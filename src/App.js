@@ -1,26 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Menu } from 'semantic-ui-react'
+import { Switch, Route } from 'react-router-dom'
 import './App.css';
+import ProfilePage from './components/ProfilePage.js'
+import HomePage from './components/HomePage.js'
+import SignupPage from './components/SignupPage.js'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  render(){
+    return(
+      <>
+        <Menu style={{backgroundColor:"#0585E8",borderRadius:"0px"}}>
+          <Menu.Item header>
+          </Menu.Item>
+        </Menu>
+        <Switch>
+          <Route exact path="/" render={({ history }) => <HomePage history={history} /> } />
+          <Route path="/profile" render={({history}) => <ProfilePage history={history} />} />
+          <Route path="/signup" render={({history}) => <SignupPage history={history} />} />
+        </Switch>
+      </>
+    )
+  }
 }
-
 export default App;
