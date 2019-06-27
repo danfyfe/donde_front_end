@@ -1,9 +1,13 @@
 import React, { Component, } from 'react'
-import { Segment, Form, Message, Button, Header, Menu, Card } from 'semantic-ui-react'
-import HouseCard from './HouseCard.js'
+import { Segment, Form, Message, Button, Header, Menu } from 'semantic-ui-react'
+import HouseholdCardsContainer from './HouseholdCardsContainer.js'
 import MessageContainer from './MessageContainer.js'
+// import withAuth from '../hocs/withAuth'
+
 class ProfilePage extends Component {
   state = {
+    userData: {},
+    households:[],
     addingHousehold: false,
     householdName: "",
     householdPass: ""
@@ -14,8 +18,21 @@ class ProfilePage extends Component {
       method:"POST",
       headers: { Authorization:  localStorage.getItem("token") }
     }).then(resp=>resp.json())
-    .then(data=>{
-      console.log("Profile!!", data)
+    .then(user=>{
+      // console.log("Profile!!", data)
+      this.setState({
+        userData: user
+      })
+    })
+
+
+    fetch('http://localhost:3000/api/v1/households')
+    .then(resp=>resp.json())
+    .then(households=>{
+      // console.log(households)
+      this.setState({
+        households: households
+      })
     })
   }
 
@@ -67,7 +84,10 @@ class ProfilePage extends Component {
       })
     }).then(resp=>resp.json())
     .then(household=>{
-      console.log(household)
+      const newHouseholds = [...this.state.households, household]
+      this.setState({
+        households: newHouseholds
+      })
     })
   }
 // end of household functions
@@ -75,7 +95,9 @@ class ProfilePage extends Component {
 
 
   render(){
-    console.log(this.state)
+    // console.log(store)
+    // console.log("PROF STATE",this.state)
+    // console.log("PROF PROPS",this.props)
     if (!localStorage.token || localStorage.token === "undefined") {
     this.props.history.push("/")
     }
@@ -87,27 +109,25 @@ class ProfilePage extends Component {
 
 
         <Segment style={{width:"98%", margin:"0 auto"}}>
-          Hi from profile page
 
-          { this.state.addingHousehold ?
-            this.renderHouseholdForm() : <Header href="#"style={{color:"blue"}} onClick={this.setAddingHousehold} as='a'>Add Household</Header>
-          }
           <Segment>
             <Menu style={{margin:"0px 0px 15px 0px "}}>
               <Header style={{padding:"10px"}}>Households</Header>
             </Menu>
-            <Card.Group>
-              <HouseCard/>
-              <HouseCard/>
-              <HouseCard/>
-              <HouseCard/>
-            </Card.Group>
+            <Segment clearing>
+              { this.state.addingHousehold ?
+                this.renderHouseholdForm() : <Header floated="right"href="#"style={{color:"blue"}} onClick={this.setAddingHousehold} as='a'>Add Household</Header>
+              }
+            </Segment>
+
+          <HouseholdCardsContainer history={this.props.history} households={this.state.households}/>
+
           </Segment>
           <Segment>
-            <Menu style={{margin:"0px 0px 15px 0px"}}>
-              <Header style={{padding:"10px"}}>Messages</Header>
-            </Menu>
+            
+
             <MessageContainer/>
+
           </Segment>
 
         </Segment>
@@ -115,7 +135,13 @@ class ProfilePage extends Component {
     )
   }
 
-
+// mapStateToProps = () => {
+//
+// }
+//
+// mapDispatchToProps = (dispatch) =>{
+//   return {dispatch}
+// }
 
 
 

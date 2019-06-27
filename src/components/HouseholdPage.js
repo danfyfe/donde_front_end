@@ -1,7 +1,9 @@
 import React, { Component, } from 'react'
 import { Segment} from 'semantic-ui-react'
 
-class Household extends Component {
+class HouseholdPage extends Component {
+  
+
   render(){
     return(
       <Segment>
@@ -12,4 +14,4 @@ class Household extends Component {
 
 }
 
-export default Household
+export default HouseholdPage

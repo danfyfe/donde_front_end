@@ -5,6 +5,7 @@ import './App.css';
 import ProfilePage from './components/ProfilePage.js'
 import HomePage from './components/HomePage.js'
 import SignupPage from './components/SignupPage.js'
+import HouseholdPage from './components/HouseholdPage.js'
 
 class App extends React.Component {
 
@@ -47,13 +48,13 @@ class App extends React.Component {
             </Dropdown.Menu>
           </Dropdown>
           </Menu.Menu>
-
-
         </Menu>
+
         <Switch>
           <Route exact path="/" render={({ history }) => <HomePage history={history} /> } />
           <Route path="/profile" render={({history}) => <ProfilePage history={history} />} />
           <Route path="/signup" render={({history}) => <SignupPage history={history} />} />
+          <Route path='/households/:id' render={({history}) => <HouseholdPage history={history} />} />
         </Switch>
       </>
     )

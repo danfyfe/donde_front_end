@@ -1,24 +1,26 @@
 import React, { Component, } from 'react'
-import { Segment, Form, Message, Button, Header, Card, Icon } from 'semantic-ui-react'
+import { Button, Card, Icon, Image } from 'semantic-ui-react'
 
 
 class MessageCard extends Component {
   render(){
+    console.log("MESSAGES PROPS",this.props)
     return(
-      <Card color="yellow"style={{width: "100%"}}>
+      <Card color={this.props.message.household.color} style={{width: "100%"}}>
         <Card.Content>
           <Card.Header>
-            Message Title
+            {this.props.message.title}
+            <Image floated="right"size="mini" src={this.props.message.household.image}/>
           </Card.Header>
-          <Card.Description>
-            Message Content
+          <Card.Description style={{margin:"10px"}}>
+            {this.props.message.content}
           </Card.Description>
           <Card.Meta>
           <Icon name="home"/>
-            Household Name
+          <span style={{maring:'10px'}}>{this.props.message.household.name}</span>
           <Icon name="user"/>
-            Username
-            <Button float="right">Add Message</Button>
+          <span>{this.props.message.user.username}</span>
+          <Button size="mini" floated="right">Add Message</Button>
           </Card.Meta>
         </Card.Content>
       </Card>
