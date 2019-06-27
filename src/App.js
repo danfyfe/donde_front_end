@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu } from 'semantic-ui-react'
+import { Menu, Dropdown, Icon } from 'semantic-ui-react'
 import { Switch, Route } from 'react-router-dom'
 import './App.css';
 import ProfilePage from './components/ProfilePage.js'
@@ -7,12 +7,48 @@ import HomePage from './components/HomePage.js'
 import SignupPage from './components/SignupPage.js'
 
 class App extends React.Component {
+
+  handleLogOut = () => {
+    // console.log(localStorage)
+    localStorage.clear()
+    this.props.history.push('/')
+
+  }
   render(){
+    // const dropdownTrigger = (
+    //   <span>
+    //     <Icon name="bars"/>
+    //   </span>
+    // )
+    // const dropdownOptions = [
+    //   {key:'profile', text:'Profile', icon:'user circle'},
+    //   {key:'items', text:'Items', icon:'images'},
+    //   {key:'logout', text:'LogOut', icon:'log out'}
+    // ]
+
     return(
       <>
-        <Menu style={{backgroundColor:"#0585E8",borderRadius:"0px"}}>
+        <Menu style={{backgroundColor:"#3d8af7",borderRadius:"0px", marginBottom: "0px"}}>
           <Menu.Item header>
+              ¿
           </Menu.Item>
+          <Menu.Item header>
+            Don¿e
+          </Menu.Item>
+          <Menu.Item >
+            <Icon name="search"/>
+          </Menu.Item>
+          <Menu.Menu position="right">
+          <Dropdown pointing="top right" item text={null} icon="bars">
+            <Dropdown.Menu>
+              <Dropdown.Item><Icon name="user circle"/>Profile</Dropdown.Item>
+              <Dropdown.Item><Icon name="images"/>Items</Dropdown.Item>
+              <Dropdown.Item onClick={this.handleLogOut}><Icon name="log out"/>LogOut</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          </Menu.Menu>
+
+
         </Menu>
         <Switch>
           <Route exact path="/" render={({ history }) => <HomePage history={history} /> } />
@@ -24,3 +60,5 @@ class App extends React.Component {
   }
 }
 export default App;
+
+// <Dropdown trigger ={dropdownTrigger}options={dropdownOptions} pointing="top right" icon={null}/>
