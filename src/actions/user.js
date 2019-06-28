@@ -6,7 +6,7 @@ export const /*FUNCTION*/ loginUser = (username, password) => {
     // adapter.loginUser(username, password)
     // http://localhost:3000
     // TODO: send out env variables
-    fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/login`, { //TODO: move this to an adapter
+    fetch(`http://localhost:3000/api/v1/login`, { //TODO: move this to an adapter
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ export const /*FUNCTION*/ loginUser = (username, password) => {
       } */
       .then(JSONResponse => {
         console.log('%c INSIDE YE OLDE .THEN', 'color: navy', JSONResponse)
-        localStorage.setItem('jwt', JSONResponse.jwt)
+        localStorage.setItem('token', JSONResponse.jwt)
         dispatch({ type: 'SET_CURRENT_USER', payload: JSONResponse.user })
         // dispatch(setCurrentUser(JSONResponse.user))
       })
@@ -52,7 +52,7 @@ export const fetchCurrentUser = () => {
     fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/profile`, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('jwt')}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     })
       .then(response => response.json())
@@ -72,3 +72,8 @@ export const failedLogin = (errorMsg) => ({
 
 // tell our app we're currently fetching
 export const authenticatingUser = () => ({ type: 'AUTHENTICATING_USER' })
+
+
+export const setHousehold = () => ({
+  type: 'SET_HOUSEHOLD'
+})

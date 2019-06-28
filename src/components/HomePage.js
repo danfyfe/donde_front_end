@@ -17,7 +17,7 @@ class HomePage extends Component {
   handleLogIn = () => {
     fetch('http://localhost:3000/api/v1/login',{
       method:"POST",
-      headers: {"Content-Type": "application/json"},
+      headers: {"Content-Type": "application/json", Authorization:  localStorage.getItem("token")},
       body: JSON.stringify({user:this.state})
     }).then(resp=>resp.json())
     .then(data=>{

@@ -32,7 +32,7 @@ class MessageContainer extends Component {
   }
 
   render(){
-    // console.log("MESSAGE CONTAINER", this.props)
+    console.log("MESSAGE CONTAINER", this.props)
     return(
       <>
       <Menu style={{margin:"0px 0px 15px 0px"}}>

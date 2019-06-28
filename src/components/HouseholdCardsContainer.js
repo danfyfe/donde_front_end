@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Card, Segment, Menu, Form, Message,Button, Header,Dropdown } from 'semantic-ui-react'
-
 import HouseholdCard from './HouseholdCard.js'
+import { connect } from 'react-redux'
 
 class HouseholdCardsContainer extends Component {
   state = {
@@ -13,12 +13,15 @@ class HouseholdCardsContainer extends Component {
   }
 
   componentDidMount(){
-    fetch('http://localhost:3000/api/v1/households')
+    fetch('http://localhost:3000/api/v1/households',{
+      method: "GET",
+      headers: { Authorization:  localStorage.getItem("token") }
+    })
     .then(resp=>resp.json())
     .then(households=>{
       // console.log(households)
       this.setState({
-        households: households
+        households: this.props.user.households
       })
     })
   }
@@ -108,6 +111,7 @@ class HouseholdCardsContainer extends Component {
   }
 
   render(){
+    console.log(this.props.user.households)
     // console.log("HHCARDCONT",this.props)
     return(
 
@@ -131,4 +135,14 @@ class HouseholdCardsContainer extends Component {
   }
 }
 
-export default HouseholdCardsContainer
+const mapStateToProps = (state) => {
+  return { state }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+      addHousehold: (household) => dispatch({type:"ADD_HOUSEHOLD", household})
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(HouseholdCardsContainer)

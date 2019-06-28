@@ -21,10 +21,10 @@ const withAuth = /*FUNCTION*/ (WrappedComponent) => {
         return <WrappedComponent />
       } else if (localStorage.getItem('token') && (this.props.authenticatingUser || !this.props.loggedIn)) {
         //we're currently fetching, show a loading spinner
-        return <Loader active inline="centered" />
+        return <Loader style={{margin: "400px auto"}} active inline="centered" />
       } else {
         //user is not AUTHORIZED to see this component
-        return <Redirect to="/login" />
+        return <Redirect to="/" />
       }
     }
   }

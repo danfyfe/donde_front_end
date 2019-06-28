@@ -2,17 +2,11 @@ import React, { Component } from 'react'
 import { Segment, Header, Menu } from 'semantic-ui-react'
 import HouseholdCardsContainer from './HouseholdCardsContainer.js'
 import MessageContainer from './MessageContainer.js'
+import { connect } from 'react-redux'
 // import withAuth from '../hocs/withAuth'
 
 class ProfilePage extends Component {
-  state = {
-    userData: {},
-    // households:[],
-    // addingHousehold: false,
-    // householdName: "",
-    // householdPass: "",
-    // householdColor: ""
-  }
+
 
   componentDidMount(){
     fetch('http://localhost:3000/api/v1/profile',{
@@ -20,58 +14,68 @@ class ProfilePage extends Component {
       headers: { Authorization:  localStorage.getItem("token") }
     }).then(resp=>resp.json())
     .then(user=>{
-      // console.log("Profile!!", data)
-      this.setState({
-        userData: user
-      })
+      // console.log("USER", user)
+      this.props.setUser(user.user)
     })
   }
 
 
   render(){
-    // console.log(store)
-    // console.log("PROF STATE",this.state.userData.user)
-    // console.log("PROF PROPS",this.props)
     if (!localStorage.token || localStorage.token === "undefined") {
     this.props.history.push("/")
     }
-
+    console.log("Profile",this.props.state.user)
     return(
-
       <>
         <Menu style={{marginTop: "0px"}}>
           <Header style={{padding:"10px"}}>Welcome User !</Header>
         </Menu>
 
-        <Segment style={{width:"98%", margin:"10px auto"}}>
+        <Segment raised style={{width:"98%", margin:"10px auto"}}>
           <HouseholdCardsContainer
-          user={this.state.userData.user} history={this.props.history} households={this.state.households}/>
+          user={this.props.state.user} history={this.props.history} />
         </Segment>
 
-        <Segment style={{width:"98%", margin:"10px auto"}}>
-            <MessageContainer  user={this.state.userData.user}
+        <Segment raised style={{width:"98%", margin:"10px auto"}}>
+            <MessageContainer  user={this.props.state.user}
             history={this.props.history}/>
         </Segment>
       </>
-
     )
   }
-
-// mapStateToProps = () => {
-//
-// }
-//
-// mapDispatchToProps = (dispatch) =>{
-//   return {dispatch}
-// }
-
-
-
 }
 
-export default ProfilePage
+const mapStateToProps = (state) => {
+  return { state }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+  return {
+    setUser: (user) => dispatch({type:"SET_USER", user})
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(ProfilePage)
 
 
 
 
   // <Dropdown placeholder="Color" name="househholdColor" search selection options={householdColorOptions} onSelect={this.handleHouseholdInput}/>
+
+
+
+  // <>
+  //   <Menu style={{marginTop: "0px"}}>
+  //     <Header style={{padding:"10px"}}>Welcome User !</Header>
+  //   </Menu>
+  //
+  //   <Segment raised style={{width:"98%", margin:"10px auto"}}>
+  //     <HouseholdCardsContainer
+  //     user={this.state.userData.user} history={this.props.history} households={this.state.households}/>
+  //   </Segment>
+  //
+  //   <Segment raised style={{width:"98%", margin:"10px auto"}}>
+  //       <MessageContainer  user={this.state.userData.user}
+  //       history={this.props.history}/>
+  //   </Segment>
+  // </>
