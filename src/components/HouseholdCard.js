@@ -1,16 +1,17 @@
 import React, { Component, } from 'react'
 import { Card, Image } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
 class HouseholdCard extends Component {
   displaySpaceOverview = () => {
-    return this.props.household.spaces.map(space=>{
-      return <Card.Content key={space.id}>
-        {space.name}
-        <Card.Content extra>
-        <span># Items</span>
-        </Card.Content>
-      </Card.Content>
-    })
+    // return this.props.household.spaces.map(space=>{
+    //   return <Card.Content key={space.id}>
+    //     {space.name}
+    //     <Card.Content extra>
+    //     <span># Items</span>
+    //     </Card.Content>
+    //   </Card.Content>
+    // })
   }
 
   render(){
@@ -31,10 +32,16 @@ class HouseholdCard extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return { state }
+}
+
+const mapDispatchToProps = () => {
+
+}
 
 
-
-export default HouseholdCard
+export default connect(mapStateToProps, mapDispatchToProps)(HouseholdCard)
 
 // <Card.Content description={"Space # Items"}/>
 // <Card.Content description={

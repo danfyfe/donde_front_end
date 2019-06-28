@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 class HouseholdCardsContainer extends Component {
   state = {
-    households:[],
+    // households:[],
     addingHousehold: false,
     householdName: "",
     householdPass: "",
@@ -13,17 +13,36 @@ class HouseholdCardsContainer extends Component {
   }
 
   componentDidMount(){
-    fetch('http://localhost:3000/api/v1/households',{
+    fetch('http://localhost:3000/api/v1/households', {
       method: "GET",
       headers: { Authorization:  localStorage.getItem("token") }
-    })
-    .then(resp=>resp.json())
+    }).then(resp=>resp.json())
     .then(households=>{
-      // console.log(households)
-      this.setState({
-        households: this.props.user.households
-      })
+      this.props.setHouseholds(households)
     })
+
+
+    // fetch('http://localhost:3000/api/v1/users',{
+    //   method: "GET",
+    //   headers: { Authorization:  localStorage.getItem("token") }
+    // })
+    // .then(resp=>resp.json())
+    // .then(households=>{
+    //   // console.log(households)
+    //   this.setState({
+    //     households: households
+    //   })
+    // })
+
+    // fetch('http://localhost:3000/api/v1/profile',{
+    //   method:"POST",
+    //   headers: { Authorization:  localStorage.getItem("token") }
+    // }).then(resp=>resp.json())
+    // .then(user=>{
+    //   // console.log("USER", user)
+    //   this.props.setUser(user.user)
+    // })
+
   }
 
   // ADD HOUSEHOLD FUNCTIONS
@@ -84,35 +103,49 @@ class HouseholdCardsContainer extends Component {
             password: this.state.householdPass,
             color: this.state.householdColor
           },
-          user: this.props.user
+          user: this.props.state.user
         })
       }).then(resp=>resp.json())
       .then(household=>{
         // console.log(household)
         const newHouseholds = [...this.state.households, household]
-        this.setState({
-          households: newHouseholds
-        })
+        // this.setState({
+        //   households: newHouseholds
+        // })
+        this.props.addHousehold(newHouseholds)
       })
     }
   // end of household functions
 
 
   renderHouseholdCards = () => {
-    return this.state.households.map(household=>{
-      // console.log(household)
-      return <HouseholdCard key={household.id} redirectToHousehold={this.redirectToHousehold} household={household}/>
-    })
+    // console.log("RHHC", this.props.user.households )
+    // let userHouseholds = []
+    //
+    // this.state.households.map(household=>{
+    //     return this.props.user.households.map(userHousehold=>{
+    //       return userHousehold.id === household.id ? userHouseholds = [...userHouseholds, userHousehold] : null
+    //     })
+    // })
+    // console.log("USERHOUSEHOLSD",userHouseholds)
+    // return userHouseholds.map(household=>{
+    //   // console.log(household)
+    //   return <HouseholdCard key={household.id} redirectToHousehold={this.redirectToHousehold} household={household}/>
+    // })
+    if (this.props.state.user.households) {
+      return this.props.state.user.households.map(household=>{
+        return <HouseholdCard key={household.id} redirectToHousehold={this.redirectToHousehold} household={household}/>
+      })
+    }
   }
 
   redirectToHousehold = (id) => {
-    // console.log(id)
     this.props.history.push(`/households/${id}`)
   }
 
   render(){
-    console.log(this.props.user.households)
-    // console.log("HHCARDCONT",this.props)
+    // console.log("HHCARDCONT",this.props.state.user.households)
+    // console.log("HCC", this.props.state)
     return(
 
 
@@ -139,8 +172,11 @@ const mapStateToProps = (state) => {
   return { state }
 }
 
+
 const mapDispatchToProps = (dispatch) => {
     return {
+      setUser: (user) => dispatch({type:"SET_USER", user}),
+      setHouseholds: (households) => dispatch({type:"SET_HOUSEHOLDS",households}),
       addHousehold: (household) => dispatch({type:"ADD_HOUSEHOLD", household})
     }
 }

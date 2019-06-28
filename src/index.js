@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { createStore } from 'redux'
+// combineReducers, applyMiddleware
 import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'
-import { composeWithDevTools } from 'redux-devtools-extension'
+// import thunk from 'redux-thunk'
+// import { composeWithDevTools } from 'redux-devtools-extension'
 import './index.css';
 import App from './App';
-import usersReducer from './reducers/usersReducer'
+// import usersReducer from './reducers/usersReducer'
 import appReducer from './reducers/appReducer.js'
 // import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Route } from 'react-router-dom'

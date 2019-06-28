@@ -24,7 +24,7 @@ class ProfilePage extends Component {
     if (!localStorage.token || localStorage.token === "undefined") {
     this.props.history.push("/")
     }
-    console.log("Profile",this.props.state.user)
+    // console.log("Profile",this.props.state.user)
     return(
       <>
         <Menu style={{marginTop: "0px"}}>
@@ -32,8 +32,7 @@ class ProfilePage extends Component {
         </Menu>
 
         <Segment raised style={{width:"98%", margin:"10px auto"}}>
-          <HouseholdCardsContainer
-          user={this.props.state.user} history={this.props.history} />
+          <HouseholdCardsContainer history={this.props.history} />
         </Segment>
 
         <Segment raised style={{width:"98%", margin:"10px auto"}}>
