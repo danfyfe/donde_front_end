@@ -20,11 +20,12 @@ class MessageContainer extends Component {
 
   renderMessageCards = () => {
     return this.state.messages.map(message => {
-      return <MessageCard message={message}/>
+      return <MessageCard key={message.id} message={message}/>
     })
   }
 
   render(){
+    console.log("MESSAGE CONTAINER", this.props)
     return(
       <>
       <Menu style={{margin:"0px 0px 15px 0px"}}>
