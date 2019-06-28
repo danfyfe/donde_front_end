@@ -1,4 +1,4 @@
-import React, { Component, } from 'react'
+import React, { Component } from 'react'
 import { Segment, Header, Menu } from 'semantic-ui-react'
 import HouseholdCardsContainer from './HouseholdCardsContainer.js'
 import MessageContainer from './MessageContainer.js'
@@ -37,27 +37,23 @@ class ProfilePage extends Component {
     }
 
     return(
+
       <>
         <Menu style={{marginTop: "0px"}}>
           <Header style={{padding:"10px"}}>Welcome User !</Header>
         </Menu>
 
-
-
+        <Segment style={{width:"98%", margin:"10px auto"}}>
           <HouseholdCardsContainer
           user={this.state.userData.user} history={this.props.history} households={this.state.households}/>
+        </Segment>
 
-
-          <Segment>
-
-
+        <Segment style={{width:"98%", margin:"10px auto"}}>
             <MessageContainer  user={this.state.userData.user}
             history={this.props.history}/>
-
-          </Segment>
-
-
+        </Segment>
       </>
+
     )
   }
 

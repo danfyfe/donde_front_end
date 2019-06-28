@@ -7,9 +7,6 @@ class MessageCard extends Component {
     addingMessage: false,
     messageTitle: '',
     messageContent: ''
-    // newMessageUserId: this.props.message.user.id,
-    // newMessageHouseholdId: this.props.message.household.id,
-
   }
 
   setAddingMessage = () => {
@@ -35,20 +32,21 @@ class MessageCard extends Component {
         message:{
           title: this.state.messageTitle,
           content: this.state.messageContent,
-          user_id: this.props.message.user.id,
+          user_id: this.props.user.id,
           household_id: this.props.message.household.id
         }
       })
     }).then(resp=>resp.json())
     .then(message=>{
-      console.log(message)
+      // console.log(message)
+      this.props.renderNewMessage(message)
     })
 
   }
 
   render(){
     // console.log("MESSAGES PROPS",this.props)
-    console.log("MESSAGE STATE", this.state)
+    // console.log("MESSAGE STATE", this.state)
     return(
       <Card color={this.props.message.household.color} style={{width: "100%"}}>
         <Card.Content>
@@ -64,18 +62,19 @@ class MessageCard extends Component {
           <span style={{maring:'10px'}}>{this.props.message.household.name}</span>
           <Icon name="user"/>
           <span>{this.props.message.user.username}</span>
-          {this.state.addingMessage ? null :<Button onClick={this.setAddingMessage}size="mini" floated="right">Add Message</Button>}
+          {this.state.addingMessage ? null :<Button onClick={this.setAddingMessage}size="mini" floated="right"> Reply </Button>}
           </Card.Meta>
         </Card.Content>
 
 
-
+        {this.state.addingMessage ?
         <Segment>
-        <Message header="Add a Message!"/>
+          <Message header="Add a Message!"/>
           <Form>
             <Form.Field>
               <label>Title</label>
-                <input name="messageTitle" placeholder="Title"
+                <input name="messageTitle"
+                value={"re: "+this.props.message.title} placeholder="Title"
                 onChange={this.handleMessageInput}/>
             </Form.Field>
             <Form.Field>
@@ -88,7 +87,7 @@ class MessageCard extends Component {
             <Button size='small'floated="right"
             onClick={this.addMessage}>Submit</Button>
           </Form>
-        </Segment>
+        </Segment>:null}
 
 
       </Card>

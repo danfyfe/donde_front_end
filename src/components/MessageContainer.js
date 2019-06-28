@@ -11,7 +11,7 @@ class MessageContainer extends Component {
     fetch('http://localhost:3000/api/v1/messages')
     .then(resp=>resp.json())
     .then(messages=>{
-      console.log("MESSAGES",messages)
+      // console.log("MESSAGES",messages)
       this.setState({
         messages: messages
       })
@@ -20,12 +20,19 @@ class MessageContainer extends Component {
 
   renderMessageCards = () => {
     return this.state.messages.map(message => {
-      return <MessageCard key={message.id} message={message}/>
+      return <MessageCard user={this.props.user}key={message.id} message={message} renderNewMessage={this.renderNewMessage}/>
+    })
+  }
+
+  renderNewMessage = (message) => {
+    const newMessages = [...this.state.messages, message]
+    this.setState({
+      messages: newMessages
     })
   }
 
   render(){
-    console.log("MESSAGE CONTAINER", this.props)
+    // console.log("MESSAGE CONTAINER", this.props)
     return(
       <>
       <Menu style={{margin:"0px 0px 15px 0px"}}>
@@ -34,7 +41,7 @@ class MessageContainer extends Component {
         <Card.Group>
           {this.renderMessageCards()}
         </Card.Group>
-        </>
+      </>
     )
   }
 }

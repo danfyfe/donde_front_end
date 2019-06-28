@@ -104,15 +104,15 @@ class HouseholdCardsContainer extends Component {
 
   redirectToHousehold = (id) => {
     // console.log(id)
-    this.props.history.push(`/housholds/${id}`)
+    this.props.history.push(`/households/${id}`)
   }
 
   render(){
     // console.log("HHCARDCONT",this.props)
     return(
-      <Segment style={{width:"98%", margin:"0 auto"}}>
 
-        <Segment>
+
+      <>
           <Menu style={{margin:"0px 0px 15px 0px "}}>
             <Header style={{padding:"10px"}}>Households</Header>
           </Menu>
@@ -122,11 +122,11 @@ class HouseholdCardsContainer extends Component {
             }
           </Segment>
 
-      </Segment>
-      <Card.Group>
-        {this.renderHouseholdCards()}
-      </Card.Group>
-      </Segment>
+
+          <Card.Group>
+            {this.renderHouseholdCards()}
+          </Card.Group>
+      </>
     )
   }
 }

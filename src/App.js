@@ -16,16 +16,6 @@ class App extends React.Component {
 
   }
   render(){
-    // const dropdownTrigger = (
-    //   <span>
-    //     <Icon name="bars"/>
-    //   </span>
-    // )
-    // const dropdownOptions = [
-    //   {key:'profile', text:'Profile', icon:'user circle'},
-    //   {key:'items', text:'Items', icon:'images'},
-    //   {key:'logout', text:'LogOut', icon:'log out'}
-    // ]
 
     return(
       <>
@@ -54,7 +44,7 @@ class App extends React.Component {
           <Route exact path="/" render={({ history }) => <HomePage history={history} /> } />
           <Route path="/profile" render={({history}) => <ProfilePage history={history} />} />
           <Route path="/signup" render={({history}) => <SignupPage history={history} />} />
-          <Route path='/households/:id' render={({history}) => <HouseholdPage history={history} />} />
+          <Route path='/households/:id' render={props=><HouseholdPage {...props}/>} />
         </Switch>
       </>
     )
