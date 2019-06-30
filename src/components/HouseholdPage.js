@@ -1,13 +1,22 @@
 import React, { Component, } from 'react'
-import { Segment, Menu, Header} from 'semantic-ui-react'
+import { Segment, Menu, Header, Image} from 'semantic-ui-react'
 import HouseholdContainer from './HouseholdContainer.js'
 import HouseholdMessagesContainer from './HouseholdMessagesContainer.js'
+import { connect } from 'react-redux'
+
 class HouseholdPage extends Component {
-  state = {
-    household: {}
-  }
+  // state = {
+  //   household: {}
+  // }
 
   componentDidMount(){
+    fetch('http://localhost:3000/api/v1/profile',{
+      method:"POST",
+      headers: { Authorization:  localStorage.getItem("token") }
+    }).then(resp=>resp.json())
+    .then(user=>{
+      this.props.setUser(user.user)
+    }).then(
     fetch(`http://localhost:3000/api/v1/households/${this.props.match.params.id}`,{
       method: "GET",
       headers: { Authorization:  localStorage.getItem("token") }
@@ -15,28 +24,39 @@ class HouseholdPage extends Component {
     .then(resp=>resp.json())
     .then(household=>{
       // console.log("HOUSEHOLD",household)
-      this.setState({
-        household: household
-      })
+      this.props.setCurrentHousehold(household)
     })
+  )
   }
 
   render(){
-    // console.log("Household PORPS",this.props)
+    // console.log("Household PORPS",this.props.state.currentHousehold)
     // console.log("Household STATE", this.state.household)
     return(
       <>
         <Menu style={{marginTop: "0px"}}>
-          <Header style={{padding:"10px"}}>USER!</Header>
+          <Header style={{padding:"10px"}}>{this.props.state.user.username}</Header>
+          <Image src={this.props.state.user.image} size="mini"/>
         </Menu>
         <Segment raised style={{margin:"10px auto",width:"98%"}}>
           <HouseholdContainer/>
-          <HouseholdMessagesContainer household={this.state.household}/>
+          <HouseholdMessagesContainer household={this.props.state.currentHousehold}/>
         </Segment>
       </>
     )
   }
-
 }
 
-export default HouseholdPage
+const mapStateToProps = (state) => {
+  return { state }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+  return {
+    setUser: (user) => dispatch({type:"SET_USER", user}),
+    setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household})
+  }
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(HouseholdPage)

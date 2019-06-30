@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 
 class HouseholdCardsContainer extends Component {
   state = {
-      // households:this.props.state.user.households,
     addingHousehold: false,
     householdName: "",
     householdPass: "",
@@ -13,7 +12,14 @@ class HouseholdCardsContainer extends Component {
   }
 
   componentDidMount(){
-
+    // fetch('http://localhost:3000/api/v1/households',{
+    //   method:"GET",
+    //   headers: { Authorization:  localStorage.getItem("token") }
+    // }).then(resp=>resp.json())
+    // .then(households=>{
+    //   // console.log("HOUSEHOLDS", households)
+    //   this.props.setHouseholds(households)
+    // })
   }
 
   // ADD HOUSEHOLD FUNCTIONS
@@ -78,13 +84,6 @@ class HouseholdCardsContainer extends Component {
         })
       }).then(resp=>resp.json())
       .then(household=>{
-        // console.log(household)
-        // console.log("HOUSEHOLDS",this.state.households)
-        // console.log("PROPS STATE HH IN FETCH", this.props.state.user.households)
-        // const newHouseholds = [...this.state.households, household]
-        // this.setState({
-        //   households: newHouseholds
-        // })
         this.props.addHousehold(household)
       })
     }
@@ -94,7 +93,6 @@ class HouseholdCardsContainer extends Component {
   renderHouseholdCards = () => {
       // console.log("PROPS STATE HH IN RHHC", this.props.state.user.households)
     if (this.props.state.user.households) {
-      // console.log("THIS WOULD WORK")
       return this.props.state.user.households.map(household=>{
         return <HouseholdCard key={household.id} household={household}
         redirectToHousehold={this.redirectToHousehold}/>
@@ -107,14 +105,8 @@ class HouseholdCardsContainer extends Component {
   }
 
   render(){
-    // console.log("HHCARDCONT",this.props.state.user.households)
-    // console.log("HCC", this.props.state)
-
-
 
     return(
-
-
       <>
           <Menu style={{margin:"0px 0px 15px 0px "}}>
             <Header style={{padding:"10px"}}>Households</Header>

@@ -45,23 +45,24 @@ class MessageCard extends Component {
   }
 
   render(){
-    // console.log("MESSAGES PROPS",this.props)
+    // console.log("MESSAGES PROPS",this.props.message)
     // console.log("MESSAGE STATE", this.state)
+    // console.log("messageCard props", this.props)
     return(
-      <Card color={this.props.message.household.color} style={{width: "100%"}}>
+      <Card color={this.props.household.color} style={{width: "100%"}}>
         <Card.Content>
           <Card.Header>
             {this.props.message.title}
-            <Image floated="right"size="mini" src={this.props.message.household.image}/>
+            <Image floated="right"size="mini" src={this.props.household.image}/>
           </Card.Header>
           <Card.Description style={{margin:"10px"}}>
             {this.props.message.content}
           </Card.Description>
           <Card.Meta>
           <Icon name="home"/>
-          <span style={{maring:'10px'}}>{this.props.message.household.name}</span>
+          <span style={{maring:'10px'}}>{this.props.household.name}</span>
           <Icon name="user"/>
-          <span>{this.props.message.user.username}</span>
+          <span>FIGURE OUT HOW TO GET MESSAGE USER</span>
           {this.state.addingMessage ? null :<Button onClick={this.setAddingMessage}size="mini" floated="right"> Reply </Button>}
           </Card.Meta>
         </Card.Content>

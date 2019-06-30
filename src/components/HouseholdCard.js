@@ -16,9 +16,7 @@ class HouseholdCard extends Component {
 
   render(){
     // console.log("HHCARD",this.props.household)
-    const displaySpaceOverview = () => {
 
-    }
     return(
       <Card color={this.props.household.color} link onClick={()=>this.props.redirectToHousehold(this.props.household.id)}>
         <Card.Content>

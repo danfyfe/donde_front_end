@@ -16,7 +16,7 @@ class HouseholdMessagesContainer extends Component {
     // return this.props.household.messages.map(message=>{
     //   console.log(message)
     // })
-    console.log("RMC",this.props.household.messages)
+    // console.log("RMC",this.props.household.messages)
 
   }
 
@@ -39,7 +39,7 @@ class HouseholdMessagesContainer extends Component {
 
   render(){
     // this.setHouseholdMessages()
-    console.log("HHMC", this.props)
+    // console.log("HHMC", this.props)
     return(
       <>
       <Menu style={{margin:"0px 0px 15px 0px"}}>

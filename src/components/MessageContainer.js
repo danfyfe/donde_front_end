@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 
 class MessageContainer extends Component {
   state = {
-    messages:[]
+    messages: []
   }
   componentDidMount(){
 
@@ -16,22 +16,60 @@ class MessageContainer extends Component {
     })
     .then(resp=>resp.json())
     .then(messages=>{
-      this.props.setMessages(messages)
+      // this.props.setUserHouseholdMessages(messages)
       // console.log("MESSAGES",messages)
-      this.setState({
-        messages: messages
-      })
+      // this.setState({
+      //   messages: messages
+      // })
     })
   }
 
-  // renderMessageCards = () => {
-  //   // console.log(this.props.state.messages)
-  //   // if (this.props.state.messages) {
-  //     // return this.props.state.messages.map(message => {
-  //     //   return <MessageCard user={this.props.user}key={message.id} message={message} renderNewMessage={this.renderNewMessage}/>
-  //     // })
-  //   // }
+  // setUserHouseholdMessages = () => {
+  //
+  //   let userHouseholdMessages = []
+  //
+  //   if (this.props.state.user.households) {
+  //     this.props.state.user.households.forEach(household => {
+  //       // console.log(household)
+  //       return userHouseholdMessages = [...userHouseholdMessages, household.messages]
+  //     })
+  //   }
+  //
+  //   this.setState({
+  //     userHouseholdMessages: userHouseholdMessages.flat()
+  //   })
   // }
+
+
+  renderMessageCards = () => {
+    // let userHouseholdMessages = []
+    // if (this.props.state.user.households) {
+    //   this.props.state.user.households.forEach(household => {
+    //
+    //     return userHouseholdMessages = [...userHouseholdMessages, household.messages]
+    //   })
+    // }
+    //
+    // userHouseholdMessages = [...userHouseholdMessages].flat()
+    //
+    //
+    //
+    // return userHouseholdMessages.map(message => {
+    //   return <MessageCard key={message.id} message={message}/>
+    // })
+
+    if (this.props.state.user.households) {
+      // console.log(this.props.user.households)
+      return this.props.state.user.households.map(household => {
+        return household.messages.map(message => {
+          return <MessageCard message={message} household={household}
+          user={this.props.user}/>
+        })
+      })
+    }
+
+
+  }
 
   renderNewMessage = (message) => {
     const newMessages = [...this.state.messages, message]
@@ -41,18 +79,15 @@ class MessageContainer extends Component {
   }
 
   render(){
-    const renderMessageCards = () =>{
-      // console.log("MESSAGE CARD",this.props.state.messages)
-    }
-    // console.log("MESSAGE CONTAINER", this.props)
-    // console.log(this.props.state.messages)
+
+    // console.log(this.state.messages)
     return(
       <>
       <Menu style={{margin:"0px 0px 15px 0px"}}>
-        <Header style={{padding:"10px"}}>{this.props.state.messages.length} Messages</Header>
+        <Header style={{padding:"10px"}}> Messages</Header>
       </Menu>
         <Card.Group>
-          {renderMessageCards()}
+          {this.renderMessageCards()}
         </Card.Group>
       </>
     )
@@ -69,7 +104,7 @@ const mapDispatchToProps = (dispatch) => {
       setUser: (user) => dispatch({type:"SET_USER", user}),
       setHouseholds: (households) => dispatch({type:"SET_HOUSEHOLDS",households}),
       addHousehold: (household) => dispatch({type:"ADD_HOUSEHOLD", household}),
-      setMessages: (messages) => dispatch({type:"SET_MESSAGES",messages})
+      setUserHouseholdMessages: (allMessages) => dispatch({type:"SET_USERHOUSEHOLDMESSAGES", allMessages})
     }
 }
 

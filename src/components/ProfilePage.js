@@ -33,11 +33,11 @@ class ProfilePage extends Component {
 
         <Segment raised style={{width:"98%", margin:"10px auto"}}>
           <HouseholdCardsContainer history={this.props.history}
-          user={this.props.state.user}/>
+          />
         </Segment>
 
         <Segment raised style={{width:"98%", margin:"10px auto"}}>
-            <MessageContainer  user={this.props.state.user}
+            <MessageContainer
             history={this.props.history}/>
         </Segment>
       </>
