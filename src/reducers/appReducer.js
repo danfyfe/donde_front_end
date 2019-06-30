@@ -1,6 +1,7 @@
 const defaultState = {
   user: {},
-  households: {}
+  households: {},
+  messages: {}
 }
 
 
@@ -16,10 +17,13 @@ function householdReducer (state = defaultState, action){
         return {...state, households: action.households}
     case "ADD_HOUSEHOLD":
       // console.log("ADD_HOUSEHOLD STATE",state.user)
-      // console.log("ADD_HOUSEHOLD", action.household)
-      return {...state, user:{...state.user, households: [...state.user.households, action.household[0]]}}
+      console.log("ADD_HOUSEHOLD", action.household)
+      return {...state, user:{...state.user, households: [...state.user.households, action.household]}}
+    case "SET_MESSAGES":
+      // console.log(action.messages)
+      return {...state, messages: action.messages}
     case "ADD_MESSAGE":
-      
+
     return state
     default:
     return state

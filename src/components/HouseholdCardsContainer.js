@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 class HouseholdCardsContainer extends Component {
   state = {
-    // households:[],
+      // households:this.props.state.user.households,
     addingHousehold: false,
     householdName: "",
     householdPass: "",
@@ -13,35 +13,6 @@ class HouseholdCardsContainer extends Component {
   }
 
   componentDidMount(){
-    fetch('http://localhost:3000/api/v1/households', {
-      method: "GET",
-      headers: { Authorization:  localStorage.getItem("token") }
-    }).then(resp=>resp.json())
-    .then(households=>{
-      this.props.setHouseholds(households)
-    })
-
-
-    // fetch('http://localhost:3000/api/v1/users',{
-    //   method: "GET",
-    //   headers: { Authorization:  localStorage.getItem("token") }
-    // })
-    // .then(resp=>resp.json())
-    // .then(households=>{
-    //   // console.log(households)
-    //   this.setState({
-    //     households: households
-    //   })
-    // })
-
-    // fetch('http://localhost:3000/api/v1/profile',{
-    //   method:"POST",
-    //   headers: { Authorization:  localStorage.getItem("token") }
-    // }).then(resp=>resp.json())
-    // .then(user=>{
-    //   // console.log("USER", user)
-    //   this.props.setUser(user.user)
-    // })
 
   }
 
@@ -108,33 +79,25 @@ class HouseholdCardsContainer extends Component {
       }).then(resp=>resp.json())
       .then(household=>{
         // console.log(household)
-        const newHouseholds = [...this.state.households, household]
+        // console.log("HOUSEHOLDS",this.state.households)
+        // console.log("PROPS STATE HH IN FETCH", this.props.state.user.households)
+        // const newHouseholds = [...this.state.households, household]
         // this.setState({
         //   households: newHouseholds
         // })
-        this.props.addHousehold(newHouseholds)
+        this.props.addHousehold(household)
       })
     }
   // end of household functions
 
 
   renderHouseholdCards = () => {
-    // console.log("RHHC", this.props.user.households )
-    // let userHouseholds = []
-    //
-    // this.state.households.map(household=>{
-    //     return this.props.user.households.map(userHousehold=>{
-    //       return userHousehold.id === household.id ? userHouseholds = [...userHouseholds, userHousehold] : null
-    //     })
-    // })
-    // console.log("USERHOUSEHOLSD",userHouseholds)
-    // return userHouseholds.map(household=>{
-    //   // console.log(household)
-    //   return <HouseholdCard key={household.id} redirectToHousehold={this.redirectToHousehold} household={household}/>
-    // })
+      // console.log("PROPS STATE HH IN RHHC", this.props.state.user.households)
     if (this.props.state.user.households) {
+      // console.log("THIS WOULD WORK")
       return this.props.state.user.households.map(household=>{
-        return <HouseholdCard key={household.id} redirectToHousehold={this.redirectToHousehold} household={household}/>
+        return <HouseholdCard key={household.id} household={household}
+        redirectToHousehold={this.redirectToHousehold}/>
       })
     }
   }
@@ -146,6 +109,9 @@ class HouseholdCardsContainer extends Component {
   render(){
     // console.log("HHCARDCONT",this.props.state.user.households)
     // console.log("HCC", this.props.state)
+
+
+
     return(
 
 

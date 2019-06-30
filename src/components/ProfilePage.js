@@ -32,7 +32,8 @@ class ProfilePage extends Component {
         </Menu>
 
         <Segment raised style={{width:"98%", margin:"10px auto"}}>
-          <HouseholdCardsContainer history={this.props.history} />
+          <HouseholdCardsContainer history={this.props.history}
+          user={this.props.state.user}/>
         </Segment>
 
         <Segment raised style={{width:"98%", margin:"10px auto"}}>
