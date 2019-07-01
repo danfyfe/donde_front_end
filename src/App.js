@@ -2,10 +2,9 @@ import React from 'react';
 import { Menu, Dropdown, Icon } from 'semantic-ui-react'
 import { Switch, Route } from 'react-router-dom'
 
-// import { connect } from 'react-redux'
+import { connect } from 'react-redux'
 
 import './App.css';
-
 
 import ProfilePage from './components/ProfilePage.js'
 import HomePage from './components/HomePage.js'
@@ -13,6 +12,8 @@ import SignupPage from './components/SignupPage.js'
 import ItemsPage from './components/ItemsPage.js'
 import HouseholdPage from './components/HouseholdPage.js'
 import SpacePage from './components/SpacePage.js'
+
+// import Search from './components/Search.js'
 
 class App extends React.Component {
   //  main dropdown menu functions
@@ -31,17 +32,17 @@ class App extends React.Component {
 
 
   render(){
-    // (console.log(this.props))
+    // (console.log('APP PROPS state',this.props.state))
     return(
       <>
         <Menu style={{backgroundColor:"#3d8af7",borderRadius:"0px", marginBottom: "0px"}}>
           <Menu.Item header>
               ¿
           </Menu.Item>
-          <Menu.Item header>
+          <Menu.Item onClick={this.sendToProfilePage} header>
             Don¿e
           </Menu.Item>
-          <Menu.Item >
+          <Menu.Item onClick={this.props.setSearching} >
             <Icon name="search"/>
           </Menu.Item>
           <Menu.Menu position="right">
@@ -54,6 +55,8 @@ class App extends React.Component {
           </Dropdown>
           </Menu.Menu>
         </Menu>
+
+
 
         <Switch>
           <Route exact path="/" render={({ history }) => <HomePage history={history} /> } />
@@ -68,14 +71,16 @@ class App extends React.Component {
   }
 }
 
-// const mapStateToProps = (state) => {
-//
-// }
-//
-// const mapDispatchToProps = () => {
-//
-// }
+const mapStateToProps = (state) => {
+  return { state }
+}
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setSearching: ()=> dispatch({type:"SET_SEARCHING"})
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);
 
 // <Dropdown trigger ={dropdownTrigger}options={dropdownOptions} pointing="top right" icon={null}/>

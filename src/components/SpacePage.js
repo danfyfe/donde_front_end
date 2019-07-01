@@ -34,7 +34,7 @@ class SpacePage extends Component {
     console.log('CURRENT SPACE',this.props.state.currentSpace)
     return(
       <Segment>
-
+      
       <HouseholdMessagesContainer household={this.props.state.currentHousehold}/>
       </Segment>
     )

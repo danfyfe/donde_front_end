@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { Segment, Card, Button, Form } from 'semantic-ui-react'
+import { Segment, Card } from 'semantic-ui-react'
 
 import ItemCard from './ItemCard.js'
 
@@ -17,7 +17,7 @@ class SearchedItemsContainer extends Component {
     return null
     }else {
     return filteredItems.map(item => {
-      return <ItemCard history={this.props.history} item={item}/>
+      return <ItemCard key={item.id} history={this.props.history} item={item}/>
     })
     }
   }
@@ -26,7 +26,9 @@ class SearchedItemsContainer extends Component {
     // console.log('search term by props',this.props.searchTerm)
     return(
       <Segment>
-      {this.renderSearchedItems() }
+        <Card.Group itemsPerRow={8}>
+        {this.renderSearchedItems() }
+        </Card.Group>
       </Segment>
     )
   }

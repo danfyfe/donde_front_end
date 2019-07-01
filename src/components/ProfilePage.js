@@ -36,7 +36,8 @@ class ProfilePage extends Component {
           <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
         </Menu>
 
-        <Search history={this.props.history}/>
+        {this.props.state.searching ? <Search history={this.props.history}/> : null}
+
 
         <Segment raised style={{width:"98%", margin:"10px auto"}}>
           <HouseholdCardsContainer history={this.props.history}

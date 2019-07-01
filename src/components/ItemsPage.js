@@ -1,7 +1,11 @@
 import React, { Component, } from 'react'
 import { Segment, Card, Menu, Header } from 'semantic-ui-react'
 import {connect} from 'react-redux'
+
+
 import ItemCard from './ItemCard.js'
+import Search from './Search.js'
+
 class ItemsPage extends Component {
   state = {
     items: []
@@ -31,27 +35,33 @@ class ItemsPage extends Component {
 
 
   renderItems = () => {
-    // if (this.props.state.user) {
-    //   return this.props.state.user.items.map(item => {
-    //       return <Card/>
-    //     })
+
+    // let householdItems = []
+    // if (this.props.state.user.households) {
+    //   this.props.state.user.households.forEach(household => {
+    //     return householdItems = [...householdItems, household.items].flat()
+    //   })
     // }
-    // console.log(this.props.state.user)
-    return this.state.items.map(item => {
-      return <ItemCard item={item}/>
-    })
+    // // console.log(householdItems)
+    // return householdItems.map(item => {
+    //   return <ItemCard key={item.id} item={item}/>
+    // })
+
   }
 
   render(){
-    // TRY CONST FUNCTIONS HERE
-    console.log("ITEMS PAGE",this.props.state.user)
+
+    // console.log("ITEMS PAGE",this.props.state)
     return(
       <>
       <Menu style={{marginTop: "0px"}}>
         <Header style={{padding:"10px"}}>Welcome {this.props.state.user.username}'s Items!</Header>
       </Menu>
+
+        {this.props.state.searching ? <Search history={this.props.history}/> : null}
+
       <Segment>
-        <Card.Group>
+        <Card.Group itemsPerRow={8}>
           {this.renderItems()}
         </Card.Group>
       </Segment>

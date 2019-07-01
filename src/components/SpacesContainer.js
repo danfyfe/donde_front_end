@@ -6,7 +6,7 @@ class SpacesConatiner extends Component {
   renderSpaceCards = () => {
     if (this.props.household.spaces) {
       return this.props.household.spaces.map(space => {
-        return <SpaceCard redirectToSpace={this.redirectToSpace}space={space}/>
+        return <SpaceCard key={space.id} redirectToSpace={this.redirectToSpace}space={space}/>
       })
     }
   }

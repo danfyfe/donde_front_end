@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { Segment, Card, Button, Form } from 'semantic-ui-react'
+import { Segment, Form } from 'semantic-ui-react'
 
 
 import SearchedHouseholdsContainer from './SearchedHouseholdsContainer.js'
@@ -39,21 +39,11 @@ class Search extends Component {
     )
   }
 
-
-
-
   setSearchTerm = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     })
   }
-
-
-
-
-
-
-
 
   render(){
     // console.log('search state',this.state)
@@ -65,15 +55,16 @@ class Search extends Component {
           <label>Search</label>
           <input onChange={this.setSearchTerm} name="searchTerm" placeholder="Start typing to search"/>
           </Form.Field>
-
         </Form>
 
         <Segment>
-        <SearchedItemsContainer history={this.props.history} searchTerm={this.state.searchTerm}
-        items={this.state.items}/>
-        <SearchedHouseholdsContainer
-        history={this.props.history}
-        searchTerm={this.state.searchTerm} households={this.state.households}/>
+          Items
+          <SearchedItemsContainer history={this.props.history} searchTerm={this.state.searchTerm}
+          items={this.state.items}/>
+          Households
+          <SearchedHouseholdsContainer
+          history={this.props.history}
+          searchTerm={this.state.searchTerm} households={this.state.households}/>
         </Segment>
 
 

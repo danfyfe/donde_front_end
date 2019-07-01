@@ -58,7 +58,7 @@ class HouseholdContainer extends Component {
   }
 
   render(){
-    // console.log("CURRENT HOUSEHOLD",this.props)
+    console.log("CURRENT HOUSEHOLD",this.props.state)
     return(
       <>
         <Segment raised >

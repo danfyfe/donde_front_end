@@ -1,6 +1,8 @@
 import React, { Component, } from 'react'
 import { Button, Card, Icon, Image, Segment, Form, Message } from 'semantic-ui-react'
 
+import { connect } from 'react-redux'
+
 
 class MessageCard extends Component {
   state = {
@@ -33,37 +35,41 @@ class MessageCard extends Component {
         message:{
           title: this.state.messageTitle,
           content: this.state.messageContent,
-          user_id: this.props.user.id,
-          household_id: this.props.message.household.id
+          user_id: this.props.state.user.id,
+
+
         }
       })
     }).then(resp=>resp.json())
     .then(message=>{
+      console.log(message)
       // console.log(message)
-      this.props.renderNewMessage(message)
+      // this.props.renderNewMessage(message)
+
     })
 
   }
 
   render(){
-    // console.log("MESSAGES PROPS",this.props.message)
+    console.log("MESSAGES PROPS",this.props.message)
     // console.log("MESSAGE STATE", this.state)
-    // console.log("messageCard props", this.props)
+    // console.log("messageCard props", this.props.state.user.id)
+
     return(
       <Card color={this.props.household.color} style={{width: "100%"}}>
         <Card.Content>
           <Card.Header>
             {this.props.message.title}
-            <Image floated="right"size="mini" src={this.props.household.image}/>
+            <Image floated="right"size="mini" src={this.props.message.household.image}/>
           </Card.Header>
           <Card.Description style={{margin:"10px"}}>
             {this.props.message.content}
           </Card.Description>
           <Card.Meta>
           <Icon name="home"/>
-          <span style={{maring:'10px'}}>{this.props.household.name}</span>
+          <span style={{maring:'10px'}}>{this.props.message.household.name}</span>
           <Icon name="user"/>
-          <span>FIGURE OUT HOW TO GET MESSAGE USER</span>
+          <span>{this.props.message.user.username}</span>
           {this.state.addingMessage ? null :<Button onClick={this.setAddingMessage}size="mini" floated="right"> Reply </Button>}
           </Card.Meta>
         </Card.Content>
@@ -95,7 +101,25 @@ class MessageCard extends Component {
   }
 }
 
-export default MessageCard
+
+
+
+const mapStateToProps = (state) => {
+  return { state }
+}
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+      setUser: (user) => dispatch({type:"SET_USER", user}),
+      setHouseholds: (households) => dispatch({type:"SET_HOUSEHOLDS", households}),
+      addHousehold: (household) => dispatch({type:"ADD_HOUSEHOLD", household}),
+      setUserHouseholdMessages: (allMessages) => dispatch({type:"SET_USERHOUSEHOLDMESSAGES", allMessages}),
+      addMessage: (message) => dispatch({type:"ADD_MESSAGE", message})
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(MessageCard)
 
 // <Card.Header>
 //   Message Title

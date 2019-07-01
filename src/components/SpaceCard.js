@@ -7,7 +7,7 @@ class SpaceCard extends Component {
       return this.props.space.containers.map(container => {
         return <>
         <Segment>
-            <Card.Content  header={container.name}/>
+            <Card.Content header={container.name}/>
             <Card.Content meta={container.description}/>
             <Card.Content extra>
             <List>

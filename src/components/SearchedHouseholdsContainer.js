@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { Segment, Card, Button, Form } from 'semantic-ui-react'
+import { Segment, Card } from 'semantic-ui-react'
 
 import HouseholdCard from './HouseholdCard.js'
 
@@ -21,7 +21,7 @@ class SearchedHouseholdsContainer extends Component {
     return null
     }else {
     return filteredHouseholds.map(household => {
-      return <HouseholdCard history={this.props.history} redirectToHousehold={this.redirectToHousehold} household={household}/>
+      return <HouseholdCard key={household.id} history={this.props.history} redirectToHousehold={this.redirectToHousehold} household={household}/>
     })
     }
   }
@@ -30,7 +30,9 @@ class SearchedHouseholdsContainer extends Component {
     // console.log('search term by props',this.props.searchTerm)
     return(
       <Segment>
-      {this.renderSearchedHouseholds() }
+        <Card.Group itemsPerRow={6}>
+        {this.renderSearchedHouseholds() }
+        </Card.Group>
       </Segment>
     )
   }

@@ -3,7 +3,8 @@ const defaultState = {
   households: {},
   userHouseholdMessages: {},
   currentHousehold: {},
-  currentSpace: {}
+  currentSpace: {},
+  searching: false
 }
 
 
@@ -21,7 +22,7 @@ function householdReducer (state = defaultState, action){
       // console.log(action.userHouseholdMessages)
       return {state}
     case "ADD_MESSAGE":
-
+    console.log('inside add_message',action.message)
     return state
     case "SET_CURRENT_HOUSEHOLD":
       // console.log(action.household)
@@ -29,8 +30,11 @@ function householdReducer (state = defaultState, action){
       case "ADD_SPACE":
       // console.log(action.space
         return {...state, currentHousehold:{...state.currentHousehold, spaces:[...state.currentHousehold.spaces,action.space]}}
-        case "SET_CURRENT_SPACE":
-          return {...state, currentSpace: action.space}
+      case "SET_CURRENT_SPACE":
+        return {...state, currentSpace: action.space}
+      case "SET_SEARCHING":
+      // console.log('inside set_searching')
+        return {...state, searching: !state.searching}
     default:
       return state
   }

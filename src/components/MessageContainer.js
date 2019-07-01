@@ -42,29 +42,23 @@ class MessageContainer extends Component {
 
 
   renderMessageCards = () => {
-    // let userHouseholdMessages = []
-    // if (this.props.state.user.households) {
-    //   this.props.state.user.households.forEach(household => {
-    //
-    //     return userHouseholdMessages = [...userHouseholdMessages, household.messages]
-    //   })
-    // }
-    //
-    // userHouseholdMessages = [...userHouseholdMessages].flat()
-    //
-    //
-    //
-    // return userHouseholdMessages.map(message => {
-    //   return <MessageCard key={message.id} message={message}/>
-    // })
 
     if (this.props.state.user.households) {
       // console.log(this.props.user.households)
-      return this.props.state.user.households.map(household => {
-        return household.messages.map(message => {
-          return <MessageCard message={message} household={household}
-          user={this.props.user}/>
-        })
+      // return this.props.state.user.households.map(household => {
+      //   return household.messages.map(message => {
+      //     return <MessageCard key={message.id} message={message} household={household}/>
+      //   })
+      // })
+      let householdMessages = []
+
+      this.props.state.user.households.forEach(household => {
+        return householdMessages = [...householdMessages, household.messages].flat()
+      })
+
+      // console.log(householdMessages)
+      return householdMessages.map(message => {
+        return <MessageCard key={message.id} message={message}/>
       })
     }
 
@@ -72,15 +66,16 @@ class MessageContainer extends Component {
   }
 
   renderNewMessage = (message) => {
-    const newMessages = [...this.state.messages, message]
-    this.setState({
-      messages: newMessages
-    })
+    // const newMessages = [...this.state.messages, message]
+    // this.setState({
+    //   messages: newMessages
+    // })
+
   }
 
   render(){
 
-    // console.log(this.state.messages)
+    console.log(this.props.state.user.households)
     return(
       <>
       <Menu style={{margin:"0px 0px 15px 0px"}}>
@@ -102,9 +97,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
       setUser: (user) => dispatch({type:"SET_USER", user}),
-      setHouseholds: (households) => dispatch({type:"SET_HOUSEHOLDS",households}),
+      setHouseholds: (households) => dispatch({type:"SET_HOUSEHOLDS", households}),
       addHousehold: (household) => dispatch({type:"ADD_HOUSEHOLD", household}),
-      setUserHouseholdMessages: (allMessages) => dispatch({type:"SET_USERHOUSEHOLDMESSAGES", allMessages})
+      setUserHouseholdMessages: (allMessages) => dispatch({type:"SET_USERHOUSEHOLDMESSAGES", allMessages}),
+      addMessage: (message) => dispatch({type:"ADD_MESSAGE", message})
     }
 }
 

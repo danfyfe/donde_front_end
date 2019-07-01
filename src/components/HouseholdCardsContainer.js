@@ -28,7 +28,7 @@ class HouseholdCardsContainer extends Component {
         addingHousehold: !this.state.addingHousehold
       })
     }
-    
+
     renderHouseholdForm = () => {
       const householdColorDefinitions = ['red','orange','yellow','olive','green','teal','blue','violet','purple','pink','brown','grey']
 
@@ -106,7 +106,7 @@ class HouseholdCardsContainer extends Component {
   }
 
   render(){
-
+  
     return(
       <>
           <Menu style={{margin:"0px 0px 15px 0px "}}>
