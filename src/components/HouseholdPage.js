@@ -32,6 +32,7 @@ class HouseholdPage extends Component {
   render(){
     // console.log("Household PORPS",this.props.state.currentHousehold)
     // console.log("Household STATE", this.state.household)
+    // console.log(this.props)
     return(
       <>
         <Menu style={{marginTop: "0px"}}>
@@ -39,7 +40,7 @@ class HouseholdPage extends Component {
           <Image src={this.props.state.user.image} size="mini"/>
         </Menu>
         <Segment raised style={{margin:"10px auto",width:"98%"}}>
-          <HouseholdContainer/>
+          <HouseholdContainer history={this.props.history}/>
           <HouseholdMessagesContainer household={this.props.state.currentHousehold}/>
         </Segment>
       </>

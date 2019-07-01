@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Menu, Form, Button } from 'semantic-ui-react'
+import { Segment, Header, Form, Button } from 'semantic-ui-react'
 import SpacesContainer from './SpacesContainer.js'
 import { connect } from 'react-redux'
 
@@ -46,7 +46,7 @@ class HouseholdContainer extends Component {
     <Form>
       <Form.Field>
         <label>Name</label>
-        <input onChange={this.handleNewSpaceInput} name="newSpaceName" placeholder=""/>
+        <input onChange={this.handleNewSpaceInput} name="newSpaceName" placeholder="Space Name"/>
       </Form.Field>
       <Button floated="right"
        onClick={this.setAddingSpace}>Cancel</Button>
@@ -58,15 +58,15 @@ class HouseholdContainer extends Component {
   }
 
   render(){
-    console.log(this.state)
+    // console.log("CURRENT HOUSEHOLD",this.props)
     return(
       <>
         <Segment raised >
           <Header as="h1">{this.props.state.currentHousehold.name}</Header>
-          <Header onClick={this.setAddingSpace}style={{color:"blue"}} as='a'>Add Space</Header>
-          {this.renderAddSpaceForm()}
+
+          {this.state.addingSpace ? this.renderAddSpaceForm() : <Header onClick={this.setAddingSpace}style={{color:"blue"}} as='a'>Add Space</Header>}
             <Segment>
-              <SpacesContainer household={this.props.state.currentHousehold}/>
+              <SpacesContainer history={this.props.history}  household={this.props.state.currentHousehold}/>
             </Segment>
         </Segment>
       </>

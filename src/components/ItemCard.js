@@ -5,6 +5,7 @@ class ItemCard extends Component {
   state = {
     editingItem: false
   }
+  
   renderOwners = () => {
     return this.props.item.users.map(user => {
       return <span>{user.username}</span>
@@ -12,7 +13,7 @@ class ItemCard extends Component {
   }
 
   render(){
-    console.log(this.props.item)
+    // console.log(this.props.item)
     return(
       <Card>
         <Card.Content header={this.props.item.name}/>

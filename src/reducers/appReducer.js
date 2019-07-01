@@ -2,7 +2,8 @@ const defaultState = {
   user: {},
   households: {},
   userHouseholdMessages: {},
-  currentHousehold: {}
+  currentHousehold: {},
+  currentSpace: {}
 }
 
 
@@ -25,6 +26,11 @@ function householdReducer (state = defaultState, action){
     case "SET_CURRENT_HOUSEHOLD":
       // console.log(action.household)
       return {...state, currentHousehold: action.household}
+      case "ADD_SPACE":
+      // console.log(action.space
+        return {...state, currentHousehold:{...state.currentHousehold, spaces:[...state.currentHousehold.spaces,action.space]}}
+        case "SET_CURRENT_SPACE":
+          return {...state, currentSpace: action.space}
     default:
       return state
   }

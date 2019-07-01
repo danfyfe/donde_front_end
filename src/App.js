@@ -12,6 +12,7 @@ import HomePage from './components/HomePage.js'
 import SignupPage from './components/SignupPage.js'
 import ItemsPage from './components/ItemsPage.js'
 import HouseholdPage from './components/HouseholdPage.js'
+import SpacePage from './components/SpacePage.js'
 
 class App extends React.Component {
   //  main dropdown menu functions
@@ -60,6 +61,7 @@ class App extends React.Component {
           <Route path="/signup" render={({history}) => <SignupPage history={history} />} />
           <Route path='/households/:id' render={props=><HouseholdPage {...props}/>} />
           <Route path='/items' render={props=><ItemsPage {...props}/>}/>
+          <Route path='/spaces/:id' render={props=><SpacePage {...props}/>}/>
         </Switch>
       </>
     )

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Menu, Card, List, Icon } from 'semantic-ui-react'
+import { Segment, Card, List, Icon } from 'semantic-ui-react'
 
 class SpaceCard extends Component {
 
@@ -9,7 +9,6 @@ class SpaceCard extends Component {
         <Segment>
             <Card.Content  header={container.name}/>
             <Card.Content meta={container.description}/>
-
             <Card.Content extra>
             <List>
               {this.renderSpaceItems()}
@@ -32,10 +31,10 @@ class SpaceCard extends Component {
   }
 
   render(){
-    console.log("SPACECARD",this.props.space)
+    // console.log("SPACECARD",this.props.space)
     return(
 
-      <Card link>
+      <Card link onClick={()=>{this.props.redirectToSpace(this.props.space.id)}}>
         <Card.Content header={this.props.space.name}/>
         <Segment>
         {this.renderContainerDescriptions()}
@@ -46,3 +45,10 @@ class SpaceCard extends Component {
 }
 
 export default SpaceCard
+
+// <Card link>
+//   <Card.Content header={this.props.space.name}/>
+//   <Segment>
+//   {this.renderContainerDescriptions()}
+//   </Segment>
+// </Card>

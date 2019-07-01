@@ -1,8 +1,8 @@
-import React, { Component, } from 'react'
-import { Button, Card, Icon, Image, Segment, Form, Message } from 'semantic-ui-react'
+import React, { Component } from 'react'
+import { Segment, Card, Form, Icon, Image, Message, Button } from 'semantic-ui-react'
 
 
-class MessageCard extends Component {
+class HouseholdMessageCard extends Component {
   state = {
     addingMessage: false,
     messageTitle: '',
@@ -17,38 +17,11 @@ class MessageCard extends Component {
 
   handleMessageInput = (e) => {
     this.setState({
-      [e.target.name]: e.target.value,
-      // messageTitle: e.target.value
+      [e.target.name]: e.target.value
     })
   }
-
-  addMessage = () => {
-    fetch('http://localhost:3000/api/v1/messages',{
-      method:"POST",
-      headers:{
-        'Content-Type':'application/json',
-        Accept: 'application/json'
-      },
-      body:JSON.stringify({
-        message:{
-          title: this.state.messageTitle,
-          content: this.state.messageContent,
-          user_id: this.props.user.id,
-          household_id: this.props.message.household.id
-        }
-      })
-    }).then(resp=>resp.json())
-    .then(message=>{
-      // console.log(message)
-      this.props.renderNewMessage(message)
-    })
-
-  }
-
   render(){
-    // console.log("MESSAGES PROPS",this.props.message)
-    // console.log("MESSAGE STATE", this.state)
-    // console.log("messageCard props", this.props)
+    console.log(this.props.message)
     return(
       <Card color={this.props.household.color} style={{width: "100%"}}>
         <Card.Content>
@@ -67,7 +40,6 @@ class MessageCard extends Component {
           {this.state.addingMessage ? null :<Button onClick={this.setAddingMessage}size="mini" floated="right"> Reply </Button>}
           </Card.Meta>
         </Card.Content>
-
 
         {this.state.addingMessage ?
         <Segment>
@@ -90,13 +62,11 @@ class MessageCard extends Component {
             onClick={this.addMessage}>Submit</Button>
           </Form>
         </Segment>:null}
+
+
       </Card>
     )
   }
 }
 
-export default MessageCard
-
-// <Card.Header>
-//   Message Title
-// </Card.Header>
+export default HouseholdMessageCard

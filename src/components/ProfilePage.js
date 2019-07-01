@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
 import { Segment, Header, Menu } from 'semantic-ui-react'
+import { connect } from 'react-redux'
+
+
 import HouseholdCardsContainer from './HouseholdCardsContainer.js'
 import MessageContainer from './MessageContainer.js'
-import { connect } from 'react-redux'
+import Search from './Search.js'
+
+
 // import withAuth from '../hocs/withAuth'
 
 class ProfilePage extends Component {
@@ -28,8 +33,10 @@ class ProfilePage extends Component {
     return(
       <>
         <Menu style={{marginTop: "0px"}}>
-          <Header style={{padding:"10px"}}>Welcome User !</Header>
+          <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
         </Menu>
+
+        <Search history={this.props.history}/>
 
         <Segment raised style={{width:"98%", margin:"10px auto"}}>
           <HouseholdCardsContainer history={this.props.history}

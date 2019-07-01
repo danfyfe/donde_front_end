@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Segment, Header, Menu, Card } from 'semantic-ui-react'
-import MessageCard from './MessageCard.js'
+import { Header, Menu, Card } from 'semantic-ui-react'
+import HouseholdMessageCard from './HouseholdMessageCard.js'
 import { connect } from 'react-redux'
 
 class HouseholdMessagesContainer extends Component {
@@ -10,13 +10,11 @@ class HouseholdMessagesContainer extends Component {
 
 
   renderMessageCards = () => {
-    // return this.state.messages.map(message => {
-    //   return <MessageCard user={this.props.user}key={message.id} message={message} renderNewMessage={this.renderNewMessage}/>
-    // })
-    // return this.props.household.messages.map(message=>{
-    //   console.log(message)
-    // })
-    // console.log("RMC",this.props.household.messages)
+    if (this.props.state.currentHousehold.messages) {
+      return this.props.state.currentHousehold.messages.map(message => {
+          return <HouseholdMessageCard message={message} household={this.props.state.currentHousehold}/>
+        })
+    }
 
   }
 
@@ -27,23 +25,13 @@ class HouseholdMessagesContainer extends Component {
     })
   }
 
-  setHouseholdMessages = () => {
-    const householdMessages = this.state.messages.filter(message=>{
-      return  message.household_id === this.props.household.id
-    })
-    // console.log("HH MESSAGE CONTAINER", householdMessages)
-    this.setState({
-      messages: householdMessages
-    })
-  }
-
   render(){
     // this.setHouseholdMessages()
-    // console.log("HHMC", this.props)
+    // console.log("HHMC", this.props.state.currentHousehold.messages)
     return(
       <>
       <Menu style={{margin:"0px 0px 15px 0px"}}>
-        <Header style={{padding:"10px"}}>{this.state.messages.length} Messages</Header>
+        <Header style={{padding:"10px"}}>Messages</Header>
       </Menu>
         <Card.Group>
           {this.renderMessageCards()}
@@ -53,13 +41,12 @@ class HouseholdMessagesContainer extends Component {
   }
 }
 
-// const mapStateToProps = (state) => {
-//   console.log("MSTP",state)
-//   return {}
-// }
-//
-// const mapDispatchToProps = () => {
-//
-// }
+const mapStateToProps = (state) => {
+  return { state }
+}
 
-export default HouseholdMessagesContainer
+const mapDispatchToProps = (dispatch) => {
+
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(HouseholdMessagesContainer)
