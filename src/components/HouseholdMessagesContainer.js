@@ -4,26 +4,36 @@ import HouseholdMessageCard from './HouseholdMessageCard.js'
 import { connect } from 'react-redux'
 
 class HouseholdMessagesContainer extends Component {
-  state = {
-    messages:[]
-  }
-
+  // state = {
+  //   messages:[]
+  // }
+  //
+  //
+  // renderMessageCards = () => {
+  //   if (this.props.state.currentHousehold.messages) {
+  //     return this.props.state.currentHousehold.messages.map(message => {
+  //         return <HouseholdMessageCard message={message} household={this.props.state.currentHousehold}/>
+  //       })
+  //   }
+  //
+  // }
 
   renderMessageCards = () => {
-    if (this.props.state.currentHousehold.messages) {
+    if (this.props.state.user.households && this.props.state.currentHousehold) {
+      //
+      // let householdMessages = []
+      //
+      // this.props.state.user.households.forEach(household => {
+      //   return householdMessages = [...householdMessages, household.messages].flat()
+      // })
+      //
       return this.props.state.currentHousehold.messages.map(message => {
-          return <HouseholdMessageCard message={message} household={this.props.state.currentHousehold}/>
-        })
+        return <HouseholdMessageCard key={message.id} message={message}/>
+      })
     }
-
   }
 
-  renderNewMessage = (message) => {
-    const newMessages = [...this.state.messages, message]
-    this.setState({
-      messages: newMessages
-    })
-  }
+
 
   render(){
     // this.setHouseholdMessages()
@@ -46,7 +56,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-
+    return {
+      addMessageToCurrentHousehold: (message) => dispatch({type:"ADD_MESSAGE_TO_CURRENTHOUSEHOLD", message})
+    }
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(HouseholdMessagesContainer)

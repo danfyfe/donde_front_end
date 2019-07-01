@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 class MessageCard extends Component {
   state = {
     addingMessage: false,
-    messageTitle: '',
+    messageTitle: 're: '+this.props.message.title,
     messageContent: ''
   }
 
@@ -24,6 +24,13 @@ class MessageCard extends Component {
     })
   }
 
+  handleTitleInput = (e) => {
+    console.log(e.target.value)
+    this.setState({
+      messageTitle: e.target.value
+    })
+  }
+
   addMessage = () => {
     fetch('http://localhost:3000/api/v1/messages',{
       method:"POST",
@@ -37,24 +44,20 @@ class MessageCard extends Component {
           content: this.state.messageContent,
           user_id: this.props.state.user.id,
           household_id: this.props.message.household.id
-
         }
       })
     }).then(resp=>resp.json())
     .then(message=>{
-      console.log(message)
-      // console.log(message)
-      // this.props.renderNewMessage(message)
-
+      this.props.addMessage(message)
+      this.setState({
+        addingMessage: !this.state.addingMessage
+      })
     })
 
   }
 
   render(){
-    // console.log("MESSAGES PROPS",this.props.message)
-    // console.log("MESSAGE STATE", this.state)
-    // console.log("messageCard props", this.props.state.user.id)
-
+    console.log(this.props.message)
     return(
       <Card color={this.props.message.household.color} style={{width: "100%"}}>
         <Card.Content>
@@ -82,8 +85,8 @@ class MessageCard extends Component {
             <Form.Field>
               <label>Title</label>
                 <input name="messageTitle"
-                value={"re: "+this.props.message.title} placeholder="Title"
-                onChange={this.handleMessageInput}/>
+                value={this.state.messageTitle} placeholder="Title"
+                onChange={this.handleTitleInput}/>
             </Form.Field>
             <Form.Field>
               <label>Message</label>
@@ -101,13 +104,9 @@ class MessageCard extends Component {
   }
 }
 
-
-
-
 const mapStateToProps = (state) => {
   return { state }
 }
-
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -120,7 +119,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(MessageCard)
-
-// <Card.Header>
-//   Message Title
-// </Card.Header>

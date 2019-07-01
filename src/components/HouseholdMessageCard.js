@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { Segment, Card, Form, Icon, Image, Message, Button } from 'semantic-ui-react'
 
+import { connect } from 'react-redux'
+
 
 class HouseholdMessageCard extends Component {
   state = {
     addingMessage: false,
-    messageTitle: '',
+    messageTitle: 're: '+this.props.message.title,
     messageContent: ''
   }
 
@@ -20,26 +22,61 @@ class HouseholdMessageCard extends Component {
       [e.target.name]: e.target.value
     })
   }
+
+  handleTitleInput = (e) => {
+    console.log(e.target.value)
+    this.setState({
+      messageTitle: e.target.value
+    })
+  }
+
+
+  addMessage = () => {
+    fetch('http://localhost:3000/api/v1/messages',{
+      method:"POST",
+      headers:{
+        'Content-Type':'application/json',
+        Accept: 'application/json'
+      },
+      body:JSON.stringify({
+        message:{
+          title: this.state.messageTitle,
+          content: this.state.messageContent,
+          user_id: this.props.state.user.id,
+          household_id: this.props.message.household.id
+        }
+      })
+    }).then(resp=>resp.json())
+    .then(message=>{
+      this.props.addMessageToCurrentHousehold(message)
+      this.setState({
+        addingMessage: !this.state.addingMessage
+      })
+    })
+
+  }
+
   render(){
-    console.log(this.props.message)
+    // console.log(this.props.message)
     return(
-      <Card color={this.props.household.color} style={{width: "100%"}}>
+      <Card color={this.props.message.household.color} style={{width: "100%"}}>
         <Card.Content>
           <Card.Header>
             {this.props.message.title}
-            <Image floated="right"size="mini" src={this.props.household.image}/>
+            <Image floated="right"size="mini" src={this.props.message.household.image}/>
           </Card.Header>
           <Card.Description style={{margin:"10px"}}>
             {this.props.message.content}
           </Card.Description>
           <Card.Meta>
           <Icon name="home"/>
-          <span style={{maring:'10px'}}>{this.props.household.name}</span>
+          <span style={{maring:'10px'}}>{this.props.message.household.name}</span>
           <Icon name="user"/>
-          <span>FIGURE OUT HOW TO GET MESSAGE USER</span>
+          <span>{this.props.message.user.username}</span>
           {this.state.addingMessage ? null :<Button onClick={this.setAddingMessage}size="mini" floated="right"> Reply </Button>}
           </Card.Meta>
         </Card.Content>
+
 
         {this.state.addingMessage ?
         <Segment>
@@ -48,8 +85,8 @@ class HouseholdMessageCard extends Component {
             <Form.Field>
               <label>Title</label>
                 <input name="messageTitle"
-                value={"re: "+this.props.message.title} placeholder="Title"
-                onChange={this.handleMessageInput}/>
+                value={this.state.messageTitle} placeholder="Title"
+                onChange={this.handleTitleInput}/>
             </Form.Field>
             <Form.Field>
               <label>Message</label>
@@ -62,11 +99,20 @@ class HouseholdMessageCard extends Component {
             onClick={this.addMessage}>Submit</Button>
           </Form>
         </Segment>:null}
-
-
       </Card>
     )
   }
 }
 
-export default HouseholdMessageCard
+const mapStateToProps = (state) => {
+  return { state }
+}
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+      addMessageToCurrentHousehold: (message) => dispatch({type:"ADD_MESSAGE_TO_CURRENTHOUSEHOLD", message})
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(HouseholdMessageCard)

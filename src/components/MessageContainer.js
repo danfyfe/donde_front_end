@@ -5,28 +5,8 @@ import MessageCard from './MessageCard.js'
 import { connect } from 'react-redux'
 
 class MessageContainer extends Component {
-  // state = {
-  //   messages: []
-  // }
-  // componentDidMount(){
-  //
-  //   fetch('http://localhost:3000/api/v1/messages',{
-  //     method: "GET",
-  //     headers: { Authorization:  localStorage.getItem("token")}
-  //   })
-  //   .then(resp=>resp.json())
-  //   .then(messages=>{
-  //     // this.props.setUserHouseholdMessages(messages)
-  //     // console.log("MESSAGES",messages)
-  //     // this.setState({
-  //     //   messages: messages
-  //     // })
-  //   })
-  // }
-
 
   renderMessageCards = () => {
-
     if (this.props.state.user.households) {
 
       let householdMessages = []
@@ -35,26 +15,15 @@ class MessageContainer extends Component {
         return householdMessages = [...householdMessages, household.messages].flat()
       })
 
-      // console.log(householdMessages)
       return householdMessages.map(message => {
         return <MessageCard key={message.id} message={message}/>
       })
     }
-
-
   }
 
-  renderNewMessage = (message) => {
-    // const newMessages = [...this.state.messages, message]
-    // this.setState({
-    //   messages: newMessages
-    // })
-
-  }
 
   render(){
 
-    console.log(this.props.state.user.households)
     return(
       <>
       <Menu style={{margin:"0px 0px 15px 0px"}}>
@@ -78,7 +47,7 @@ const mapDispatchToProps = (dispatch) => {
       setUser: (user) => dispatch({type:"SET_USER", user}),
       setHouseholds: (households) => dispatch({type:"SET_HOUSEHOLDS", households}),
       addHousehold: (household) => dispatch({type:"ADD_HOUSEHOLD", household}),
-      setUserHouseholdMessages: (allMessages) => dispatch({type:"SET_USERHOUSEHOLDMESSAGES", allMessages}),
+      setUserHouseholdMessages: (userHouseholdMessages) => dispatch({type:"SET_USERHOUSEHOLDMESSAGES", userHouseholdMessages}),
       addMessage: (message) => dispatch({type:"ADD_MESSAGE", message})
     }
 }

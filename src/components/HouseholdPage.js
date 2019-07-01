@@ -1,8 +1,12 @@
 import React, { Component, } from 'react'
 import { Segment, Menu, Header, Image} from 'semantic-ui-react'
+import { connect } from 'react-redux'
+
 import HouseholdContainer from './HouseholdContainer.js'
 import HouseholdMessagesContainer from './HouseholdMessagesContainer.js'
-import { connect } from 'react-redux'
+import Search from './Search.js'
+
+
 
 class HouseholdPage extends Component {
   // state = {
@@ -39,6 +43,10 @@ class HouseholdPage extends Component {
           <Header style={{padding:"10px"}}>{this.props.state.user.username}</Header>
           <Image src={this.props.state.user.image} size="mini"/>
         </Menu>
+
+        {this.props.state.searching ? <Search history={this.props.history}/> : null}
+
+
         <Segment raised style={{margin:"10px auto",width:"98%"}}>
           <HouseholdContainer history={this.props.history}/>
           <HouseholdMessagesContainer household={this.props.state.currentHousehold}/>
