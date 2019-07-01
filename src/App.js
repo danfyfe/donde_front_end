@@ -12,6 +12,7 @@ import SignupPage from './components/SignupPage.js'
 import ItemsPage from './components/ItemsPage.js'
 import HouseholdPage from './components/HouseholdPage.js'
 import SpacePage from './components/SpacePage.js'
+import ItemPage from './components/ItemPage.js'
 
 // import Search from './components/Search.js'
 
@@ -63,6 +64,7 @@ class App extends React.Component {
           <Route path="/profile" render={({history}) => <ProfilePage history={history} />} />
           <Route path="/signup" render={({history}) => <SignupPage history={history} />} />
           <Route path='/households/:id' render={props=><HouseholdPage {...props}/>} />
+          <Route path='/items/:id' render={props=><ItemPage {...props} />} />
           <Route path='/items' render={props=><ItemsPage {...props}/>}/>
           <Route path='/spaces/:id' render={props=><SpacePage {...props}/>}/>
         </Switch>

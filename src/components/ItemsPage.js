@@ -33,29 +33,30 @@ class ItemsPage extends Component {
     )
   }
 
+  redirectToItemPage = (id) => {
+    this.props.history.push(`/items/${id}`)
+  }
 
   renderItems = () => {
+    if (this.props.state.user.households) {
+      let householdItems = []
 
-    // let householdItems = []
-    // if (this.props.state.user.households) {
-    //   this.props.state.user.households.forEach(household => {
-    //     return householdItems = [...householdItems, household.items].flat()
-    //   })
-    // }
-    // // console.log(householdItems)
-    // return householdItems.map(item => {
-    //   return <ItemCard key={item.id} item={item}/>
-    // })
+      this.props.state.user.households.map(household => {
+        return householdItems = [...householdItems, household.items].flat()
+      })
 
+      return householdItems.map(item => {
+        return <ItemCard key={item.id} redirectToItemPage={this.redirectToItemPage} history={this.props.history}  item={item}/>
+      })
+    }
   }
 
   render(){
-
-    // console.log("ITEMS PAGE",this.props.state)
+    // console.log("ITEMS PAGE",this.props)
     return(
       <>
       <Menu style={{marginTop: "0px"}}>
-        <Header style={{padding:"10px"}}>Welcome {this.props.state.user.username}'s Items!</Header>
+        <Header style={{padding:"10px"}}>Welcome to {this.props.state.user.username}'s Household Items!</Header>
       </Menu>
 
         {this.props.state.searching ? <Search history={this.props.history}/> : null}

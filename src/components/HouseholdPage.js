@@ -30,7 +30,7 @@ class HouseholdPage extends Component {
       // console.log("HOUSEHOLD",household)
       this.props.setCurrentHousehold(household)
     })
-  )
+    )
   }
 
   render(){

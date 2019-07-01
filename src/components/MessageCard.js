@@ -57,7 +57,7 @@ class MessageCard extends Component {
   }
 
   render(){
-    console.log(this.props.message.created_at)
+
     return(
       <Card color={this.props.message.household.color} style={{width: "100%"}}>
         <Card.Content>

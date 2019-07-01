@@ -4,6 +4,7 @@ const defaultState = {
   userHouseholdMessages: {},
   currentHousehold: {},
   currentSpace: {},
+  currentItem:{},
   searching: false
 }
 
@@ -53,6 +54,11 @@ function householdReducer (state = defaultState, action){
         // console.log('addMtoCH', action.message)
         // console.log('addMtoCH', state.currentHousehold)
       return {...state, currentHousehold:{...state.currentHousehold, messages:[...state.currentHousehold.messages, action.message]}}
+
+
+    case "SET_CURRENT_ITEM":
+      // console.log(action.item)
+      return {...state, currentItem: action.item}
       
     default:
       return state
