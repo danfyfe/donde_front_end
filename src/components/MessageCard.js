@@ -2,7 +2,7 @@ import React, { Component, } from 'react'
 import { Button, Card, Icon, Image, Segment, Form, Message } from 'semantic-ui-react'
 
 import { connect } from 'react-redux'
-
+import moment from 'moment'
 
 class MessageCard extends Component {
   state = {
@@ -57,7 +57,7 @@ class MessageCard extends Component {
   }
 
   render(){
-    console.log(this.props.message)
+    console.log(this.props.message.created_at)
     return(
       <Card color={this.props.message.household.color} style={{width: "100%"}}>
         <Card.Content>
@@ -73,6 +73,8 @@ class MessageCard extends Component {
           <span style={{maring:'10px'}}>{this.props.message.household.name}</span>
           <Icon name="user"/>
           <span>{this.props.message.user.username}</span>
+          <Icon name="clock"/>
+          <span>{moment(this.props.message.created_at).format('MMMM Do YYYY, h:mm a')}</span>
           {this.state.addingMessage ? null :<Button onClick={this.setAddingMessage}size="mini" floated="right"> Reply </Button>}
           </Card.Meta>
         </Card.Content>
