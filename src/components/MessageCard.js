@@ -36,7 +36,7 @@ class MessageCard extends Component {
           title: this.state.messageTitle,
           content: this.state.messageContent,
           user_id: this.props.state.user.id,
-
+          household_id: this.props.message.household.id
 
         }
       })
@@ -51,12 +51,12 @@ class MessageCard extends Component {
   }
 
   render(){
-    console.log("MESSAGES PROPS",this.props.message)
+    // console.log("MESSAGES PROPS",this.props.message)
     // console.log("MESSAGE STATE", this.state)
     // console.log("messageCard props", this.props.state.user.id)
 
     return(
-      <Card color={this.props.household.color} style={{width: "100%"}}>
+      <Card color={this.props.message.household.color} style={{width: "100%"}}>
         <Card.Content>
           <Card.Header>
             {this.props.message.title}

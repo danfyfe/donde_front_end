@@ -5,38 +5,22 @@ import MessageCard from './MessageCard.js'
 import { connect } from 'react-redux'
 
 class MessageContainer extends Component {
-  state = {
-    messages: []
-  }
-  componentDidMount(){
-
-    fetch('http://localhost:3000/api/v1/messages',{
-      method: "GET",
-      headers: { Authorization:  localStorage.getItem("token")}
-    })
-    .then(resp=>resp.json())
-    .then(messages=>{
-      // this.props.setUserHouseholdMessages(messages)
-      // console.log("MESSAGES",messages)
-      // this.setState({
-      //   messages: messages
-      // })
-    })
-  }
-
-  // setUserHouseholdMessages = () => {
+  // state = {
+  //   messages: []
+  // }
+  // componentDidMount(){
   //
-  //   let userHouseholdMessages = []
-  //
-  //   if (this.props.state.user.households) {
-  //     this.props.state.user.households.forEach(household => {
-  //       // console.log(household)
-  //       return userHouseholdMessages = [...userHouseholdMessages, household.messages]
-  //     })
-  //   }
-  //
-  //   this.setState({
-  //     userHouseholdMessages: userHouseholdMessages.flat()
+  //   fetch('http://localhost:3000/api/v1/messages',{
+  //     method: "GET",
+  //     headers: { Authorization:  localStorage.getItem("token")}
+  //   })
+  //   .then(resp=>resp.json())
+  //   .then(messages=>{
+  //     // this.props.setUserHouseholdMessages(messages)
+  //     // console.log("MESSAGES",messages)
+  //     // this.setState({
+  //     //   messages: messages
+  //     // })
   //   })
   // }
 
@@ -44,12 +28,7 @@ class MessageContainer extends Component {
   renderMessageCards = () => {
 
     if (this.props.state.user.households) {
-      // console.log(this.props.user.households)
-      // return this.props.state.user.households.map(household => {
-      //   return household.messages.map(message => {
-      //     return <MessageCard key={message.id} message={message} household={household}/>
-      //   })
-      // })
+
       let householdMessages = []
 
       this.props.state.user.households.forEach(household => {
