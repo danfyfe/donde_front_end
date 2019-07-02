@@ -82,7 +82,7 @@ class HouseholdMessageCard extends Component {
 
         {this.state.addingMessage ?
         <Segment>
-          <Message header="Add a Message!"/>
+          <Message header="Reply to Message!"/>
           <Form>
             <Form.Field>
               <label>Title</label>

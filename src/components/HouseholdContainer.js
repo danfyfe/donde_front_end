@@ -4,12 +4,14 @@ import SpacesContainer from './SpacesContainer.js'
 import { connect } from 'react-redux'
 
 class HouseholdContainer extends Component {
+
   state = {
     addingSpace: false,
     newSpaceName:"",
     joiningHousehold: false,
     householdPassword: "",
-
+    currentSpace: {},
+    currentContainer: {}
   }
 
   setAddingSpace = () => {
@@ -30,12 +32,7 @@ class HouseholdContainer extends Component {
       })
   }
 
-
-
   joinHousehold = () => {
-    console.log('join hh user',this.props.state.user)
-    console.log('join hh currenthousehold',this.props.state.currentHousehold)
-
     fetch(`http://localhost:3000/api/v1/households/${this.props.state.user.id}/${this.props.state.currentHousehold.id}`,{
       method:"POST",
       headers:{
@@ -51,8 +48,7 @@ class HouseholdContainer extends Component {
       })
     }).then(resp=>resp.json())
     .then(household=>{
-      console.log(household)
-
+      // this.props.setCurrentHousehold(household)
       this.setState({
         joiningHousehold: !this.state.joiningHousehold
       })
@@ -74,25 +70,48 @@ class HouseholdContainer extends Component {
       })
     }).then(resp=>resp.json())
     .then(space=>{
+      this.setState({
+        addingSpace: !this.state.addingSpace
+      })
       this.props.addSpace(space)
     })
   }
 
+  renderAddSpaceHeader = () => {
+    return <Header onClick={this.setAddingSpace} style={{color:"blue"}} as='a'>Add Space</Header>
+  }
 
   renderAddSpaceForm = () => {
     return <Segment clearing>
-    <Form>
-      <Form.Field>
-        <label>Name</label>
-        <input onChange={this.handleInput} name="newSpaceName" placeholder="Space Name"/>
-      </Form.Field>
-      <Button floated="right"
-       onClick={this.setAddingSpace}>Cancel</Button>
-      <Button floated="right"
-      onClick={this.addSpace}>Submit</Button>
-    </Form>
-
+      <Form>
+        <Form.Field>
+          <label>Name</label>
+          <input onChange={this.handleInput} name="newSpaceName" placeholder="Space Name"/>
+        </Form.Field>
+        <Button floated="right"
+         onClick={this.setAddingSpace}>Cancel</Button>
+        <Button floated="right"
+        onClick={this.addSpace}>Submit</Button>
+      </Form>
     </Segment>
+  }
+
+  renderJoinHouseholdForm = () => {
+    return <Segment clearing>
+      <Form>
+        <Form.Field>
+          <title>Password</title>
+          <input type="password" name="householdPassword" onChange={this.handleInput} placeholder="Please enter Household Password"/>
+        </Form.Field>
+        <Button floated="right"
+        onClick={this.setJoiningHousehold}>Cancel</Button>
+        <Button floated="right" onClick={this.joinHousehold}>Submit</Button>
+      </Form>
+    </Segment>
+  }
+
+  renderJoinHouseholdHeader = () => {
+    return <Header onClick={this.setJoiningHousehold} style={{color:"blue"}} as='a'>Join Household</Header>
   }
 
   setAddOrJoin = () => {
@@ -102,54 +121,35 @@ class HouseholdContainer extends Component {
       let memberOfHousehold = this.props.state.user.households.find(household => {
         return household.id === this.props.state.currentHousehold.id
       })
-
       if (memberOfHousehold) {
-
         // console.log('you are a member of this household')
-
         if (this.state.addingSpace) {
           return this.renderAddSpaceForm()
         }else {
-          return <Header onClick={this.setAddingSpace} style={{color:"blue"}} as='a'>Add Space</Header>
+          return this.renderAddSpaceHeader()
         }
       }else {
         // console.log('you are NOT a memeber of this household')
         if (this.state.joiningHousehold) {
-          return <Segment clearing>
-            <Form>
-              <Form.Field>
-                <title>Password</title>
-                <input type="password" name="householdPassword" onChange={this.handleInput} placeholder="Please enter Household Password"/>
-              </Form.Field>
-              <Button floated="right"
-              onClick={this.setJoiningHousehold}>Cancel</Button>
-              <Button floated="right" onClick={this.joinHousehold}>Submit</Button>
-            </Form>
-          </Segment>
+          return this.renderJoinHouseholdForm()
         }else {
-          return <Header onClick={this.setJoiningHousehold} style={{color:"blue"}} as='a'>Join Household</Header>
+          return this.renderJoinHouseholdHeader()
         }
       }
-
     }
   }
 
   render(){
     // console.log("CURRENT HOUSEHOLD",this.props.state.currentHousehold)
-
     // console.log('CURRENT USER', this.props.state.user.households.includes(this.props.state.currentHousehold))
-console.log(this.state)
     return(
       <>
         <Segment raised >
           <Header as="h1">{this.props.state.currentHousehold.name}</Header>
-
-          {/*this.state.addingSpace ? this.renderAddSpaceForm() : <Header onClick={this.setAddingSpace}style={{color:"blue"}} as='a'>Add Space</Header>*/}
-
           {this.setAddOrJoin()}
-            <Segment>
-              <SpacesContainer history={this.props.history}  household={this.props.state.currentHousehold}/>
-            </Segment>
+
+              <SpacesContainer history={this.props.history}/>
+
         </Segment>
       </>
     )

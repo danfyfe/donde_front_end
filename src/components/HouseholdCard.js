@@ -25,8 +25,8 @@ class HouseholdCard extends Component {
         </Card.Content>
         {this.displaySpaceOverview()}
         <Card.Content extra>
-          <span># Users</span>
-          <span># Messages</span>
+          <span>{this.props.household.users.length} Users</span>
+          <span>{this.props.household.messages.length} Messages</span>
         </Card.Content>
       </Card>
     )

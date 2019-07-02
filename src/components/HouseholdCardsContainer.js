@@ -11,16 +11,6 @@ class HouseholdCardsContainer extends Component {
     householdColor: ""
   }
 
-  componentDidMount(){
-    // fetch('http://localhost:3000/api/v1/households',{
-    //   method:"GET",
-    //   headers: { Authorization:  localStorage.getItem("token") }
-    // }).then(resp=>resp.json())
-    // .then(households=>{
-    //   // console.log("HOUSEHOLDS", households)
-    //   this.props.setHouseholds(households)
-    // })
-  }
 
   // ADD HOUSEHOLD FUNCTIONS
     setAddingHousehold = () => {
@@ -37,7 +27,7 @@ class HouseholdCardsContainer extends Component {
       })
 
       return <>
-        <Segment style={{width:"75%", margin:"0 auto"}}>
+        <Segment clearing style={{width:"75%", margin:"20px auto"}}>
           <Message header="Add a Household!"/>
           <Form>
             <Form.Field>
@@ -115,11 +105,11 @@ class HouseholdCardsContainer extends Component {
           <Menu style={{margin:"0px 0px 15px 0px "}}>
             <Header style={{padding:"10px"}}>Households</Header>
           </Menu>
-          <Segment clearing>
+
             { this.state.addingHousehold ?
               this.renderHouseholdForm() : <Header floated="right"href="#"style={{color:"blue"}} onClick={this.setAddingHousehold} as='a'>Add Household</Header>
             }
-          </Segment>
+
 
 
           <Card.Group>

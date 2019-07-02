@@ -53,7 +53,6 @@ class MessageCard extends Component {
         addingMessage: !this.state.addingMessage
       })
     })
-
   }
 
   render(){
@@ -79,10 +78,9 @@ class MessageCard extends Component {
           </Card.Meta>
         </Card.Content>
 
-
         {this.state.addingMessage ?
         <Segment>
-          <Message header="Add a Message!"/>
+          <Message header="Relpy to Message!"/>
           <Form>
             <Form.Field>
               <label>Title</label>

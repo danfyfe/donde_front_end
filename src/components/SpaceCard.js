@@ -6,15 +6,13 @@ class SpaceCard extends Component {
   renderContainerDescriptions = () => {
       return this.props.space.containers.map(container => {
         return <>
-        <Segment>
+        <Card>
             <Card.Content header={container.name}/>
             <Card.Content meta={container.description}/>
             <Card.Content extra>
-            <List>
-              {this.renderSpaceItems()}
-            </List>
-          </Card.Content>
-        </Segment>
+              {container.items.length} Items
+            </Card.Content>
+        </Card>
         </>
       })
   }
@@ -23,7 +21,6 @@ class SpaceCard extends Component {
     return this.props.space.items.map(item => {
       return <Segment>
       <List.Item>
-
       <List.Content><Icon name='info'/>{item.name}</List.Content>
       </List.Item>
       </Segment>
@@ -31,14 +28,14 @@ class SpaceCard extends Component {
   }
 
   render(){
-    // console.log("SPACECARD",this.props.space)
+    console.log("SPACECARD",this.props.space)
     return(
 
       <Card link onClick={()=>{this.props.redirectToSpace(this.props.space.id)}}>
         <Card.Content header={this.props.space.name}/>
-        <Segment>
+
         {this.renderContainerDescriptions()}
-        </Segment>
+
       </Card>
     )
   }
@@ -52,3 +49,7 @@ export default SpaceCard
 //   {this.renderContainerDescriptions()}
 //   </Segment>
 // </Card>
+
+// <List>
+//   {this.renderSpaceItems()}
+// </List>

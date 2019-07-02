@@ -11,8 +11,6 @@ import Search from './Search.js'
 // import withAuth from '../hocs/withAuth'
 
 class ProfilePage extends Component {
-
-
   componentDidMount(){
     fetch('http://localhost:3000/api/v1/profile',{
       method:"POST",
@@ -23,7 +21,6 @@ class ProfilePage extends Component {
       this.props.setUser(user.user)
     })
   }
-
 
   render(){
     if (!localStorage.token || localStorage.token === "undefined") {
