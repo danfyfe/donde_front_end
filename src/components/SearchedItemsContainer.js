@@ -17,11 +17,15 @@ class SearchedItemsContainer extends Component {
     return null
     }else {
     return filteredItems.map(item => {
-      return <ItemCard key={item.id} history={this.props.history} item={item}/>
+      // console.log(item)
+      return <ItemCard redirectToItemPage={this.redirectToItemPage} key={item.id} history={this.props.history} item={item}/>
     })
     }
   }
 
+  redirectToItemPage = (id) => {
+    this.props.history.push(`/items/${id}`)
+  }
   render(){
     // console.log('search term by props',this.props.searchTerm)
     return(

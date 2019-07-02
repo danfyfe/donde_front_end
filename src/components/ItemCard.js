@@ -15,7 +15,7 @@ class ItemCard extends Component {
 
 
   render(){
-    // console.log(this.props)
+    // console.log(this.props.item)
     return(
       <Card link onClick={()=>this.props.redirectToItemPage(this.props.item.id)}>
         <Card.Content header={this.props.item.name}/>

@@ -31,12 +31,16 @@ class Search extends Component {
         headers: { Authorization:  localStorage.getItem("token") }
       }).then(resp=>resp.json())
       .then(items=>{
-        // console.log('ALL USERS', users)
+        // console.log('ALL ITEMS', items)
         this.setState({
           items: items
         })
       })
     )
+  }
+
+  redirectToItemPage = (id) => {
+    this.props.history.push(`/items/${id}`)
   }
 
   setSearchTerm = (e) => {

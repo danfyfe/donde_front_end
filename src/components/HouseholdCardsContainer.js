@@ -86,6 +86,9 @@ class HouseholdCardsContainer extends Component {
       }).then(resp=>resp.json())
       .then(household=>{
         this.props.addHousehold(household)
+        this.setState({
+          addingHousehold: !this.state.addingHousehold
+        })
       })
     }
   // end of household functions
@@ -106,7 +109,7 @@ class HouseholdCardsContainer extends Component {
   }
 
   render(){
-  
+
     return(
       <>
           <Menu style={{margin:"0px 0px 15px 0px "}}>

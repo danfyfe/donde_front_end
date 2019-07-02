@@ -9,9 +9,6 @@ import Search from './Search.js'
 
 
 class HouseholdPage extends Component {
-  // state = {
-  //   household: {}
-  // }
 
   componentDidMount(){
     fetch('http://localhost:3000/api/v1/profile',{
@@ -35,8 +32,10 @@ class HouseholdPage extends Component {
 
   render(){
     // console.log("Household PORPS",this.props.state.currentHousehold)
+    // console.log("Household USER",this.props.state.user.households)
     // console.log("Household STATE", this.state.household)
     // console.log(this.props)
+
     return(
       <>
         <Menu style={{marginTop: "0px"}}>
