@@ -82,7 +82,7 @@ class MessageContainer extends Component {
   }
 
   renderNewMessageHeader = () => {
-    return <Header onClick={this.setAddingNewMessage} style={{padding:"10px", color:"blue"}}>Add Message</Header>
+    return <Header onClick={this.setAddingNewMessage} color="blue">Add Message</Header>
   }
 
   addNewMessage = () => {

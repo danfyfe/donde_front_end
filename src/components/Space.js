@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
-import { Segment, Card, List, Icon, Header, Menu } from 'semantic-ui-react'
+import { Segment, Card, List, Icon, Header, Menu, Form, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import ContainerCard from './ContainerCard.js'
 
 class Space extends Component {
+
+  state = {
+    addingContainer: false,
+    containerName: "",
+  }
 
   renderContainerCards = () => {
     if (this.props.space.containers) {
@@ -14,6 +19,32 @@ class Space extends Component {
     }
   }
 
+  handleInput = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  setAddingContainer = () => {
+    this.setState({
+      addingContainer: !this.state.addingContainer
+    })
+  }
+
+  renderAddContainerHeader = () => {
+    return <Header onClick={this.setAddingContainer} color="blue">Add Container</Header>
+  }
+
+  renderAddContainerForm = () => {
+    return <Segment>
+      <Form>
+        <Form.Field>
+          <label>Container Name</label>
+          <input onChange={this.handleInput}/>
+        </Form.Field>
+      </Form>
+    </Segment>
+  }
 
   render(){
     // console.log(this.props.space)
@@ -21,6 +52,7 @@ class Space extends Component {
       <Segment >
         <Segment>
           <Header size="medium">{this.props.space.name}</Header>
+          {this.state.addingContainer ? this.renderAddContainerForm() : this.renderAddContainerHeader()}
         </Segment>
         <Card.Group itemsPerRow={1}>
           {this.renderContainerCards()}

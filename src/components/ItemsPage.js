@@ -1,14 +1,18 @@
 import React, { Component, } from 'react'
-import { Segment, Card, Menu, Header } from 'semantic-ui-react'
+import { Segment, Card, Menu, Header, Form, Button } from 'semantic-ui-react'
 import {connect} from 'react-redux'
 
 
 import ItemCard from './ItemCard.js'
 import Search from './Search.js'
 
+
 class ItemsPage extends Component {
   state = {
-    items: []
+    items: [],
+    addingItem: false,
+    itemName: "",
+
   }
 
   componentDidMount(){
@@ -51,6 +55,35 @@ class ItemsPage extends Component {
     }
   }
 
+  handleInput = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  setAddItem = () => {
+    this.setState({
+      addingItem: !this.state.addingItem
+    })
+  }
+  
+  renderAddItemHeader = () => {
+    return <Header onClick={this.setAddItem} color="blue">Add Item</Header>
+  }
+
+  renderAddItemForm = () => {
+    return <Segment clearing>
+      <Form>
+        <Form.Field>
+          <label>Name</label>
+          <input onChange={this.handleInput} name="itemName" placeholder="Item name"/>
+        </Form.Field>
+        <Button onClick={this.setAddItem} floated="right">Cancel</Button>
+        <Button floated="right">Submit</Button>
+      </Form>
+    </Segment>
+  }
+
   render(){
     // console.log("ITEMS PAGE",this.props)
     return(
@@ -62,6 +95,7 @@ class ItemsPage extends Component {
         {this.props.state.searching ? <Search history={this.props.history}/> : null}
 
       <Segment>
+        {this.state.addingItem ? this.renderAddItemForm() : this.renderAddItemHeader()}
         <Card.Group itemsPerRow={8}>
           {this.renderItems()}
         </Card.Group>

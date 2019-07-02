@@ -7,9 +7,9 @@ class ContainerCard extends Component {
 
   renderContainerItems = () => {
     return this.props.container.items.map(item => {
-      return <Segment>
-      <List.Item>
-      <List.Content>{item.name}</List.Content>
+      return <Segment style={{margin:"5px"}}>
+      <List.Item >
+        <List.Content>{item.name}</List.Content>
       </List.Item>
       </Segment>
     })

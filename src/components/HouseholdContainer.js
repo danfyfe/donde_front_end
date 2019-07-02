@@ -79,7 +79,7 @@ class HouseholdContainer extends Component {
   }
 
   renderAddSpaceHeader = () => {
-    return <Header onClick={this.setAddingSpace} style={{color:"blue"}} as='a'>Add Space</Header>
+    return <Header onClick={this.setAddingSpace} color="blue" as='a'>Add Space</Header>
   }
 
   renderAddSpaceForm = () => {

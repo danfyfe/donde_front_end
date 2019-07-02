@@ -49,6 +49,10 @@ class HouseholdCardsContainer extends Component {
     </>
   }
 
+  renderAddHouseholdHeader = () => {
+    return <Header floated="right"href="#" color="blue" onClick={this.setAddingHousehold} as='a'>Add Household</Header>
+  }
+
   handleHouseholdInput = (e) => {
     // console.log("TARGET",e.target.innerText)
     // FIX THIS!!! find value for dropdown
@@ -107,7 +111,7 @@ class HouseholdCardsContainer extends Component {
           </Menu>
 
             { this.state.addingHousehold ?
-              this.renderHouseholdForm() : <Header floated="right"href="#"style={{color:"blue"}} onClick={this.setAddingHousehold} as='a'>Add Household</Header>
+              this.renderHouseholdForm() : this.renderAddHouseholdHeader()
             }
 
           <Card.Group>
