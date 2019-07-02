@@ -10,6 +10,7 @@ class HouseholdContainer extends Component {
     newSpaceName:"",
     joiningHousehold: false,
     householdPassword: "",
+
     currentSpace: {},
     currentContainer: {}
   }
@@ -140,15 +141,13 @@ class HouseholdContainer extends Component {
   }
 
   render(){
-    // console.log("CURRENT HOUSEHOLD",this.props.state.currentHousehold)
-    // console.log('CURRENT USER', this.props.state.user.households.includes(this.props.state.currentHousehold))
     return(
       <>
         <Segment raised >
           <Header as="h1">{this.props.state.currentHousehold.name}</Header>
           {this.setAddOrJoin()}
-
-              <SpacesContainer history={this.props.history}/>
+          {}
+          <SpacesContainer history={this.props.history}/>
 
         </Segment>
       </>
@@ -164,9 +163,9 @@ const mapDispatchToProps = (dispatch) =>{
   return {
     setUser: (user) => dispatch({type:"SET_USER", user}),
     setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
-    addSpace: (space) => dispatch({type:"ADD_SPACE", space})
+    addSpace: (space) => dispatch({type:"ADD_SPACE", space}),
+    setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE"})
   }
 }
-
 
 export default connect(mapStateToProps,mapDispatchToProps)(HouseholdContainer)

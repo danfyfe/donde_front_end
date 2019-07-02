@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { Segment, Card, List, Icon } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
 class SpaceCard extends Component {
 
   renderContainerDescriptions = () => {
       return this.props.space.containers.map(container => {
         return <>
-        <Card>
+        <Card link>
             <Card.Content header={container.name}/>
             <Card.Content meta={container.description}/>
             <Card.Content extra>
@@ -21,27 +22,42 @@ class SpaceCard extends Component {
     return this.props.space.items.map(item => {
       return <Segment>
       <List.Item>
-      <List.Content><Icon name='info'/>{item.name}</List.Content>
+      <List.Content>{item.name}</List.Content>
       </List.Item>
       </Segment>
     })
   }
 
   render(){
-    console.log("SPACECARD",this.props.space)
+    // console.log("SPACECARD",this.props.space)
     return(
 
-      <Card link onClick={()=>{this.props.redirectToSpace(this.props.space.id)}}>
+      <Card link onClick={()=>{this.props.setCurrentSpace(this.props.space)}}>
         <Card.Content header={this.props.space.name}/>
-
+        <Card.Group itemsPerRow={6}>
         {this.renderContainerDescriptions()}
+        </Card.Group>
 
       </Card>
     )
   }
 }
 
-export default SpaceCard
+const mapStateToProps = (state) => {
+  return { state }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+  return {
+    setUser: (user) => dispatch({type:"SET_USER", user}),
+    setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
+    addSpace: (space) => dispatch({type:"ADD_SPACE", space}),
+    setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE", space})
+  }
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(SpaceCard)
 
 // <Card link>
 //   <Card.Content header={this.props.space.name}/>

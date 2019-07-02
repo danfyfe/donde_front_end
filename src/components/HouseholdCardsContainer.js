@@ -13,75 +13,75 @@ class HouseholdCardsContainer extends Component {
 
 
   // ADD HOUSEHOLD FUNCTIONS
-    setAddingHousehold = () => {
+  setAddingHousehold = () => {
+    this.setState({
+      addingHousehold: !this.state.addingHousehold
+    })
+  }
+
+  renderHouseholdForm = () => {
+    const householdColorDefinitions = ['red','orange','yellow','olive','green','teal','blue','violet','purple','pink','brown','grey']
+
+    const householdColorOptions = householdColorDefinitions.map(color=>{
+      return {key:color,text:color,value:color}
+    })
+
+    return <>
+      <Segment clearing style={{width:"75%", margin:"20px auto"}}>
+        <Message header="Add a Household!"/>
+        <Form>
+          <Form.Field>
+            <label>Name</label>
+            <input onChange={this.handleHouseholdInput} name="householdName" placeholder='Household Name'/>
+          </Form.Field>
+          <Form.Field>
+            <label>Password</label>
+            <input onChange={this.handleHouseholdInput} name="householdPass" type="password" placeholder='Household Password'/>
+          </Form.Field>
+          <Form.Field>
+          <label>Color</label>
+            <Dropdown name="householdColor" onChange={this.handleHouseholdInput} pointing="top left" placeholder="Select Color" fluid selection options={householdColorOptions}/>
+          </Form.Field>
+          <Button onClick={this.createHousehold}>Submit</Button>
+          <Button onClick={this.setAddingHousehold}>Cancel</Button>
+        </Form>
+      </Segment>
+    </>
+  }
+
+  handleHouseholdInput = (e) => {
+    // console.log("TARGET",e.target.innerText)
+    // FIX THIS!!! find value for dropdown
+    this.setState({
+      [e.target.name]:e.target.value,
+      householdColor: e.target.innerText
+    })
+  }
+
+  createHousehold = () => {
+    fetch('http://localhost:3000/api/v1/households',{
+      method:"POST",
+      headers:{
+        'Content-Type':'application/json',
+        Accept: 'application/json'
+      },
+      body:JSON.stringify({
+        household:{
+          name: this.state.householdName,
+          password: this.state.householdPass,
+          color: this.state.householdColor
+        },
+        user: this.props.state.user
+      })
+    }).then(resp=>resp.json())
+    .then(household=>{
+      this.props.addHousehold(household)
       this.setState({
         addingHousehold: !this.state.addingHousehold
       })
-    }
-
-    renderHouseholdForm = () => {
-      const householdColorDefinitions = ['red','orange','yellow','olive','green','teal','blue','violet','purple','pink','brown','grey']
-
-      const householdColorOptions = householdColorDefinitions.map(color=>{
-        return {key:color,text:color,value:color}
-      })
-
-      return <>
-        <Segment clearing style={{width:"75%", margin:"20px auto"}}>
-          <Message header="Add a Household!"/>
-          <Form>
-            <Form.Field>
-              <label>Name</label>
-              <input onChange={this.handleHouseholdInput} name="householdName" placeholder='Household Name'/>
-            </Form.Field>
-            <Form.Field>
-              <label>Password</label>
-              <input onChange={this.handleHouseholdInput} name="householdPass" type="password" placeholder='Household Password'/>
-            </Form.Field>
-            <Form.Field>
-            <label>Color</label>
-              <Dropdown name="householdColor" onChange={this.handleHouseholdInput} pointing="top left" placeholder="Select Color" fluid selection options={householdColorOptions}/>
-            </Form.Field>
-            <Button onClick={this.createHousehold}>Submit</Button>
-            <Button onClick={this.setAddingHousehold}>Cancel</Button>
-          </Form>
-        </Segment>
-      </>
-    }
-
-    handleHouseholdInput = (e) => {
-      // console.log("TARGET",e.target.innerText)
-      // FIX THIS!!! find value for dropdown
-      this.setState({
-        [e.target.name]:e.target.value,
-        householdColor: e.target.innerText
-      })
-    }
-
-    createHousehold = () => {
-      fetch('http://localhost:3000/api/v1/households',{
-        method:"POST",
-        headers:{
-          'Content-Type':'application/json',
-          Accept: 'application/json'
-        },
-        body:JSON.stringify({
-          household:{
-            name: this.state.householdName,
-            password: this.state.householdPass,
-            color: this.state.householdColor
-          },
-          user: this.props.state.user
-        })
-      }).then(resp=>resp.json())
-      .then(household=>{
-        this.props.addHousehold(household)
-        this.setState({
-          addingHousehold: !this.state.addingHousehold
-        })
-      })
-    }
-  // end of household functions
+    })
+  }
+// end of household functions
 
 
   renderHouseholdCards = () => {
@@ -109,8 +109,6 @@ class HouseholdCardsContainer extends Component {
             { this.state.addingHousehold ?
               this.renderHouseholdForm() : <Header floated="right"href="#"style={{color:"blue"}} onClick={this.setAddingHousehold} as='a'>Add Household</Header>
             }
-
-
 
           <Card.Group>
             {this.renderHouseholdCards()}

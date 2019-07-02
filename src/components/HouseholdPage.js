@@ -25,7 +25,7 @@ class HouseholdPage extends Component {
     .then(resp=>resp.json())
     .then(household=>{
       this.props.setCurrentHousehold(household)
-      
+      // try setting member of household here
     })
     )
   }
