@@ -17,8 +17,8 @@ function householdReducer (state = defaultState, action){
     case "SET_USER":
       return {...state, user: action.user}
 
-      case "SET_HOUSEHOLDS":
-        return {...state, households: action.households}
+    case "SET_HOUSEHOLDS":
+      return {...state, households: action.households}
 
     case "ADD_HOUSEHOLD":
       return {...state, user:{...state.user, households: [...state.user.households, action.household]}}
@@ -44,6 +44,15 @@ function householdReducer (state = defaultState, action){
     // console.log(action.space
       return {...state, currentHousehold:{...state.currentHousehold, spaces:[...state.currentHousehold.spaces,action.space]}}
 
+    case "ADD_ITEM":
+      // console.log("add_item",action.item)
+      // console.log('add_item container',state.currentContainer)
+      return {...state, currentContainer:{...state.currentContainer, items:[...state.currentContainer.items, action.item]}}
+
+    case "ADD_CONTAINER":
+      // console.log('add_container',action.container)
+      // console.log('add_container',state.currentSpace)
+      return {...state, currentSpace: {...state.currentSpace, containers:[...state.currentSpace.containers, action.container]}}
     case "SET_CURRENT_SPACE":
       // console.log('set current space',action.space)
       return {...state, currentSpace: action.space}

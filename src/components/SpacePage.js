@@ -7,6 +7,9 @@ import { connect } from 'react-redux'
 
 class SpacePage extends Component {
 
+  state = {
+    currentSpace: {}
+  }
   componentDidMount(){
     fetch('http://localhost:3000/api/v1/profile',{
       method:"POST",
@@ -25,6 +28,9 @@ class SpacePage extends Component {
       // console.log("SPACE PAGE SPACE", space)
       // this.props.setCurrentHousehold(household)
       this.props.setCurrentSpace(space)
+      // this.setState({
+      //   currentSpace: space
+      // })
     })
   )
   }
@@ -34,7 +40,7 @@ class SpacePage extends Component {
     console.log('CURRENT SPACE',this.props.state.currentSpace)
     return(
       <Segment>
-      
+
       <HouseholdMessagesContainer household={this.props.state.currentHousehold}/>
       </Segment>
     )

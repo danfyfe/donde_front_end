@@ -25,10 +25,12 @@ class App extends React.Component {
 
   sendToProfilePage = () => {
     this.props.history.push('/profile')
+    this.props.setCurrentSpace({})
   }
 
   sendToItemsPage = () => {
     this.props.history.push('/items')
+    this.props.setCurrentSpace({})
   }
 
 
@@ -79,7 +81,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setSearching: ()=> dispatch({type:"SET_SEARCHING"})
+    setSearching: ()=> dispatch({type:"SET_SEARCHING"}),
+      setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE"})
   }
 }
 

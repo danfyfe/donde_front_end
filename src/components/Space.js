@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Card, List, Icon, Header, Menu, Form, Button } from 'semantic-ui-react'
+import { Segment, Card, List, Icon, Header, Menu, Form, Button, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import ContainerCard from './ContainerCard.js'
@@ -9,7 +9,8 @@ class Space extends Component {
 
   state = {
     addingContainer: false,
-    containerName: "",
+    newContainerName: "",
+    newContainerDescription: ""
   }
 
   renderContainerCards = () => {
@@ -36,13 +37,45 @@ class Space extends Component {
     return <Header onClick={this.setAddingContainer} color="blue">Add Container</Header>
   }
 
+  addContainer = () => {
+    fetch('http://localhost:3000/api/v1/containers',{
+      method:"POST",
+      headers:{
+        'Content-Type':'application/json',
+        Accept: 'application/json'
+      },
+      body:JSON.stringify({
+        container:{
+          name: this.state.newContainerName,
+          description: this.state.newContainerDescription,
+          space_id: this.props.state.currentSpace.id
+        }
+      })
+    }).then(resp=>resp.json())
+    .then(container =>{
+      // console.log('new container', container)
+      this.props.addContainer(container)
+
+      this.setState({
+        addingContainer: !this.state.addingContainer
+      })
+    })
+  }
+
   renderAddContainerForm = () => {
-    return <Segment>
+    return <Segment clearing>
+      <Message>Add a Container to the Space!</Message>
       <Form>
         <Form.Field>
-          <label>Container Name</label>
-          <input onChange={this.handleInput}/>
+          <label>Name</label>
+          <input onChange={this.handleInput} name="newContainerName" placeholder="Container Name"/>
         </Form.Field>
+        <Form.Field>
+          <label>Description</label>
+          <input onChange={this.handleInput} name="newContainerDescription" placeholder="Continer Description"/>
+        </Form.Field>
+        <Button onClick={this.setAddingContainer} floated="right">Cancel</Button>
+        <Button onClick={this.addContainer} floated="right">Submit</Button>
       </Form>
     </Segment>
   }
@@ -57,13 +90,17 @@ class Space extends Component {
     return <Container container={this.props.state.currentContainer}/>
   }
 
+
+
   render(){
-    // console.log(this.props.space)
+    // console.log(this.props.state.currentContainer)
     return(
       <Segment >
         <Segment>
           <Header size="medium">{this.props.space.name}</Header>
           {this.state.addingContainer ? this.renderAddContainerForm() : this.renderAddContainerHeader()}
+
+
         </Segment>
           {this.props.state.currentContainer.hasOwnProperty('id') ?
           this.renderContainer() : this.renderContainers()}
@@ -82,7 +119,8 @@ const mapDispatchToProps = (dispatch) =>{
     setUser: (user) => dispatch({type:"SET_USER", user}),
     setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
     addSpace: (space) => dispatch({type:"ADD_SPACE", space}),
-    setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE", space})
+    setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE", space}),
+    addContainer: (container) => dispatch({type:"ADD_CONTAINER", container})
   }
 }
 

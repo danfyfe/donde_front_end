@@ -24,7 +24,7 @@ class SpacesConatiner extends Component {
   }
 
   render(){
-    console.log('current container in spaces container',this.props.state.currentContainer.hasOwnProperty('id'))
+    // console.log('current container in spaces container',this.props.state.currentContainer.hasOwnProperty('id'))
     return(
       <>
 
