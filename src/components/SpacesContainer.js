@@ -20,7 +20,7 @@ class SpacesConatiner extends Component {
   }
 
   renderSpace = () => {
-    return <Space space={this.props.state.currentSpace}/>
+    return <Space history={this.props.history} space={this.props.state.currentSpace}/>
   }
 
   render(){

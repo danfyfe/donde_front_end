@@ -1,7 +1,8 @@
 import React, { Component, } from 'react'
-import { Segment, Header, Form, Dropdown } from 'semantic-ui-react'
+import { Segment, Header, Form, Dropdown, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
+import Search from './Search.js'
 
 
 class ItemPage extends Component {
@@ -10,8 +11,12 @@ class ItemPage extends Component {
     editing: false,
     itemName: "",
     itemDescription: "",
+    itemHousehold_id: "",
+    itemSpace_id: "",
+    itemContainer_id: ""
 
   }
+
   componentDidMount(){
     fetch('http://localhost:3000/api/v1/profile',{
       method:"POST",
@@ -73,6 +78,24 @@ class ItemPage extends Component {
     })
   }
 
+  handleHouseholdInput = (e,data) => {
+    this.setState({
+      itemHousehold_id: data.value
+    })
+  }
+
+  handleSpaceInput = (e,data) => {
+    this.setState({
+      itemSpace_id: data.value
+    })
+  }
+
+  handleContainerInput = (e,data) => {
+    this.setState({
+      itemContainer_id: data.value
+    })
+  }
+
   setEditing = () => {
     this.setState({
       editing: !this.state.editing
@@ -83,30 +106,104 @@ class ItemPage extends Component {
     return <Header onClick={this.setEditing} color="blue">Edit Item</Header>
   }
 
+
+
   renderEditForm = () => {
-    return <Segment>
+    if (this.props.state.user.households) {
+      const householdOptions = this.props.state.user.households.map(household => {
+        return {key:household.id, text:household.name, value:household.id}
+      })
+      const userSpaces = this.props.state.user.households.map(household => {
+        return household.spaces
+      }).flat()
+
+      const spaceOptions = userSpaces.map(space => {
+        return {key:space.id, text:space.name, value:space.id}
+      })
+
+      const userContainers = userSpaces.map(space => {
+        return space.containers
+      }).flat()
+
+      const containerOptions = userContainers.map(container => {
+        return {key: container.id, text: container.name, value: container.id}
+      })
+
+    return <Segment clearing>
       <Form>
         <Form.Field>
           <label>Name</label>
           <input onChange={this.handleItemNameInput} placeholder="Item name" value={this.state.itemName}/>
         </Form.Field>
+
         <Form.Field>
           <label>Description</label>
           <input onChange={this.handleItemDescriptionInput} placeholder="Item description" value={this.state.itemDescription}/>
         </Form.Field>
+
+        <Form.Field>
+          <label>Container</label>
+          <Dropdown name="container_id" onChange={this.handleContainerInput} pointing="top left" placeholder="Select Container" fluid selection options={containerOptions}/>
+        </Form.Field>
+
+        <Form.Field>
+          <label>Space</label>
+          <Dropdown name="space_id" onChange={this.handleSpaceInput} pointing="top left" placeholder="Select Space" fluid selection options={spaceOptions}/>
+        </Form.Field>
+
+        <Form.Field>
+          <label>Household</label>
+          <Dropdown name="household_id" onChange={this.handleHouseholdInput} pointing="top left" placeholder="Select Household" fluid selection options={householdOptions}/>
+        </Form.Field>
+
+        <Button onClick={this.setEditing} floated="right">Cancel</Button>
+        <Button onClick={this.editItem} floated="right">Submit</Button>
+
       </Form>
     </Segment>
+    }
   }
+
+  editItem = () => {
+    fetch(`http://localhost:3000/api/v1/items/${this.props.state.currentItem.id}`,{
+      method:"PATCH",
+      headers:{
+        'Content-Type':'application/json',
+        Accept: 'application/json'
+      },
+      body:JSON.stringify({
+        item:{
+          household_id: this.state.itemHousehold_id,
+          space_id: this.state.itemSpace_id,
+          container_id: this.state.itemContainer_id,
+          id: this.props.state.currentItem.id,
+          name: this.state.itemName,
+          description: this.state.itemDescription
+        }
+      })
+    }).then(resp=>resp.json())
+    .then(updatedItem => {
+      // console.log("updated item",updatedItem)
+      this.props.setCurrentItem(updatedItem)
+    })
+  }
+
+
+
   render(){
     // console.log(this.props.state.currentItem.space.name)
-    console.log(this.props.state.currentItem.household)
+    // console.log(this.props.state.currentItem.household)
     // console.log('item page state', this.state)
+    // console.log('current_item', this.props.state.currentItem)
+    // console.log('current_user', this.props.state.user.households)
+
 
     return(
+        <>{this.props.state.searching ? <Search history={this.props.history}/> : null}
       <Segment.Group style={{margin:"2% auto",width:"98%"}}>
         <Segment>
-        {this.renderEditHeader()}
-        {this.renderEditForm()}
+        {this.state.editing ? this.renderEditForm() : this.renderEditHeader()}
+  
           <Header>{this.props.state.currentItem.name}</Header>
         </Segment>
         <Segment.Group>
@@ -115,12 +212,15 @@ class ItemPage extends Component {
           </Segment>
         </Segment.Group>
 
+
+
         <Segment>Owners:</Segment>
         <Segment.Group>
             {this.renderOwners()}
         </Segment.Group>
 
       </Segment.Group>
+      </>
     )
   }
 }

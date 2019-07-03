@@ -87,13 +87,13 @@ class Space extends Component {
   }
 
   renderContainer = () => {
-    return <Container container={this.props.state.currentContainer}/>
+    return <Container history={this.props.history} container={this.props.state.currentContainer}/>
   }
 
 
 
   render(){
-    // console.log(this.props.state.currentContainer)
+    // console.log(this.props.history)
     return(
       <Segment >
         <Segment>

@@ -12,9 +12,10 @@ class Container extends Component {
   }
 
   renderItemCards = () => {
+    console.log()
     if (this.props.container.items) {
       return this.props.container.items.map(item => {
-        return <ItemCard item={item}/>
+        return <ItemCard redirectToItemPage={this.redirectToItemPage} item={item}/>
       })
     }
   }
@@ -29,6 +30,10 @@ class Container extends Component {
     this.setState({
       addingItem: !this.state.addingItem
     })
+  }
+
+  redirectToItemPage = (id) => {
+    this.props.history.push(`/items/${id}`)
   }
 
   renderAddItemHeader = () => {
@@ -85,7 +90,7 @@ class Container extends Component {
 
 
   render(){
-    // console.log(this.props.container.items)
+    // console.log(this.props.history)
     return(
       <Segment>
 
