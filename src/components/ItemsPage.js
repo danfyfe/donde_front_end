@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { Segment, Card, Menu, Header, Form, Button } from 'semantic-ui-react'
+import { Segment, Card, Menu, Header, Form, Button, Message, Dropdown } from 'semantic-ui-react'
 import {connect} from 'react-redux'
 
 
@@ -12,7 +12,7 @@ class ItemsPage extends Component {
     items: [],
     addingItem: false,
     itemName: "",
-
+    itemDescription:"",
   }
 
   componentDidMount(){
@@ -66,18 +66,24 @@ class ItemsPage extends Component {
       addingItem: !this.state.addingItem
     })
   }
-  
+
   renderAddItemHeader = () => {
     return <Header onClick={this.setAddItem} color="blue">Add Item</Header>
   }
 
   renderAddItemForm = () => {
     return <Segment clearing>
+    <Message>Add an Item</Message>
       <Form>
         <Form.Field>
           <label>Name</label>
           <input onChange={this.handleInput} name="itemName" placeholder="Item name"/>
         </Form.Field>
+        <Form.Field>
+          <label>Description</label>
+          <input onChange={this.handleInput} name="itemDescription" placeholder="Item description"/>
+        </Form.Field>
+
         <Button onClick={this.setAddItem} floated="right">Cancel</Button>
         <Button floated="right">Submit</Button>
       </Form>
@@ -86,6 +92,7 @@ class ItemsPage extends Component {
 
   render(){
     // console.log("ITEMS PAGE",this.props)
+    console.log('items page state', this.state)
     return(
       <>
       <Menu style={{marginTop: "0px"}}>

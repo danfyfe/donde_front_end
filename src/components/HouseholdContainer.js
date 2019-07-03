@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Form, Button } from 'semantic-ui-react'
+import { Segment, Header, Form, Button, Dropdown } from 'semantic-ui-react'
 import SpacesContainer from './SpacesContainer.js'
 import { connect } from 'react-redux'
 
@@ -10,6 +10,10 @@ class HouseholdContainer extends Component {
     newSpaceName:"",
     joiningHousehold: false,
     householdPassword: "",
+
+    editingHousehold: false,
+    newHouseholdName: "",
+    newHouseholdColor:"",
 
     currentSpace: {},
     currentContainer: {}
@@ -139,14 +143,91 @@ class HouseholdContainer extends Component {
       }
     }
   }
+  //  end add space/join household
+
+
+  // edit household
+
+  setEditingHousehold = () => {
+    this.setState({
+      editingHousehold: !this.state.editingHousehold
+    })
+  }
+
+  renderEditHouseholdHeaeder = () => {
+    return <Header onClick={this.setEditingHousehold} color="blue">Edit Household</Header>
+  }
+
+  handleEditHouseholdColorInput = (e) => {
+    // console.log('target innertext',e.target.innerText)
+    this.setState({
+      // newHouseholdName: e.target.value,
+      newHouseholdColor: e.target.innerText
+    })
+  }
+  handleEditHouseholdNameInput = (e) => {
+    // console.log('target innertext',e.target.innerText)
+    this.setState({
+      newHouseholdName: e.target.value
+      // newHouseholdColor: e.target.innerText
+    })
+  }
+
+  editHousehold = () => {
+    fetch(`http://localhost:3000/api/v1/households/${this.props.state.currentHousehold.id}`,{
+      method:"PATCH",
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization:  localStorage.getItem("token")
+      },
+      body:JSON.stringify({
+        household:{
+          id: this.props.state.currentHousehold.id,
+          name: this.state.newHouseholdName,
+          color: this.state.newHouseholdColor
+        }
+      })
+    }).then(resp=>resp.json())
+    .then(household=>{
+      // console.log("updated household", household)
+      this.props.setCurrentHousehold(household)
+    })
+  }
+
+  renderEditHouseholdForm = () => {
+    const householdColorDefinitions = ['red','orange','yellow','olive','green','teal','blue','violet','purple','pink','brown','grey']
+
+    const householdColorOptions = householdColorDefinitions.map(color=>{
+      return {key:color,text:color,value:color}
+    })
+
+    return <Segment clearing>
+      <Form>
+        <Form.Field>
+        <label>Name</label>
+        <input onChange={this.handleEditHouseholdNameInput} placeholder="New Household Name"/>
+        </Form.Field>
+        <Form.Field>
+        <label>Color</label>
+          <Dropdown name="householdColor" onChange={this.handleEditHouseholdColorInput} pointing="top left" placeholder="Select Color" fluid selection options={householdColorOptions}/>
+        </Form.Field>
+        <Button floated="right" onClick={this.setEditingHousehold}>Cancel</Button>
+        <Button onClick={this.editHousehold} floated="right">Submit</Button>
+      </Form>
+    </Segment>
+  }
+
 
   render(){
+    // console.log('HHC state', this.state)
     return(
       <>
         <Segment raised >
-          <Header as="h1">{this.props.state.currentHousehold.name}</Header>
+          <Header onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)} as="h1">{this.props.state.currentHousehold.name}</Header>
+          {this.state.editingHousehold ?
+          this.renderEditHouseholdForm() : this.renderEditHouseholdHeaeder()}
           {this.setAddOrJoin()}
-          {}
           <SpacesContainer history={this.props.history}/>
 
         </Segment>

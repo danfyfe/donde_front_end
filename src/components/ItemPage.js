@@ -1,22 +1,44 @@
 import React, { Component, } from 'react'
-import { Segment } from 'semantic-ui-react'
+import { Segment, Header, Form, Dropdown } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 
 
 class ItemPage extends Component {
 
-  componentDidMount(){
+  state = {
+    editing: false,
+    itemName: "",
+    itemDescription: "",
 
-    fetch(`http://localhost:3000/api/v1/items/${this.props.match.params.id}`,{
-      method: "GET",
+  }
+  componentDidMount(){
+    fetch('http://localhost:3000/api/v1/profile',{
+      method:"POST",
       headers: { Authorization:  localStorage.getItem("token") }
+    }).then(resp=>resp.json())
+    .then(user=>{
+      // console.log("USER", user)
+      this.props.setUser(user.user)
     })
-    .then(resp=>resp.json())
-    .then(item=>{
-      // console.log(item)
-      this.props.setCurrentItem(item)
-    })
+    .then(
+      fetch(`http://localhost:3000/api/v1/items/${this.props.match.params.id}`,{
+        method: "GET",
+        headers: { Authorization:  localStorage.getItem("token") }
+      })
+      .then(resp=>resp.json())
+      .then(item=>{
+        // console.log(item)
+        this.setState({
+          itemName: item.name,
+          itemDescription: item.description,
+          itemContainer_id: item.container.id,
+          itemSpace_id: item.space.id,
+          itemHousehold_id: item.household.id
+        })
+        this.props.setCurrentItem(item)
+      })
+    )
   }
 
 
@@ -28,15 +50,76 @@ class ItemPage extends Component {
     }
   }
 
+  renderLocationDetails = () => {
+    if (this.props.state.currentItem.household) {
+      return <>
+      <Header as="h1">{this.props.state.currentItem.household.name}</Header>
+      <Header as="h4">{this.props.state.currentItem.space.name}</Header>
+      <Header as="h5">{this.props.state.currentItem.container.name}</Header>
+      </>
+    }
+  }
+
+  handleItemNameInput = (e) => {
+    this.setState({
+      // [e.target.name]: e.target.value
+      itemName: e.target.value
+    })
+  }
+
+  handleItemDescriptionInput = (e) => {
+    this.setState({
+      itemDescription: e.target.value
+    })
+  }
+
+  setEditing = () => {
+    this.setState({
+      editing: !this.state.editing
+    })
+  }
+
+  renderEditHeader = () => {
+    return <Header onClick={this.setEditing} color="blue">Edit Item</Header>
+  }
+
+  renderEditForm = () => {
+    return <Segment>
+      <Form>
+        <Form.Field>
+          <label>Name</label>
+          <input onChange={this.handleItemNameInput} placeholder="Item name" value={this.state.itemName}/>
+        </Form.Field>
+        <Form.Field>
+          <label>Description</label>
+          <input onChange={this.handleItemDescriptionInput} placeholder="Item description" value={this.state.itemDescription}/>
+        </Form.Field>
+      </Form>
+    </Segment>
+  }
   render(){
     // console.log(this.props.state.currentItem.space.name)
+    console.log(this.props.state.currentItem.household)
+    // console.log('item page state', this.state)
+
     return(
-      <Segment.Group style={{width:"98%"}}>
-        <Segment>{this.props.state.currentItem.name}</Segment>
-        <Segment></Segment>
+      <Segment.Group style={{margin:"2% auto",width:"98%"}}>
+        <Segment>
+        {this.renderEditHeader()}
+        {this.renderEditForm()}
+          <Header>{this.props.state.currentItem.name}</Header>
+        </Segment>
+        <Segment.Group>
+          <Segment>
+            {this.renderLocationDetails()}
+          </Segment>
+        </Segment.Group>
+
+        <Segment>Owners:</Segment>
         <Segment.Group>
             {this.renderOwners()}
         </Segment.Group>
+
       </Segment.Group>
     )
   }

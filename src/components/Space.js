@@ -3,6 +3,7 @@ import { Segment, Card, List, Icon, Header, Menu, Form, Button } from 'semantic-
 import { connect } from 'react-redux'
 
 import ContainerCard from './ContainerCard.js'
+import Container from './Container.js'
 
 class Space extends Component {
 
@@ -46,6 +47,16 @@ class Space extends Component {
     </Segment>
   }
 
+  renderContainers = () => {
+    return <Card.Group itemsPerRow={1}>
+      {this.renderContainerCards()}
+    </Card.Group>
+  }
+
+  renderContainer = () => {
+    return <Container container={this.props.state.currentContainer}/>
+  }
+
   render(){
     // console.log(this.props.space)
     return(
@@ -54,9 +65,9 @@ class Space extends Component {
           <Header size="medium">{this.props.space.name}</Header>
           {this.state.addingContainer ? this.renderAddContainerForm() : this.renderAddContainerHeader()}
         </Segment>
-        <Card.Group itemsPerRow={1}>
-          {this.renderContainerCards()}
-        </Card.Group>
+          {this.props.state.currentContainer.hasOwnProperty('id') ?
+          this.renderContainer() : this.renderContainers()}
+
       </Segment>
     )
   }

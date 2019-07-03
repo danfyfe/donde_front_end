@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card } from 'semantic-ui-react'
+import { Card, Segment } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import SpaceCard from './SpaceCard.js'
@@ -23,16 +23,17 @@ class SpacesConatiner extends Component {
     return <Space space={this.props.state.currentSpace}/>
   }
 
-
   render(){
-    // console.log(this.props.state.currentSpace)
+    console.log('current container in spaces container',this.props.state.currentContainer.hasOwnProperty('id'))
     return(
       <>
-      {this.props.state.currentSpace ?  this.renderSpace() :
+
+      {this.props.state.currentSpace.hasOwnProperty('id') ?  this.renderSpace() :
         <Card.Group itemsPerRow={1}>
         {this.renderSpaceCards()}
         </Card.Group>
-       }
+      }
+
       </>
     )
   }

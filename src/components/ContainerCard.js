@@ -17,9 +17,10 @@ class ContainerCard extends Component {
 
 
   render(){
-    console.log(this.props.container)
+    // console.log(this.props.container)
+    // console.log('current container',this.props.state.currentContainer)
     return(
-      <Card link>
+      <Card link onClick={()=>this.props.setCurrentContainer(this.props.container)}>
         <Card.Content>
           <Card.Header>{this.props.container.name}</Card.Header>
           <Card.Meta>{this.props.container.description}</Card.Meta>
