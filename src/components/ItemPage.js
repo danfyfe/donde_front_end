@@ -111,7 +111,7 @@ class ItemPage extends Component {
   }
 
   renderEditHeader = () => {
-    return <Button onClick={this.setEditing} color="blue">Move Item</Button>
+    return <Button floated="right" size="mini" onClick={this.setEditing} color="blue">Move Item</Button>
   }
 
 
@@ -194,6 +194,9 @@ class ItemPage extends Component {
     .then(updatedItem => {
       // console.log("updated item",updatedItem)
       this.props.setCurrentItem(updatedItem)
+      this.setState({
+        editing: !this.state.editing
+      })
     })
   }
 
@@ -207,7 +210,7 @@ class ItemPage extends Component {
     }
 
     renderAddOwnersHeader = () => {
-      return <Button floated="right" onClick={this.setAddingOwners} color="blue">Add Owners</Button>
+      return <Button floated="right" size="mini" onClick={this.setAddingOwners} color="blue">Add Owners</Button>
     }
 
     renderAddOwnersForm = () => {
@@ -304,29 +307,29 @@ class ItemPage extends Component {
       <>
       {this.props.state.isDoneFetching ?
         <>{this.props.state.searching ? <Search history={this.props.history}/> : null}
-        <Segment.Group style={{margin:"2% auto",width:"98%"}}>
+        <Segment style={{margin:"2% auto",width:"98%"}}>
         <Segment clearing>
         {this.state.editing ? this.renderEditForm() : this.renderEditHeader()}
 
-        <Header>{this.props.state.currentItem.name}</Header>
+        <Header floated="left">{this.props.state.currentItem.name}</Header>
         </Segment>
-        <Segment.Group>
+
         <Segment>
         {this.renderLocationDetails()}
         </Segment>
-        </Segment.Group>
+
 
 
         <Segment>Owners:</Segment>
-        <Segment.Group>
+
 
         <Segment clearing>
         {this.state.addingOwners ? this.renderAddOwnersForm() : this.renderAddOwnersHeader() }
         </Segment>
         {this.renderOwners()}
-        </Segment.Group>
+        </Segment>
 
-        </Segment.Group>
+
         </> : <Loading/>
 
       }

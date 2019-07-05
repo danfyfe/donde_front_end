@@ -53,7 +53,7 @@ class Search extends Component {
     // console.log('search state',this.state)
     return(
 
-        <Segment  clearing raised style={{width:"98%", margin:"10px auto"}}>
+        <Segment clearing raised>
         <Message header="Search for an Item or Household!"/>
           <Form>
             <Form.Field>

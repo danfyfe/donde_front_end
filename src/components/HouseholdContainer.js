@@ -83,7 +83,7 @@ class HouseholdContainer extends Component {
   }
 
   renderAddSpaceHeader = () => {
-    return <Header onClick={this.setAddingSpace} color="blue" as='a'>Add Space</Header>
+    return <Button onClick={this.setAddingSpace} color="blue" floated="right" size="mini">Add Space</Button>
   }
 
   renderAddSpaceForm = () => {
@@ -116,7 +116,7 @@ class HouseholdContainer extends Component {
   }
 
   renderJoinHouseholdHeader = () => {
-    return <Header onClick={this.setJoiningHousehold} style={{color:"blue"}} as='a'>Join Household</Header>
+    return <Button onClick={this.setJoiningHousehold} color="blue" floated="right" size="mini">Join Household</Button>
   }
 
   setAddOrJoin = () => {
@@ -155,7 +155,7 @@ class HouseholdContainer extends Component {
   }
 
   renderEditHouseholdHeaeder = () => {
-    return <Header onClick={this.setEditingHousehold} color="blue">Edit Household</Header>
+    return <Button onClick={this.setEditingHousehold} floated="right"color="blue" size="mini">Edit Household</Button>
   }
 
   handleEditHouseholdColorInput = (e) => {
@@ -221,13 +221,18 @@ class HouseholdContainer extends Component {
 
   render(){
     // console.log('HHC state', this.state)
+    if (this.props.state.user.households) {
+      // console.log(this.props.state.user.households)
+
+    }
     return(
       <>
-        <Segment raised >
-          <Header onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)} as="h1">{this.props.state.currentHousehold.name}</Header>
+        <Segment raised>
+          <Header onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)} as="h1" floated="left">{this.props.state.currentHousehold.name}</Header>
           {this.state.editingHousehold ?
           this.renderEditHouseholdForm() : this.renderEditHouseholdHeaeder()}
           {this.setAddOrJoin()}
+
           <SpacesContainer history={this.props.history}/>
 
         </Segment>

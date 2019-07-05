@@ -85,7 +85,7 @@ class MessageContainer extends Component {
     if (this.props.state.user.households.length === 0) {
       return <Message>No messages are being displayed because you do not currently belong to any households. You can create a household by clicking 'Add Household', or use the Search Icon above to search for a household to join</Message>
     }else {
-      return <Header onClick={this.setAddingNewMessage} color="blue">Add Message</Header>
+      return <Button onClick={this.setAddingNewMessage} color="blue" size="mini" floated="right">Add Message</Button>
     }
   }
 
@@ -119,10 +119,10 @@ class MessageContainer extends Component {
     // console.log(this.props.state)
     return(
       <>
-      <Menu style={{margin:"0px 0px 15px 0px"}}>
-        <Header style={{padding:"10px"}}>Messages</Header>
-      </Menu>
-      {this.state.addingNewMessage ? this.renderNewMessageForm():this.renderNewMessageHeader()}
+      <Segment clearing>
+        <Header floated="left">Messages</Header>
+        {this.state.addingNewMessage ? this.renderNewMessageForm():this.renderNewMessageHeader()}
+      </Segment>
         <Card.Group>
           {this.renderMessageCards()}
         </Card.Group>
@@ -147,3 +147,8 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(MessageContainer)
+
+
+// <Menu style={{margin:"0px 0px 15px 0px"}}>
+//   <Header style={{padding:"10px"}}>Messages</Header>
+// </Menu>

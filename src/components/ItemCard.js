@@ -17,7 +17,7 @@ class ItemCard extends Component {
   render(){
     // console.log(this.props.item)
     return(
-      <Card link onClick={()=>this.props.redirectToItemPage(this.props.item.id)}>
+      <Card link style={{width:"100%"}} onClick={()=>this.props.redirectToItemPage(this.props.item.id)}>
         <Card.Content header={this.props.item.name}/>
         <Card.Content meta={this.props.item.space.name + ":" + this.props.item.container.name}/>
         <Card.Content description={this.props.item.description}/>

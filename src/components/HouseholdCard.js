@@ -18,14 +18,14 @@ class HouseholdCard extends Component {
     // console.log("HHCARD",this.props)
 
     return(
-      <Card color={this.props.household.color} link onClick={()=>this.props.redirectToHousehold(this.props.household.id)}>
+      <Card color={this.props.household.color} link style={{width:"100%"}} onClick={()=>this.props.redirectToHousehold(this.props.household.id)}>
         <Card.Content>
           <Image floated='right' size='mini' src={this.props.household.image}/>
           <Card.Header>{this.props.household.name}</Card.Header>
         </Card.Content>
         {this.displaySpaceOverview()}
         <Card.Content extra>
-          <span>{this.props.household.users.length} Users</span>
+          <span style={{paddingRight:"5px"}}>{this.props.household.users.length} Users</span>
           <span>{this.props.household.messages.length} Messages</span>
         </Card.Content>
       </Card>

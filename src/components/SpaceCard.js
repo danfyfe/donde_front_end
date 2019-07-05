@@ -32,11 +32,13 @@ class SpaceCard extends Component {
     // console.log("SPACECARD",this.props.space)
     return(
 
-      <Card link onClick={()=>{this.props.setCurrentSpace(this.props.space)}}>
+      <Card link style={{width:"100%"}} onClick={()=>{this.props.setCurrentSpace(this.props.space)}} >
         <Card.Content header={this.props.space.name}/>
-        <Card.Group itemsPerRow={6}>
-        {this.renderContainerDescriptions()}
-        </Card.Group>
+        <Segment>
+          <Card.Group itemsPerRow={6}>
+          {this.renderContainerDescriptions()}
+          </Card.Group>
+        </Segment>
 
       </Card>
     )
@@ -69,3 +71,11 @@ export default connect(mapStateToProps,mapDispatchToProps)(SpaceCard)
 // <List>
 //   {this.renderSpaceItems()}
 // </List>
+
+// <Card link onClick={()=>{this.props.setCurrentSpace(this.props.space)}} style={{width:"50%"}}>
+//   <Card.Content header={this.props.space.name}/>
+//   <Card.Group itemsPerRow={6}>
+//   {this.renderContainerDescriptions()}
+//   </Card.Group>
+//
+// </Card>

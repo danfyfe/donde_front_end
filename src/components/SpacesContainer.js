@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card } from 'semantic-ui-react'
+import { Card, Segment } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import SpaceCard from './SpaceCard.js'
@@ -15,9 +15,9 @@ class SpacesConatiner extends Component {
     }
   }
 
-  redirectToSpace = (id) => {
-    this.props.history.push(`/spaces/${id}`)
-  }
+  // redirectToSpace = (id) => {
+  //   this.props.history.push(`/spaces/${id}`)
+  // }
 
   renderSpace = () => {
     return <Space history={this.props.history} space={this.props.state.currentSpace}/>
@@ -29,9 +29,9 @@ class SpacesConatiner extends Component {
       <>
 
       {this.props.state.currentSpace && this.props.state.currentSpace.hasOwnProperty('id') ?  this.renderSpace() :
-        <Card.Group itemsPerRow={1}>
-        {this.renderSpaceCards()}
-        </Card.Group>
+        <>
+          {this.renderSpaceCards()}
+        </>
       }
 
       </>

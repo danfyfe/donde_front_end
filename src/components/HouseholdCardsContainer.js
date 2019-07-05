@@ -27,7 +27,7 @@ class HouseholdCardsContainer extends Component {
     })
 
     return <>
-      <Segment clearing style={{width:"75%", margin:"20px auto"}}>
+      <Segment clearing>
         <Message header="Add a Household!"/>
         <Form>
           <Form.Field>
@@ -42,15 +42,15 @@ class HouseholdCardsContainer extends Component {
           <label>Color</label>
             <Dropdown name="householdColor" onChange={this.handleHouseholdInput} pointing="top left" placeholder="Select Color" fluid selection options={householdColorOptions}/>
           </Form.Field>
-          <Button onClick={this.createHousehold}>Submit</Button>
-          <Button onClick={this.setAddingHousehold}>Cancel</Button>
+          <Button size="mini" onClick={this.createHousehold}>Submit</Button>
+          <Button size="mini" onClick={this.setAddingHousehold}>Cancel</Button>
         </Form>
       </Segment>
     </>
   }
 
   renderAddHouseholdHeader = () => {
-    return <Header onClick={this.setAddingHousehold} color="blue">Add Household</Header>
+    return <Button onClick={this.setAddingHousehold} color="blue" floated="right" size="mini">Add Household</Button>
   }
 
   handleHouseholdInput = (e) => {
@@ -110,13 +110,13 @@ class HouseholdCardsContainer extends Component {
 
     return(
       <>
-          <Menu style={{margin:"0px 0px 15px 0px"}}>
-            <Header style={{padding:"10px"}}>Households</Header>
-          </Menu>
-
+      <Segment clearing>
+            <Header floated='left'>Households</Header>
             { this.state.addingHousehold ?
               this.renderHouseholdForm() : this.renderAddHouseholdHeader()
             }
+      </Segment>
+
 
           <Card.Group>
             {this.renderHouseholdCards()}

@@ -13,7 +13,7 @@ class HouseholdPage extends Component {
 
   componentDidMount(){
     this.props.isFetching()
-  
+
     fetch('http://localhost:3000/api/v1/profile',{
       method:"POST",
       headers: { Authorization:  localStorage.getItem("token") }
@@ -27,8 +27,11 @@ class HouseholdPage extends Component {
     })
     .then(resp=>resp.json())
     .then(household=>{
+      console.log(this.props.state.user)
       this.props.setCurrentHousehold(household)
-      this.props.isDoneFetching()
+      if (this.props.state.currentHousehold) {
+        this.props.isDoneFetching()
+      }
       // try setting member of household here
     })
     )

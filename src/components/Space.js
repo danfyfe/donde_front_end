@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Segment, Card, Header, Form, Button, Message } from 'semantic-ui-react'
+import { Segment, Card, Header, Form, Button, Message, Container } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import ContainerCard from './ContainerCard.js'
-import Container from './Container.js'
+import ContainerDisplay from './Container.js'
 
 class Space extends Component {
 
@@ -34,7 +34,7 @@ class Space extends Component {
   }
 
   renderAddContainerHeader = () => {
-    return <Header onClick={this.setAddingContainer} color="blue">Add Container</Header>
+    return <Button onClick={this.setAddingContainer} color="blue" size="mini" floated="right">Add Container</Button>
   }
 
   addContainer = () => {
@@ -87,7 +87,7 @@ class Space extends Component {
   }
 
   renderContainer = () => {
-    return <Container history={this.props.history} container={this.props.state.currentContainer}/>
+    return <ContainerDisplay history={this.props.history} container={this.props.state.currentContainer}/>
   }
 
 
@@ -95,17 +95,18 @@ class Space extends Component {
   render(){
     // console.log(this.props.history)
     return(
-      <Segment >
-        <Segment>
-          <Header size="medium">{this.props.space.name}</Header>
+      <>
+        <Container>
+          <Header size="medium" floated="left">{this.props.space.name}</Header>
           {this.state.addingContainer ? this.renderAddContainerForm() : this.renderAddContainerHeader()}
+        </Container>
 
-
-        </Segment>
+        <Container>
           {this.props.state.currentContainer.hasOwnProperty('id') ?
           this.renderContainer() : this.renderContainers()}
+        </Container>
 
-      </Segment>
+      </>
     )
   }
 }
