@@ -38,7 +38,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return { }
+  return {
+  setSearchingToFalse: () => dispatch({type:'SET_SEARCHING_TO_FALSE'})
+ }
 }
 
 

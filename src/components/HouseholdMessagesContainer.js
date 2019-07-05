@@ -36,9 +36,12 @@ class HouseholdMessagesContainer extends Component {
 
   renderMessageCards = () => {
     if (this.props.state.user.households && this.props.state.currentHousehold) {
-      return this.props.state.currentHousehold.messages.map(message => {
-        return <HouseholdMessageCard key={message.id} message={message}/>
-      })
+      if (this.props.state.currentHousehold.messages) {
+
+        return this.props.state.currentHousehold.messages.map(message => {
+          return <HouseholdMessageCard key={message.id} message={message}/>
+        })
+      }
     }
   }
 

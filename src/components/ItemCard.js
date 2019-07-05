@@ -39,7 +39,8 @@ const mapDispatchToProps = (dispatch) => {
       setHouseholds: (households) => dispatch({type:"SET_HOUSEHOLDS", households}),
       addHousehold: (household) => dispatch({type:"ADD_HOUSEHOLD", household}),
       setUserHouseholdMessages: (allMessages) => dispatch({type:"SET_USERHOUSEHOLDMESSAGES", allMessages}),
-      addMessage: (message) => dispatch({type:"ADD_MESSAGE", message})
+      addMessage: (message) => dispatch({type:"ADD_MESSAGE", message}),
+      setSearchingToFalse: () => dispatch({type:'SET_SEARCHING_TO_FALSE'})
     }
 }
 

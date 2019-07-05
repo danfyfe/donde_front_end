@@ -53,19 +53,22 @@ function householdReducer (state = defaultState, action){
       // console.log('add_container',action.container)
       // console.log('add_container',state.currentSpace)
       return {...state, currentSpace: {...state.currentSpace, containers:[...state.currentSpace.containers, action.container]}}
+
     case "SET_CURRENT_SPACE":
       // console.log('set current space',action.space)
       return {...state, currentSpace: action.space}
 
     case "SET_CURRENT_CONTAINER":
 
-
       return {...state, currentContainer: action.container}
 
     case "SET_SEARCHING":
-    // console.log('inside set_searching')
+      // console.log('inside set_searching')
       return {...state, searching: !state.searching}
 
+    case "SET_SEARCHING_TO_FALSE":
+      console.log('inside set seraching to false')
+      return {...state, searching: false}
     case "ADD_MESSAGE_TO_CURRENTHOUSEHOLD":
         // console.log('addMtoCH', action.message)
         // console.log('addMtoCH', state.currentHousehold)

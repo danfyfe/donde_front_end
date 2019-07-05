@@ -1,6 +1,6 @@
 import React, { Component, } from 'react'
-import { Segment, Form } from 'semantic-ui-react'
-
+import { Segment, Form, Button, Message, Modal } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
 import SearchedHouseholdsContainer from './SearchedHouseholdsContainer.js'
 import SearchedItemsContainer from './SearchedItemsContainer'
@@ -52,34 +52,42 @@ class Search extends Component {
   render(){
     // console.log('search state',this.state)
     return(
-      <Segment clearing raised style={{width:"98%", margin:"10px auto"}}>
 
-        <Form>
-          <Form.Field>
-          <label>Search</label>
-          <input onChange={this.setSearchTerm} name="searchTerm" placeholder="Start typing to search"/>
-          </Form.Field>
-        </Form>
+        <Segment  clearing raised style={{width:"98%", margin:"10px auto"}}>
+        <Message header="Search for an Item or Household!"/>
+          <Form>
+            <Form.Field>
+            <label>Search</label>
+            <input onChange={this.setSearchTerm} name="searchTerm" placeholder="Start typing to search"/>
+            </Form.Field>
+          </Form>
 
-        <Segment>
-          Items
-          <SearchedItemsContainer history={this.props.history} searchTerm={this.state.searchTerm}
-          items={this.state.items}/>
-          Households
-          <SearchedHouseholdsContainer
-          history={this.props.history}
-          searchTerm={this.state.searchTerm} households={this.state.households}/>
-        </Segment>
+          <Segment>
+            Items
+            <SearchedItemsContainer history={this.props.history} searchTerm={this.state.searchTerm}
+            items={this.state.items}/>
+            Households
+            <SearchedHouseholdsContainer
+            history={this.props.history}
+            searchTerm={this.state.searchTerm} households={this.state.households}/>
+          </Segment>
+          <Button onClick={this.props.setSearching}floated="right">Cancel</Button>
 
+          </Segment>
 
-
-
-
-
-
-      </Segment>
     )
   }
 }
 
-export default Search
+
+const mapStateToProps = (state) => {
+  return { state }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setSearching: ()=> dispatch({type:"SET_SEARCHING"})
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Search)

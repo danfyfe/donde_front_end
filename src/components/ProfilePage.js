@@ -23,14 +23,16 @@ class ProfilePage extends Component {
   }
 
   render(){
+    // console.log(this.props.state.searching)
     if (!localStorage.token || localStorage.token === "undefined") {
     this.props.history.push("/")
     }
     // console.log("Profile",this.props.state.user)
     return(
       <>
+      {/*this.props.state.user.households[0] ? <Header>Has households</Header> : <Header>You have no household! Click the search icon in the nav bar to search for one!</Header>*/}
         <Menu style={{marginTop: "0px"}}>
-          <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
+          <Header style={{padding:"10px"}}>Welcome, {this.props.state.user ? this.props.state.user.username : null}!</Header>
         </Menu>
 
         {this.props.state.searching ? <Search history={this.props.history}/> : null}

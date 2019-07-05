@@ -28,7 +28,7 @@ class SpacesConatiner extends Component {
     return(
       <>
 
-      {this.props.state.currentSpace.hasOwnProperty('id') ?  this.renderSpace() :
+      {this.props.state.currentSpace && this.props.state.currentSpace.hasOwnProperty('id') ?  this.renderSpace() :
         <Card.Group itemsPerRow={1}>
         {this.renderSpaceCards()}
         </Card.Group>

@@ -13,8 +13,9 @@ class ItemPage extends Component {
     itemDescription: "",
     itemHousehold_id: "",
     itemSpace_id: "",
-    itemContainer_id: ""
-
+    itemContainer_id: "",
+    addingOwners: false,
+    addOwnersIds: []
   }
 
   componentDidMount(){
@@ -190,20 +191,106 @@ class ItemPage extends Component {
 
 
 
+  // add owners
+    setAddingOwners = () => {
+      this.setState({
+        addingOwners: !this.state.addingOwners
+      })
+    }
+
+    renderAddOwnersHeader = () => {
+      return <Header color="blue">Add Owners</Header>
+    }
+
+    renderAddOwnersForm = () => {
+      // console.log('addOwnersForm', this.props.state.currentItem.household)
+      // console.log('addOwnersForm USER', this.props.state.user)
+      let currentItemHousehold = {}
+
+      if (this.props.state.user.households) {
+        currentItemHousehold = this.props.state.user.households.filter(household => {
+          return household.id === this.props.state.currentItem.household.id
+        })[0]
+
+      }
+
+      let currentItemHouseholdUsersOptions = {}
+
+      if (currentItemHousehold.users) {
+         currentItemHouseholdUsersOptions = currentItemHousehold.users.map(user => {
+          return {key:user.id,text:user.username,value:user.id}
+        })
+      }
+
+      // console.log(currentItemHouseholdUsersOptions)
+      // debugger
+      if (currentItemHouseholdUsersOptions.hasOwnProperty(0)) {
+        return <Segment clearing>
+          <Form>
+            <Form.Field>
+              <Dropdown
+              onChange = {this.handleOwnersInput}
+              placeholder='Household Users'
+              fluid
+              multiple
+              search
+              selection
+              options={currentItemHouseholdUsersOptions}
+              />
+            </Form.Field>
+            <Button onClick={this.setAddingOwners} floated="right">Cancel</Button>
+            <Button onClick={this.addOwners} floated="right">Submit</Button>
+          </Form>
+        </Segment>
+
+
+
+      }
+
+    }
+
+    handleOwnersInput = (e,data) => {
+      // console.log(data.value)
+      this.setState({
+        addingOwnersIds: data.value
+      })
+    }
+
+
+    addOwners = () => {
+      fetch(`http://localhost:3000/api/v1/items/owners/${this.props.state.currentItem}`,{
+        method:"PATCH",
+        headers:{
+          'Content-Type':'application/json',
+          Accept: 'application/json'
+        },
+        body:JSON.stringify({
+          item:{
+            id: this.props.state.currentItem.id
+          },
+          users: this.state.addingOwnersIds
+        })
+      }).then(resp=>resp.json())
+      .then(item =>{
+        // console.log(item)
+        this.props.setCurrentItem(item)
+      })
+    }
+
+
   render(){
+    // console.log(this.state)
     // console.log(this.props.state.currentItem.space.name)
     // console.log(this.props.state.currentItem.household)
     // console.log('item page state', this.state)
     // console.log('current_item', this.props.state.currentItem)
     // console.log('current_user', this.props.state.user.households)
-
-
     return(
         <>{this.props.state.searching ? <Search history={this.props.history}/> : null}
       <Segment.Group style={{margin:"2% auto",width:"98%"}}>
         <Segment>
         {this.state.editing ? this.renderEditForm() : this.renderEditHeader()}
-  
+
           <Header>{this.props.state.currentItem.name}</Header>
         </Segment>
         <Segment.Group>
@@ -213,6 +300,9 @@ class ItemPage extends Component {
         </Segment.Group>
 
 
+
+        {this.renderAddOwnersHeader()}
+        {this.renderAddOwnersForm()}
 
         <Segment>Owners:</Segment>
         <Segment.Group>

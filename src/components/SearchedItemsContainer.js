@@ -1,5 +1,6 @@
 import React, { Component, } from 'react'
 import { Segment, Card } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
 import ItemCard from './ItemCard.js'
 
@@ -24,8 +25,10 @@ class SearchedItemsContainer extends Component {
   }
 
   redirectToItemPage = (id) => {
+    this.props.setSearchingToFalse()
     this.props.history.push(`/items/${id}`)
   }
+
   render(){
     // console.log('search term by props',this.props.searchTerm)
     return(
@@ -38,4 +41,19 @@ class SearchedItemsContainer extends Component {
   }
 }
 
-export default SearchedItemsContainer
+const mapStateToProps = (state) => {
+  return { state }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setSearching: ()=> dispatch({type:"SET_SEARCHING"}),
+    setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE"}),
+    setCurrentContainer: (container) => dispatch({type:"SET_CURRENT_CONTAINER", container}),
+    setSearchingToFalse: () => dispatch({type:"SET_SEARCHING_TO_FALSE"})
+    }
+  }
+
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(SearchedItemsContainer)

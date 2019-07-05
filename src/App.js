@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Dropdown, Icon } from 'semantic-ui-react'
+import { Menu, Dropdown, Icon, Modal } from 'semantic-ui-react'
 import { Switch, Route } from 'react-router-dom'
 
 import { connect } from 'react-redux'
@@ -13,6 +13,7 @@ import ItemsPage from './components/ItemsPage.js'
 import HouseholdPage from './components/HouseholdPage.js'
 import SpacePage from './components/SpacePage.js'
 import ItemPage from './components/ItemPage.js'
+import Search from './components/Search.js'
 
 // import Search from './components/Search.js'
 
@@ -26,11 +27,13 @@ class App extends React.Component {
   sendToProfilePage = () => {
     this.props.history.push('/profile')
     this.props.setCurrentSpace({})
+    this.props.setCurrentContainer({})
   }
 
   sendToItemsPage = () => {
     this.props.history.push('/items')
     this.props.setCurrentSpace({})
+    this.props.setCurrentContainer({})
   }
 
 
@@ -59,7 +62,9 @@ class App extends React.Component {
           </Menu.Menu>
         </Menu>
 
-
+        <Modal>
+          <Search />
+        </Modal>
 
         <Switch>
           <Route exact path="/" render={({ history }) => <HomePage history={history} /> } />
@@ -82,7 +87,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setSearching: ()=> dispatch({type:"SET_SEARCHING"}),
-      setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE"})
+    setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE"}),
+    setCurrentContainer: (container) => {
+      dispatch({type:"SET_CURRENT_CONTAINER", container})
+    }
   }
 }
 
