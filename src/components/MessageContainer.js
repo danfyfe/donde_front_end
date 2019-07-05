@@ -37,7 +37,7 @@ class MessageContainer extends Component {
   }
 
   renderMessageCards = () => {
-    if (this.props.state.user.households) {
+    if (this.props.state.isDoneFetching) {
 
       let householdMessages = []
 
@@ -45,10 +45,10 @@ class MessageContainer extends Component {
         return householdMessages = [...householdMessages, household.messages].flat()
       })
 
-      return householdMessages.map(message => {
-        return <MessageCard key={message.id} message={message}/>
-      })
-    }
+        return householdMessages.map(message => {
+          return <MessageCard key={message.id} message={message}/>
+        })
+      }
   }
 
   renderNewMessageForm = () => {
@@ -82,7 +82,11 @@ class MessageContainer extends Component {
   }
 
   renderNewMessageHeader = () => {
-    return <Header onClick={this.setAddingNewMessage} color="blue">Add Message</Header>
+    if (this.props.state.user.households.length === 0) {
+      return <Message>No messages are being displayed because you do not currently belong to any households. You can create a household by clicking 'Add Household', or use the Search Icon above to search for a household to join</Message>
+    }else {
+      return <Header onClick={this.setAddingNewMessage} color="blue">Add Message</Header>
+    }
   }
 
   addNewMessage = () => {

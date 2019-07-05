@@ -5,12 +5,15 @@ import { connect } from 'react-redux'
 import HouseholdContainer from './HouseholdContainer.js'
 import HouseholdMessagesContainer from './HouseholdMessagesContainer.js'
 import Search from './Search.js'
+import Loading from './Loading.js'
 
 
 
 class HouseholdPage extends Component {
 
   componentDidMount(){
+    this.props.isFetching()
+  
     fetch('http://localhost:3000/api/v1/profile',{
       method:"POST",
       headers: { Authorization:  localStorage.getItem("token") }
@@ -25,6 +28,7 @@ class HouseholdPage extends Component {
     .then(resp=>resp.json())
     .then(household=>{
       this.props.setCurrentHousehold(household)
+      this.props.isDoneFetching()
       // try setting member of household here
     })
     )
@@ -38,16 +42,22 @@ class HouseholdPage extends Component {
 
     return(
       <>
-        <Menu style={{marginTop: "0px"}}>
+        {this.props.state.isDoneFetching ?
+
+          <>
+          <Menu style={{marginTop: "0px"}}>
           <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
-        </Menu>
+          </Menu>
 
-        {this.props.state.searching ? <Search history={this.props.history}/> : null}
+          {this.props.state.searching ? <Search history={this.props.history}/> : null}
 
-        <Segment raised style={{margin:"10px auto",width:"98%"}}>
+          <Segment raised style={{margin:"10px auto",width:"98%"}}>
           <HouseholdContainer history={this.props.history}/>
           <HouseholdMessagesContainer />
-        </Segment>
+          </Segment>
+          </> : <Loading/>
+        }
+
       </>
     )
   }
@@ -60,7 +70,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) =>{
   return {
     setUser: (user) => dispatch({type:"SET_USER", user}),
-    setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household})
+    setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
+    isFetching: () => dispatch({type:"IS_FETCHING"}),
+    isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"})
   }
 }
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Card, List, Icon, Header, Menu, Form, Button, Message } from 'semantic-ui-react'
+import { Segment, Card, Header, Form, Button, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import ItemCard from './ItemCard.js'
@@ -12,7 +12,6 @@ class Container extends Component {
   }
 
   renderItemCards = () => {
-    console.log()
     if (this.props.container.items) {
       return this.props.container.items.map(item => {
         return <ItemCard redirectToItemPage={this.redirectToItemPage} item={item}/>

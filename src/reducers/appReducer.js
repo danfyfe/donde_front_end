@@ -6,7 +6,10 @@ const defaultState = {
   currentSpace: {},
   currentContainer: {},
   currentItem: {},
-  searching: false
+  searching: false,
+  isFetching: false,
+  isDoneFetching: false,
+
 }
 
 
@@ -78,6 +81,15 @@ function householdReducer (state = defaultState, action){
     case "SET_CURRENT_ITEM":
       // console.log(action.item)
       return {...state, currentItem: action.item}
+
+
+    case "IS_FETCHING":
+
+      return {...state, isFetching: true}
+
+    case "IS_DONE_FETCHING":
+
+      return {...state, isDoneFetching: true}
 
     default:
       return state

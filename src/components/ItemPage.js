@@ -3,6 +3,7 @@ import { Segment, Header, Form, Dropdown, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import Search from './Search.js'
+import Loading from './Loading.js'
 
 
 class ItemPage extends Component {
@@ -19,6 +20,7 @@ class ItemPage extends Component {
   }
 
   componentDidMount(){
+    this.props.isFetching()
     fetch('http://localhost:3000/api/v1/profile',{
       method:"POST",
       headers: { Authorization:  localStorage.getItem("token") }
@@ -43,6 +45,11 @@ class ItemPage extends Component {
           itemHousehold_id: item.household.id
         })
         this.props.setCurrentItem(item)
+        // console.log(this.props.state.currentItem)
+        if (this.props.state.currentItem) {
+          this.props.isDoneFetching()
+
+        }
       })
     )
   }
@@ -104,7 +111,7 @@ class ItemPage extends Component {
   }
 
   renderEditHeader = () => {
-    return <Header onClick={this.setEditing} color="blue">Edit Item</Header>
+    return <Button onClick={this.setEditing} color="blue">Move Item</Button>
   }
 
 
@@ -180,7 +187,8 @@ class ItemPage extends Component {
           id: this.props.state.currentItem.id,
           name: this.state.itemName,
           description: this.state.itemDescription
-        }
+        },
+        user_id: this.props.state.user.id
       })
     }).then(resp=>resp.json())
     .then(updatedItem => {
@@ -199,7 +207,7 @@ class ItemPage extends Component {
     }
 
     renderAddOwnersHeader = () => {
-      return <Header color="blue">Add Owners</Header>
+      return <Button floated="right" onClick={this.setAddingOwners} color="blue">Add Owners</Button>
     }
 
     renderAddOwnersForm = () => {
@@ -207,7 +215,7 @@ class ItemPage extends Component {
       // console.log('addOwnersForm USER', this.props.state.user)
       let currentItemHousehold = {}
 
-      if (this.props.state.user.households) {
+      if (this.props.state.user.households && this.props.state.currentItem.household) {
         currentItemHousehold = this.props.state.user.households.filter(household => {
           return household.id === this.props.state.currentItem.household.id
         })[0]
@@ -228,6 +236,7 @@ class ItemPage extends Component {
         return <Segment clearing>
           <Form>
             <Form.Field>
+            <label>Owners to be added</label>
               <Dropdown
               onChange = {this.handleOwnersInput}
               placeholder='Household Users'
@@ -258,6 +267,7 @@ class ItemPage extends Component {
 
 
     addOwners = () => {
+      this.props.isFetching()
       fetch(`http://localhost:3000/api/v1/items/owners/${this.props.state.currentItem}`,{
         method:"PATCH",
         headers:{
@@ -268,48 +278,58 @@ class ItemPage extends Component {
           item:{
             id: this.props.state.currentItem.id
           },
-          users: this.state.addingOwnersIds
+          users_ids: this.state.addingOwnersIds
         })
       }).then(resp=>resp.json())
       .then(item =>{
         // console.log(item)
         this.props.setCurrentItem(item)
+
+        this.setState({
+          addingOwners: !this.state.addingOwners
+        })
+
+        if (this.props.state.currentItem) {
+          this.props.isDoneFetching()
+        }
+        //
       })
     }
 
 
   render(){
-    // console.log(this.state)
-    // console.log(this.props.state.currentItem.space.name)
-    // console.log(this.props.state.currentItem.household)
-    // console.log('item page state', this.state)
-    // console.log('current_item', this.props.state.currentItem)
-    // console.log('current_user', this.props.state.user.households)
+    // console.log('done?',this.props.state.isDoneFetching)
+    // console.log('started', this.props.state.isFetching)
     return(
+      <>
+      {this.props.state.isDoneFetching ?
         <>{this.props.state.searching ? <Search history={this.props.history}/> : null}
-      <Segment.Group style={{margin:"2% auto",width:"98%"}}>
-        <Segment>
+        <Segment.Group style={{margin:"2% auto",width:"98%"}}>
+        <Segment clearing>
         {this.state.editing ? this.renderEditForm() : this.renderEditHeader()}
 
-          <Header>{this.props.state.currentItem.name}</Header>
+        <Header>{this.props.state.currentItem.name}</Header>
         </Segment>
         <Segment.Group>
-          <Segment>
-            {this.renderLocationDetails()}
-          </Segment>
+        <Segment>
+        {this.renderLocationDetails()}
+        </Segment>
         </Segment.Group>
 
-
-
-        {this.renderAddOwnersHeader()}
-        {this.renderAddOwnersForm()}
 
         <Segment>Owners:</Segment>
         <Segment.Group>
-            {this.renderOwners()}
+
+        <Segment clearing>
+        {this.state.addingOwners ? this.renderAddOwnersForm() : this.renderAddOwnersHeader() }
+        </Segment>
+        {this.renderOwners()}
         </Segment.Group>
 
-      </Segment.Group>
+        </Segment.Group>
+        </> : <Loading/>
+
+      }
       </>
     )
   }
@@ -326,7 +346,9 @@ const mapDispatchToProps = (dispatch) => {
       addHousehold: (household) => dispatch({type:"ADD_HOUSEHOLD", household}),
       setUserHouseholdMessages: (allMessages) => dispatch({type:"SET_USERHOUSEHOLDMESSAGES", allMessages}),
       addMessage: (message) => dispatch({type:"ADD_MESSAGE", message}),
-      setCurrentItem: (item) => dispatch({type:"SET_CURRENT_ITEM", item})
+      setCurrentItem: (item) => dispatch({type:"SET_CURRENT_ITEM", item}),
+      isFetching: () => dispatch({type:"IS_FETCHING"}),
+      isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"})
     }
 }
 

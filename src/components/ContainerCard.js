@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Card, List, Icon } from 'semantic-ui-react'
+import { Segment, Card, List } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 class ContainerCard extends Component {

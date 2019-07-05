@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Segment, Menu, Form, Message,Button, Header,Dropdown } from 'semantic-ui-react'
+import { Card, Segment, Menu, Form, Message, Button, Header,Dropdown } from 'semantic-ui-react'
 import HouseholdCard from './HouseholdCard.js'
 import { connect } from 'react-redux'
 
@@ -50,7 +50,7 @@ class HouseholdCardsContainer extends Component {
   }
 
   renderAddHouseholdHeader = () => {
-    return <Header floated="right"href="#" color="blue" onClick={this.setAddingHousehold} as='a'>Add Household</Header>
+    return <Header onClick={this.setAddingHousehold} color="blue">Add Household</Header>
   }
 
   handleHouseholdInput = (e) => {
@@ -85,16 +85,20 @@ class HouseholdCardsContainer extends Component {
       })
     })
   }
-// end of household functions
+// end of add household functions
 
 
   renderHouseholdCards = () => {
       // console.log("PROPS STATE HH IN RHHC", this.props.state.user.households)
-    if (this.props.state.user.households) {
-      return this.props.state.user.households.map(household=>{
-        return <HouseholdCard key={household.id} household={household}
-        redirectToHousehold={this.redirectToHousehold}/>
-      })
+    if (this.props.state.isDoneFetching) {
+      if (this.props.state.user.households.length === 0) {
+        return <Message>You do not currently belong to any households. You can create a household by clicking 'Add Household', or use the Search Icon above to search for a household to join</Message>
+      }else {
+        return this.props.state.user.households.map(household=>{
+          return <HouseholdCard key={household.id} household={household}
+          redirectToHousehold={this.redirectToHousehold}/>
+        })
+      }
     }
   }
 
@@ -103,10 +107,10 @@ class HouseholdCardsContainer extends Component {
   }
 
   render(){
-    
+
     return(
       <>
-          <Menu style={{margin:"0px 0px 15px 0px "}}>
+          <Menu style={{margin:"0px 0px 15px 0px"}}>
             <Header style={{padding:"10px"}}>Households</Header>
           </Menu>
 
