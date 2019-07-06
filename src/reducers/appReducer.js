@@ -9,6 +9,7 @@ const defaultState = {
   searching: false,
   isFetching: false,
   isDoneFetching: false,
+  isUserHousehold: false
 
 }
 
@@ -29,6 +30,7 @@ function householdReducer (state = defaultState, action){
     // case "SET_USERHOUSEHOLDMESSAGES":
     //   console.log(action.userHouseholdMessages)
     //   return state
+
     case "ADD_MESSAGE":
     // console.log('inside add_message',action.message.household)
     let household = state.user.households.find(household=>{
@@ -42,6 +44,10 @@ function householdReducer (state = defaultState, action){
     case "SET_CURRENT_HOUSEHOLD":
       // console.log(action.household)
       return {...state, currentHousehold: action.household}
+
+    case "IS_USERS_HOUSEHOLD":
+
+      return {...state, isUserHousehold: true}
 
     case "ADD_SPACE":
     // console.log(action.space
@@ -72,6 +78,7 @@ function householdReducer (state = defaultState, action){
     case "SET_SEARCHING_TO_FALSE":
       console.log('inside set seraching to false')
       return {...state, searching: false}
+
     case "ADD_MESSAGE_TO_CURRENTHOUSEHOLD":
         // console.log('addMtoCH', action.message)
         // console.log('addMtoCH', state.currentHousehold)

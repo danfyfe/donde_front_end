@@ -42,9 +42,7 @@ class App extends React.Component {
     return(
       <>
         <Menu style={{backgroundColor:"#3d8af7",borderRadius:"0px", marginBottom: "0px"}}>
-          <Menu.Item header>
-              ¿
-          </Menu.Item>
+        
           <Menu.Item onClick={this.sendToProfilePage} header>
             Don¿e
           </Menu.Item>

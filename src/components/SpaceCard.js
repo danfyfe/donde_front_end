@@ -7,7 +7,7 @@ class SpaceCard extends Component {
   renderContainerDescriptions = () => {
       return this.props.space.containers.map(container => {
         return <>
-        <Card link>
+        <Card link onClick={()=>this.props.setCurrentContainer(container)}>
             <Card.Content header={container.name}/>
             <Card.Content meta={container.description}/>
             <Card.Content extra>
@@ -54,7 +54,10 @@ const mapDispatchToProps = (dispatch) =>{
     setUser: (user) => dispatch({type:"SET_USER", user}),
     setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
     addSpace: (space) => dispatch({type:"ADD_SPACE", space}),
-    setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE", space})
+    setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE", space}),
+    setCurrentContainer: (container) => {
+      dispatch({type:"SET_CURRENT_CONTAINER", container})
+    }
   }
 }
 

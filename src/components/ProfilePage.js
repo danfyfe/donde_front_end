@@ -45,7 +45,7 @@ class ProfilePage extends Component {
           </Menu>
 
 
-          {this.props.state.searching ? <Segment clearing><Search history={this.props.history}/> </Segment>: null}
+          {this.props.state.searching ? <Search history={this.props.history}/> : null}
 
 
           <Segment raised style={{width:"98%", margin:"10px auto"}}>

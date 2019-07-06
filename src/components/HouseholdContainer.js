@@ -231,7 +231,7 @@ class HouseholdContainer extends Component {
           <Header onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)} as="h1" floated="left">{this.props.state.currentHousehold.name}</Header>
           {this.state.editingHousehold ?
           this.renderEditHouseholdForm() : this.renderEditHouseholdHeaeder()}
-          {this.setAddOrJoin()}
+          
 
           <SpacesContainer history={this.props.history}/>
 
