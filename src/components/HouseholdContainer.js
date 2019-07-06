@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Form, Button, Dropdown } from 'semantic-ui-react'
+import { Segment, Header, Form, Button, Dropdown, Message } from 'semantic-ui-react'
 import SpacesContainer from './SpacesContainer.js'
 import { connect } from 'react-redux'
 
@@ -83,11 +83,14 @@ class HouseholdContainer extends Component {
   }
 
   renderAddSpaceHeader = () => {
-    return <Button onClick={this.setAddingSpace} color="blue" floated="right" size="mini">Add Space</Button>
+    if (!this.state.editingHousehold) {
+      return <Button onClick={this.setAddingSpace} color="blue" floated="right" size="mini">Add Space</Button>
+    }
   }
 
   renderAddSpaceForm = () => {
     return <Segment clearing>
+    <Message>Add a space to {this.props.state.currentHousehold.name}</Message>
       <Form>
         <Form.Field>
           <label>Name</label>
@@ -155,7 +158,9 @@ class HouseholdContainer extends Component {
   }
 
   renderEditHouseholdHeaeder = () => {
-    return <Button onClick={this.setEditingHousehold} floated="right"color="blue" size="mini">Edit Household</Button>
+    if (!this.state.addingSpace) {
+      return <Button onClick={this.setEditingHousehold} floated="right"color="blue" size="mini">Edit Household</Button>
+    }
   }
 
   handleEditHouseholdColorInput = (e) => {
@@ -231,7 +236,8 @@ class HouseholdContainer extends Component {
           <Header onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)} as="h1" floated="left">{this.props.state.currentHousehold.name}</Header>
           {this.state.editingHousehold ?
           this.renderEditHouseholdForm() : this.renderEditHouseholdHeaeder()}
-          
+          {this.state.addingSpace ? this.renderAddSpaceForm() : this.renderAddSpaceHeader()}
+
 
           <SpacesContainer history={this.props.history}/>
 

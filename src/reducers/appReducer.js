@@ -76,7 +76,7 @@ function householdReducer (state = defaultState, action){
       return {...state, searching: !state.searching}
 
     case "SET_SEARCHING_TO_FALSE":
-      console.log('inside set seraching to false')
+      // console.log('inside set seraching to false')
       return {...state, searching: false}
 
     case "ADD_MESSAGE_TO_CURRENTHOUSEHOLD":

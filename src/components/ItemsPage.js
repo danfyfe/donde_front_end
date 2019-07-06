@@ -96,6 +96,10 @@ class ItemsPage extends Component {
   render(){
     // console.log("ITEMS PAGE",this.props)
     // console.log('items page state', this.state)
+    if (!localStorage.token || localStorage.token === "undefined") {
+    this.props.history.push("/")
+    }
+    
     return(
       <>
       {this.props.state.isDoneFetching ? null

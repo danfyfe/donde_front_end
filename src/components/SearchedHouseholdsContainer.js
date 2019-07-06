@@ -5,11 +5,13 @@ import { connect } from 'react-redux'
 import HouseholdCard from './HouseholdCard.js'
 
 class SearchedHouseholdsContainer extends Component {
-
+  
   redirectToHousehold = (id) => {
-    console.log('inside redirect to household')
+    // console.log('inside redirect to household')
     this.props.setSearchingToFalse()
+
     this.props.history.push(`/households/${id}`)
+
   }
 
   renderSearchedHouseholds = () => {
@@ -34,7 +36,7 @@ class SearchedHouseholdsContainer extends Component {
     return(
       <Segment>
         <Card.Group itemsPerRow={6}>
-        {this.renderSearchedHouseholds() }
+        {this.renderSearchedHouseholds()}
         </Card.Group>
       </Segment>
     )
@@ -50,7 +52,8 @@ const mapDispatchToProps = (dispatch) => {
     setSearching: ()=> dispatch({type:"SET_SEARCHING"}),
     setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE"}),
     setCurrentContainer: (container) => dispatch({type:"SET_CURRENT_CONTAINER", container}),
-    setSearchingToFalse: () => dispatch({type:"SET_SEARCHING_TO_FALSE"})
+    setSearchingToFalse: () => dispatch({type:"SET_SEARCHING_TO_FALSE"}),
+    setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household})
   }
 }
 

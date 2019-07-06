@@ -303,6 +303,7 @@ class ItemPage extends Component {
   render(){
     // console.log('done?',this.props.state.isDoneFetching)
     // console.log('started', this.props.state.isFetching)
+
     return(
       <>
       {this.props.state.isDoneFetching ?

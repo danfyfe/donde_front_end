@@ -4,14 +4,17 @@ import { connect } from 'react-redux'
 
 class HouseholdCard extends Component {
   displaySpaceOverview = () => {
-    // return this.props.household.spaces.map(space=>{
-    //   return <Card.Content key={space.id}>
-    //     {space.name}
-    //     <Card.Content extra>
-    //     <span># Items</span>
-    //     </Card.Content>
-    //   </Card.Content>
-    // })
+    if (this.props.household.spaces) {
+      // return this.props.household.spaces.map(space=>{
+      //     return <Card.Content key={space.id}>
+      //       {space.name}
+      //       <Card.Content extra>
+      //       <span># Items</span>
+      //       </Card.Content>
+      //     </Card.Content>
+      //   })
+
+    }
   }
 
   render(){
