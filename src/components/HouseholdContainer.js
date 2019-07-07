@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Form, Button, Dropdown, Message } from 'semantic-ui-react'
+import { Segment, Header, Form, Button, Dropdown, Message, Image } from 'semantic-ui-react'
 import SpacesContainer from './SpacesContainer.js'
 import { connect } from 'react-redux'
 
@@ -12,8 +12,9 @@ class HouseholdContainer extends Component {
     householdPassword: "",
 
     editingHousehold: false,
-    newHouseholdName: "",
+    newHouseholdName: this.props.state.currentHousehold.name,
     newHouseholdColor:"",
+    newHouseholdImage:"",
 
     currentSpace: {},
     currentContainer: {}
@@ -163,13 +164,22 @@ class HouseholdContainer extends Component {
     }
   }
 
-  handleEditHouseholdColorInput = (e) => {
-    // console.log('target innertext',e.target.innerText)
+  handleEditHouseholdColorInput = (e, data) => {
+
     this.setState({
       // newHouseholdName: e.target.value,
-      newHouseholdColor: e.target.innerText
+      newHouseholdColor: data.value
     })
   }
+
+  handleEditHouseholdImageInput = (e, data) => {
+
+    this.setState({
+      // newHouseholdName: e.target.value,
+      newHouseholdImage: data.value
+    })
+  }
+
   handleEditHouseholdNameInput = (e) => {
     // console.log('target innertext',e.target.innerText)
     this.setState({
@@ -190,32 +200,48 @@ class HouseholdContainer extends Component {
         household:{
           id: this.props.state.currentHousehold.id,
           name: this.state.newHouseholdName,
-          color: this.state.newHouseholdColor
+          color: this.state.newHouseholdColor,
+          image: this.state.newHouseholdImage
         }
       })
     }).then(resp=>resp.json())
     .then(household=>{
       // console.log("updated household", household)
       this.props.setCurrentHousehold(household)
+      this.setState({
+        editingHousehold: !this.state.editingHousehold
+      })
     })
   }
 
   renderEditHouseholdForm = () => {
     const householdColorDefinitions = ['red','orange','yellow','olive','green','teal','blue','violet','purple','pink','brown','grey']
 
+    const householdImageDefinitions = [{url:"https://i.imgur.com/GMOhUbb.png", name:"House 1"}, {url:"https://i.imgur.com/JSJ5Dk7.png", name: "House 2"}, {url:"https://i.imgur.com/rY6q2iR.png", name:"House 3"}, {url:"https://i.imgur.com/nKUQcrC.png", name:"House 4"}, {url:"https://i.imgur.com/0n5AzLS.png", name:"House 5"}, {url:"https://i.imgur.com/0dtFzLj.png",name:"House 6"}, {url:"https://i.imgur.com/CPYkV9E.png", name:"House 7"}]
+
     const householdColorOptions = householdColorDefinitions.map(color=>{
       return {key:color,text:color,value:color}
     })
 
+    const householdImageOptions = householdImageDefinitions.map(imageObj => {
+      return {key: imageObj.url, text: imageObj.name, value: imageObj.url, image:{ size: "mini", src: imageObj.url }}
+    })
+
     return <Segment clearing>
+    <Message>Edit {this.props.state.currentHousehold.name}</Message>
       <Form>
         <Form.Field>
         <label>Name</label>
-        <input onChange={this.handleEditHouseholdNameInput} placeholder="New Household Name"/>
+        <input onChange={this.handleEditHouseholdNameInput} placeholder="New Household Name"
+        value={this.state.newHouseholdName}/>
         </Form.Field>
         <Form.Field>
         <label>Color</label>
           <Dropdown name="householdColor" onChange={this.handleEditHouseholdColorInput} pointing="top left" placeholder="Select Color" fluid selection options={householdColorOptions}/>
+        </Form.Field>
+        <Form.Field>
+        <label>Image</label>
+          <Dropdown name="householdImage" onChange={this.handleEditHouseholdImageInput} pointing="top left" placeholder="Select Image" fluid selection options={householdImageOptions}/>
         </Form.Field>
         <Button floated="right" onClick={this.setEditingHousehold}>Cancel</Button>
         <Button onClick={this.editHousehold} floated="right">Submit</Button>
@@ -232,13 +258,13 @@ class HouseholdContainer extends Component {
     }
     return(
       <>
-        <Segment raised>
-          <Header onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)} as="h1" floated="left">{this.props.state.currentHousehold.name}</Header>
+        <Segment raised clearing>
+          <Header onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)} as="h1" floated="left">{this.props.state.currentHousehold.name}</Header><Image floated="left" src={this.props.state.currentHousehold.image} size="mini"/>
           {this.state.editingHousehold ?
           this.renderEditHouseholdForm() : this.renderEditHouseholdHeaeder()}
           {this.state.addingSpace ? this.renderAddSpaceForm() : this.renderAddSpaceHeader()}
 
-
+          
           <SpacesContainer history={this.props.history}/>
 
         </Segment>

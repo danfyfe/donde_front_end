@@ -64,7 +64,7 @@ class HouseholdMessagesContainer extends Component {
   }
 
   renderNewMessageHeader = () => {
-    return <Header onClick={this.setAddingNewMessage} color="blue">Add Message</Header>
+    return <Button onClick={this.setAddingNewMessage} color="blue" size="mini" floated="right">Add Message</Button>
   }
 
   addNewMessage = () => {
@@ -98,14 +98,14 @@ class HouseholdMessagesContainer extends Component {
 
     return(
       <>
-      <Menu style={{margin:"0px 0px 15px 0px"}}>
-        <Header style={{padding:"10px"}}>Messages</Header>
-      </Menu>
+      <Segment clearing>
+      <Header floated="left">Messages</Header>
       {this.state.addingNewMessage ? this.renderNewMessageForm():this.renderNewMessageHeader()}
+      </Segment>
         <Card.Group>
           {this.renderMessageCards()}
         </Card.Group>
-      </>
+        </>
     )
   }
 }

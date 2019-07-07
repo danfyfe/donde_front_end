@@ -61,16 +61,18 @@ class Search extends Component {
             <input onChange={this.setSearchTerm} name="searchTerm" placeholder="Start typing to search"/>
             </Form.Field>
           </Form>
+          {this.state.searchTerm === "" ?  null :
 
           <Segment>
-            Items
-            <SearchedItemsContainer history={this.props.history} searchTerm={this.state.searchTerm}
-            items={this.state.items}/>
-            Households
-            <SearchedHouseholdsContainer
-            history={this.props.history}
-            searchTerm={this.state.searchTerm} households={this.state.households}/>
+          <Message size="mini">Items</Message>
+          <SearchedItemsContainer history={this.props.history} searchTerm={this.state.searchTerm}
+          items={this.state.items}/>
+          <Message size="mini">Households</Message>
+          <SearchedHouseholdsContainer
+          history={this.props.history}
+          searchTerm={this.state.searchTerm} households={this.state.households}/>
           </Segment>
+        }
           <Button onClick={this.props.setSearching}floated="right">Cancel</Button>
 
           </Segment>

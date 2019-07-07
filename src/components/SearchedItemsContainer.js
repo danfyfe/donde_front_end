@@ -7,14 +7,22 @@ import ItemCard from './ItemCard.js'
 class SearchedItemsContainer extends Component {
 
   renderSearchedItems = () => {
-    let filteredItems = this.props.items.filter(item => {
+
+    // console.log('inside renderSearchedItems', this.props.state.user.households)
+    const userHouseholdItems = this.props.state.user.households.map(household => {
+      return household.items
+    }).flat()
+
+    // console.log(userHouseholdItems)
+
+    let filteredItems = userHouseholdItems.filter(item => {
       // console.log(item)
       return (item.name.toLowerCase().includes(this.props.searchTerm.toLowerCase()) || item.description.toLowerCase().includes(this.props.searchTerm.toLowerCase()))
     })
     // console.log(this.props.items)
     // console.log('filteredItems',filteredItems)
 
-    if (filteredItems.length === this.props.items.length) {
+    if (filteredItems.length === userHouseholdItems.length) {
     return null
     }else {
     return filteredItems.map(item => {
@@ -33,6 +41,7 @@ class SearchedItemsContainer extends Component {
     // console.log('search term by props',this.props.searchTerm)
     return(
       <Segment>
+      {/* render items if only a small amount? - toggle showing items with button or something*/}
         <Card.Group itemsPerRow={8}>
         {this.renderSearchedItems() }
         </Card.Group>
