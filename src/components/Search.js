@@ -64,14 +64,19 @@ class Search extends Component {
           {this.state.searchTerm === "" ?  null :
 
           <Segment>
-          <Message size="mini">Items</Message>
-          <SearchedItemsContainer history={this.props.history} searchTerm={this.state.searchTerm}
-          items={this.state.items}/>
-          <Message size="mini">Households</Message>
-          <SearchedHouseholdsContainer
-          history={this.props.history}
-          searchTerm={this.state.searchTerm} households={this.state.households}/>
-          </Segment>
+            <>
+              <Message size="mini">Households</Message>
+              <SearchedHouseholdsContainer
+              history={this.props.history}
+              searchTerm={this.state.searchTerm} households={this.state.households}/>
+            </>
+
+            <>
+              <Message size="mini">Items</Message>
+              <SearchedItemsContainer history={this.props.history} searchTerm={this.state.searchTerm}
+              items={this.state.items}/>
+            </>
+            </Segment>
         }
           <Button onClick={this.props.setSearching}floated="right">Cancel</Button>
 

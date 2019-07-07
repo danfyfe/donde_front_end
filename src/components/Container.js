@@ -36,7 +36,7 @@ class Container extends Component {
   }
 
   renderAddItemHeader = () => {
-    return <Header onClick={this.setAddItem} color="blue">Add Item</Header>
+    return <Button onClick={this.setAddItem} color="blue" size="mini" floated="right">Add Item</Button>
   }
 
   addItemToCurrentContainer = () => {
@@ -68,7 +68,7 @@ class Container extends Component {
   }
 
   renderAddItemForm = () => {
-    return <Segment clearing>
+    return <Segment clearing raised>
     <Message>Add an Item to this Container</Message>
       <Form>
         <Form.Field>
@@ -92,13 +92,13 @@ class Container extends Component {
     // console.log(this.props.history)
     return(
       <Segment>
-
-          <Header size="medium">{this.props.container.name}</Header>
+          <>
+          <Header floated="left">{this.props.container.name} in {this.props.state.currentSpace.name} at {this.props.state.currentHousehold.name}</Header>
           {this.state.addingItem ? this.renderAddItemForm() : this.renderAddItemHeader()}
-
-          <Card.Group>
+          </>
+          <>
             {this.renderItemCards()}
-          </Card.Group>
+          </>
 
       </Segment>
     )

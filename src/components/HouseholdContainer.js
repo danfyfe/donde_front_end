@@ -259,12 +259,21 @@ class HouseholdContainer extends Component {
     return(
       <>
         <Segment raised clearing>
-          <Header onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)} as="h1" floated="left">{this.props.state.currentHousehold.name}</Header><Image floated="left" src={this.props.state.currentHousehold.image} size="mini"/>
-          {this.state.editingHousehold ?
-          this.renderEditHouseholdForm() : this.renderEditHouseholdHeaeder()}
-          {this.state.addingSpace ? this.renderAddSpaceForm() : this.renderAddSpaceHeader()}
 
-          
+          {this.props.state.currentSpace && this.props.state.currentSpace.hasOwnProperty('id') ? null :
+          <>
+
+          <Header onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)} as="h1" floated="left">{this.props.state.currentHousehold.name}</Header><Image floated="left" src={this.props.state.currentHousehold.image} size="mini"/>
+
+          {this.state.editingHousehold ?
+            this.renderEditHouseholdForm() : this.renderEditHouseholdHeaeder()}
+
+
+            {this.state.addingSpace ? this.renderAddSpaceForm() : this.renderAddSpaceHeader()}
+          </>
+        }
+
+
           <SpacesContainer history={this.props.history}/>
 
         </Segment>

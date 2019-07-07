@@ -21,7 +21,7 @@ class HouseholdCard extends Component {
     // console.log("HHCARD",this.props)
 
     return(
-      <Card color={this.props.household.color} link style={{width:"100%"}} onClick={()=>this.props.redirectToHousehold(this.props.household.id)}>
+      <Card color={this.props.household.color} link style={{width:"100%"}} onClick={()=>this.props.redirectToHousehold(this.props.household)}>
         <Card.Content>
           <Image floated='right' size='mini' src={this.props.household.image}/>
           <Card.Header>{this.props.household.name}</Card.Header>

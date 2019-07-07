@@ -34,7 +34,10 @@ class Space extends Component {
   }
 
   renderAddContainerHeader = () => {
-    return <Button onClick={this.setAddingContainer} color="blue" size="mini" floated="right">Add Container</Button>
+    return <>
+    <Button onClick={() => this.props.setCurrentSpace({})} color="blue" size="mini" floated="right">Back To Household</Button>
+    <Button onClick={this.setAddingContainer} color="blue" size="mini" floated="right">Add Container</Button>
+    </>
   }
 
   addContainer = () => {
@@ -63,7 +66,7 @@ class Space extends Component {
   }
 
   renderAddContainerForm = () => {
-    return <Segment clearing>
+    return <Segment clearing raised>
       <Message>Add a Container to the Space!</Message>
       <Form>
         <Form.Field>
@@ -81,9 +84,9 @@ class Space extends Component {
   }
 
   renderContainers = () => {
-    return <Card.Group itemsPerRow={1}>
+    return <>
       {this.renderContainerCards()}
-    </Card.Group>
+    </>
   }
 
   renderContainer = () => {
@@ -96,15 +99,19 @@ class Space extends Component {
     // console.log(this.props.history)
     return(
       <>
-        <Container>
-          <Header size="medium" floated="left">{this.props.space.name}</Header>
-          {this.state.addingContainer ? this.renderAddContainerForm() : this.renderAddContainerHeader()}
-        </Container>
 
-        <Container>
-          {this.props.state.currentContainer.hasOwnProperty('id') ?
+      
+      <Segment>
+        <>
+          <Header floated="left">{this.props.space.name} at {this.props.state.currentHousehold.name}</Header>
+          {this.state.addingContainer ? this.renderAddContainerForm() : this.renderAddContainerHeader()}
+        </>
+
+
+          {this.props.state.currentContainer && this.props.state.currentContainer.hasOwnProperty('id') ?
           this.renderContainer() : this.renderContainers()}
-        </Container>
+
+        </Segment>
 
       </>
     )

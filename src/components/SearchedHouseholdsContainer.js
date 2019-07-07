@@ -5,12 +5,14 @@ import { connect } from 'react-redux'
 import HouseholdCard from './HouseholdCard.js'
 
 class SearchedHouseholdsContainer extends Component {
-  
-  redirectToHousehold = (id) => {
+
+  redirectToHousehold = (household) => {
     // console.log('inside redirect to household')
     this.props.setSearchingToFalse()
 
-    this.props.history.push(`/households/${id}`)
+    this.props.history.push(`/households/${household.id}`)
+    
+    this.props.setCurrentHousehold(household)
 
   }
 

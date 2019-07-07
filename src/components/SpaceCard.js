@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Card, List } from 'semantic-ui-react'
+import { Segment, Card, List, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 class SpaceCard extends Component {
@@ -7,7 +7,7 @@ class SpaceCard extends Component {
   renderContainerDescriptions = () => {
       return this.props.space.containers.map(container => {
         return <>
-        <Card link onClick={()=>this.props.setCurrentContainer(container)}>
+        <Card link onClick={()=>this.props.setCurrentContainer(container)} style={{width:"100%"}}>
             <Card.Content header={container.name}/>
             <Card.Content meta={container.description}/>
             <Card.Content extra>
@@ -28,16 +28,28 @@ class SpaceCard extends Component {
     })
   }
 
+  renderNoContainersMessage = () => {
+    return <Message warning>This space has no containers! Click on the space to add one!</Message>
+  }
+
+  setCurrentSpaceAndContainerToNone = (space) => {
+    this.props.setCurrentSpace(space)
+    this.props.setCurrentContainer({})
+  }
+
   render(){
     // console.log("SPACECARD",this.props.space)
     return(
 
-      <Card link style={{width:"100%"}} onClick={()=>{this.props.setCurrentSpace(this.props.space)}} >
+      <Card link style={{width:"100%"}} onClick={()=>{this.setCurrentSpaceAndContainerToNone(this.props.space)}} >
         <Card.Content header={this.props.space.name}/>
         <Segment>
+        {
+          this.props.space.containers.length === 0 ? this.renderNoContainersMessage() :
           <Card.Group itemsPerRow={6}>
           {this.renderContainerDescriptions()}
           </Card.Group>
+        }
         </Segment>
 
       </Card>

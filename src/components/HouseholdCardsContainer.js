@@ -132,12 +132,13 @@ class HouseholdCardsContainer extends Component {
     }
   }
 
-  redirectToHousehold = (id) => {
-    this.props.history.push(`/households/${id}`)
+  redirectToHousehold = (household) => {
+    this.props.history.push(`/households/${household.id}`)
+    // this.props.setCurrentHousehold()
   }
 
   render(){
-    console.log(this.state)
+
     return(
       <>
       <Segment clearing>
@@ -165,7 +166,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
       setUser: (user) => dispatch({type:"SET_USER", user}),
       setHouseholds: (households) => dispatch({type:"SET_HOUSEHOLDS",households}),
-      addHousehold: (household) => dispatch({type:"ADD_HOUSEHOLD", household})
+      addHousehold: (household) => dispatch({type:"ADD_HOUSEHOLD", household}),
+      setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household})
     }
 }
 
