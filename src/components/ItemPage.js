@@ -3,6 +3,7 @@ import { Segment, Header, Form, Dropdown, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import Search from './Search.js'
+import Loading from './Loading.js'
 
 
 class ItemPage extends Component {
@@ -13,11 +14,13 @@ class ItemPage extends Component {
     itemDescription: "",
     itemHousehold_id: "",
     itemSpace_id: "",
-    itemContainer_id: ""
-
+    itemContainer_id: "",
+    addingOwners: false,
+    addOwnersIds: []
   }
 
   componentDidMount(){
+    this.props.isFetching()
     fetch('http://localhost:3000/api/v1/profile',{
       method:"POST",
       headers: { Authorization:  localStorage.getItem("token") }
@@ -42,6 +45,11 @@ class ItemPage extends Component {
           itemHousehold_id: item.household.id
         })
         this.props.setCurrentItem(item)
+        // console.log(this.props.state.currentItem)
+        if (this.props.state.currentItem) {
+          this.props.isDoneFetching()
+
+        }
       })
     )
   }
@@ -103,7 +111,7 @@ class ItemPage extends Component {
   }
 
   renderEditHeader = () => {
-    return <Header onClick={this.setEditing} color="blue">Edit Item</Header>
+    return <Button floated="right" size="mini" onClick={this.setEditing} color="blue">Move Item</Button>
   }
 
 
@@ -179,47 +187,153 @@ class ItemPage extends Component {
           id: this.props.state.currentItem.id,
           name: this.state.itemName,
           description: this.state.itemDescription
-        }
+        },
+        user_id: this.props.state.user.id
       })
     }).then(resp=>resp.json())
     .then(updatedItem => {
       // console.log("updated item",updatedItem)
       this.props.setCurrentItem(updatedItem)
+      this.setState({
+        editing: !this.state.editing
+      })
     })
   }
 
 
 
-  render(){
-    // console.log(this.props.state.currentItem.space.name)
-    // console.log(this.props.state.currentItem.household)
-    // console.log('item page state', this.state)
-    // console.log('current_item', this.props.state.currentItem)
-    // console.log('current_user', this.props.state.user.households)
+  // add owners
+    setAddingOwners = () => {
+      this.setState({
+        addingOwners: !this.state.addingOwners
+      })
+    }
 
+    renderAddOwnersHeader = () => {
+      return <Button floated="right" size="mini" onClick={this.setAddingOwners} color="blue">Add Owners</Button>
+    }
+
+    renderAddOwnersForm = () => {
+      // console.log('addOwnersForm', this.props.state.currentItem.household)
+      // console.log('addOwnersForm USER', this.props.state.user)
+      let currentItemHousehold = {}
+
+      if (this.props.state.user.households && this.props.state.currentItem.household) {
+        currentItemHousehold = this.props.state.user.households.filter(household => {
+          return household.id === this.props.state.currentItem.household.id
+        })[0]
+
+      }
+
+      let currentItemHouseholdUsersOptions = {}
+
+      if (currentItemHousehold.users) {
+         currentItemHouseholdUsersOptions = currentItemHousehold.users.map(user => {
+          return {key:user.id,text:user.username,value:user.id}
+        })
+      }
+
+      // console.log(currentItemHouseholdUsersOptions)
+      // debugger
+      if (currentItemHouseholdUsersOptions.hasOwnProperty(0)) {
+        return <Segment clearing>
+          <Form>
+            <Form.Field>
+            <label>Owners to be added</label>
+              <Dropdown
+              onChange = {this.handleOwnersInput}
+              placeholder='Household Users'
+              fluid
+              multiple
+              search
+              selection
+              options={currentItemHouseholdUsersOptions}
+              />
+            </Form.Field>
+            <Button onClick={this.setAddingOwners} floated="right">Cancel</Button>
+            <Button onClick={this.addOwners} floated="right">Submit</Button>
+          </Form>
+        </Segment>
+
+
+
+      }
+
+    }
+
+    handleOwnersInput = (e,data) => {
+      // console.log(data.value)
+      this.setState({
+        addingOwnersIds: data.value
+      })
+    }
+
+
+    addOwners = () => {
+      this.props.isFetching()
+      fetch(`http://localhost:3000/api/v1/items/owners/${this.props.state.currentItem}`,{
+        method:"PATCH",
+        headers:{
+          'Content-Type':'application/json',
+          Accept: 'application/json'
+        },
+        body:JSON.stringify({
+          item:{
+            id: this.props.state.currentItem.id
+          },
+          users_ids: this.state.addingOwnersIds
+        })
+      }).then(resp=>resp.json())
+      .then(item =>{
+        // console.log(item)
+        this.props.setCurrentItem(item)
+
+        this.setState({
+          addingOwners: !this.state.addingOwners
+        })
+
+        if (this.props.state.currentItem) {
+          this.props.isDoneFetching()
+        }
+        //
+      })
+    }
+
+
+  render(){
+    // console.log('done?',this.props.state.isDoneFetching)
+    // console.log('started', this.props.state.isFetching)
 
     return(
+      <>
+      {this.props.state.isDoneFetching ?
         <>{this.props.state.searching ? <Search history={this.props.history}/> : null}
-      <Segment.Group style={{margin:"2% auto",width:"98%"}}>
-        <Segment>
+        <Segment style={{margin:"2% auto",width:"98%"}}>
+        <Segment clearing>
         {this.state.editing ? this.renderEditForm() : this.renderEditHeader()}
-  
-          <Header>{this.props.state.currentItem.name}</Header>
+
+        <Header floated="left">{this.props.state.currentItem.name}</Header>
         </Segment>
-        <Segment.Group>
-          <Segment>
-            {this.renderLocationDetails()}
-          </Segment>
-        </Segment.Group>
+
+        <Segment>
+        {this.renderLocationDetails()}
+        </Segment>
 
 
 
         <Segment>Owners:</Segment>
-        <Segment.Group>
-            {this.renderOwners()}
-        </Segment.Group>
 
-      </Segment.Group>
+
+        <Segment clearing>
+        {this.state.addingOwners ? this.renderAddOwnersForm() : this.renderAddOwnersHeader() }
+        </Segment>
+        {this.renderOwners()}
+        </Segment>
+
+
+        </> : <Loading/>
+
+      }
       </>
     )
   }
@@ -236,7 +350,9 @@ const mapDispatchToProps = (dispatch) => {
       addHousehold: (household) => dispatch({type:"ADD_HOUSEHOLD", household}),
       setUserHouseholdMessages: (allMessages) => dispatch({type:"SET_USERHOUSEHOLDMESSAGES", allMessages}),
       addMessage: (message) => dispatch({type:"ADD_MESSAGE", message}),
-      setCurrentItem: (item) => dispatch({type:"SET_CURRENT_ITEM", item})
+      setCurrentItem: (item) => dispatch({type:"SET_CURRENT_ITEM", item}),
+      isFetching: () => dispatch({type:"IS_FETCHING"}),
+      isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"})
     }
 }
 

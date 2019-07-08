@@ -6,7 +6,11 @@ const defaultState = {
   currentSpace: {},
   currentContainer: {},
   currentItem: {},
-  searching: false
+  searching: false,
+  isFetching: false,
+  isDoneFetching: false,
+  isUserHousehold: false
+
 }
 
 
@@ -26,6 +30,7 @@ function householdReducer (state = defaultState, action){
     // case "SET_USERHOUSEHOLDMESSAGES":
     //   console.log(action.userHouseholdMessages)
     //   return state
+
     case "ADD_MESSAGE":
     // console.log('inside add_message',action.message.household)
     let household = state.user.households.find(household=>{
@@ -40,6 +45,10 @@ function householdReducer (state = defaultState, action){
       // console.log(action.household)
       return {...state, currentHousehold: action.household}
 
+    case "IS_USERS_HOUSEHOLD":
+
+      return {...state, isUserHousehold: true}
+
     case "ADD_SPACE":
     // console.log(action.space
       return {...state, currentHousehold:{...state.currentHousehold, spaces:[...state.currentHousehold.spaces,action.space]}}
@@ -53,18 +62,22 @@ function householdReducer (state = defaultState, action){
       // console.log('add_container',action.container)
       // console.log('add_container',state.currentSpace)
       return {...state, currentSpace: {...state.currentSpace, containers:[...state.currentSpace.containers, action.container]}}
+
     case "SET_CURRENT_SPACE":
       // console.log('set current space',action.space)
       return {...state, currentSpace: action.space}
 
     case "SET_CURRENT_CONTAINER":
 
-
       return {...state, currentContainer: action.container}
 
     case "SET_SEARCHING":
-    // console.log('inside set_searching')
+      // console.log('inside set_searching')
       return {...state, searching: !state.searching}
+
+    case "SET_SEARCHING_TO_FALSE":
+      // console.log('inside set seraching to false')
+      return {...state, searching: false}
 
     case "ADD_MESSAGE_TO_CURRENTHOUSEHOLD":
         // console.log('addMtoCH', action.message)
@@ -75,6 +88,15 @@ function householdReducer (state = defaultState, action){
     case "SET_CURRENT_ITEM":
       // console.log(action.item)
       return {...state, currentItem: action.item}
+
+
+    case "IS_FETCHING":
+
+      return {...state, isFetching: true}
+
+    case "IS_DONE_FETCHING":
+
+      return {...state, isDoneFetching: true}
 
     default:
       return state

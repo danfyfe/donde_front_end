@@ -14,19 +14,26 @@ class MessageContainer extends Component {
   }
 
   handleInput = (e) => {
-    let newMessageHouseholdObj = {}
-
-    if (e.target.innerText) {
-      if (this.props.state.user.households) {
-        newMessageHouseholdObj = this.props.state.user.households.find(household=>{
-          return household.name === e.target.innerText
-        })
-      }
-    }
+    // let newMessageHouseholdObj = {}
+    //
+    // if (e.target.innerText) {
+    //   if (this.props.state.user.households) {
+    //     newMessageHouseholdObj = this.props.state.user.households.find(household=>{
+    //       return household.name === e.target.innerText
+    //     })
+    //   }
+    // }
 
     this.setState({
       [e.target.name]: e.target.value,
-      newMessageHousehold_id: newMessageHouseholdObj.id
+      // newMessageHousehold_id: newMessageHouseholdObj.id
+    })
+  }
+
+  handleMessageHouseholdInput = (e,data) => {
+    // console.log(data.value)
+    this.setState({
+      newMessageHousehold_id: data.value
     })
   }
 
@@ -37,7 +44,7 @@ class MessageContainer extends Component {
   }
 
   renderMessageCards = () => {
-    if (this.props.state.user.households) {
+    if (this.props.state.isDoneFetching) {
 
       let householdMessages = []
 
@@ -45,10 +52,10 @@ class MessageContainer extends Component {
         return householdMessages = [...householdMessages, household.messages].flat()
       })
 
-      return householdMessages.map(message => {
-        return <MessageCard key={message.id} message={message}/>
-      })
-    }
+        return householdMessages.map(message => {
+          return <MessageCard key={message.id} message={message}/>
+        })
+      }
   }
 
   renderNewMessageForm = () => {
@@ -56,7 +63,7 @@ class MessageContainer extends Component {
 
     if (this.props.state.user.households) {
       householdOptions = this.props.state.user.households.map(household => {
-       return {key:household.name,text:household.name,value:household.id}
+       return {key:household.name, text:household.name, value:household.id}
       })
     }
 
@@ -73,7 +80,7 @@ class MessageContainer extends Component {
         </Form.Field>
         <Form.Field>
         <label>Household</label>
-          <Dropdown name="household" onChange={this.handleInput} pointing="top left" placeholder="Select Household" fluid selection options={householdOptions}/>
+          <Dropdown name="household" onChange={this.handleMessageHouseholdInput} pointing="top left" placeholder="Select Household" fluid selection options={householdOptions}/>
         </Form.Field>
         <Button onClick={this.setAddingNewMessage} floated="right">Cancel</Button>
         <Button onClick={this.addNewMessage} floated="right">Submit</Button>
@@ -82,7 +89,11 @@ class MessageContainer extends Component {
   }
 
   renderNewMessageHeader = () => {
-    return <Header onClick={this.setAddingNewMessage} color="blue">Add Message</Header>
+    if (this.props.state.user.households.length === 0) {
+      return <Message size="small" compact>No messages are being displayed because you do not currently belong to any households. You can create a household by clicking 'Add Household', or use the Search Icon above to search for a household to join</Message>
+    }else {
+      return <Button onClick={this.setAddingNewMessage} color="blue" size="mini" floated="right">Add Message</Button>
+    }
   }
 
   addNewMessage = () => {
@@ -113,12 +124,13 @@ class MessageContainer extends Component {
 
   render(){
     // console.log(this.props.state)
+    // console.log(this.state)
     return(
       <>
-      <Menu style={{margin:"0px 0px 15px 0px"}}>
-        <Header style={{padding:"10px"}}>Messages</Header>
-      </Menu>
-      {this.state.addingNewMessage ? this.renderNewMessageForm():this.renderNewMessageHeader()}
+      <Segment clearing>
+        <Header floated="left">Messages</Header>
+        {this.state.addingNewMessage ? this.renderNewMessageForm():this.renderNewMessageHeader()}
+      </Segment>
         <Card.Group>
           {this.renderMessageCards()}
         </Card.Group>
@@ -143,3 +155,8 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(MessageContainer)
+
+
+// <Menu style={{margin:"0px 0px 15px 0px"}}>
+//   <Header style={{padding:"10px"}}>Messages</Header>
+// </Menu>

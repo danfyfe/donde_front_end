@@ -1,10 +1,11 @@
 import React, { Component, } from 'react'
-import { Segment, Card, Menu, Header, Form, Button, Message, Dropdown } from 'semantic-ui-react'
+import { Segment, Card, Menu, Header, Form, Button, Message } from 'semantic-ui-react'
 import {connect} from 'react-redux'
 
 
 import ItemCard from './ItemCard.js'
 import Search from './Search.js'
+import Loading from './Loading.js'
 
 
 class ItemsPage extends Component {
@@ -16,6 +17,7 @@ class ItemsPage extends Component {
   }
 
   componentDidMount(){
+    this.props.isFetching()
     fetch('http://localhost:3000/api/v1/profile',{
       method:"POST",
       headers: { Authorization:  localStorage.getItem("token") }
@@ -33,6 +35,7 @@ class ItemsPage extends Component {
         this.setState({
           items: items
         })
+        this.props.isDoneFetching()
       })
     )
   }
@@ -92,9 +95,19 @@ class ItemsPage extends Component {
 
   render(){
     // console.log("ITEMS PAGE",this.props)
-    console.log('items page state', this.state)
+    // console.log('items page state', this.state)
+    if (!localStorage.token || localStorage.token === "undefined") {
+    this.props.history.push("/")
+    }
+    
     return(
       <>
+      {this.props.state.isDoneFetching ? null
+
+
+
+        : <Loading/>
+      }
       <Menu style={{marginTop: "0px"}}>
         <Header style={{padding:"10px"}}>Welcome to {this.props.state.user.username}'s Household Items!</Header>
       </Menu>
@@ -122,7 +135,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
       setUser: (user) => dispatch({type:"SET_USER", user}),
       setHouseholds: (households) => dispatch({type:"SET_HOUSEHOLDS",households}),
-      addHousehold: (household) => dispatch({type:"ADD_HOUSEHOLD", household})
+      addHousehold: (household) => dispatch({type:"ADD_HOUSEHOLD", household}),
+      isFetching: () => dispatch({type:"IS_FETCHING"}),
+      isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"})
     }
 }
 

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Segment, Card, List, Icon, Header, Menu, Form, Button, Message } from 'semantic-ui-react'
+import { Segment, Card, Header, Form, Button, Message, Container } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import ContainerCard from './ContainerCard.js'
-import Container from './Container.js'
+import ContainerDisplay from './Container.js'
 
 class Space extends Component {
 
@@ -34,7 +34,10 @@ class Space extends Component {
   }
 
   renderAddContainerHeader = () => {
-    return <Header onClick={this.setAddingContainer} color="blue">Add Container</Header>
+    return <>
+    <Button onClick={() => this.props.setCurrentSpace({})} color="blue" size="mini" floated="right">Back To Household</Button>
+    <Button onClick={this.setAddingContainer} color="blue" size="mini" floated="right">Add Container</Button>
+    </>
   }
 
   addContainer = () => {
@@ -63,7 +66,7 @@ class Space extends Component {
   }
 
   renderAddContainerForm = () => {
-    return <Segment clearing>
+    return <Segment clearing raised>
       <Message>Add a Container to the Space!</Message>
       <Form>
         <Form.Field>
@@ -81,13 +84,13 @@ class Space extends Component {
   }
 
   renderContainers = () => {
-    return <Card.Group itemsPerRow={1}>
+    return <>
       {this.renderContainerCards()}
-    </Card.Group>
+    </>
   }
 
   renderContainer = () => {
-    return <Container history={this.props.history} container={this.props.state.currentContainer}/>
+    return <ContainerDisplay history={this.props.history} container={this.props.state.currentContainer}/>
   }
 
 
@@ -95,17 +98,22 @@ class Space extends Component {
   render(){
     // console.log(this.props.history)
     return(
-      <Segment >
-        <Segment>
-          <Header size="medium">{this.props.space.name}</Header>
+      <>
+
+      
+      <Segment>
+        <>
+          <Header floated="left">{this.props.space.name} at {this.props.state.currentHousehold.name}</Header>
           {this.state.addingContainer ? this.renderAddContainerForm() : this.renderAddContainerHeader()}
+        </>
 
 
-        </Segment>
-          {this.props.state.currentContainer.hasOwnProperty('id') ?
+          {this.props.state.currentContainer && this.props.state.currentContainer.hasOwnProperty('id') ?
           this.renderContainer() : this.renderContainers()}
 
-      </Segment>
+        </Segment>
+
+      </>
     )
   }
 }

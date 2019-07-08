@@ -15,9 +15,9 @@ class SpacesConatiner extends Component {
     }
   }
 
-  redirectToSpace = (id) => {
-    this.props.history.push(`/spaces/${id}`)
-  }
+  // redirectToSpace = (id) => {
+  //   this.props.history.push(`/spaces/${id}`)
+  // }
 
   renderSpace = () => {
     return <Space history={this.props.history} space={this.props.state.currentSpace}/>
@@ -28,10 +28,10 @@ class SpacesConatiner extends Component {
     return(
       <>
 
-      {this.props.state.currentSpace.hasOwnProperty('id') ?  this.renderSpace() :
-        <Card.Group itemsPerRow={1}>
-        {this.renderSpaceCards()}
-        </Card.Group>
+      {this.props.state.currentSpace && this.props.state.currentSpace.hasOwnProperty('id') ?  <> {this.renderSpace()} </>:
+        <>
+          {this.renderSpaceCards()}
+        </>
       }
 
       </>

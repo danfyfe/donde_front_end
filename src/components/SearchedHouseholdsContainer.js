@@ -1,12 +1,19 @@
 import React, { Component, } from 'react'
 import { Segment, Card } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
 import HouseholdCard from './HouseholdCard.js'
 
 class SearchedHouseholdsContainer extends Component {
 
-  redirectToHousehold = (id) => {
-    this.props.history.push(`/households/${id}`)
+  redirectToHousehold = (household) => {
+    // console.log('inside redirect to household')
+    this.props.setSearchingToFalse()
+
+    this.props.history.push(`/households/${household.id}`)
+    
+    this.props.setCurrentHousehold(household)
+
   }
 
   renderSearchedHouseholds = () => {
@@ -31,13 +38,27 @@ class SearchedHouseholdsContainer extends Component {
     return(
       <Segment>
         <Card.Group itemsPerRow={6}>
-        {this.renderSearchedHouseholds() }
+        {this.renderSearchedHouseholds()}
         </Card.Group>
       </Segment>
     )
   }
 }
 
+const mapStateToProps = (state) => {
+  return { state }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setSearching: ()=> dispatch({type:"SET_SEARCHING"}),
+    setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE"}),
+    setCurrentContainer: (container) => dispatch({type:"SET_CURRENT_CONTAINER", container}),
+    setSearchingToFalse: () => dispatch({type:"SET_SEARCHING_TO_FALSE"}),
+    setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household})
+  }
+}
 
 
-export default SearchedHouseholdsContainer
+
+export default connect(mapStateToProps,mapDispatchToProps)(SearchedHouseholdsContainer)

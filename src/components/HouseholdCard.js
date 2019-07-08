@@ -4,28 +4,31 @@ import { connect } from 'react-redux'
 
 class HouseholdCard extends Component {
   displaySpaceOverview = () => {
-    // return this.props.household.spaces.map(space=>{
-    //   return <Card.Content key={space.id}>
-    //     {space.name}
-    //     <Card.Content extra>
-    //     <span># Items</span>
-    //     </Card.Content>
-    //   </Card.Content>
-    // })
+    if (this.props.household.spaces) {
+      // return this.props.household.spaces.map(space=>{
+      //     return <Card.Content key={space.id}>
+      //       {space.name}
+      //       <Card.Content extra>
+      //       <span># Items</span>
+      //       </Card.Content>
+      //     </Card.Content>
+      //   })
+
+    }
   }
 
   render(){
-    console.log("HHCARD",this.props)
+    // console.log("HHCARD",this.props)
 
     return(
-      <Card color={this.props.household.color} link onClick={()=>this.props.redirectToHousehold(this.props.household.id)}>
+      <Card color={this.props.household.color} link style={{width:"100%"}} onClick={()=>this.props.redirectToHousehold(this.props.household)}>
         <Card.Content>
           <Image floated='right' size='mini' src={this.props.household.image}/>
           <Card.Header>{this.props.household.name}</Card.Header>
         </Card.Content>
         {this.displaySpaceOverview()}
         <Card.Content extra>
-          <span>{this.props.household.users.length} Users</span>
+          <span style={{paddingRight:"5px"}}>{this.props.household.users.length} Users</span>
           <span>{this.props.household.messages.length} Messages</span>
         </Card.Content>
       </Card>
@@ -38,7 +41,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return { }
+  return {
+  setSearchingToFalse: () => dispatch({type:'SET_SEARCHING_TO_FALSE'})
+ }
 }
 
 

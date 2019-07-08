@@ -69,9 +69,9 @@ class MessageCard extends Component {
           </Card.Description>
           <Card.Meta>
           <Icon name="home"/>
-          <span style={{maring:'10px'}}>{this.props.message.household.name}</span>
+          <span style={{maring:'10px', paddingRight:'5px'}}>{this.props.message.household.name}</span>
           <Icon name="user"/>
-          <span>{this.props.message.user.username}</span>
+          <span style={{paddingRight:'5px'}}>{this.props.message.user.username}</span>
           <Icon name="clock"/>
           <span>{moment(this.props.message.created_at).format('MMMM Do YYYY, h:mm a')}</span>
           {this.state.addingMessage ? null :<Button onClick={this.setAddingMessage}size="mini" floated="right"> Reply </Button>}
@@ -94,8 +94,8 @@ class MessageCard extends Component {
                 onChange={this.handleMessageInput}/>
             </Form.Field>
 
-            <Button size='small'floated="right" onClick={this.setAddingMessage}>Cancel</Button>
-            <Button size='small'floated="right"
+            <Button size='mini'floated="right" onClick={this.setAddingMessage}>Cancel</Button>
+            <Button size='mini'floated="right"
             onClick={this.addMessage}>Submit</Button>
           </Form>
         </Segment>:null}
