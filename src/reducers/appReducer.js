@@ -10,7 +10,6 @@ const defaultState = {
   isFetching: false,
   isDoneFetching: false,
   isUserHousehold: false
-
 }
 
 
@@ -86,7 +85,7 @@ function householdReducer (state = defaultState, action){
     case "ADD_MESSAGE_TO_CURRENTHOUSEHOLD":
         // console.log('addMtoCH', action.message)
         // console.log('addMtoCH', state.currentHousehold)
-      return {...state, currentHousehold:{...state.currentHousehold, messages:[...state.currentHousehold.messages, action.message]}}
+      return {...state, currentHousehold:{...state.currentHousehold, messages:[action.message, ...state.currentHousehold.messages]}}
 
     case "SET_CURRENT_ITEM":
       // console.log(action.item)

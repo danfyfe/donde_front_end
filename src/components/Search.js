@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { Segment, Form, Button, Message } from 'semantic-ui-react'
+import { Segment, Form, Button, Message, Grid } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import SearchedHouseholdsContainer from './SearchedHouseholdsContainer.js'
@@ -55,31 +55,39 @@ class Search extends Component {
     return(
 
         <Segment clearing raised style={{margin:"0 10px"}}>
-        <Message header="Search for a Household and/or Item!"/>
-          <Form>
-            <Form.Field>
-            <label>Search</label>
-            <input onChange={this.setSearchTerm} name="searchTerm" placeholder="Start typing to search"/>
-            </Form.Field>
-          </Form>
+          <Segment clearing>
+            <Message header="Search for a Household and/or Item!"/>
+            <Form floated="left">
+              <Form.Field>
+              <label>Search</label>
+              <input onChange={this.setSearchTerm} name="searchTerm" placeholder="Start typing to search"/>
+              </Form.Field>
+              <Button onClick={this.props.setSearching}floated="right" style={{margin:"2% 0 0 0 0"}}>Cancel</Button>
+            </Form>
+          </Segment>
           {this.state.searchTerm === "" ?  null :
 
-          <Segment>
+        <Grid columns={2}>
+          <Grid.Column>
+
             <>
               <Message size="mini">Households</Message>
               <SearchedHouseholdsContainer
               history={this.props.history}
               searchTerm={this.state.searchTerm} households={this.state.households}/>
             </>
-
+          </Grid.Column>
+          <Grid.Column>
             <>
               <Message size="mini">Items</Message>
               <SearchedItemsContainer history={this.props.history} searchTerm={this.state.searchTerm}
               items={this.state.items}/>
             </>
-            </Segment>
+            </Grid.Column>
+
+        </Grid>
         }
-          <Button onClick={this.props.setSearching}floated="right">Cancel</Button>
+
 
           </Segment>
 

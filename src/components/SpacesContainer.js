@@ -10,7 +10,7 @@ class SpacesConatiner extends Component {
   renderSpaceCards = () => {
     if (this.props.state.currentHousehold.spaces) {
       if (this.props.state.currentHousehold.spaces.length === 0) {
-        return <Message style={{margin:"3% 0 0 0"}}>There are currently no spaces in this household. Click Add Space to add one!</Message>
+        return <Message warning style={{margin:"3% 0 0 0"}}>There are currently no spaces in this household. A space is a location that you put your stuff, like a closet or storage area. Click Add Space to add one!</Message>
       } else {
         return this.props.state.currentHousehold.spaces.map(space => {
           return <SpaceCard key={space.id} redirectToSpace={this.redirectToSpace} space={space}/>

@@ -54,9 +54,13 @@ class ItemsPage extends Component {
         return householdItems = [...householdItems, household.items].flat()
       })
 
-      return householdItems.map(item => {
-        return <ItemCard key={item.id} redirectToItemPage={this.redirectToItemPage} history={this.props.history}  item={item}/>
-      })
+      if (householdItems.length === 0) {
+        return <Message warning style={{margin:" 5% auto"}}>You do not currently have access to any items. Create and item through a household or join a household!</Message>
+      } else {
+        return householdItems.map(item => {
+          return <ItemCard key={item.id} redirectToItemPage={this.redirectToItemPage} history={this.props.history}  item={item}/>
+        })
+      }
     }
   }
 
@@ -116,7 +120,7 @@ class ItemsPage extends Component {
 
         {this.props.state.searching ? <Search history={this.props.history}/> : null}
 
-      <Segment>
+      <Segment style={{margin: "1% auto",width:"98%"}}>
         {/*this.state.addingItem ? this.renderAddItemForm() : this.renderAddItemHeader()*/}
         <Card.Group itemsPerRow={8}>
           {this.renderItems()}
