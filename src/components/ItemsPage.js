@@ -40,8 +40,10 @@ class ItemsPage extends Component {
     )
   }
 
-  redirectToItemPage = (id) => {
-    this.props.history.push(`/items/${id}`)
+  redirectToItemPage = (item) => {
+    this.props.history.push(`/items/${item.id}`)
+    this.props.setSearchingToFalse()
+    this.props.setCurrentItem(item)
   }
 
   renderItems = () => {
@@ -115,7 +117,7 @@ class ItemsPage extends Component {
         {this.props.state.searching ? <Search history={this.props.history}/> : null}
 
       <Segment>
-        {this.state.addingItem ? this.renderAddItemForm() : this.renderAddItemHeader()}
+        {/*this.state.addingItem ? this.renderAddItemForm() : this.renderAddItemHeader()*/}
         <Card.Group itemsPerRow={8}>
           {this.renderItems()}
         </Card.Group>
@@ -137,7 +139,9 @@ const mapDispatchToProps = (dispatch) => {
       setHouseholds: (households) => dispatch({type:"SET_HOUSEHOLDS",households}),
       addHousehold: (household) => dispatch({type:"ADD_HOUSEHOLD", household}),
       isFetching: () => dispatch({type:"IS_FETCHING"}),
-      isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"})
+      isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"}),
+      setCurrentItem: (item) => dispatch({type:"SET_CURRENT_ITEM", item}),
+      setSearchingToFalse: () => dispatch({type:"SET_SEARCHING_TO_FALSE"})
     }
 }
 

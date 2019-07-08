@@ -39,6 +39,7 @@ class Search extends Component {
     )
   }
 
+  // can probs delete this
   redirectToItemPage = (id) => {
     this.props.history.push(`/items/${id}`)
   }

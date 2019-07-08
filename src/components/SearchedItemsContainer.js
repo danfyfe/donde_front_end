@@ -32,9 +32,11 @@ class SearchedItemsContainer extends Component {
     }
   }
 
-  redirectToItemPage = (id) => {
+  redirectToItemPage = (item) => {
+    // console.log(item)
     this.props.setSearchingToFalse()
-    this.props.history.push(`/items/${id}`)
+    this.props.history.push(`/items/${item.id}`)
+    this.props.setCurrentItem(item)
   }
 
   render(){
@@ -59,7 +61,8 @@ const mapDispatchToProps = (dispatch) => {
     setSearching: ()=> dispatch({type:"SET_SEARCHING"}),
     setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE"}),
     setCurrentContainer: (container) => dispatch({type:"SET_CURRENT_CONTAINER", container}),
-    setSearchingToFalse: () => dispatch({type:"SET_SEARCHING_TO_FALSE"})
+    setSearchingToFalse: () => dispatch({type:"SET_SEARCHING_TO_FALSE"}),
+    setCurrentItem: (item) => dispatch({type:"SET_CURRENT_ITEM", item})
     }
   }
 

@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { Segment, Header, Form, Dropdown, Button } from 'semantic-ui-react'
+import { Segment, Header, Form, Dropdown, Button, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import Search from './Search.js'
@@ -16,7 +16,10 @@ class ItemPage extends Component {
     itemSpace_id: "",
     itemContainer_id: "",
     addingOwners: false,
-    addOwnersIds: []
+    addOwnersIds: [],
+    deleting: false,
+    statusMessage: "",
+    error: false
   }
 
   componentDidMount(){
@@ -44,6 +47,7 @@ class ItemPage extends Component {
           itemSpace_id: item.space.id,
           itemHousehold_id: item.household.id
         })
+
         this.props.setCurrentItem(item)
         // console.log(this.props.state.currentItem)
         if (this.props.state.currentItem) {
@@ -57,20 +61,36 @@ class ItemPage extends Component {
 
   renderOwners = () => {
     if (this.props.state.currentItem.users) {
-      return this.props.state.currentItem.users.map(user => {
-        return <Segment key={user.id}>{user.username}</Segment>
-      })
+      if (this.props.state.currentItem.users.length === 0) {
+        return <Message>This item currently has no owners! Click Add Owners to give it some!</Message>
+      } else {
+        return this.props.state.currentItem.users.map(user => {
+          return <Segment key={user.id}>{user.username}</Segment>
+        })
+      }
+    }
+  }
+
+  renderDescription = () => {
+    if (this.props.state.currentItem) {
+      return <Header>{this.props.state.currentItem.description}</Header>
     }
   }
 
   renderLocationDetails = () => {
     if (this.props.state.currentItem.household) {
       return <>
-      <Header as="h1">{this.props.state.currentItem.household.name}</Header>
-      <Header as="h4">{this.props.state.currentItem.space.name}</Header>
-      <Header as="h5">{this.props.state.currentItem.container.name}</Header>
+      <Header as="h4" floated="left" color="grey">in {this.props.state.currentItem.container.name}</Header>
+      <Header as="h4" floated="left" color="grey">in {this.props.state.currentItem.space.name}</Header>
+      <Header as="h4" floated="left" color="grey">at {this.props.state.currentItem.household.name}</Header>
       </>
     }
+  }
+
+  handleInput = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
   }
 
   handleItemNameInput = (e) => {
@@ -110,11 +130,38 @@ class ItemPage extends Component {
     })
   }
 
-  renderEditHeader = () => {
-    return <Button floated="right" size="mini" onClick={this.setEditing} color="blue">Move Item</Button>
+  setDeleting = () => {
+    this.setState({
+      deleting: !this.state.deleting,
+      statusMessage: ""
+    })
   }
 
+  renderEditHeader = () => {
+    return <>
+    <Button floated="right" size="mini" onClick={this.setEditing} color="blue">Move Item</Button>
+    </>
+  }
 
+  renderDeleteHeader = () => {
+    return <>
+      <Button floated="right" size="mini" onClick={this.setDeleting} color="red">Delete Item</Button>
+    </>
+  }
+
+  renderDeleteForm = () => {
+    return <Segment clearing>
+      {this.renderErrorMessage()}
+      <Form>
+        <Form.Field>
+          <label>Please enter household password to delete item</label>
+          <input onChange={this.handleInput} name="householdPassword" type="password" placeholder="Household password"/>
+        </Form.Field>
+        <Button floated="right" size="mini" onClick={this.setDeleting}>Cancel</Button>
+        <Button floated="right" size="mini" color="red" onClick={this.deleteItem}>Delete Item</Button>
+      </Form>
+    </Segment>
+  }
 
   renderEditForm = () => {
     if (this.props.state.user.households) {
@@ -137,7 +184,7 @@ class ItemPage extends Component {
         return {key: container.id, text: container.name, value: container.id}
       })
 
-    return <Segment clearing>
+    return <Segment clearing raised>
       <Form>
         <Form.Field>
           <label>Name</label>
@@ -164,8 +211,8 @@ class ItemPage extends Component {
           <Dropdown name="household_id" onChange={this.handleHouseholdInput} pointing="top left" placeholder="Select Household" fluid selection options={householdOptions}/>
         </Form.Field>
 
-        <Button onClick={this.setEditing} floated="right">Cancel</Button>
-        <Button onClick={this.editItem} floated="right">Submit</Button>
+        <Button onClick={this.setEditing} floated="right" size="mini">Cancel</Button>
+        <Button onClick={this.editItem} floated="right" size="mini">Submit</Button>
 
       </Form>
     </Segment>
@@ -200,6 +247,24 @@ class ItemPage extends Component {
     })
   }
 
+  deleteItem = () => {
+    fetch(`http://localhost:3000/api/v1/items/${this.props.state.currentItem.id}`,{
+      method:"DELETE",
+      headers:{
+        'Content-Type':'application/json',
+        Accept: 'application/json'
+      },
+      body:JSON.stringify({
+        householdPassword: this.state.householdPassword,
+        userId: this.props.state.user.id
+      })
+    }).then(resp=>resp.json())
+    .then(data => {
+      this.setState({
+        statusMessage: data.message
+      })
+    })
+  }
 
 
   // add owners
@@ -236,7 +301,7 @@ class ItemPage extends Component {
       // console.log(currentItemHouseholdUsersOptions)
       // debugger
       if (currentItemHouseholdUsersOptions.hasOwnProperty(0)) {
-        return <Segment clearing>
+        return <Segment clearing raised>
           <Form>
             <Form.Field>
             <label>Owners to be added</label>
@@ -250,15 +315,11 @@ class ItemPage extends Component {
               options={currentItemHouseholdUsersOptions}
               />
             </Form.Field>
-            <Button onClick={this.setAddingOwners} floated="right">Cancel</Button>
-            <Button onClick={this.addOwners} floated="right">Submit</Button>
+            <Button onClick={this.setAddingOwners} floated="right" size="mini">Cancel</Button>
+            <Button onClick={this.addOwners} floated="right" size="mini">Submit</Button>
           </Form>
         </Segment>
-
-
-
       }
-
     }
 
     handleOwnersInput = (e,data) => {
@@ -267,7 +328,6 @@ class ItemPage extends Component {
         addingOwnersIds: data.value
       })
     }
-
 
     addOwners = () => {
       this.props.isFetching()
@@ -295,41 +355,58 @@ class ItemPage extends Component {
         if (this.props.state.currentItem) {
           this.props.isDoneFetching()
         }
-        //
+
       })
+    }
+
+    renderErrorMessage = () => {
+      if (this.state.statusMessage !== "") {
+        return <Message warning>{this.state.statusMessage}</Message>
+      }
     }
 
 
   render(){
     // console.log('done?',this.props.state.isDoneFetching)
     // console.log('started', this.props.state.isFetching)
-
+    console.log(this.state.statusMessage)
     return(
       <>
       {this.props.state.isDoneFetching ?
         <>{this.props.state.searching ? <Search history={this.props.history}/> : null}
-        <Segment style={{margin:"2% auto",width:"98%"}}>
+
+      <Segment clearing style={{margin:"1% auto",width:"98%"}}>
+
+      <Segment clearing>
+        <Header floated="left" as="h1">{this.props.state.currentItem.name}</Header>
+
+        {/*this.renderLocationDetails()*/}
+
+        {this.state.deleting ? this.renderDeleteForm() : this.state.editing ? null :this.renderDeleteHeader()}
+
+        {this.state.editing ? this.renderEditForm() : this.state.deleting ? null :this.renderEditHeader()}
+
+      </Segment>
+
+      <Segment.Group>
         <Segment clearing>
-        {this.state.editing ? this.renderEditForm() : this.renderEditHeader()}
-
-        <Header floated="left">{this.props.state.currentItem.name}</Header>
+          {this.renderLocationDetails()}
         </Segment>
-
         <Segment>
-        {this.renderLocationDetails()}
+          {this.renderDescription()}
         </Segment>
-
-
-
-        <Segment>Owners:</Segment>
+      </Segment.Group>
 
 
         <Segment clearing>
-        {this.state.addingOwners ? this.renderAddOwnersForm() : this.renderAddOwnersHeader() }
-        </Segment>
-        {this.renderOwners()}
+          <Header floated="left">Owners</Header>
+          {this.state.addingOwners ? this.renderAddOwnersForm() : this.renderAddOwnersHeader() }
+          <Segment.Group style={{margin:"2.5% 0 0 0"}}>
+            {this.renderOwners()}
+          </Segment.Group>
         </Segment>
 
+      </Segment>
 
         </> : <Loading/>
 

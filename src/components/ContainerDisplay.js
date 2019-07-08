@@ -31,8 +31,9 @@ class Container extends Component {
     })
   }
 
-  redirectToItemPage = (id) => {
-    this.props.history.push(`/items/${id}`)
+  redirectToItemPage = (item) => {
+    this.props.history.push(`/items/${item.id}`)
+    this.props.setCurrentItem(item)
   }
 
   renderAddItemHeader = () => {
@@ -121,9 +122,9 @@ const mapDispatchToProps = (dispatch) =>{
     addSpace: (space) => dispatch({type:"ADD_SPACE", space}),
     setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE"}),
     addItem: (item) => dispatch({type:"ADD_ITEM", item}),
-    setCurrentContainer: (container) => {
-      dispatch({type:"SET_CURRENT_CONTAINER", container})
-    }
+    setCurrentContainer: (container) =>
+      dispatch({type:"SET_CURRENT_CONTAINER", container}),
+    setCurrentItem: (item) => dispatch({type:"SET_CURRENT_ITEM", item})
   }
 }
 
