@@ -35,12 +35,16 @@ class HouseholdMessagesContainer extends Component {
   }
 
   renderMessageCards = () => {
+    // console.log(this.props.state.currentHousehold.messages)
     if (this.props.state.user.households && this.props.state.currentHousehold) {
       if (this.props.state.currentHousehold.messages) {
-
-        return this.props.state.currentHousehold.messages.map(message => {
-          return <HouseholdMessageCard key={message.id} message={message}/>
-        })
+        if (this.props.state.currentHousehold.messages.length === 0) {
+          return <Message size="small" compact style={{margin: "2% auto"}}>There are no messages for this household! Click Add Message to create one!</Message>
+        } else {
+          return this.props.state.currentHousehold.messages.map(message => {
+            return <HouseholdMessageCard key={message.id} message={message}/>
+          })
+        }
       }
     }
   }

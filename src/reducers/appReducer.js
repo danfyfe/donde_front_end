@@ -49,6 +49,10 @@ function householdReducer (state = defaultState, action){
 
       return {...state, isUserHousehold: true}
 
+    case "ADD_HOUSEHOLD_TO_CURRENT_USER":
+        // console.log(action.household)
+      return {...state, user: {...state.user, households:[...state.user.households, action.household]}}
+
     case "ADD_SPACE":
     // console.log(action.space
       return {...state, currentHousehold:{...state.currentHousehold, spaces:[...state.currentHousehold.spaces,action.space]}}

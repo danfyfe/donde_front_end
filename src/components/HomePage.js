@@ -39,7 +39,6 @@ class HomePage extends Component {
         this.props.history.push("/")
       }
 
-
     })
   }
 
@@ -48,7 +47,7 @@ class HomePage extends Component {
   }
 
 render(){
-  console.log(this.state.statusMessage)
+  // console.log(this.state.statusMessage)
   return ( localStorage.token && localStorage.token !== "undefined" ? (
       <Redirect to={"/profile"} />
     ) : (
@@ -65,7 +64,6 @@ render(){
                 <Button content='Login' primary />
               </Form>
             </Grid.Column>
-
 
             <Grid.Column verticalAlign='middle'>
               <Button content='Sign up' icon='signup' size='big'

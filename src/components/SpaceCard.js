@@ -8,7 +8,7 @@ class SpaceCard extends Component {
       return this.props.space.containers.map(container => {
         return <Fragment key={container.id}>
         <Card key={container.id} link onClick={()=>this.props.setCurrentContainer(container)} style={{width:"100%"}}>
-            <Card.Content header={container.name}/>
+            <Card.Content header={container.name }/>
             <Card.Content meta={container.description}/>
             <Card.Content extra>
               {container.items.length} Items

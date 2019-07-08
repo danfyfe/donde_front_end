@@ -77,7 +77,7 @@ class HouseholdCardsContainer extends Component {
   handleHouseholdColorInput = (e, data) => {
     // console.log("TARGET",e.target.innerText)
     // FIX THIS!!! find value for dropdown
-    console.log(data)
+    // console.log(data)
     this.setState({
       householdColor: data.value
     })
@@ -122,8 +122,8 @@ class HouseholdCardsContainer extends Component {
       // console.log("PROPS STATE HH IN RHHC", this.props.state.user.households)
     if (this.props.state.isDoneFetching) {
       if (this.props.state.user.households.length === 0) {
-        return <Message size="small" compact style={{margin:"0 auto"}}>You do not currently belong to any households. You can create a household by clicking 'Add Household', or use the Search Icon above to search for a household to join</Message>
-      }else {
+        return <Message size="small" compact style={{margin:"1% auto"}}>You do not currently belong to any households! You can create a household by clicking 'Add Household', or use the Search Icon above to search for a household to join</Message>
+      } else {
         return this.props.state.user.households.map(household=>{
           return <HouseholdCard key={household.id} household={household}
           redirectToHousehold={this.redirectToHousehold}/>

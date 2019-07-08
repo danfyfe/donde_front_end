@@ -15,9 +15,13 @@ class Space extends Component {
 
   renderContainerCards = () => {
     if (this.props.space.containers) {
-      return this.props.space.containers.map(container => {
-        return <ContainerCard key={container.id} container={container}/>
-      })
+      if (this.props.space.containers.length === 0) {
+        return this.renderNoContainersMessage()
+      } else {
+        return this.props.space.containers.map(container => {
+          return <ContainerCard key={container.id} container={container}/>
+        })
+      }
     }
   }
 
@@ -93,6 +97,10 @@ class Space extends Component {
     return <ContainerDisplay history={this.props.history} container={this.props.state.currentContainer}/>
   }
 
+  renderNoContainersMessage = () => {
+    return <Message>No Containers!</Message>
+  }
+
 
 
   render(){
@@ -111,6 +119,7 @@ class Space extends Component {
 
 
       {this.renderContainers()}
+
       </>
 
       }

@@ -16,6 +16,7 @@ class HouseholdPage extends Component {
     joingingHousehold: false,
     householdPassword: ""
   }
+
   componentDidMount(){
     this.props.isFetching()
 
@@ -57,10 +58,10 @@ class HouseholdPage extends Component {
 
   isUsersHousehold = () => {
     let isUserHousehold
-    if (this.state.user && this.state.household) {
+    if (this.props.state.user && this.props.state.currentHousehold) {
 
-      if (this.state.user.households) {
-        isUserHousehold = this.state.user.households.filter(household => {
+      if (this.props.state.user.households) {
+        isUserHousehold = this.props.state.user.households.filter(household => {
           return household.id === this.props.state.currentHousehold.id
         })
       }
@@ -91,12 +92,12 @@ class HouseholdPage extends Component {
     return <>
       <Form>
         <Form.Field>
-          <title>Password</title>
+          <label>Password</label>
           <input type="password" name="householdPassword" onChange={this.handleInput} placeholder="Please enter Household Password"/>
         </Form.Field>
-        <Button floated="right"
+        <Button floated="right" size="mini"
         onClick={this.setJoiningHousehold}>Cancel</Button>
-        <Button floated="right" onClick={this.joinHousehold}>Submit</Button>
+        <Button floated="right" size="mini" onClick={this.joinHousehold}>Submit</Button>
       </Form>
       </>
   }
@@ -120,30 +121,33 @@ class HouseholdPage extends Component {
     .then(household=>{
       // this.props.setCurrentHousehold(household)
       //
+      this.props.addHouseholdToCurrentUser(household)
+
       this.setState({
         joiningHousehold: !this.state.joiningHousehold,
         household: household
       })
 
       // this.props.isDoneFetching()
-      // this.props.history.push(`/households/${household.id}`)
+      this.props.history.push(`/households/${household.id}`)
 
     })
   }
 
   render(){
     // console.log(this.state)
-    console.log(this.props.state.currentHousehold.name)
-    console.log(this.isUsersHousehold())
+    // console.log(this.props.state.user.households)
+    // console.log(this.isUsersHousehold())
     if (!localStorage.token || localStorage.token === "undefined") {
     this.props.history.push("/")
     }
+
     return(
       <>
         {this.props.state.isDoneFetching ?
           <>
           <Menu style={{marginTop: "0px"}}>
-          <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
+            <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
           </Menu>
 
           {this.props.state.searching ? <Search history={this.props.history}/> : null}
@@ -182,7 +186,8 @@ const mapDispatchToProps = (dispatch) =>{
     setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
     isFetching: () => dispatch({type:"IS_FETCHING"}),
     isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"}),
-    isUsersHousehold: () => dispatch({type:"IS_USERS_HOUSEHOLD"})
+    isUsersHousehold: () => dispatch({type:"IS_USERS_HOUSEHOLD"}),
+    addHouseholdToCurrentUser: (household) => dispatch({type:"ADD_HOUSEHOLD_TO_CURRENT_USER", household})
   }
 }
 

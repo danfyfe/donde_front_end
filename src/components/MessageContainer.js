@@ -90,7 +90,7 @@ class MessageContainer extends Component {
 
   renderNewMessageHeader = () => {
     if (this.props.state.user.households.length === 0) {
-      return <Message size="small" compact>No messages are being displayed because you do not currently belong to any households. You can create a household by clicking 'Add Household', or use the Search Icon above to search for a household to join</Message>
+      return <Message size="small" compact style={{margin: "2% auto 0 auto"}}>No messages are being displayed because you do not currently belong to any households. You can create a household by clicking 'Add Household', or use the Search Icon above to search for a household to join</Message>
     }else {
       return <Button onClick={this.setAddingNewMessage} color="blue" size="mini" floated="right">Add Message</Button>
     }
