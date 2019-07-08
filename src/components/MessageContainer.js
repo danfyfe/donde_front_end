@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { Card, Menu, Header, Form, Message, Segment, Button, Dropdown } from 'semantic-ui-react'
+import { Card, Header, Form, Message, Segment, Button, Dropdown } from 'semantic-ui-react'
 import MessageCard from './MessageCard.js'
 
 import { connect } from 'react-redux'
@@ -67,7 +67,7 @@ class MessageContainer extends Component {
       })
     }
 
-    return <Segment clearing>
+    return <Segment clearing raised>
     <Message>Add New Message!</Message>
       <Form>
         <Form.Field>

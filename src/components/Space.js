@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Segment, Card, Header, Form, Button, Message, Container } from 'semantic-ui-react'
+import { Segment, Header, Form, Button, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import ContainerCard from './ContainerCard.js'
-import ContainerDisplay from './Container.js'
+import ContainerDisplay from './ContainerDisplay.js'
 
 class Space extends Component {
 
@@ -67,7 +67,7 @@ class Space extends Component {
 
   renderAddContainerForm = () => {
     return <Segment clearing raised>
-      <Message>Add a Container to the Space!</Message>
+      <Message>Add a Container to the {this.props.state.currentSpace.name}!</Message>
       <Form>
         <Form.Field>
           <label>Name</label>
@@ -77,8 +77,8 @@ class Space extends Component {
           <label>Description</label>
           <input onChange={this.handleInput} name="newContainerDescription" placeholder="Continer Description"/>
         </Form.Field>
-        <Button onClick={this.setAddingContainer} floated="right">Cancel</Button>
-        <Button onClick={this.addContainer} floated="right">Submit</Button>
+        <Button onClick={this.setAddingContainer} floated="right" size="mini">Cancel</Button>
+        <Button onClick={this.addContainer} floated="right" size="mini">Submit</Button>
       </Form>
     </Segment>
   }
@@ -100,16 +100,20 @@ class Space extends Component {
     return(
       <>
 
-      
+
       <Segment>
-        <>
-          <Header floated="left">{this.props.space.name} at {this.props.state.currentHousehold.name}</Header>
-          {this.state.addingContainer ? this.renderAddContainerForm() : this.renderAddContainerHeader()}
-        </>
+      {this.props.state.currentContainer && this.props.state.currentContainer.hasOwnProperty('id') ? this.renderContainer() :
+
+      <>
+      <Header floated="left" as="h2">{this.props.space.name}</Header>
+      <Header color="grey" floated="left" as="h2">at {this.props.state.currentHousehold.name}</Header>
+      {this.state.addingContainer ? this.renderAddContainerForm() : this.renderAddContainerHeader()}
 
 
-          {this.props.state.currentContainer && this.props.state.currentContainer.hasOwnProperty('id') ?
-          this.renderContainer() : this.renderContainers()}
+      {this.renderContainers()}
+      </>
+
+      }
 
         </Segment>
 

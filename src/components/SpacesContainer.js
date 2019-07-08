@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Segment } from 'semantic-ui-react'
+import {  } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import SpaceCard from './SpaceCard.js'

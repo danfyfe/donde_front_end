@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Segment, Menu, Form, Message, Button, Header,Dropdown } from 'semantic-ui-react'
+import { Card, Segment, Form, Message, Button, Header,Dropdown } from 'semantic-ui-react'
 import HouseholdCard from './HouseholdCard.js'
 import { connect } from 'react-redux'
 
@@ -35,7 +35,7 @@ class HouseholdCardsContainer extends Component {
 
 
     return <>
-      <Segment clearing>
+      <Segment clearing raised>
         <Message header="Add a Household!"/>
         <Form>
           <Form.Field>
@@ -54,8 +54,8 @@ class HouseholdCardsContainer extends Component {
           <label>Image</label>
             <Dropdown name="householdImage" onChange={this.handleHouseholdImageInput} pointing="top left" placeholder="Select Image" fluid selection options={householdImageOptions}/>
           </Form.Field>
-          <Button size="mini" onClick={this.createHousehold}>Submit</Button>
-          <Button size="mini" onClick={this.setAddingHousehold}>Cancel</Button>
+          <Button size="mini" floated="right" onClick={this.setAddingHousehold}>Cancel</Button>
+          <Button size="mini" floated="right" onClick={this.createHousehold}>Submit</Button>
         </Form>
       </Segment>
     </>

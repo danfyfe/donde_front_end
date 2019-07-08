@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Card, Header, Form, Button, Message } from 'semantic-ui-react'
+import { Segment, Header, Form, Button, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import ItemCard from './ItemCard.js'
@@ -36,12 +36,12 @@ class Container extends Component {
   }
 
   renderAddItemHeader = () => {
-    return <Button onClick={this.setAddItem} color="blue" size="mini" floated="right">Add Item</Button>
+    return <>
+    <Button onClick={() => this.props.setCurrentContainer({})} color="blue" size="mini" floated="right">Back to Space</Button>
+    <Button onClick={this.setAddItem} color="blue" size="mini" floated="right">Add Item</Button>
+    </>
   }
 
-  addItemToCurrentContainer = () => {
-
-  }
 
   addItem = () => {
     fetch('http://localhost:3000/api/v1/items',{
@@ -81,8 +81,8 @@ class Container extends Component {
           <input onChange={this.handleInput} name="itemDescription" placeholder="Item description"/>
         </Form.Field>
 
-        <Button onClick={this.setAddItem} floated="right">Cancel</Button>
-        <Button onClick={this.addItem} floated="right">Submit</Button>
+        <Button onClick={this.setAddItem} floated="right" size="mini">Cancel</Button>
+        <Button onClick={this.addItem} floated="right" size="mini">Submit</Button>
       </Form>
     </Segment>
   }
@@ -91,16 +91,18 @@ class Container extends Component {
   render(){
     // console.log(this.props.history)
     return(
+      <>
       <Segment>
           <>
-          <Header floated="left">{this.props.container.name} in {this.props.state.currentSpace.name} at {this.props.state.currentHousehold.name}</Header>
+          <Header floated="left">{this.props.container.name}</Header>
+          <Header color="grey" floated="left">in {this.props.state.currentSpace.name} at {this.props.state.currentHousehold.name}</Header>
           {this.state.addingItem ? this.renderAddItemForm() : this.renderAddItemHeader()}
-          </>
-          <>
-            {this.renderItemCards()}
+
+          {this.renderItemCards()}
           </>
 
       </Segment>
+      </>
     )
   }
 }
@@ -118,7 +120,10 @@ const mapDispatchToProps = (dispatch) =>{
     setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
     addSpace: (space) => dispatch({type:"ADD_SPACE", space}),
     setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE"}),
-    addItem: (item) => dispatch({type:"ADD_ITEM", item})
+    addItem: (item) => dispatch({type:"ADD_ITEM", item}),
+    setCurrentContainer: (container) => {
+      dispatch({type:"SET_CURRENT_CONTAINER", container})
+    }
   }
 }
 

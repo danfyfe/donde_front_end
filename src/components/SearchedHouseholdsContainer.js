@@ -1,4 +1,4 @@
-import React, { Component, } from 'react'
+import React, { Component } from 'react'
 import { Segment, Card } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
@@ -11,7 +11,7 @@ class SearchedHouseholdsContainer extends Component {
     this.props.setSearchingToFalse()
 
     this.props.history.push(`/households/${household.id}`)
-    
+
     this.props.setCurrentHousehold(household)
 
   }

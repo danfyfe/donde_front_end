@@ -61,7 +61,7 @@ class HouseholdPage extends Component {
 
       if (this.state.user.households) {
         isUserHousehold = this.state.user.households.filter(household => {
-          return household.id === this.state.household.id
+          return household.id === this.props.state.currentHousehold.id
         })
       }
     }
@@ -133,6 +133,8 @@ class HouseholdPage extends Component {
 
   render(){
     // console.log(this.state)
+    console.log(this.props.state.currentHousehold.name)
+    console.log(this.isUsersHousehold())
     if (!localStorage.token || localStorage.token === "undefined") {
     this.props.history.push("/")
     }
@@ -155,6 +157,7 @@ class HouseholdPage extends Component {
               </> :
 
               <Segment clearing>
+                <Header>{this.props.state.currentHousehold.name}</Header>
                 <Message warning clearing><Header>You must join this household to view its details!</Header>
                 </Message>
                   {this.state.joiningHousehold ? this.renderJoinHouseholdForm() : this.renderJoinHouseholdHeader()}

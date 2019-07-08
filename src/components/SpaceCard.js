@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Segment, Card, List, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
@@ -6,22 +6,22 @@ class SpaceCard extends Component {
 
   renderContainerDescriptions = () => {
       return this.props.space.containers.map(container => {
-        return <>
-        <Card link onClick={()=>this.props.setCurrentContainer(container)} style={{width:"100%"}}>
+        return <Fragment key={container.id}>
+        <Card key={container.id} link onClick={()=>this.props.setCurrentContainer(container)} style={{width:"100%"}}>
             <Card.Content header={container.name}/>
             <Card.Content meta={container.description}/>
             <Card.Content extra>
               {container.items.length} Items
             </Card.Content>
         </Card>
-        </>
+        </Fragment>
       })
   }
 
   renderSpaceItems = () => {
     return this.props.space.items.map(item => {
-      return <Segment>
-      <List.Item>
+      return <Segment key={item.id}>
+      <List.Item key={item.id}>
       <List.Content>{item.name}</List.Content>
       </List.Item>
       </Segment>
@@ -29,7 +29,7 @@ class SpaceCard extends Component {
   }
 
   renderNoContainersMessage = () => {
-    return <Message warning>This space has no containers! Click on the space to add one!</Message>
+    return <Message warning>This space has no containers! View this space to add one!</Message>
   }
 
   setCurrentSpaceAndContainerToNone = (space) => {

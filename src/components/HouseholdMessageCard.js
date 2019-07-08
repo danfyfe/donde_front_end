@@ -96,8 +96,8 @@ class HouseholdMessageCard extends Component {
                 onChange={this.handleMessageInput}/>
             </Form.Field>
 
-            <Button size='small'floated="right" onClick={this.setAddingMessage}>Cancel</Button>
-            <Button size='small'floated="right"
+            <Button size='mini'floated="right" onClick={this.setAddingMessage}>Cancel</Button>
+            <Button size='mini'floated="right"
             onClick={this.addMessage}>Submit</Button>
           </Form>
         </Segment>:null}

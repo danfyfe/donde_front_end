@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Header, Menu, Card, Form, Message, Segment, Button } from 'semantic-ui-react'
+import { Header, Card, Form, Message, Segment, Button } from 'semantic-ui-react'
 import HouseholdMessageCard from './HouseholdMessageCard.js'
 import { connect } from 'react-redux'
 

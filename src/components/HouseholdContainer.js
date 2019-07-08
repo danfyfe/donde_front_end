@@ -90,31 +90,31 @@ class HouseholdContainer extends Component {
   }
 
   renderAddSpaceForm = () => {
-    return <Segment clearing>
+    return <Segment clearing raised>
     <Message>Add a space to {this.props.state.currentHousehold.name}</Message>
       <Form>
         <Form.Field>
           <label>Name</label>
           <input onChange={this.handleInput} name="newSpaceName" placeholder="Space Name"/>
         </Form.Field>
-        <Button floated="right"
+        <Button floated="right" size="mini"
          onClick={this.setAddingSpace}>Cancel</Button>
-        <Button floated="right"
+        <Button floated="right" size="mini"
         onClick={this.addSpace}>Submit</Button>
       </Form>
     </Segment>
   }
 
   renderJoinHouseholdForm = () => {
-    return <Segment clearing>
+    return <Segment clearing raised>
       <Form>
         <Form.Field>
           <title>Password</title>
           <input type="password" name="householdPassword" onChange={this.handleInput} placeholder="Please enter Household Password"/>
         </Form.Field>
-        <Button floated="right"
+        <Button floated="right" size="mini"
         onClick={this.setJoiningHousehold}>Cancel</Button>
-        <Button floated="right" onClick={this.joinHousehold}>Submit</Button>
+        <Button floated="right" size="mini" onClick={this.joinHousehold}>Submit</Button>
       </Form>
     </Segment>
   }
@@ -227,7 +227,7 @@ class HouseholdContainer extends Component {
       return {key: imageObj.url, text: imageObj.name, value: imageObj.url, image:{ size: "mini", src: imageObj.url }}
     })
 
-    return <Segment clearing>
+    return <Segment clearing raised>
     <Message>Edit {this.props.state.currentHousehold.name}</Message>
       <Form>
         <Form.Field>
@@ -243,8 +243,8 @@ class HouseholdContainer extends Component {
         <label>Image</label>
           <Dropdown name="householdImage" onChange={this.handleEditHouseholdImageInput} pointing="top left" placeholder="Select Image" fluid selection options={householdImageOptions}/>
         </Form.Field>
-        <Button floated="right" onClick={this.setEditingHousehold}>Cancel</Button>
-        <Button onClick={this.editHousehold} floated="right">Submit</Button>
+        <Button floated="right" size="mini" onClick={this.setEditingHousehold}>Cancel</Button>
+        <Button onClick={this.editHousehold} floated="right" size="mini">Submit</Button>
       </Form>
     </Segment>
   }

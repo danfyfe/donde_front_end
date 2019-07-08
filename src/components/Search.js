@@ -54,7 +54,7 @@ class Search extends Component {
     return(
 
         <Segment clearing raised style={{margin:"0 10px"}}>
-        <Message header="Search for an Item or Household!"/>
+        <Message header="Search for a Household and/or Item!"/>
           <Form>
             <Form.Field>
             <label>Search</label>

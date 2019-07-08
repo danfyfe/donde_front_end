@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { Card, Segment, Header, Breadcrumb } from 'semantic-ui-react'
+import { Card } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 class ItemCard extends Component {
@@ -19,7 +19,7 @@ class ItemCard extends Component {
     return(
       <>
 
-      <Card link style={{margin:"1% auto", height:"100%",width:"90%"}} onClick={()=>this.props.redirectToItemPage(this.props.item.id)}>
+      <Card link style={{margin:"1% auto", height:"100%",width:"100%"}} onClick={()=>this.props.redirectToItemPage(this.props.item.id)}>
         <Card.Content header={this.props.item.name}/>
 
 

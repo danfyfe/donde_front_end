@@ -71,7 +71,7 @@ class ItemsPage extends Component {
   }
 
   renderAddItemHeader = () => {
-    return <Header onClick={this.setAddItem} color="blue">Add Item</Header>
+    return <Button onClick={this.setAddItem} color="blue" size="mini">Add Item</Button>
   }
 
   renderAddItemForm = () => {
@@ -87,8 +87,8 @@ class ItemsPage extends Component {
           <input onChange={this.handleInput} name="itemDescription" placeholder="Item description"/>
         </Form.Field>
 
-        <Button onClick={this.setAddItem} floated="right">Cancel</Button>
-        <Button floated="right">Submit</Button>
+        <Button onClick={this.setAddItem} floated="right" size="mini">Cancel</Button>
+        <Button floated="right" size="mini">Submit</Button>
       </Form>
     </Segment>
   }
@@ -99,7 +99,7 @@ class ItemsPage extends Component {
     if (!localStorage.token || localStorage.token === "undefined") {
     this.props.history.push("/")
     }
-    
+
     return(
       <>
       {this.props.state.isDoneFetching ? null
