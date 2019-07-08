@@ -1,18 +1,22 @@
 import React, { Component } from 'react'
-import { Segment, Card, List } from 'semantic-ui-react'
+import { Segment, Card, List, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 class ContainerCard extends Component {
 
 
   renderContainerItems = () => {
-    return this.props.container.items.map(item => {
-      return <Segment style={{margin:"5px"}}>
-      <List.Item >
+    if (this.props.container.items.length === 0) {
+      return <Segment><Message warning>There are currently no items in this container! Click this card to view this container and add one!</Message></Segment>
+    } else {
+      return this.props.container.items.map(item => {
+        return <Segment style={{margin:"5px"}}>
+        <List.Item >
         <List.Content>{item.name}</List.Content>
-      </List.Item>
-      </Segment>
-    })
+        </List.Item>
+        </Segment>
+      })
+    }
   }
 
 

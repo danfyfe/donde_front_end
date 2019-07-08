@@ -28,12 +28,14 @@ class App extends React.Component {
     this.props.history.push('/profile')
     this.props.setCurrentSpace({})
     this.props.setCurrentContainer({})
+    this.props.setSearchingToFalse()
   }
 
   sendToItemsPage = () => {
     this.props.history.push('/items')
     this.props.setCurrentSpace({})
     this.props.setCurrentContainer({})
+    this.props.setSearchingToFalse()
   }
 
 
@@ -42,9 +44,9 @@ class App extends React.Component {
     return(
       <>
         <Menu style={{backgroundColor:"#3d8af7",borderRadius:"0px", marginBottom: "0px"}}>
-        
+
           <Menu.Item onClick={this.sendToProfilePage} header>
-            Don¿e
+            Donde
           </Menu.Item>
           <Menu.Item onClick={this.props.setSearching} >
             <Icon name="search"/>
@@ -86,9 +88,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setSearching: ()=> dispatch({type:"SET_SEARCHING"}),
     setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE"}),
-    setCurrentContainer: (container) => {
-      dispatch({type:"SET_CURRENT_CONTAINER", container})
-    }
+    setCurrentContainer: (container) => dispatch({type:"SET_CURRENT_CONTAINER", container}),
+    setSearchingToFalse: () => dispatch({type:"SET_SEARCHING_TO_FALSE"})
   }
 }
 

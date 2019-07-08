@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Menu } from 'semantic-ui-react'
+import { Segment, Header, Menu, Grid } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 
@@ -47,18 +47,24 @@ class ProfilePage extends Component {
 
           {this.props.state.searching ? <Search history={this.props.history}/> : null}
 
+          <Grid columns={2}>
 
-          <Segment raised style={{width:"98%", margin:"10px auto"}}>
+            <Grid.Column>
+              <Segment raised style={{width:"98%", margin:"10px auto"}}>
+                <MessageContainer
+                history={this.props.history}/>
+              </Segment>
+            </Grid.Column>
 
 
-          <HouseholdCardsContainer history={this.props.history}
-          />
-          </Segment>
+            <Grid.Column>
+              <Segment raised style={{width:"98%", margin:"10px auto"}}>
+                <HouseholdCardsContainer history={this.props.history}
+                />
+              </Segment>
+            </Grid.Column>
 
-          <Segment raised style={{width:"98%", margin:"10px auto"}}>
-          <MessageContainer
-          history={this.props.history}/>
-          </Segment>
+          </Grid>
 
 
         </> : <Loading/>
@@ -76,7 +82,8 @@ const mapDispatchToProps = (dispatch) =>{
   return {
     setUser: (user) => dispatch({type:"SET_USER", user}),
     isFetching: () => dispatch({type:"IS_FETCHING"}),
-    isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"})
+    isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"}),
+    setSearchingToFalse: () => dispatch({type:"SET_SEARCHING_TO_FALSE"})
   }
 }
 

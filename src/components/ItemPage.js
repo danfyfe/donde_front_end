@@ -165,9 +165,10 @@ class ItemPage extends Component {
 
   renderEditForm = () => {
     if (this.props.state.user.households) {
-      const householdOptions = this.props.state.user.households.map(household => {
-        return {key:household.id, text:household.name, value:household.id}
-      })
+      // const householdOptions = this.props.state.user.households.map(household => {
+      //   return {key:household.id, text:household.name, value:household.id}
+      // })
+
       const userSpaces = this.props.state.user.households.map(household => {
         return household.spaces
       }).flat()
@@ -181,7 +182,8 @@ class ItemPage extends Component {
       }).flat()
 
       const containerOptions = userContainers.map(container => {
-        return {key: container.id, text: container.name, value: container.id}
+        console.log(container)
+        return {key: container.id, text: `${container.name}`, value: container.id}
       })
 
     return <Segment clearing raised>
@@ -206,10 +208,7 @@ class ItemPage extends Component {
           <Dropdown name="space_id" onChange={this.handleSpaceInput} pointing="top left" placeholder="Select Space" fluid selection options={spaceOptions}/>
         </Form.Field>
 
-        <Form.Field>
-          <label>Household</label>
-          <Dropdown name="household_id" onChange={this.handleHouseholdInput} pointing="top left" placeholder="Select Household" fluid selection options={householdOptions}/>
-        </Form.Field>
+
 
         <Button onClick={this.setEditing} floated="right" size="mini">Cancel</Button>
         <Button onClick={this.editItem} floated="right" size="mini">Submit</Button>
@@ -260,9 +259,25 @@ class ItemPage extends Component {
       })
     }).then(resp=>resp.json())
     .then(data => {
+
+      // console.log(data)
+
       this.setState({
         statusMessage: data.message
       })
+
+      if (!data.error) {
+        if (this.props.state.currentHousehold.hasOwnProperty('id')) {
+          this.props.history.push(`/households/${this.props.state.currentHousehold.id}`)
+          this.props.setCurrentContainer({})
+          this.props.setCurrentSpace({})
+          this.props.setCurrentHousehold(this.props.state.currentHousehold)
+        } else {
+          this.props.history.push('/')
+        }
+      }
+
+
     })
   }
 
@@ -369,7 +384,7 @@ class ItemPage extends Component {
   render(){
     // console.log('done?',this.props.state.isDoneFetching)
     // console.log('started', this.props.state.isFetching)
-    console.log(this.state.statusMessage)
+    console.log(this.props.state.currentHousehold)
     return(
       <>
       {this.props.state.isDoneFetching ?
@@ -429,8 +444,16 @@ const mapDispatchToProps = (dispatch) => {
       addMessage: (message) => dispatch({type:"ADD_MESSAGE", message}),
       setCurrentItem: (item) => dispatch({type:"SET_CURRENT_ITEM", item}),
       isFetching: () => dispatch({type:"IS_FETCHING"}),
-      isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"})
+      isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"}),
+      setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE"}),
+      setCurrentContainer: (container) => dispatch({type:"SET_CURRENT_CONTAINER", container}),
+      setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household})
     }
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(ItemPage)
+
+// <Form.Field>
+//   <label>Household</label>
+//   <Dropdown name="household_id" onChange={this.handleHouseholdInput} pointing="top left" placeholder="Select Household" fluid selection options={householdOptions}/>
+// </Form.Field>

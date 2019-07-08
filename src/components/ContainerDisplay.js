@@ -93,7 +93,7 @@ class Container extends Component {
     // console.log(this.props.history)
     return(
       <>
-      <Segment>
+      <Segment clearing>
           <>
           <Header floated="left">{this.props.container.name}</Header>
           <Header color="grey" floated="left">in {this.props.state.currentSpace.name} at {this.props.state.currentHousehold.name}</Header>

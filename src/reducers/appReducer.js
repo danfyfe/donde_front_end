@@ -36,7 +36,7 @@ function householdReducer (state = defaultState, action){
     let household = state.user.households.find(household=>{
       return household.id === action.message.household.id
     })
-    let updatedHousehold = {...household, messages:[...household.messages, action.message]}
+    let updatedHousehold = {...household, messages:[action.message, ...household.messages]}
     let householdIndex = state.user.households.indexOf(household)
     state.user.households.splice(householdIndex, 1, updatedHousehold)
     return {...state, user: {...state.user, households: state.user.households}}
@@ -88,11 +88,9 @@ function householdReducer (state = defaultState, action){
         // console.log('addMtoCH', state.currentHousehold)
       return {...state, currentHousehold:{...state.currentHousehold, messages:[...state.currentHousehold.messages, action.message]}}
 
-
     case "SET_CURRENT_ITEM":
       // console.log(action.item)
       return {...state, currentItem: action.item}
-
 
     case "IS_FETCHING":
 

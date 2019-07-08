@@ -98,7 +98,7 @@ class Space extends Component {
   }
 
   renderNoContainersMessage = () => {
-    return <Message>No Containers!</Message>
+    return <Message warning style={{margin: "3% 0 0 0"}}>This space currently has no containers! Click Add Container to give it one!</Message>
   }
 
 

@@ -29,7 +29,7 @@ class SpaceCard extends Component {
   }
 
   renderNoContainersMessage = () => {
-    return <Message warning>This space has no containers! View this space to add one!</Message>
+    return <Message warning>This space has no containers! Click this card to view this space and add one!</Message>
   }
 
   setCurrentSpaceAndContainerToNone = (space) => {

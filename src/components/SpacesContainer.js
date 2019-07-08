@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {  } from 'semantic-ui-react'
+import { Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import SpaceCard from './SpaceCard.js'
@@ -9,9 +9,13 @@ import Space from './Space.js'
 class SpacesConatiner extends Component {
   renderSpaceCards = () => {
     if (this.props.state.currentHousehold.spaces) {
-      return this.props.state.currentHousehold.spaces.map(space => {
-        return <SpaceCard key={space.id} redirectToSpace={this.redirectToSpace} space={space}/>
-      })
+      if (this.props.state.currentHousehold.spaces.length === 0) {
+        return <Message style={{margin:"3% 0 0 0"}}>There are currently no spaces in this household. Click Add Space to add one!</Message>
+      } else {
+        return this.props.state.currentHousehold.spaces.map(space => {
+          return <SpaceCard key={space.id} redirectToSpace={this.redirectToSpace} space={space}/>
+        })
+      }
     }
   }
 
