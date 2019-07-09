@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Form, Button, Message } from 'semantic-ui-react'
+import { Segment, Header, Form, Button, Message, Dropdown } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import ItemCard from './ItemCard.js'
@@ -8,7 +8,8 @@ import ItemCard from './ItemCard.js'
 class Container extends Component {
 
   state = {
-    addingItem: false
+    addingItem: false,
+    addingOwnersIds: []
   }
 
   renderItemCards = () => {
@@ -25,6 +26,12 @@ class Container extends Component {
     })
   }
 
+  handleOwnersInput = (e,data) => {
+    // console.log(data.value)
+    this.setState({
+      addingOwnersIds: data.value
+    })
+  }
 
   setAddItem = () => {
     this.setState({
@@ -57,7 +64,8 @@ class Container extends Component {
           name: this.state.itemName,
           description: this.state.itemDescription,
           container_id: this.props.state.currentContainer.id
-        }
+        },
+        users_ids: this.state.addingOwnersIds
       })
     }).then(resp=>resp.json())
     .then(item =>{
@@ -70,6 +78,15 @@ class Container extends Component {
   }
 
   renderAddItemForm = () => {
+
+    let currentHosueholdUsersOptions = {}
+
+    if (this.props.state.currentHousehold.users) {
+      currentHosueholdUsersOptions = this.props.state.currentHousehold.users.map(user => {
+        return {key:user.id,text:user.username,value:user.id}
+      })
+    }
+
     return <Segment clearing raised>
     <Message header={"Add an Item to" + this.props.state.currentContainer.name} size="mini"/>
       <Form>
@@ -83,6 +100,21 @@ class Container extends Component {
           <input onChange={this.handleInput} name="itemDescription" placeholder="Item description"/>
         </Form.Field>
 
+        <Form.Field>
+        <label>Owners</label>
+          <Dropdown
+          onChange = {this.handleOwnersInput}
+          placeholder='Household Users'
+          fluid
+          multiple
+          search
+          selection
+          options={currentHosueholdUsersOptions}
+          />
+        </Form.Field>
+
+
+
         <Button onClick={this.setAddItem} floated="right" size="mini">Cancel</Button>
         <Button onClick={this.addItem} floated="right" size="mini">Submit</Button>
       </Form>
@@ -92,6 +124,7 @@ class Container extends Component {
 
   render(){
     // console.log(this.props.history)
+    console.log(this.state)
     return(
       <>
       <Segment clearing>
