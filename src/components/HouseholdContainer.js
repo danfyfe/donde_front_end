@@ -80,6 +80,7 @@ class HouseholdContainer extends Component {
         addingSpace: !this.state.addingSpace
       })
       this.props.addSpace(space)
+      // this.props.setCurrentSpace(space)
     })
   }
 

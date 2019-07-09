@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Segment, Card, List, Message } from 'semantic-ui-react'
+import { Segment, Card, List, Message, Header } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 class SpaceCard extends Component {
@@ -45,6 +45,7 @@ class SpaceCard extends Component {
       <Card link style={{width:"100%"}} onClick={()=>{this.setCurrentSpaceAndContainerToNone(this.props.space)}} >
         <Card.Content header={this.props.space.name}/>
         <Segment>
+        <Header as="h3">Containers:</Header>
         {
           this.props.space.containers.length === 0 ? this.renderNoContainersMessage() :
           <Card.Group itemsPerRow={6}>
