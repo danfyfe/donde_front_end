@@ -55,7 +55,7 @@ class HouseholdMessagesContainer extends Component {
 
   renderNewMessageForm = () => {
     return <Segment clearing>
-    <Message>Add New Message!</Message>
+    <Message header="Add a New Message!" size="mini"/>
       <Form>
         <Form.Field>
           <label>Title</label>
@@ -65,8 +65,8 @@ class HouseholdMessagesContainer extends Component {
           <label>Content</label>
           <input onChange={this.handleInput} name="newMessageContent" placeholder="Message Content"/>
         </Form.Field>
-        <Button onClick={this.setAddingNewMessage} floated="right">Cancel</Button>
-        <Button onClick={this.addNewMessage} floated="right">Submit</Button>
+        <Button onClick={this.setAddingNewMessage} floated="right" size="mini">Cancel</Button>
+        <Button onClick={this.addNewMessage} floated="right" size="mini">Submit</Button>
       </Form>
     </Segment>
   }

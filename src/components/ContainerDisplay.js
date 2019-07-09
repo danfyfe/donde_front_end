@@ -25,6 +25,7 @@ class Container extends Component {
     })
   }
 
+
   setAddItem = () => {
     this.setState({
       addingItem: !this.state.addingItem
@@ -70,7 +71,7 @@ class Container extends Component {
 
   renderAddItemForm = () => {
     return <Segment clearing raised>
-    <Message>Add an Item to this Container</Message>
+    <Message header={"Add an Item to" + this.props.state.currentContainer.name} size="mini"/>
       <Form>
         <Form.Field>
           <label>Name</label>
