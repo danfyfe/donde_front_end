@@ -36,7 +36,7 @@ class HouseholdCardsContainer extends Component {
 
     return <>
       <Segment clearing raised>
-        <Message header="Add a Household!"/>
+        <Message header="Add a Household!" size="mini"/>
         <Form>
           <Form.Field>
             <label>Name</label>

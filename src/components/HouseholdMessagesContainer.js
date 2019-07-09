@@ -41,7 +41,11 @@ class HouseholdMessagesContainer extends Component {
         if (this.props.state.currentHousehold.messages.length === 0) {
           return <Message size="small" compact style={{margin: "2% auto"}}>There are no messages for this household! Click Add Message to create one!</Message>
         } else {
-          return this.props.state.currentHousehold.messages.map(message => {
+          let currentHouseholdMessages = this.props.state.currentHousehold.messages
+
+          currentHouseholdMessages.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1).reverse()
+
+          return currentHouseholdMessages.map(message => {
             return <HouseholdMessageCard key={message.id} message={message}/>
           })
         }
@@ -51,7 +55,7 @@ class HouseholdMessagesContainer extends Component {
 
   renderNewMessageForm = () => {
     return <Segment clearing>
-    <Message>Add New Message!</Message>
+    <Message header="Add a New Message!" size="mini"/>
       <Form>
         <Form.Field>
           <label>Title</label>
@@ -61,8 +65,8 @@ class HouseholdMessagesContainer extends Component {
           <label>Content</label>
           <input onChange={this.handleInput} name="newMessageContent" placeholder="Message Content"/>
         </Form.Field>
-        <Button onClick={this.setAddingNewMessage} floated="right">Cancel</Button>
-        <Button onClick={this.addNewMessage} floated="right">Submit</Button>
+        <Button onClick={this.setAddingNewMessage} floated="right" size="mini">Cancel</Button>
+        <Button onClick={this.addNewMessage} floated="right" size="mini">Submit</Button>
       </Form>
     </Segment>
   }

@@ -52,6 +52,10 @@ class MessageContainer extends Component {
         return householdMessages = [...householdMessages, household.messages].flat()
       })
 
+      householdMessages.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1).reverse()
+
+      // console.log(householdMessages)
+
         return householdMessages.map(message => {
           return <MessageCard key={message.id} message={message}/>
         })
@@ -68,7 +72,7 @@ class MessageContainer extends Component {
     }
 
     return <Segment clearing raised>
-    <Message>Add New Message!</Message>
+    <Message header="Add New Message!" size="mini"/>
       <Form>
         <Form.Field>
           <label>Title</label>
@@ -82,8 +86,8 @@ class MessageContainer extends Component {
         <label>Household</label>
           <Dropdown name="household" onChange={this.handleMessageHouseholdInput} pointing="top left" placeholder="Select Household" fluid selection options={householdOptions}/>
         </Form.Field>
-        <Button onClick={this.setAddingNewMessage} floated="right">Cancel</Button>
-        <Button onClick={this.addNewMessage} floated="right">Submit</Button>
+        <Button onClick={this.setAddingNewMessage} floated="right" size="mini">Cancel</Button>
+        <Button onClick={this.addNewMessage} floated="right" size="mini">Submit</Button>
       </Form>
     </Segment>
   }

@@ -56,13 +56,13 @@ class Search extends Component {
 
         <Segment clearing raised style={{margin:"0 10px"}}>
           <Segment clearing>
-            <Message header="Search for a Household and/or Item!"/>
+            <Message header="Search for a Household and/or Item!" size="mini"/>
             <Form floated="left">
               <Form.Field>
               <label>Search</label>
               <input onChange={this.setSearchTerm} name="searchTerm" placeholder="Start typing to search"/>
               </Form.Field>
-              <Button onClick={this.props.setSearching}floated="right" style={{margin:"2% 0 0 0 0"}}>Cancel</Button>
+              <Button onClick={this.props.setSearching}floated="right" style={{margin:"2% 0 0 0 0"}} size="mini">Cancel</Button>
             </Form>
           </Segment>
           {this.state.searchTerm === "" ?  null :

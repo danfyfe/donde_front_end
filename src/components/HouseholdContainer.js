@@ -91,7 +91,7 @@ class HouseholdContainer extends Component {
 
   renderAddSpaceForm = () => {
     return <Segment clearing raised>
-    <Message>Add a space to {this.props.state.currentHousehold.name}</Message>
+    <Message header={"Add a space to" + this.props.state.currentHousehold.name} size="mini"/>
       <Form>
         <Form.Field>
           <label>Name</label>
@@ -228,7 +228,7 @@ class HouseholdContainer extends Component {
     })
 
     return <Segment clearing raised>
-    <Message>Edit {this.props.state.currentHousehold.name}</Message>
+    <Message header={"Edit" + this.props.state.currentHousehold.name} size="mini"/>
       <Form>
         <Form.Field>
         <label>Name</label>
