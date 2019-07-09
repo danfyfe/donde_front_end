@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { Segment, Header, Form, Dropdown, Button, Message } from 'semantic-ui-react'
+import { Segment, Header, Form, Dropdown, Button, Message, Menu } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import Search from './Search.js'
@@ -389,6 +389,10 @@ class ItemPage extends Component {
       <>
       {this.props.state.isDoneFetching ?
         <>{this.props.state.searching ? <Search history={this.props.history}/> : null}
+
+      <Menu style={{marginTop: "0px"}}>
+        <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
+      </Menu>
 
       <Segment clearing style={{margin:"1% auto",width:"98%"}}>
 

@@ -41,7 +41,11 @@ class HouseholdMessagesContainer extends Component {
         if (this.props.state.currentHousehold.messages.length === 0) {
           return <Message size="small" compact style={{margin: "2% auto"}}>There are no messages for this household! Click Add Message to create one!</Message>
         } else {
-          return this.props.state.currentHousehold.messages.map(message => {
+          let currentHouseholdMessages = this.props.state.currentHousehold.messages
+
+          currentHouseholdMessages.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1).reverse()
+
+          return currentHouseholdMessages.map(message => {
             return <HouseholdMessageCard key={message.id} message={message}/>
           })
         }

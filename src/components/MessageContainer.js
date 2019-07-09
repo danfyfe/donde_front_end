@@ -52,6 +52,10 @@ class MessageContainer extends Component {
         return householdMessages = [...householdMessages, household.messages].flat()
       })
 
+      householdMessages.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1).reverse()
+
+      console.log(householdMessages)
+
         return householdMessages.map(message => {
           return <MessageCard key={message.id} message={message}/>
         })
