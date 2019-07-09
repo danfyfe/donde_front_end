@@ -44,7 +44,7 @@ class MessageContainer extends Component {
   }
 
   renderMessageCards = () => {
-    if (this.props.state.isDoneFetching) {
+    if (this.props.state.isDoneFetching && this.props.state.user.households) {
 
       let householdMessages = []
 
@@ -93,10 +93,12 @@ class MessageContainer extends Component {
   }
 
   renderNewMessageHeader = () => {
-    if (this.props.state.user.households.length === 0) {
-      return <Message size="small" compact style={{margin: "2% auto 0 auto"}}>No messages are being displayed because you do not currently belong to any households. You can create a household by clicking 'Add Household', or use the Search Icon above to search for a household to join</Message>
-    }else {
-      return <Button onClick={this.setAddingNewMessage} color="blue" size="mini" floated="right">Add Message</Button>
+    if (this.props.state.user.households) {
+      if (this.props.state.user.households.length === 0) {
+        return <Message size="small" compact style={{margin: "2% auto 0 auto"}}>No messages are being displayed because you do not currently belong to any households. You can create a household by clicking 'Add Household', or use the Search Icon above to search for a household to join</Message>
+      }else {
+        return <Button onClick={this.setAddingNewMessage} color="blue" size="mini" floated="right">Add Message</Button>
+      }
     }
   }
 
@@ -119,6 +121,7 @@ class MessageContainer extends Component {
     .then(message=>{
       // console.log('addnewmessage fetch return',message)
       this.props.addMessage(message)
+
       this.setState({
         addingNewMessage: !this.state.addingNewMessage
       })
@@ -127,7 +130,7 @@ class MessageContainer extends Component {
 
 
   render(){
-    // console.log(this.props.state)
+    console.log(this.props.state)
     // console.log(this.state)
     return(
       <>

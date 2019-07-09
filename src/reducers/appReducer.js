@@ -9,7 +9,8 @@ const defaultState = {
   searching: false,
   isFetching: false,
   isDoneFetching: false,
-  isUserHousehold: false
+  isUserHousehold: false,
+  itemDeleteConfirmationMessage: ""
 }
 
 
@@ -98,6 +99,13 @@ function householdReducer (state = defaultState, action){
     case "IS_DONE_FETCHING":
 
       return {...state, isDoneFetching: true}
+
+    case "ITEM_DELETE_CONFIRMATION":
+
+      return {...state, itemDeleteConfirmationMessage: "Item successfully deleted! A message has been sent to the household on your behalf"}
+
+    case "ITEM_DELETE_CONFIRMATION_TO_NOTHING":
+        return {...state, itemDeleteConfirmationMessage: ""}
 
     default:
       return state

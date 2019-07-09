@@ -131,10 +131,10 @@ class Container extends Component {
     // console.log(this.state)
     return(
       <>
-      <Segment clearing>
+      <Segment clearing style={{minHeight:"500px"}}>
           <>
-          <Header floated="left">{this.props.container.name}</Header>
-          <Header color="grey" floated="left">in {this.props.state.currentSpace.name} at {this.props.state.currentHousehold.name}</Header>
+          <Header floated="left" as="h2">{this.props.container.name}</Header>
+          <Header color="grey" floated="left" as="h2">in {this.props.state.currentSpace.name} at {this.props.state.currentHousehold.name}</Header>
           {this.state.addingItem ? this.renderAddItemForm() : this.renderAddItemHeader()}
 
           {this.renderItemCards()}

@@ -134,7 +134,20 @@ class HouseholdPage extends Component {
     })
   }
 
+  renderDeleteConfirmationMessage = () => {
+    return <Message floated="center" style={{textAlign:"center", margin:"10px auto"}} warning>{this.props.state.itemDeleteConfirmationMessage}</Message>
+  }
+
+  setItemDeleteConfirmationMessageToNothing = () => {
+    if (this.props.state.itemDeleteConfirmationMessage !== "") {
+      setTimeout(()=>{
+        this.props.itemDeleteConfirmationToNothing()
+      },3000)
+    }
+  }
+
   render(){
+    // console.log("item delete message", this.props.state.itemDeleteConfirmationMessage)
     // console.log(this.state)
     // console.log(this.props.state.user.households)
     // console.log(this.isUsersHousehold())
@@ -144,12 +157,16 @@ class HouseholdPage extends Component {
 
     return(
       <>
+      {this.setItemDeleteConfirmationMessageToNothing()}
         {this.props.state.isDoneFetching ?
           <>
+
           <Menu style={{marginTop: "0px"}}>
             <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
           </Menu>
 
+          {this.props.state.itemDeleteConfirmationMessage !== "" ? this.renderDeleteConfirmationMessage() : null}
+          
           {this.props.state.searching ? <Search history={this.props.history}/> : null}
 
           <Segment raised style={{margin:"10px auto",width:"98%"}}>
@@ -187,7 +204,8 @@ const mapDispatchToProps = (dispatch) =>{
     isFetching: () => dispatch({type:"IS_FETCHING"}),
     isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"}),
     isUsersHousehold: () => dispatch({type:"IS_USERS_HOUSEHOLD"}),
-    addHouseholdToCurrentUser: (household) => dispatch({type:"ADD_HOUSEHOLD_TO_CURRENT_USER", household})
+    addHouseholdToCurrentUser: (household) => dispatch({type:"ADD_HOUSEHOLD_TO_CURRENT_USER", household}),
+    itemDeleteConfirmationToNothing: () => dispatch({type:"ITEM_DELETE_CONFIRMATION_TO_NOTHING"})
   }
 }
 

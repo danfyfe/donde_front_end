@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Menu, Grid } from 'semantic-ui-react'
+import { Segment, Header, Menu, Grid, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 
@@ -25,17 +25,29 @@ class ProfilePage extends Component {
     })
   }
 
+  renderDeleteConfirmationMessage = () => {
+    return <Message floated="center" style={{textAlign:"center", margin:"10px auto"}} warning>{this.props.state.itemDeleteConfirmationMessage}</Message>
+  }
+
+  setItemDeleteConfirmationMessageToNothing = () => {
+    if (this.props.state.itemDeleteConfirmationMessage !== "") {
+      setTimeout(()=>{
+        this.props.itemDeleteConfirmationToNothing()
+      },3000)
+    }
+  }
+
   render(){
+    // console.log("item delete message", this.props.state.itemDeleteConfirmationMessage)
 
     if (!localStorage.token || localStorage.token === "undefined") {
     this.props.history.push("/")
     }
 
-    if (this.props.state.isDoneFetching) {
-      // console.log("Profile",this.props.state.user)
-    }
+
     return(
       <>
+      {this.setItemDeleteConfirmationMessageToNothing()}
 
       {this.props.state.isDoneFetching ?
         <>
@@ -44,6 +56,7 @@ class ProfilePage extends Component {
             <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
           </Menu>
 
+          {this.props.state.itemDeleteConfirmationMessage !== "" ? this.renderDeleteConfirmationMessage() : null}
 
           {this.props.state.searching ? <Search history={this.props.history}/> : null}
 
@@ -82,7 +95,8 @@ const mapDispatchToProps = (dispatch) =>{
     setUser: (user) => dispatch({type:"SET_USER", user}),
     isFetching: () => dispatch({type:"IS_FETCHING"}),
     isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"}),
-    setSearchingToFalse: () => dispatch({type:"SET_SEARCHING_TO_FALSE"})
+    setSearchingToFalse: () => dispatch({type:"SET_SEARCHING_TO_FALSE"}),
+    itemDeleteConfirmationToNothing: () => dispatch({type:"ITEM_DELETE_CONFIRMATION_TO_NOTHING"})
   }
 }
 

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import Search from './Search.js'
 import Loading from './Loading.js'
+import MessageContainer from './MessageContainer'
 
 
 class ItemPage extends Component {
@@ -155,7 +156,7 @@ class ItemPage extends Component {
 
   renderDeleteForm = () => {
     return <Segment clearing>
-      {this.renderErrorMessage()}
+
       <Form>
         <Form.Field>
           <label>Please enter household password to delete item</label>
@@ -279,13 +280,13 @@ class ItemPage extends Component {
       this.props.setCurrentItem(updatedItem)
       this.setState({
         editing: !this.state.editing,
-        statusMessage: "Item successfully moved!"
+        statusMessage: "Item successfully moved! A message was sent to your household on your behalf."
       })
     })
   }
 
   renderErrorMessage = () => {
-    return <Message error header={this.state.statusMessage}/>
+    return <Message key={1} error header={this.state.statusMessage}/>
   }
 
   deleteItem = () => {
@@ -305,16 +306,20 @@ class ItemPage extends Component {
       // console.log(data)
 
       this.setState({
-        statusMessage: data.message
+        statusMessage: data.message,
+        deleting: !this.state.deleting
       })
+
 
       if (!data.error) {
         if (this.props.state.currentHousehold.hasOwnProperty('id')) {
-          this.props.history.push(`/households/${this.props.state.currentHousehold.id}`)
+          this.props.itemDeleteConfirmation()
           this.props.setCurrentContainer({})
           this.props.setCurrentSpace({})
           this.props.setCurrentHousehold(this.props.state.currentHousehold)
+          this.props.history.push(`/households/${this.props.state.currentHousehold.id}`)
         } else {
+          this.props.itemDeleteConfirmation()
           this.props.history.push('/')
         }
       }
@@ -410,26 +415,42 @@ class ItemPage extends Component {
         })
 
         if (this.props.state.currentItem) {
+          this.setState({
+            statusMessage: "Owners succesfully added!"
+          })
           this.props.isDoneFetching()
         }
 
       })
     }
 
-    renderErrorMessage = () => {
+    renderStatusMessage = () => {
       if (this.state.statusMessage !== "") {
-        return <Message warning>{this.state.statusMessage}</Message>
+        return <Message floated="center" style={{textAlign:"center"}} warning>{this.state.statusMessage}</Message>
       }
     }
+
+    setStatusMessageToNothing = () => {
+      if (this.state.statusMessage !== "") {
+        setTimeout(()=>{
+          this.setState({
+            statusMessage: ""
+          })
+        }, 3000)
+      }
+    }
+
 
 
   render(){
     // console.log('done?',this.props.state.isDoneFetching)
     // console.log('started', this.props.state.isFetching)
     // console.log(this.props.state.user.households)
-    console.log(this.state)
+    // console.log(this.props.state)
+
     return(
       <>
+      {this.setStatusMessageToNothing()}
       {this.props.state.isDoneFetching ?
         <>{this.props.state.searching ? <Search history={this.props.history}/> : null}
 
@@ -437,22 +458,22 @@ class ItemPage extends Component {
         <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
       </Menu>
 
-      <Segment clearing style={{margin:"1% auto",width:"98%"}}>
-        {this.state.statusMessage !== "" ? this.renderErrorMessage() : null}
+      <Segment clearing raised style={{margin:"1% auto",width:"98%", minHeight:"500px"}}>
+        {this.state.statusMessage !== "" ? this.renderStatusMessage() : null}
+
         <Segment clearing>
           <Header floated="left" as="h1">{this.props.state.currentItem.name}</Header>
 
           {this.state.deleting ? this.renderDeleteForm() : this.state.editing ? null :this.renderDeleteHeader()}
 
           {this.state.editing ? this.renderEditForm() : this.state.deleting ? null :this.renderEditHeader()}
-
         </Segment>
 
         <Segment.Group>
           <Segment clearing>
             {this.renderLocationDetails()}
           </Segment>
-          <Segment>
+          <Segment >
             {this.renderDescription()}
           </Segment>
         </Segment.Group>
@@ -465,8 +486,12 @@ class ItemPage extends Component {
             {this.renderOwners()}
           </Segment.Group>
         </Segment>
-
       </Segment>
+
+      {/*<Segment raised style={{width:"98%", margin:"10px auto"}}>
+        <MessageContainer
+      history={this.props.history}/>
+      </Segment>*/}
 
         </> : <Loading/>
 
@@ -492,7 +517,8 @@ const mapDispatchToProps = (dispatch) => {
       isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"}),
       setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE"}),
       setCurrentContainer: (container) => dispatch({type:"SET_CURRENT_CONTAINER", container}),
-      setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household})
+      setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
+      itemDeleteConfirmation: () => dispatch({type:"ITEM_DELETE_CONFIRMATION"})
     }
 }
 

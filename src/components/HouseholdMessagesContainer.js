@@ -43,6 +43,7 @@ class HouseholdMessagesContainer extends Component {
         } else {
           let currentHouseholdMessages = this.props.state.currentHousehold.messages
 
+
           currentHouseholdMessages.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1).reverse()
 
           return currentHouseholdMessages.map(message => {
@@ -94,6 +95,7 @@ class HouseholdMessagesContainer extends Component {
     .then(message=>{
       // console.log('addnewmessage fetch return',message)
       this.props.addMessageToCurrentHousehold(message)
+      
       this.setState({
         addingNewMessage: !this.state.addingNewMessage
       })

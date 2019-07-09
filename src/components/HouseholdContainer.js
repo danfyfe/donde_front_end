@@ -258,7 +258,7 @@ class HouseholdContainer extends Component {
     }
     return(
       <>
-        <Segment raised clearing>
+        <Segment raised clearing style={{minHeight:"500px"}}>
 
           {this.props.state.currentSpace && this.props.state.currentSpace.hasOwnProperty('id') ? null :
           <>
