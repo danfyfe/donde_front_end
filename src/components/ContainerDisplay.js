@@ -14,9 +14,13 @@ class Container extends Component {
 
   renderItemCards = () => {
     if (this.props.container.items) {
-      return this.props.container.items.map(item => {
-        return <ItemCard redirectToItemPage={this.redirectToItemPage} item={item}/>
-      })
+      if (this.props.container.items.length === 0) {
+        return <Message warning style={{margin:"4% 0 0 0", textAlign:"center"}}>There are currently no items in this container. Click Add Item to add one!</Message>
+      } else {
+        return this.props.container.items.map(item => {
+          return <ItemCard redirectToItemPage={this.redirectToItemPage} item={item}/>
+        })
+      }
     }
   }
 
@@ -124,7 +128,7 @@ class Container extends Component {
 
   render(){
     // console.log(this.props.history)
-    console.log(this.state)
+    // console.log(this.state)
     return(
       <>
       <Segment clearing>

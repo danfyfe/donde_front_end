@@ -15,6 +15,8 @@ class ItemPage extends Component {
     itemHousehold_id: "",
     itemSpace_id: "",
     itemContainer_id: "",
+    itemContainerName:"",
+    itemSpaceName:"",
     addingOwners: false,
     addOwnersIds: [],
     deleting: false,
@@ -45,7 +47,9 @@ class ItemPage extends Component {
           itemDescription: item.description,
           itemContainer_id: item.container.id,
           itemSpace_id: item.space.id,
-          itemHousehold_id: item.household.id
+          itemHousehold_id: item.household.id,
+          itemContainerName: item.container.name,
+          itemSpaceName: item.space.name
         })
 
         this.props.setCurrentItem(item)
@@ -164,27 +168,60 @@ class ItemPage extends Component {
   }
 
   renderEditForm = () => {
-    if (this.props.state.user.households) {
+
+
+
+    if (this.props.state.user.households && this.props.state.currentItem) {
+
+      const itemHousehold = this.props.state.user.households.filter(household => {
+        // console.log(household.id)
+        // console.log(this.props.state.currentItem.household.id)
+        return household.id === this.props.state.currentItem.household.id
+      })[0]
+
+      // console.log('item household',itemHousehold)
+      // debugger
+      let spaceOptions = []
+      let containerOptions = []
+
+      if (itemHousehold.spaces && itemHousehold.containers) {
+        spaceOptions = itemHousehold.spaces.map(space => {
+          return {key:space.id, text:space.name, value: space.id}
+        })
+
+        containerOptions = itemHousehold.containers.map(container => {
+          return {key: container.id, text: container.name, value: container.id}
+        })
+      }
+
+
+      // below was giving user option to put things in different households
+
       // const householdOptions = this.props.state.user.households.map(household => {
       //   return {key:household.id, text:household.name, value:household.id}
       // })
 
-      const userSpaces = this.props.state.user.households.map(household => {
-        return household.spaces
-      }).flat()
 
-      const spaceOptions = userSpaces.map(space => {
-        return {key:space.id, text:space.name, value:space.id}
-      })
 
-      const userContainers = userSpaces.map(space => {
-        return space.containers
-      }).flat()
+      // const userSpaces = this.props.state.user.households.map(household => {
+      //   return household.spaces
+      // }).flat()
+      //
+      // const spaceOptions = userSpaces.map(space => {
+      //   return {key:space.id, text:space.name, value:space.id}
+      // })
 
-      const containerOptions = userContainers.map(container => {
-        console.log(container)
-        return {key: container.id, text: `${container.name}`, value: container.id}
-      })
+
+
+
+      // const userContainers = userSpaces.map(space => {
+      //   return space.containers
+      // }).flat()
+      //
+      // const containerOptions = userContainers.map(container => {
+      //
+      //   return {key: container.id, text: `${container.name}`, value: container.id}
+      // })
 
     return <Segment clearing raised>
       <Form>
@@ -200,12 +237,12 @@ class ItemPage extends Component {
 
         <Form.Field>
           <label>Container</label>
-          <Dropdown name="container_id" onChange={this.handleContainerInput} pointing="top left" placeholder="Select Container" fluid selection options={containerOptions}/>
+          <Dropdown name="container_id" onChange={this.handleContainerInput} pointing="top left" placeholder={this.state.itemContainerName} fluid selection options={containerOptions}/>
         </Form.Field>
 
         <Form.Field>
           <label>Space</label>
-          <Dropdown name="space_id" onChange={this.handleSpaceInput} pointing="top left" placeholder="Select Space" fluid selection options={spaceOptions}/>
+          <Dropdown name="space_id" onChange={this.handleSpaceInput} pointing="top left" placeholder={this.state.itemSpaceName} fluid selection options={spaceOptions}/>
         </Form.Field>
 
 
@@ -241,9 +278,14 @@ class ItemPage extends Component {
       // console.log("updated item",updatedItem)
       this.props.setCurrentItem(updatedItem)
       this.setState({
-        editing: !this.state.editing
+        editing: !this.state.editing,
+        statusMessage: "Item successfully moved!"
       })
     })
+  }
+
+  renderErrorMessage = () => {
+    return <Message error header={this.state.statusMessage}/>
   }
 
   deleteItem = () => {
@@ -384,7 +426,8 @@ class ItemPage extends Component {
   render(){
     // console.log('done?',this.props.state.isDoneFetching)
     // console.log('started', this.props.state.isFetching)
-    console.log(this.props.state.currentHousehold)
+    // console.log(this.props.state.user.households)
+    console.log(this.state)
     return(
       <>
       {this.props.state.isDoneFetching ?
@@ -395,26 +438,24 @@ class ItemPage extends Component {
       </Menu>
 
       <Segment clearing style={{margin:"1% auto",width:"98%"}}>
-
-      <Segment clearing>
-        <Header floated="left" as="h1">{this.props.state.currentItem.name}</Header>
-
-        {/*this.renderLocationDetails()*/}
-
-        {this.state.deleting ? this.renderDeleteForm() : this.state.editing ? null :this.renderDeleteHeader()}
-
-        {this.state.editing ? this.renderEditForm() : this.state.deleting ? null :this.renderEditHeader()}
-
-      </Segment>
-
-      <Segment.Group>
+        {this.state.statusMessage !== "" ? this.renderErrorMessage() : null}
         <Segment clearing>
-          {this.renderLocationDetails()}
+          <Header floated="left" as="h1">{this.props.state.currentItem.name}</Header>
+
+          {this.state.deleting ? this.renderDeleteForm() : this.state.editing ? null :this.renderDeleteHeader()}
+
+          {this.state.editing ? this.renderEditForm() : this.state.deleting ? null :this.renderEditHeader()}
+
         </Segment>
-        <Segment>
-          {this.renderDescription()}
-        </Segment>
-      </Segment.Group>
+
+        <Segment.Group>
+          <Segment clearing>
+            {this.renderLocationDetails()}
+          </Segment>
+          <Segment>
+            {this.renderDescription()}
+          </Segment>
+        </Segment.Group>
 
 
         <Segment clearing>

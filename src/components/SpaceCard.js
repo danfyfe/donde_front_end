@@ -41,6 +41,7 @@ class SpaceCard extends Component {
     // console.log("SPACECARD",this.props.space)
     return(
 
+
       <Card link style={{width:"100%"}} onClick={()=>{this.setCurrentSpaceAndContainerToNone(this.props.space)}} >
         <Card.Content header={this.props.space.name}/>
         <Segment>
@@ -53,6 +54,7 @@ class SpaceCard extends Component {
         </Segment>
 
       </Card>
+
     )
   }
 }
