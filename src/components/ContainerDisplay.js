@@ -9,7 +9,11 @@ class Container extends Component {
 
   state = {
     addingItem: false,
-    addingOwnersIds: []
+    addingOwnersIds: [],
+    deletingContainer: false,
+    editingContainer: false,
+    householdPassword: "",
+    errorMessage: ""
   }
 
   renderItemCards = () => {
@@ -125,19 +129,80 @@ class Container extends Component {
     </Segment>
   }
 
+  setDeletingContainer = () => {
+    this.setState({
+      deletingContainer: !this.state.deletingContainer
+    })
+  }
+
+  renderDeletingHeader = () => {
+    return <Button color="red" size="mini" style={{marginTop:""}} onClick={this.setDeletingContainer}>Delete Container</Button>
+  }
+
+  renderDeletingForm = () => {
+    return <Segment clearing raised>
+      <Form>
+        <Form.Field>
+          <title>Password</title>
+          <input type="password" name="householdPassword" onChange={this.handleInput} placeholder="Please enter Household Password"/>
+        </Form.Field>
+        <Button floated="right" size="mini"
+        onClick={this.setDeletingContainer}>Cancel</Button>
+        <Button floated="right" size="mini" onClick={this.deleteContainer} color="red">Delete Container</Button>
+      </Form>
+    </Segment>
+  }
+
+  deleteContainer = () => {
+    fetch(`http://localhost:3000/api/v1/containers/${this.props.state.currentContainer.id}`,{
+      method:"DELETE",
+      headers:{
+        'Content-Type':'application/json',
+        Accept: 'application/json'
+      },
+      body:JSON.stringify({
+        container:{
+          container_id:this.props.state.currentContainer.id,
+          household_id: this.props.state.currentHousehold.id,
+          password: this.state.householdPassword
+        }
+      })
+    }).then(resp=>resp.json())
+    .then(data=>{
+      // console.log(data)
+      if (data.hasOwnProperty("id")) {
+        this.props.setCurrentSpace(data)
+      } else {
+        this.setState({
+          errorMessage: data.message
+        })
+      }
+      this.setState({
+        deletingHousehold: !this.state.deletingHousehold
+      })
+      // this.props.history.push('/households/')
+    })
+  }
+
+  renderErrorMessage = () => {
+    return <Message warning>{this.state.errorMessage}</Message>
+  }
 
   render(){
     // console.log(this.props.history)
-    // console.log(this.state)
+    // console.log(this.state.errorMessage)
     return(
       <>
+        {this.state.errorMessage !== "" ? this.renderErrorMessage() : null}
       <Segment clearing style={{minHeight:"500px"}}>
           <>
           <Header floated="left" as="h2">{this.props.container.name}</Header>
           <Header color="grey" floated="left" as="h2">in {this.props.state.currentSpace.name} at {this.props.state.currentHousehold.name}</Header>
-          {this.state.addingItem ? this.renderAddItemForm() : this.renderAddItemHeader()}
+          {this.state.deletingContainer ? this.renderDeletingForm() : this.state.addingItem ? null : this.renderDeletingHeader()}
+          {this.state.addingItem ? this.renderAddItemForm() : this.state.deletingContainer ? null : this.renderAddItemHeader()}
 
           {this.renderItemCards()}
+
           </>
 
       </Segment>

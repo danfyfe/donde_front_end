@@ -258,7 +258,7 @@ class HouseholdContainer extends Component {
   }
 
   renderLeavingHouseholdHeader = () => {
-    return <Button color="red" size="mini" onClick={this.setLeavingHousehold}>Leave Household</Button>
+    return <Button color="red" size="mini" style={{marginTop: "0.5%"}} onClick={this.setLeavingHousehold}>Leave Household</Button>
   }
 
   renderLeavingHouseholdForm = () => {
@@ -301,8 +301,8 @@ class HouseholdContainer extends Component {
   }
 
   render(){
-    console.log('HHC state', this.state)
-    console.log(this.props.history)
+    // console.log('HHC state', this.state)
+    // console.log(this.props.history)
     // console.log(this.props.state.currentHousehold)
     if (this.props.state.user.households) {
       // console.log(this.props.state.user.households)
@@ -321,13 +321,14 @@ class HouseholdContainer extends Component {
             this.renderEditHouseholdForm() : this.renderEditHouseholdHeaeder()}
 
 
-            {this.state.addingSpace ? this.renderAddSpaceForm() : this.renderAddSpaceHeader()}
+            {this.state.addingSpace ? this.renderAddSpaceForm() : this.state.leavingHousehold ? null : this.renderAddSpaceHeader()}
+
+            {this.state.leavingHousehold ? this.renderLeavingHouseholdForm() : this.state.addingSpace ? null : this.renderLeavingHouseholdHeader()}
           </>
         }
 
 
           <SpacesContainer history={this.props.history}/>
-          {this.state.leavingHousehold ? this.renderLeavingHouseholdForm() : this.renderLeavingHouseholdHeader()}
         </Segment>
       </>
     )
