@@ -70,8 +70,8 @@ class Space extends Component {
   }
 
   renderAddContainerForm = () => {
-    return <Segment clearing raised>
-      <Message header={"Add a Container to" + this.props.state.currentSpace.name} size="mini"/>
+    return <Segment clearing raised style={{marginTop:"2%"}}>
+      <Message header={"Add a Container to " + this.props.state.currentSpace.name} size="mini"/>
       <Form>
         <Form.Field>
           <label>Name</label>

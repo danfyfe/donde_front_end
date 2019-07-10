@@ -17,7 +17,7 @@ class SignupPage extends Component {
       [e.target.name]: e.target.value
     })
   }
-  
+
   handleSubmit = () => {
     fetch('http://localhost:3000/api/v1/users',{
       method: "POST",
@@ -43,7 +43,7 @@ class SignupPage extends Component {
       localStorage.token && localStorage.token !== "undefined" ?
           <Redirect to={"/profile"} /> :
       <>
-        <Segment style={{width:"75%", margin:"0 auto"}}>
+        <Segment style={{width:"75%", margin:"10% auto"}}>
           <Message>
             <Message.Header>
               Sign Up!

@@ -33,13 +33,16 @@ function householdReducer (state = defaultState, action){
 
     case "ADD_MESSAGE":
     // console.log('inside add_message',action.message.household)
-    let household = state.user.households.find(household=>{
-      return household.id === action.message.household.id
-    })
-    let updatedHousehold = {...household, messages:[action.message, ...household.messages]}
-    let householdIndex = state.user.households.indexOf(household)
-    state.user.households.splice(householdIndex, 1, updatedHousehold)
-    return {...state, user: {...state.user, households: state.user.households}}
+      let household = state.user.households.find(household=>{
+        return household.id === action.message.household.id
+      })
+
+      let updatedHousehold = {...household, messages:[action.message, ...household.messages]}
+
+      let householdIndex = state.user.households.indexOf(household)
+      state.user.households.splice(householdIndex, 1, updatedHousehold)
+
+      return {...state, user: {...state.user, households: state.user.households}}
 
     case "SET_CURRENT_HOUSEHOLD":
       // console.log(action.household)
