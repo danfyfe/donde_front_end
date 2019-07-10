@@ -33,7 +33,7 @@ class SpacesConatiner extends Component {
       <>
       {this.props.state.currentSpace && this.props.state.currentSpace.hasOwnProperty('id') ?  <> {this.renderSpace()} </>:
         <>
-          <Segment style={{margin:"3% auto", minHeight:"500px"}}>
+          <Segment style={{margin:"4% auto", minHeight:"500px"}}>
             <Header>Spaces:</Header>
             {this.renderSpaceCards()}
           </Segment>
