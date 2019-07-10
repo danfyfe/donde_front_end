@@ -9,6 +9,7 @@ class HouseholdContainer extends Component {
     addingSpace: false,
     newSpaceName:"",
     joiningHousehold: false,
+    leavingHousehold: false,
     householdPassword: "",
 
     editingHousehold: false,
@@ -250,9 +251,59 @@ class HouseholdContainer extends Component {
     </Segment>
   }
 
+  setLeavingHousehold = () => {
+    this.setState({
+      leavingHousehold: !this.state.leavingHousehold
+    })
+  }
+
+  renderLeavingHouseholdHeader = () => {
+    return <Button color="red" size="mini" onClick={this.setLeavingHousehold}>Leave Household</Button>
+  }
+
+  renderLeavingHouseholdForm = () => {
+    return <Segment clearing raised>
+      <Form>
+        <Form.Field>
+          <title>Password</title>
+          <input type="password" name="householdPassword" onChange={this.handleInput} placeholder="Please enter Household Password"/>
+        </Form.Field>
+        <Button floated="right" size="mini"
+        onClick={this.setLeavinghousehold}>Cancel</Button>
+        <Button floated="right" size="mini" onClick={this.leaveHousehold} color="red">Leave Household</Button>
+      </Form>
+    </Segment>
+  }
+
+  leaveHousehold = () => {
+    fetch(`http://localhost:3000/api/v1/households/${this.props.state.user.id}/${this.props.state.currentHousehold.id}`,{
+      method:"DELETE",
+      headers:{
+        'Content-Type':'application/json',
+        Accept: 'application/json'
+      },
+      body:JSON.stringify({
+        leave:{
+          user_id: this.props.state.user.id,
+          household_id: this.props.state.currentHousehold.id,
+          password: this.state.householdPassword
+        }
+      })
+    }).then(resp=>resp.json())
+    .then(household=>{
+      // this.props.setCurrentHousehold(household)
+      this.setState({
+        leavingHousehold: !this.state.leavingHousehold
+      })
+      this.props.history.push('/')
+    })
+
+  }
 
   render(){
-    // console.log('HHC state', this.state)
+    console.log('HHC state', this.state)
+    console.log(this.props.history)
+    // console.log(this.props.state.currentHousehold)
     if (this.props.state.user.households) {
       // console.log(this.props.state.user.households)
 
@@ -276,7 +327,7 @@ class HouseholdContainer extends Component {
 
 
           <SpacesContainer history={this.props.history}/>
-
+          {this.state.leavingHousehold ? this.renderLeavingHouseholdForm() : this.renderLeavingHouseholdHeader()}
         </Segment>
       </>
     )
