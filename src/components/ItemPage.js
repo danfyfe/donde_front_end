@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router'
+// import { Redirect } from 'react-router'
 import { Segment, Header, Form, Dropdown, Button, Message, Menu } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 

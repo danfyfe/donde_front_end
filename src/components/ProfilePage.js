@@ -63,14 +63,14 @@ class ProfilePage extends Component {
           <Grid columns={2}>
 
             <Grid.Column>
-              <Segment raised style={{width:"98%", margin:"10px auto"}}>
+              <Segment raised style={{width:"98%", margin:"10px "}}>
                 <HouseholdCardsContainer history={this.props.history}
                 />
               </Segment>
             </Grid.Column>
 
             <Grid.Column>
-              <Segment raised style={{width:"98%", margin:"10px auto"}}>
+              <Segment raised style={{width:"98%", margin:"10px "}}>
                 <MessageContainer
                 history={this.props.history}/>
               </Segment>

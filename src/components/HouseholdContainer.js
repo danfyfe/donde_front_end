@@ -12,7 +12,7 @@ class HouseholdContainer extends Component {
     householdPassword: "",
 
     editingHousehold: false,
-    newHouseholdName: this.props.state.currentHousehold.name,
+    newHouseholdName: "",
     newHouseholdColor:"",
     newHouseholdImage:"",
 
@@ -91,8 +91,8 @@ class HouseholdContainer extends Component {
   }
 
   renderAddSpaceForm = () => {
-    return <Segment clearing raised>
-    <Message header={"Add a space to" + this.props.state.currentHousehold.name} size="mini"/>
+    return <Segment clearing raised style={{marginTop:"3%"}}>
+    <Message header={"Add a space to " + this.props.state.currentHousehold.name} size="mini"/>
       <Form>
         <Form.Field>
           <label>Name</label>
@@ -234,7 +234,7 @@ class HouseholdContainer extends Component {
         <Form.Field>
         <label>Name</label>
         <input onChange={this.handleEditHouseholdNameInput} placeholder="New Household Name"
-        value={this.state.newHouseholdName}/>
+        />
         </Form.Field>
         <Form.Field>
         <label>Color</label>

@@ -60,13 +60,13 @@ render(){
       </Segment>
 
         {this.state.statusMessage ? this.renderErrorMessage():null}
-        <Segment placeholder style={{margin: "100px 100px"}}>
+        <Segment placeholder raised style={{margin: "5% auto", width:"50%"}}>
           <Grid columns={2} relaxed='very' stackable>
             <Grid.Column>
               <Form onSubmit={this.handleLogIn}>
                 <Form.Input icon='user' iconPosition='left' label='Username' placeholder='Username'
                   name='username' onChange={this.handleChange} />
-                <Form.Input icon='lock' iconPosition='left' label='Password' type='password'
+                <Form.Input icon='lock' iconPosition='left' label='Password' placeholder="Password" type='password'
                   name='password' onChange={this.handleChange} />
                 <Button content='Login' primary />
               </Form>

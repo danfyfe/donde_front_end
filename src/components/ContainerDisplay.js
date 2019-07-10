@@ -91,8 +91,8 @@ class Container extends Component {
       })
     }
 
-    return <Segment clearing raised>
-    <Message header={"Add an Item to" + this.props.state.currentContainer.name} size="mini"/>
+    return <Segment clearing raised style={{marginTop:"2%"}}>
+    <Message header={"Add an Item to " + this.props.state.currentContainer.name} size="mini"/>
       <Form>
         <Form.Field>
           <label>Name</label>
