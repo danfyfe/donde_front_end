@@ -144,13 +144,13 @@ class ItemPage extends Component {
 
   renderEditHeader = () => {
     return <>
-    <Button floated="right" size="mini" onClick={this.setEditing} color="blue">Move Item</Button>
+    <Button floated="right" size="mini" onClick={this.setEditing} color="blue" style={{margin:"7% .05% 0 0"}}>Move Item</Button>
     </>
   }
 
   renderDeleteHeader = () => {
     return <>
-      <Button floated="right" size="mini" onClick={this.setDeleting} color="red">Delete Item</Button>
+      <Button floated="right" size="mini" onClick={this.setDeleting} color="red" style={{margin:"7% 0 0 0"}}>Delete Item</Button>
     </>
   }
 
@@ -440,6 +440,12 @@ class ItemPage extends Component {
       }
     }
 
+    redirectToHousehold = () => {
+      if (this.props.state.currentItem) {
+        this.props.history.push(`/households/${this.props.state.currentItem.household.id}`)
+      }
+    }
+
 
 
   render(){
@@ -447,6 +453,7 @@ class ItemPage extends Component {
     // console.log('started', this.props.state.isFetching)
     // console.log(this.props.state.user.households)
     // console.log(this.props.state)
+    // console.log(this.props.state.currentItem)
 
     return(
       <>
@@ -463,10 +470,7 @@ class ItemPage extends Component {
 
         <Segment clearing>
           <Header floated="left" as="h1">{this.props.state.currentItem.name}</Header>
-
-          {this.state.deleting ? this.renderDeleteForm() : this.state.editing ? null :this.renderDeleteHeader()}
-
-          {this.state.editing ? this.renderEditForm() : this.state.deleting ? null :this.renderEditHeader()}
+          <Button floated="right" color="blue" size="mini" style={{margin:".5% 0 0 0"}} onClick={this.redirectToHousehold}>Return to Household</Button>
         </Segment>
 
         <Segment.Group>
@@ -486,6 +490,10 @@ class ItemPage extends Component {
             {this.renderOwners()}
           </Segment.Group>
         </Segment>
+        {this.state.deleting ? this.renderDeleteForm() : this.state.editing ? null :this.renderDeleteHeader()}
+
+        {this.state.editing ? this.renderEditForm() : this.state.deleting ? null :this.renderEditHeader()}
+
       </Segment>
 
       {/*<Segment raised style={{width:"98%", margin:"10px auto"}}>

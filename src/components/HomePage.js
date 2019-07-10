@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
-import { Button, Segment, Grid, Form, Divider, Message } from 'semantic-ui-react'
+import { Button, Segment, Grid, Form, Divider, Message, Header } from 'semantic-ui-react'
 
 class HomePage extends Component {
   state = {
@@ -52,6 +52,13 @@ render(){
       <Redirect to={"/profile"} />
     ) : (
       <>
+      <Segment raised style={{width:"30%", height:"200px", margin:"2% auto", backgroundColor:"#3d8af7"}}>
+        <Segment raised style={{ height:"100%", margin:"auto"}}>
+          <Header as="h1" style={{margin:"6% auto", textAlign:"center"}}>Welcome to Donde</Header>
+          <Header as="h4" style={{margin:"auto", textAlign:"center"}}>Where everthing has its place</Header>
+        </Segment>
+      </Segment>
+
         {this.state.statusMessage ? this.renderErrorMessage():null}
         <Segment placeholder style={{margin: "100px 100px"}}>
           <Grid columns={2} relaxed='very' stackable>

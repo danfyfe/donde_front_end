@@ -7,15 +7,11 @@ class ContainerCard extends Component {
 
   renderContainerItems = () => {
     if (this.props.container.items.length === 0) {
-      return <Segment><Message warning>There are currently no items in this container! Click this card to view this container and add one!</Message></Segment>
+      return <Message warning>There are currently no items in this container! Click this card to view this container and add one!</Message>
     } else {
-      return this.props.container.items.map(item => {
-        return <Segment style={{margin:"5px"}}>
-        <List.Item >
-        <List.Content>{item.name}</List.Content>
-        </List.Item>
-        </Segment>
-      })
+
+        return <span>{this.props.container.items.length} Items</span>
+
     }
   }
 
@@ -31,9 +27,10 @@ class ContainerCard extends Component {
           <Card.Meta>{this.props.container.description}</Card.Meta>
         </Card.Content>
 
-        <List>
-          {this.renderContainerItems()}
-        </List>
+        <Segment style={{margin:"5px"}}>
+        {this.renderContainerItems()}
+        </Segment>
+
 
       </Card>
     )
@@ -58,3 +55,10 @@ const mapDispatchToProps = (dispatch) =>{
 
 export default connect(mapStateToProps,mapDispatchToProps)(ContainerCard)
 
+// <List.Item >
+// <List.Content>{item.name}</List.Content>
+// </List.Item>
+//
+// <List>
+//   {this.renderContainerItems()}
+// </List>

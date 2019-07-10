@@ -135,7 +135,7 @@ class HouseholdPage extends Component {
   }
 
   renderDeleteConfirmationMessage = () => {
-    return <Message floated="center" style={{textAlign:"center", margin:"10px auto"}} warning>{this.props.state.itemDeleteConfirmationMessage}</Message>
+    return <Message floated="center" style={{textAlign:"center", margin:"1% 5%"}} warning>{this.props.state.itemDeleteConfirmationMessage}</Message>
   }
 
   setItemDeleteConfirmationMessageToNothing = () => {
@@ -166,7 +166,7 @@ class HouseholdPage extends Component {
           </Menu>
 
           {this.props.state.itemDeleteConfirmationMessage !== "" ? this.renderDeleteConfirmationMessage() : null}
-          
+
           {this.props.state.searching ? <Search history={this.props.history}/> : null}
 
           <Segment raised style={{margin:"10px auto",width:"98%"}}>

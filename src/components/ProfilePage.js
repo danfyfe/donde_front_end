@@ -26,7 +26,7 @@ class ProfilePage extends Component {
   }
 
   renderDeleteConfirmationMessage = () => {
-    return <Message floated="center" style={{textAlign:"center", margin:"10px auto"}} warning>{this.props.state.itemDeleteConfirmationMessage}</Message>
+    return <Message floated="center" style={{textAlign:"center", margin:"1% 5%"}} warning>{this.props.state.itemDeleteConfirmationMessage}</Message>
   }
 
   setItemDeleteConfirmationMessageToNothing = () => {
