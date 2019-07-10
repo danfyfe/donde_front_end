@@ -37,6 +37,17 @@ class SpaceCard extends Component {
       })
   }
 
+  renderContainerList = () => {
+    let containerListItems = this.props.space.containers.map(container => {
+      return <List.Item key={container.id}>
+        {container.name}
+      </List.Item>
+    })
+    return <List>
+      {containerListItems}
+    </List>
+  }
+
   renderSpaceItems = () => {
     return this.props.space.items.map(item => {
       return <Segment key={item.id}>
@@ -121,7 +132,7 @@ class SpaceCard extends Component {
   }
 
   deleteSpace = () => {
-
+    // didnt have time
   }
 
   render(){
@@ -129,6 +140,7 @@ class SpaceCard extends Component {
     // console.log('spaceCard state',this.state)
     // console.log(this.props.state.currentHousehold)
     // console.log('current container', this.props.state.currentContainer)
+    // console.log(this.props.state.currentHousehold)
     return(
 
 
@@ -136,12 +148,10 @@ class SpaceCard extends Component {
         <Card.Content header={this.props.space.name}  />
 
         <Segment>
-          <Header as="h3">Containers:</Header>
+        <Header as="h4">Containers:</Header>
           {
             this.props.space.containers.length === 0 ? this.renderNoContainersMessage() :
-            <Card.Group itemsPerRow={6}>
-            {this.renderContainerDescriptions()}
-            </Card.Group>
+            this.renderContainerList()
           }
           {/*this.state.deleting ? this.renderDeleteSpaceForm() : this.state.editing ? null : this.renderDeleteSpaceHeader()*/}
           {/*this.state.editing ? this.renderEditSpaceForm() : this.state.deleting ? null : this.renderEditSpaceHeader()*/}
@@ -190,3 +200,7 @@ export default connect(mapStateToProps,mapDispatchToProps)(SpaceCard)
 //   </Card.Group>
 //
 // </Card>
+
+// <Card.Group itemsPerRow={6}>
+// {this.renderContainerDescriptions()}
+// </Card.Group>

@@ -130,7 +130,7 @@ class MessageContainer extends Component {
 
 
   render(){
-    console.log(this.props.state)
+    // console.log(this.props.state)
     // console.log(this.state)
     return(
       <>

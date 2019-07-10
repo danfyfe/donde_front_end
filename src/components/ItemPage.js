@@ -1,10 +1,11 @@
-import React, { Component, } from 'react'
+import React, { Component } from 'react'
+import { Redirect } from 'react-router'
 import { Segment, Header, Form, Dropdown, Button, Message, Menu } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import Search from './Search.js'
 import Loading from './Loading.js'
-import MessageContainer from './MessageContainer'
+// import MessageContainer from './MessageContainer'
 
 
 class ItemPage extends Component {
@@ -278,6 +279,7 @@ class ItemPage extends Component {
     .then(updatedItem => {
       // console.log("updated item",updatedItem)
       this.props.setCurrentItem(updatedItem)
+
       this.setState({
         editing: !this.state.editing,
         statusMessage: "Item successfully moved! A message was sent to your household on your behalf."
@@ -436,12 +438,15 @@ class ItemPage extends Component {
           this.setState({
             statusMessage: ""
           })
-        }, 3000)
+        }, 5000)
       }
     }
 
     redirectToHousehold = () => {
       if (this.props.state.currentItem) {
+        this.props.setCurrentSpace({})
+        this.props.setCurrentContainer({})
+        // return <Redirect to={"/households/" + this.props.state.currentItem.household.id}/>
         this.props.history.push(`/households/${this.props.state.currentItem.household.id}`)
       }
     }
@@ -453,7 +458,7 @@ class ItemPage extends Component {
     // console.log('started', this.props.state.isFetching)
     // console.log(this.props.state.user.households)
     // console.log(this.props.state)
-    // console.log(this.props.state.currentItem)
+    // console.log(this.props.state.currentItem.container)
 
     return(
       <>

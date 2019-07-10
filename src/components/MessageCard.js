@@ -69,7 +69,7 @@ class MessageCard extends Component {
           </Card.Description>
           <Card.Meta>
           <Icon name="home"/>
-          <span style={{maring:'10px', paddingRight:'5px'}}>{this.props.message.household.name}</span>
+          <span style={{margin:'1% 0 0 0', paddingRight:'5px'}}>{this.props.message.household.name}</span>
           <Icon name="user"/>
           <span style={{paddingRight:'5px'}}>{this.props.message.user.username}</span>
           <Icon name="clock"/>
