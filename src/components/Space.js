@@ -10,7 +10,9 @@ class Space extends Component {
   state = {
     addingContainer: false,
     newContainerName: "",
-    newContainerDescription: ""
+    newContainerDescription: "",
+    
+
   }
 
   renderContainerCards = () => {
