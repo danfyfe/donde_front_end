@@ -22,7 +22,7 @@ class Container extends Component {
         return <Message warning style={{margin:"4% 0 0 0", textAlign:"center"}}>There are currently no items in this container. Click Add Item to add one!</Message>
       } else {
         return this.props.container.items.map(item => {
-          return <ItemCard redirectToItemPage={this.redirectToItemPage} item={item}/>
+          return <ItemCard key={item.id} redirectToItemPage={this.redirectToItemPage} item={item}/>
         })
       }
     }
@@ -41,7 +41,7 @@ class Container extends Component {
     })
   }
 
-  setAddItem = () => {
+  setAddingItem = () => {
     this.setState({
       addingItem: !this.state.addingItem
     })
@@ -123,7 +123,7 @@ class Container extends Component {
 
 
 
-        <Button onClick={this.setAddItem} floated="right" size="mini">Cancel</Button>
+        <Button onClick={this.setAddingItem} floated="right" size="mini">Cancel</Button>
         <Button onClick={this.addItem} floated="right" size="mini">Submit</Button>
       </Form>
     </Segment>
@@ -198,8 +198,19 @@ class Container extends Component {
           <>
           <Header floated="left" as="h2">{this.props.container.name}</Header>
           <Header color="grey" floated="left" as="h2">in {this.props.state.currentSpace.name} at {this.props.state.currentHousehold.name}</Header>
-          {this.state.deletingContainer ? this.renderDeletingForm() : this.state.addingItem ? null : this.renderDeletingHeader()}
-          {this.state.addingItem ? this.renderAddItemForm() : this.state.deletingContainer ? null : this.renderAddItemHeader()}
+
+          <Dropdown floated="right" pointing="top right" style={{margin:"0% 0 0 57%"}} text="Container">
+            <Dropdown.Menu>
+              <Dropdown.Item text="Add Item" onClick={this.setAddingItem}/>
+              <Dropdown.Item text="Delete Container" onClick={this.setDeletingContainer}/>
+              <Dropdown.Item text="Back To Space" onClick={() => this.props.setCurrentContainer({})}/>
+
+            </Dropdown.Menu>
+          </Dropdown>
+
+
+          {this.state.deletingContainer ? this.renderDeletingForm() : null}
+          {this.state.addingItem ? this.renderAddItemForm() : null}
 
           {this.renderItemCards()}
 

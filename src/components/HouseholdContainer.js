@@ -269,7 +269,7 @@ class HouseholdContainer extends Component {
           <input type="password" name="householdPassword" onChange={this.handleInput} placeholder="Please enter Household Password"/>
         </Form.Field>
         <Button floated="right" size="mini"
-        onClick={this.setLeavinghousehold}>Cancel</Button>
+        onClick={this.setLeavingHousehold}>Cancel</Button>
         <Button floated="right" size="mini" onClick={this.leaveHousehold} color="red">Leave Household</Button>
       </Form>
     </Segment>
@@ -317,13 +317,19 @@ class HouseholdContainer extends Component {
 
           <Header onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)} as="h1" floated="left">{this.props.state.currentHousehold.name}</Header><Image floated="left" src={this.props.state.currentHousehold.image} size="mini"/>
 
-          {this.state.editingHousehold ?
-            this.renderEditHouseholdForm() : this.renderEditHouseholdHeaeder()}
+          <Dropdown floated="right" pointing="top right" style={{margin:"0.75% 0 0 77% "}} text="Household">
+            <Dropdown.Menu>
+              <Dropdown.Item text="Add Space" onClick={this.setAddingSpace}/>
+              <Dropdown.Item text="Edit" onClick={this.setEditingHousehold}/>
+              <Dropdown.Item text="Leave Household" onClick={this.setLeavingHousehold}/>
+            </Dropdown.Menu>
+          </Dropdown>
 
+            {this.state.editingHousehold ? this.renderEditHouseholdForm() : null}
 
-            {this.state.addingSpace ? this.renderAddSpaceForm() : this.state.leavingHousehold ? null : this.renderAddSpaceHeader()}
+            {this.state.addingSpace ? this.renderAddSpaceForm() : null}
 
-            {this.state.leavingHousehold ? this.renderLeavingHouseholdForm() : this.state.addingSpace ? null : this.renderLeavingHouseholdHeader()}
+            {this.state.leavingHousehold ? this.renderLeavingHouseholdForm() : null}
           </>
         }
 
@@ -349,3 +355,13 @@ const mapDispatchToProps = (dispatch) =>{
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(HouseholdContainer)
+
+
+
+          // {this.state.editingHousehold ?
+          //   this.renderEditHouseholdForm() : this.renderEditHouseholdHeaeder()}
+          //
+          //
+          //   {this.state.addingSpace ? this.renderAddSpaceForm() : this.state.leavingHousehold ? null : this.renderAddSpaceHeader()}
+          //
+          //   {this.state.leavingHousehold ? this.renderLeavingHouseholdForm() : this.state.addingSpace ? null : this.renderLeavingHouseholdHeader()}
