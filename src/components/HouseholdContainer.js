@@ -317,7 +317,7 @@ class HouseholdContainer extends Component {
 
           <Header onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)} as="h1" floated="left">{this.props.state.currentHousehold.name}</Header><Image floated="left" src={this.props.state.currentHousehold.image} size="mini"/>
 
-          <Dropdown floated="right" pointing="top right" style={{margin:"0.75% 0 0 77% "}} text="Household">
+          <Dropdown floated="right" pointing="top right" style={{margin:"0.75% 0 0 82% "}} text="Household">
             <Dropdown.Menu>
               <Dropdown.Item text="Add Space" onClick={this.setAddingSpace}/>
               <Dropdown.Item text="Edit" onClick={this.setEditingHousehold}/>
