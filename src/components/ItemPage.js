@@ -454,11 +454,6 @@ class ItemPage extends Component {
 
 
   render(){
-    // console.log('done?',this.props.state.isDoneFetching)
-    // console.log('started', this.props.state.isFetching)
-    // console.log(this.props.state.user.households)
-    // console.log(this.props.state)
-    // console.log(this.props.state.currentItem.container)
 
     return(
       <>
@@ -470,7 +465,7 @@ class ItemPage extends Component {
         <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
       </Menu>
 
-      <Segment clearing raised style={{margin:"1% auto",width:"98%", minHeight:"500px"}}>
+      <Segment clearing raised style={{margin:"1% auto",width:"98%", minHeight:"500px", backgroundColor:"#f7f7f7"}}>
         {this.state.statusMessage !== "" ? this.renderStatusMessage() : null}
 
         <Segment clearing>
@@ -500,11 +495,6 @@ class ItemPage extends Component {
         {this.state.editing ? this.renderEditForm() : this.state.deleting ? null :this.renderEditHeader()}
 
       </Segment>
-
-      {/*<Segment raised style={{width:"98%", margin:"10px auto"}}>
-        <MessageContainer
-      history={this.props.history}/>
-      </Segment>*/}
 
         </> : <Loading/>
 

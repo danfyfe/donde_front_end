@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Form, Button, Message } from 'semantic-ui-react'
+import { Segment, Header, Form, Button, Message, Dropdown } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import ContainerCard from './ContainerCard.js'
@@ -11,8 +11,6 @@ class Space extends Component {
     addingContainer: false,
     newContainerName: "",
     newContainerDescription: "",
-    
-
   }
 
   renderContainerCards = () => {
@@ -117,7 +115,15 @@ class Space extends Component {
       <>
       <Header floated="left" as="h2">{this.props.space.name}</Header>
       <Header color="grey" floated="left" as="h2">at {this.props.state.currentHousehold.name}</Header>
-      {this.state.addingContainer ? this.renderAddContainerForm() : this.renderAddContainerHeader()}
+
+      <Dropdown floated="right" pointing="top right" style={{margin:"0% 0 0 69% "}} text="Space">
+        <Dropdown.Menu>
+          <Dropdown.Item text="Add Space" onClick={this.setAddingContainer}/>
+          <Dropdown.Item text="Back To Household" onClick={() => this.props.setCurrentSpace({})}/>
+        </Dropdown.Menu>
+      </Dropdown>
+
+      {this.state.addingContainer ? this.renderAddContainerForm() :null}
 
 
       {this.renderContainers()}

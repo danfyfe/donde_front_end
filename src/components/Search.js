@@ -54,7 +54,7 @@ class Search extends Component {
     // console.log('search state',this.state)
     return(
 
-        <Segment clearing raised style={{margin:"0 10px"}}>
+        <Segment clearing raised style={{margin:"0 10px", backgroundColor:"#f7f7f7"}}>
           <Segment clearing>
             <Message header="Search for a Household and/or Item!" size="mini"/>
             <Form floated="left">
