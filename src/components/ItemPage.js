@@ -465,7 +465,7 @@ class ItemPage extends Component {
         <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
       </Menu>
 
-      <Segment clearing raised style={{margin:"1% auto",width:"98%", minHeight:"500px"}}>
+      <Segment clearing raised style={{margin:"1% auto",width:"98%", minHeight:"500px", backgroundColor:"#f7f7f7"}}>
         {this.state.statusMessage !== "" ? this.renderStatusMessage() : null}
 
         <Segment clearing>

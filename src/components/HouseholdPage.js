@@ -169,7 +169,7 @@ class HouseholdPage extends Component {
 
           {this.props.state.searching ? <Search history={this.props.history}/> : null}
 
-          <Segment raised style={{margin:"10px auto",width:"98%"}}>
+          <Segment raised style={{margin:"10px auto",width:"98%", backgroundColor:"#f7f7f7"}}>
 
           {this.isUsersHousehold() ?
               <>
