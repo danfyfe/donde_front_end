@@ -199,7 +199,7 @@ class Container extends Component {
           <Header floated="left" as="h2">{this.props.container.name}</Header>
           <Header color="grey" floated="left" as="h2">in {this.props.state.currentSpace.name} at {this.props.state.currentHousehold.name}</Header>
 
-          <Dropdown floated="right" pointing="top right" style={{margin:"0% 0 0 68%"}} text="Container">
+          <Dropdown floated="right" pointing="top right" style={{margin:"0% 0 0 54%"}} text="Container">
             <Dropdown.Menu>
               <Dropdown.Item text="Add Item" onClick={this.setAddingItem}/>
               <Dropdown.Item text="Delete Container" onClick={this.setDeletingContainer}/>
