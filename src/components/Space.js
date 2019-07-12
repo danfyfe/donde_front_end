@@ -116,7 +116,7 @@ class Space extends Component {
       <Header floated="left" as="h2">{this.props.space.name}</Header>
       <Header color="grey" floated="left" as="h2">at {this.props.state.currentHousehold.name}</Header>
 
-      <Dropdown floated="right" pointing="top right" style={{margin:"0% 0 0 77% "}} text="Space">
+      <Dropdown floated="right" pointing="top right" style={{margin:"0% 0 0 68% "}} text="Space">
         <Dropdown.Menu>
           <Dropdown.Item text="Add Container" onClick={this.setAddingContainer}/>
           <Dropdown.Item text="Back To Household" onClick={() => this.props.setCurrentSpace({})}/>
