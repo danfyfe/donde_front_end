@@ -14,24 +14,12 @@ class MessageContainer extends Component {
   }
 
   handleInput = (e) => {
-    // let newMessageHouseholdObj = {}
-    //
-    // if (e.target.innerText) {
-    //   if (this.props.state.user.households) {
-    //     newMessageHouseholdObj = this.props.state.user.households.find(household=>{
-    //       return household.name === e.target.innerText
-    //     })
-    //   }
-    // }
-
     this.setState({
       [e.target.name]: e.target.value,
-      // newMessageHousehold_id: newMessageHouseholdObj.id
     })
   }
 
   handleMessageHouseholdInput = (e,data) => {
-    // console.log(data.value)
     this.setState({
       newMessageHousehold_id: data.value
     })
@@ -53,8 +41,6 @@ class MessageContainer extends Component {
       })
 
       householdMessages.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1).reverse()
-
-      // console.log(householdMessages)
 
         return householdMessages.map(message => {
           return <MessageCard key={message.id} message={message}/>
@@ -119,7 +105,7 @@ class MessageContainer extends Component {
       })
     }).then(resp=>resp.json())
     .then(message=>{
-      // console.log('addnewmessage fetch return',message)
+
       this.props.addMessage(message)
 
       this.setState({
@@ -130,8 +116,7 @@ class MessageContainer extends Component {
 
 
   render(){
-    // console.log(this.props.state)
-    // console.log(this.state)
+
     return(
       <>
       <Segment clearing>
@@ -162,8 +147,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(MessageContainer)
-
-
-// <Menu style={{margin:"0px 0px 15px 0px"}}>
-//   <Header style={{padding:"10px"}}>Messages</Header>
-// </Menu>

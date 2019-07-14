@@ -35,14 +35,12 @@ class HouseholdMessagesContainer extends Component {
   }
 
   renderMessageCards = () => {
-    // console.log(this.props.state.currentHousehold.messages)
     if (this.props.state.user.households && this.props.state.currentHousehold) {
       if (this.props.state.currentHousehold.messages) {
         if (this.props.state.currentHousehold.messages.length === 0) {
           return <Message size="small" compact style={{margin: "2% auto"}}>There are no messages for this household! Click Add Message to create one!</Message>
         } else {
           let currentHouseholdMessages = this.props.state.currentHousehold.messages
-
 
           currentHouseholdMessages.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1).reverse()
 
@@ -93,9 +91,9 @@ class HouseholdMessagesContainer extends Component {
       })
     }).then(resp=>resp.json())
     .then(message=>{
-      // console.log('addnewmessage fetch return',message)
-      this.props.addMessageToCurrentHousehold(message)
       
+      this.props.addMessageToCurrentHousehold(message)
+
       this.setState({
         addingNewMessage: !this.state.addingNewMessage
       })

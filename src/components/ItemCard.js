@@ -15,7 +15,7 @@ class ItemCard extends Component {
 
 
   render(){
-    // console.log(this.props.item)
+
     return(
       <>
 

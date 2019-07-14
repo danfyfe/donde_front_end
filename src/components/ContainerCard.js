@@ -9,16 +9,13 @@ class ContainerCard extends Component {
     if (this.props.container.items.length === 0) {
       return <Message warning>There are currently no items in this container! Click this card to view this container and add one!</Message>
     } else {
-
         return <span>{this.props.container.items.length} Items</span>
-
     }
   }
 
 
   render(){
-    // console.log(this.props.container)
-    // console.log('current container',this.props.state.currentContainer)
+
     return(
 
       <Card link style={{width:"100%"}} onClick={()=>this.props.setCurrentContainer(this.props.container)}>
@@ -43,10 +40,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) =>{
   return {
-    setUser: (user) => dispatch({type:"SET_USER", user}),
-    setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
-    addSpace: (space) => dispatch({type:"ADD_SPACE", space}),
-    setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE", space}),
     setCurrentContainer: (container) => {
       dispatch({type:"SET_CURRENT_CONTAINER", container})
     }

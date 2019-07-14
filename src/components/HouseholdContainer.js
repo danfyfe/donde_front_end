@@ -55,7 +55,6 @@ class HouseholdContainer extends Component {
       })
     }).then(resp=>resp.json())
     .then(household=>{
-      // this.props.setCurrentHousehold(household)
       this.setState({
         joiningHousehold: !this.state.joiningHousehold
       })
@@ -81,7 +80,6 @@ class HouseholdContainer extends Component {
         addingSpace: !this.state.addingSpace
       })
       this.props.addSpace(space)
-      // this.props.setCurrentSpace(space)
     })
   }
 
@@ -125,33 +123,6 @@ class HouseholdContainer extends Component {
     return <Button onClick={this.setJoiningHousehold} color="blue" floated="right" size="mini">Join Household</Button>
   }
 
-  setAddOrJoin = () => {
-    if (this.props.state.user.households) {
-      // console.log(this.props.state.user.households)
-      // console.log(this.props.state.user.households.includes(this.props.state.currentHousehold))
-      let memberOfHousehold = this.props.state.user.households.find(household => {
-        return household.id === this.props.state.currentHousehold.id
-      })
-      if (memberOfHousehold) {
-        // console.log('you are a member of this household')
-        if (this.state.addingSpace) {
-          return this.renderAddSpaceForm()
-        }else {
-          return this.renderAddSpaceHeader()
-        }
-      }else {
-        // console.log('you are NOT a memeber of this household')
-        if (this.state.joiningHousehold) {
-          return this.renderJoinHouseholdForm()
-        }else {
-          return this.renderJoinHouseholdHeader()
-        }
-      }
-    }
-  }
-  //  end add space/join household
-
-
   // edit household
 
   setEditingHousehold = () => {
@@ -169,24 +140,19 @@ class HouseholdContainer extends Component {
   handleEditHouseholdColorInput = (e, data) => {
 
     this.setState({
-      // newHouseholdName: e.target.value,
       newHouseholdColor: data.value
     })
   }
 
   handleEditHouseholdImageInput = (e, data) => {
-
     this.setState({
-      // newHouseholdName: e.target.value,
       newHouseholdImage: data.value
     })
   }
 
   handleEditHouseholdNameInput = (e) => {
-    // console.log('target innertext',e.target.innerText)
     this.setState({
       newHouseholdName: e.target.value
-      // newHouseholdColor: e.target.innerText
     })
   }
 
@@ -208,7 +174,6 @@ class HouseholdContainer extends Component {
       })
     }).then(resp=>resp.json())
     .then(household=>{
-      // console.log("updated household", household)
       this.props.setCurrentHousehold(household)
       this.setState({
         editingHousehold: !this.state.editingHousehold
@@ -291,7 +256,6 @@ class HouseholdContainer extends Component {
       })
     }).then(resp=>resp.json())
     .then(household=>{
-      // this.props.setCurrentHousehold(household)
       this.setState({
         leavingHousehold: !this.state.leavingHousehold
       })
@@ -301,13 +265,7 @@ class HouseholdContainer extends Component {
   }
 
   render(){
-    // console.log('HHC state', this.state)
-    // console.log(this.props.history)
-    // console.log(this.props.state.currentHousehold)
-    if (this.props.state.user.households) {
-      // console.log(this.props.state.user.households)
 
-    }
     return(
       <>
         <Segment raised clearing style={{minHeight:"500px"}}>
@@ -355,13 +313,3 @@ const mapDispatchToProps = (dispatch) =>{
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(HouseholdContainer)
-
-
-
-          // {this.state.editingHousehold ?
-          //   this.renderEditHouseholdForm() : this.renderEditHouseholdHeaeder()}
-          //
-          //
-          //   {this.state.addingSpace ? this.renderAddSpaceForm() : this.state.leavingHousehold ? null : this.renderAddSpaceHeader()}
-          //
-          //   {this.state.leavingHousehold ? this.renderLeavingHouseholdForm() : this.state.addingSpace ? null : this.renderLeavingHouseholdHeader()}

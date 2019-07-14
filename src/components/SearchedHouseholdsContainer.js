@@ -7,7 +7,7 @@ import HouseholdCard from './HouseholdCard.js'
 class SearchedHouseholdsContainer extends Component {
 
   redirectToHousehold = (household) => {
-    // console.log('inside redirect to household')
+
     this.props.setSearchingToFalse()
 
     this.props.history.push(`/households/${household.id}`)
@@ -18,11 +18,9 @@ class SearchedHouseholdsContainer extends Component {
 
   renderSearchedHouseholds = () => {
     let filteredHouseholds = this.props.households.filter(household => {
-      // console.log(household)
+
       return (household.name.toLowerCase().includes(this.props.searchTerm.toLowerCase()) )
     })
-    // console.log(this.props.households)
-    // console.log('filteredHouseholds',filteredHouseholds)
 
     if (filteredHouseholds.length === this.props.households.length) {
     return null
@@ -34,7 +32,7 @@ class SearchedHouseholdsContainer extends Component {
   }
 
   render(){
-    // console.log('search term by props',this.props.searchTerm)
+
     return(
       <Segment>
         <Card.Group itemsPerRow={6}>

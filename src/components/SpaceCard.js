@@ -127,7 +127,6 @@ class SpaceCard extends Component {
         addingSpace: !this.state.addingSpace
       })
       this.props.addSpace(space)
-      // this.props.setCurrentSpace(space)
     })
   }
 
@@ -136,11 +135,7 @@ class SpaceCard extends Component {
   }
 
   render(){
-    // console.log("SPACECARD",this.props.space)
-    // console.log('spaceCard state',this.state)
-    // console.log(this.props.state.currentHousehold)
-    // console.log('current container', this.props.state.currentContainer)
-    // console.log(this.props.state.currentHousehold)
+
     return(
 
 
@@ -153,8 +148,6 @@ class SpaceCard extends Component {
             this.props.space.containers.length === 0 ? this.renderNoContainersMessage() :
             this.renderContainerList()
           }
-          {/*this.state.deleting ? this.renderDeleteSpaceForm() : this.state.editing ? null : this.renderDeleteSpaceHeader()*/}
-          {/*this.state.editing ? this.renderEditSpaceForm() : this.state.deleting ? null : this.renderEditSpaceHeader()*/}
         </Segment>
 
       </Card>
@@ -181,26 +174,3 @@ const mapDispatchToProps = (dispatch) =>{
 
 
 export default connect(mapStateToProps,mapDispatchToProps)(SpaceCard)
-
-// <Card link>
-//   <Card.Content header={this.props.space.name}/>
-//   <Segment>
-//   {this.renderContainerDescriptions()}
-//   </Segment>
-// </Card>
-
-// <List>
-//   {this.renderSpaceItems()}
-// </List>
-
-// <Card link onClick={()=>{this.props.setCurrentSpace(this.props.space)}} style={{width:"50%"}}>
-//   <Card.Content header={this.props.space.name}/>
-//   <Card.Group itemsPerRow={6}>
-//   {this.renderContainerDescriptions()}
-//   </Card.Group>
-//
-// </Card>
-
-// <Card.Group itemsPerRow={6}>
-// {this.renderContainerDescriptions()}
-// </Card.Group>

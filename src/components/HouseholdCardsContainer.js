@@ -66,26 +66,18 @@ class HouseholdCardsContainer extends Component {
   }
 
   handleHouseholdInput = (e) => {
-    // console.log("TARGET",e.target.innerText)
-
-    // FIX THIS!!! find value for dropdown
     this.setState({
       [e.target.name]:e.target.value
     })
   }
 
   handleHouseholdColorInput = (e, data) => {
-    // console.log("TARGET",e.target.innerText)
-    // FIX THIS!!! find value for dropdown
-    // console.log(data)
     this.setState({
       householdColor: data.value
     })
   }
 
   handleHouseholdImageInput = (e, data) => {
-    // console.log("TARGET",e.target.innerText)
-    // FIX THIS!!! find value for dropdown
     this.setState({
       householdImage: data.value
     })
@@ -119,7 +111,6 @@ class HouseholdCardsContainer extends Component {
 
 
   renderHouseholdCards = () => {
-      // console.log("PROPS STATE HH IN RHHC", this.props.state.user.households)
     if (this.props.state.isDoneFetching) {
       if (this.props.state.user.households.length === 0) {
         return <Message size="small" compact style={{margin:"2% auto"}}>You do not currently belong to any households! You can create a household by clicking 'Add Household', or use the Search Icon above to search for a household to join</Message>
@@ -134,7 +125,6 @@ class HouseholdCardsContainer extends Component {
 
   redirectToHousehold = (household) => {
     this.props.history.push(`/households/${household.id}`)
-    // this.props.setCurrentHousehold()
   }
 
   render(){
@@ -147,8 +137,6 @@ class HouseholdCardsContainer extends Component {
               this.renderHouseholdForm() : this.renderAddHouseholdHeader()
             }
       </Segment>
-
-
           <Card.Group>
             {this.renderHouseholdCards()}
           </Card.Group>

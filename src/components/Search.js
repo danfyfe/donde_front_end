@@ -20,7 +20,7 @@ class Search extends Component {
       headers: { Authorization:  localStorage.getItem("token") }
     }).then(resp=>resp.json())
     .then(households=>{
-      // console.log('ALL USERS', households)
+
       this.setState({
         households: households
       })
@@ -31,7 +31,7 @@ class Search extends Component {
         headers: { Authorization:  localStorage.getItem("token") }
       }).then(resp=>resp.json())
       .then(items=>{
-        // console.log('ALL ITEMS', items)
+
         this.setState({
           items: items
         })
@@ -51,7 +51,7 @@ class Search extends Component {
   }
 
   render(){
-    // console.log('search state',this.state)
+
     return(
 
         <Segment clearing raised style={{margin:"0 10px", backgroundColor:"#f7f7f7"}}>
@@ -87,7 +87,6 @@ class Search extends Component {
 
         </Grid>
         }
-
 
           </Segment>
 

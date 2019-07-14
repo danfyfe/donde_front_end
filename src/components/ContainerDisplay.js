@@ -35,7 +35,6 @@ class Container extends Component {
   }
 
   handleOwnersInput = (e,data) => {
-    // console.log(data.value)
     this.setState({
       addingOwnersIds: data.value
     })
@@ -180,7 +179,6 @@ class Container extends Component {
       this.setState({
         deletingHousehold: !this.state.deletingHousehold
       })
-      // this.props.history.push('/households/')
     })
   }
 
@@ -189,8 +187,7 @@ class Container extends Component {
   }
 
   render(){
-    // console.log(this.props.history)
-    // console.log(this.state.errorMessage)
+
     return(
       <>
         {this.state.errorMessage !== "" ? this.renderErrorMessage() : null}
@@ -231,9 +228,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) =>{
   return {
-    setUser: (user) => dispatch({type:"SET_USER", user}),
-    setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
-    addSpace: (space) => dispatch({type:"ADD_SPACE", space}),
     setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE"}),
     addItem: (item) => dispatch({type:"ADD_ITEM", item}),
     setCurrentContainer: (container) =>
