@@ -3,10 +3,10 @@ import { Segment, Header, Menu, Grid, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 
-import HouseholdCardsContainer from './HouseholdCardsContainer.js'
-import MessageContainer from './MessageContainer.js'
-import Search from './Search.js'
-import Loading from './Loading.js'
+import HouseholdCardsContainer from '../components/HouseholdCardsContainer.js'
+import MessageContainer from '../components/MessageContainer.js'
+import Search from '../components/Search.js'
+import Loading from '../components/Loading.js'
 
 
 // import withAuth from '../hocs/withAuth'

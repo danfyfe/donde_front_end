@@ -60,7 +60,7 @@ class Space extends Component {
       })
     }).then(resp=>resp.json())
     .then(container =>{
-      // console.log('new container', container)
+
       this.props.addContainer(container)
 
       this.setState({
@@ -104,11 +104,9 @@ class Space extends Component {
 
 
   render(){
-    // console.log(this.props.history)
+
     return(
       <>
-
-
       <Segment>
       {this.props.state.currentContainer && this.props.state.currentContainer.hasOwnProperty('id') ? this.renderContainer() :
 
@@ -124,7 +122,6 @@ class Space extends Component {
       </Dropdown>
 
       {this.state.addingContainer ? this.renderAddContainerForm() :null}
-
 
       {this.renderContainers()}
 

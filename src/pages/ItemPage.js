@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 import { Segment, Header, Form, Dropdown, Button, Message, Menu } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-import Search from './Search.js'
-import Loading from './Loading.js'
+import Search from '../components/Search.js'
+import Loading from '../components/Loading.js'
 // import MessageContainer from './MessageContainer'
 
 

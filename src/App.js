@@ -6,13 +6,13 @@ import { connect } from 'react-redux'
 
 import './App.css';
 
-import ProfilePage from './components/ProfilePage.js'
-import HomePage from './components/HomePage.js'
-import SignupPage from './components/SignupPage.js'
-import ItemsPage from './components/ItemsPage.js'
-import HouseholdPage from './components/HouseholdPage.js'
-import SpacePage from './components/SpacePage.js'
-import ItemPage from './components/ItemPage.js'
+import ProfilePage from './pages/ProfilePage.js'
+import HomePage from './pages/HomePage.js'
+import SignupPage from './pages/SignupPage.js'
+import ItemsPage from './pages/ItemsPage.js'
+import HouseholdPage from './pages/HouseholdPage.js'
+import SpacePage from './pages/SpacePage.js'
+import ItemPage from './pages/ItemPage.js'
 import Search from './components/Search.js'
 
 // import Search from './components/Search.js'

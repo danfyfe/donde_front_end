@@ -1,7 +1,7 @@
 import React, { Component, } from 'react'
 import { Segment } from 'semantic-ui-react'
 // import HouseholdContainer from './HouseholdContainer.js'
-import HouseholdMessagesContainer from './HouseholdMessagesContainer.js'
+import HouseholdMessagesContainer from '../components/HouseholdMessagesContainer.js'
 // import SpaceContainer from './SpaceContainer.js'
 import { connect } from 'react-redux'
 

@@ -3,9 +3,9 @@ import { Segment, Card, Menu, Header, Form, Button, Message } from 'semantic-ui-
 import {connect} from 'react-redux'
 
 
-import ItemCard from './ItemCard.js'
-import Search from './Search.js'
-import Loading from './Loading.js'
+import ItemCard from '../components/ItemCard.js'
+import Search from '../components/Search.js'
+import Loading from '../components/Loading.js'
 
 
 class ItemsPage extends Component {

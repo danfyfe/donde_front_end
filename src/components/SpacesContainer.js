@@ -19,16 +19,12 @@ class SpacesConatiner extends Component {
     }
   }
 
-  // redirectToSpace = (id) => {
-  //   this.props.history.push(`/spaces/${id}`)
-  // }
-
   renderSpace = () => {
     return <Space history={this.props.history} space={this.props.state.currentSpace}/>
   }
 
   render(){
-    // console.log('current container in spaces container',this.props.state.currentContainer.hasOwnProperty('id'))
+
     return(
       <>
       {this.props.state.currentSpace && this.props.state.currentSpace.hasOwnProperty('id') ?  <> {this.renderSpace()} </>:

@@ -3,22 +3,8 @@ import { Card, Image } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 class HouseholdCard extends Component {
-  displaySpaceOverview = () => {
-    if (this.props.household.spaces) {
-      // return this.props.household.spaces.map(space=>{
-      //     return <Card.Content key={space.id}>
-      //       {space.name}
-      //       <Card.Content extra>
-      //       <span># Items</span>
-      //       </Card.Content>
-      //     </Card.Content>
-      //   })
-
-    }
-  }
 
   render(){
-    // console.log("HHCARD",this.props)
 
     return(
       <Card color={this.props.household.color} link style={{width:"100%"}} onClick={()=>this.props.redirectToHousehold(this.props.household)}>
@@ -48,22 +34,3 @@ const mapDispatchToProps = (dispatch) => {
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(HouseholdCard)
-
-// <Card.Content description={"Space # Items"}/>
-// <Card.Content description={
-//   <>
-//     <div style={{textAlign:"center"}}>Space Name</div>
-//     <hr width={"50%"}/>
-//     <div style={{textAlign:"center"}}># of Items</div>
-//   </>
-// }/>
-// <Card.Content description={"Space # Items"}/>
-
-
-// <Card.Content header={this.props.household.name}/>
-// <Image floated='right' size="mini" src={this.props.household.image}/>
-// {this.displaySpaceOverview()}
-// <Card.Content extra>
-//   <span># Users</span>
-//   <span># Messages</span>
-// </Card.Content>

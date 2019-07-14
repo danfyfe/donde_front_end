@@ -2,10 +2,10 @@ import React, { Component, } from 'react'
 import { Segment, Menu, Header, Message, Button, Form } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-import HouseholdContainer from './HouseholdContainer.js'
-import HouseholdMessagesContainer from './HouseholdMessagesContainer.js'
-import Search from './Search.js'
-import Loading from './Loading.js'
+import HouseholdContainer from '../components/HouseholdContainer.js'
+import HouseholdMessagesContainer from '../components/HouseholdMessagesContainer.js'
+import Search from '../components/Search.js'
+import Loading from '../components/Loading.js'
 
 
 

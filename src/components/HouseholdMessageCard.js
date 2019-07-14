@@ -57,7 +57,7 @@ class HouseholdMessageCard extends Component {
   }
 
   render(){
-    // console.log(this.props.message)
+
     return(
       <Card color={this.props.message.household.color} style={{width: "100%"}}>
         <Card.Content>
@@ -78,7 +78,6 @@ class HouseholdMessageCard extends Component {
           {this.state.addingMessage ? null :<Button onClick={this.setAddingMessage}size="mini" floated="right"> Reply </Button>}
           </Card.Meta>
         </Card.Content>
-
 
         {this.state.addingMessage ?
         <Segment>
