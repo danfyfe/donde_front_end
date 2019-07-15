@@ -162,8 +162,9 @@ class Space extends Component {
       })
     }).then(resp=>resp.json())
     .then(updatedSpace =>{
-      // this.props.setCurrentSpace(updatedSpace)
-
+      // console.log(updatedSpace)
+      this.props.setCurrentSpace(updatedSpace)
+      this.props.updateSpace(updatedSpace)
 
       this.setState({
         editingSpace: !this.state.editingSpace
@@ -186,16 +187,16 @@ class Space extends Component {
         household_password: this.state.householdPassword
       })
     }).then(resp=>resp.json())
-    .then(data =>{
-      this.props.setCurrentSpace({})
-      this.props.setCurrentHousehold(this.props.state.currentHousehold)
-      // console.log(data)
-
-
+    .then(household =>{
       this.setState({
         deletingSpace: !this.state.deletingSpace,
-        statusMessage: data.message
+        // statusMessage: data.message
       })
+      this.props.setCurrentHousehold(household)
+      this.props.setCurrentSpace({})
+      // console.log(household)
+
+
     })
   }
 
@@ -250,7 +251,8 @@ const mapDispatchToProps = (dispatch) =>{
     setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
     addSpace: (space) => dispatch({type:"ADD_SPACE", space}),
     setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE", space}),
-    addContainer: (container) => dispatch({type:"ADD_CONTAINER", container})
+    addContainer: (container) => dispatch({type:"ADD_CONTAINER", container}),
+    updateSpace: (space) => dispatch({type:"UPDATE_SPACE", space})
   }
 }
 

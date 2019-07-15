@@ -55,6 +55,17 @@ function householdReducer (state = defaultState, action){
 
       return {...state, currentHousehold:{...state.currentHousehold, spaces:[...state.currentHousehold.spaces,action.space]}}
 
+    case "UPDATE_SPACE":
+        let spaceToBeUpdated = state.currentHousehold.spaces.find(space => {
+          return space.id === action.space.id
+        })
+
+        let spaceToBeUpdatedIndex = state.currentHousehold.spaces.indexOf(spaceToBeUpdated)
+
+        state.currentHousehold.spaces.splice(spaceToBeUpdatedIndex, 1, action.space)
+
+        return state
+
     case "ADD_ITEM":
 
       return {...state, currentContainer:{...state.currentContainer, items:[...state.currentContainer.items, action.item]}}
