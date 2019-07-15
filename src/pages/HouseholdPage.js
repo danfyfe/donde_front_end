@@ -179,7 +179,7 @@ class HouseholdPage extends Component {
 
               <Segment clearing>
                 <Header>{this.props.state.currentHousehold.name}</Header>
-                <Message warning clearing><Header>You must join this household to view its details!</Header>
+                <Message warning><Header>You must join this household to view its details!</Header>
                 </Message>
                   {this.state.joiningHousehold ? this.renderJoinHouseholdForm() : this.renderJoinHouseholdHeader()}
               </Segment>

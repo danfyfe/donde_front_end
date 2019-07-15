@@ -278,7 +278,7 @@ class HouseholdContainer extends Component {
           <Dropdown floated="right" pointing="top right" style={{margin:"0.75% 0 0 76% "}} text="Household">
             <Dropdown.Menu>
               <Dropdown.Item text="Add Space" onClick={this.setAddingSpace}/>
-              <Dropdown.Item text="Edit" onClick={this.setEditingHousehold}/>
+              <Dropdown.Item text="Edit Household" onClick={this.setEditingHousehold}/>
               <Dropdown.Item text="Leave Household" onClick={this.setLeavingHousehold}/>
             </Dropdown.Menu>
           </Dropdown>

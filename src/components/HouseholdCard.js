@@ -12,7 +12,7 @@ class HouseholdCard extends Component {
           <Image floated='right' size='mini' src={this.props.household.image}/>
           <Card.Header>{this.props.household.name}</Card.Header>
         </Card.Content>
-        {this.displaySpaceOverview()}
+        {}
         <Card.Content extra>
           <span style={{paddingRight:"5px"}}>{this.props.household.users.length} Users</span>
           <span>{this.props.household.messages.length} Messages</span>
