@@ -54,13 +54,6 @@ class Space extends Component {
     })
   }
 
-  // renderAddContainerHeader = () => {
-  //   return <>
-  //   <Button onClick={() => this.props.setCurrentSpace({})} color="blue" size="mini" floated="right">Back To Household</Button>
-  //   <Button onClick={this.setAddingContainer} color="blue" size="mini" floated="right">Add Container</Button>
-  //   </>
-  // }
-
   addContainer = () => {
     fetch('http://localhost:3000/api/v1/containers',{
       method:"POST",

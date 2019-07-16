@@ -134,9 +134,29 @@ class Container extends Component {
     })
   }
 
-  renderDeletingHeader = () => {
-    return <Button color="red" size="mini" style={{marginTop:""}} onClick={this.setDeletingContainer}>Delete Container</Button>
+  setEditingContainer = () => {
+    this.setState({
+      editingContainer: !this.state.editingContainer
+    })
   }
+
+  // renderDeletingHeader = () => {
+  //   return <Button color="red" size="mini" style={{marginTop:""}} onClick={this.setDeletingContainer}>Delete Container</Button>
+  // }
+  renderEditContainerForm = () => {
+    return <Segment clearing>
+    <Message header={"Edit " + this.props.state.currentContainer.name} size="mini"/>
+    <Form>
+      <Form.Field>
+        <label>New Name</label>
+        <input onChange={this.handleInput} name="newContainerName" placeholder={this.props.state.currentContainer.name}/>
+      </Form.Field>
+      <Button onClick={this.setEditingContainer} floated="right" size="mini">Cancel</Button>
+      <Button onClick={this.editContainer} floated="right" size="mini">Submit</Button>
+    </Form>
+    </Segment>
+  }
+
 
   renderDeletingForm = () => {
     return <Segment clearing raised>
@@ -182,6 +202,39 @@ class Container extends Component {
     })
   }
 
+  editContainer = () => {
+    fetch(`http://localhost:3000/api/v1/containers/${this.props.state.currentContainer.id}`,{
+      method:"PATCH",
+      headers:{
+        'Content-Type':'application/json',
+        Accept: 'application/json'
+      },
+      body:JSON.stringify({
+        container:{
+          name: this.state.newContainerName,
+          container_id:this.props.state.currentContainer.id,
+          household_id: this.props.state.currentHousehold.id,
+          password: this.state.householdPassword
+        }
+      })
+    }).then(resp=>resp.json())
+    .then(data=>{
+      // console.log(data)
+      if (data.hasOwnProperty("id")) {
+        this.props.setCurrentSpace(data)
+      } else {
+        this.setState({
+          errorMessage: data.message
+        })
+      }
+      this.setState({
+        deletingHousehold: !this.state.deletingHousehold
+      })
+    })
+
+
+  }
+
   renderErrorMessage = () => {
     return <Message warning>{this.state.errorMessage}</Message>
   }
@@ -199,6 +252,7 @@ class Container extends Component {
           <Dropdown floated="right" pointing="top right" style={{margin:"0% 0 0 54%"}} text="Container">
             <Dropdown.Menu>
               <Dropdown.Item text="Add Item" onClick={this.setAddingItem}/>
+              <Dropdown.Item text="Edit Container" onClick={this.setEditingContainer}/>
               <Dropdown.Item text="Delete Container" onClick={this.setDeletingContainer}/>
               <Dropdown.Item text="Back To Space" onClick={() => this.props.setCurrentContainer({})}/>
 

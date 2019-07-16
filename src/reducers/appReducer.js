@@ -74,6 +74,11 @@ function householdReducer (state = defaultState, action){
 
       return {...state, currentSpace: {...state.currentSpace, containers:[...state.currentSpace.containers, action.container]}}
 
+    case "UPDATE_CONTAINER":
+    
+
+      return state
+
     case "SET_CURRENT_SPACE":
 
       return {...state, currentSpace: action.space}
