@@ -2,8 +2,8 @@ import React, { Component, } from 'react'
 import { Segment, Menu, Header, Message, Button, Form } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-import HouseholdContainer from '../components/HouseholdContainer.js'
-import HouseholdMessagesContainer from '../components/HouseholdMessagesContainer.js'
+import HouseholdContainer from '../containers/HouseholdContainer.js'
+import HouseholdMessagesContainer from '../containers/HouseholdMessagesContainer.js'
 import Search from '../components/Search.js'
 import Loading from '../components/Loading.js'
 
@@ -39,10 +39,7 @@ class HouseholdPage extends Component {
     })
     .then(resp=>resp.json())
     .then(household=>{
-      // console.log(this.props.state.user)
-
       this.props.setCurrentHousehold(household)
-
       this.setState({
         household: household
       })
@@ -50,7 +47,6 @@ class HouseholdPage extends Component {
       if (this.props.state.currentHousehold && this.state.household && this.state.user) {
         this.props.isDoneFetching()
       }
-      // try setting member of household here
     })
     )
   }
@@ -67,7 +63,6 @@ class HouseholdPage extends Component {
       }
     }
     if (isUserHousehold && isUserHousehold.length) {
-      // console.log(isUserHousehold)
       return isUserHousehold
     }
   }
@@ -103,7 +98,6 @@ class HouseholdPage extends Component {
   }
 
   joinHousehold = () => {
-    // this.props.isFetching()
     fetch(`http://localhost:3000/api/v1/households/${this.props.state.user.id}/${this.props.state.currentHousehold.id}`,{
       method:"POST",
       headers:{
@@ -119,8 +113,6 @@ class HouseholdPage extends Component {
       })
     }).then(resp=>resp.json())
     .then(household=>{
-      // this.props.setCurrentHousehold(household)
-      //
       this.props.addHouseholdToCurrentUser(household)
 
       this.setState({
@@ -128,7 +120,6 @@ class HouseholdPage extends Component {
         household: household
       })
 
-      // this.props.isDoneFetching()
       this.props.history.push(`/households/${household.id}`)
 
     })
@@ -147,10 +138,7 @@ class HouseholdPage extends Component {
   }
 
   render(){
-    // console.log("item delete message", this.props.state.itemDeleteConfirmationMessage)
-    // console.log(this.state)
-    // console.log(this.props.state.user.households)
-    // console.log(this.isUsersHousehold())
+
     if (!localStorage.token || localStorage.token === "undefined") {
     this.props.history.push("/")
     }

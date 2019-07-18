@@ -2,8 +2,8 @@ import React, { Component, } from 'react'
 import { Segment, Form, Button, Message, Grid } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-import SearchedHouseholdsContainer from './SearchedHouseholdsContainer.js'
-import SearchedItemsContainer from './SearchedItemsContainer'
+import SearchedHouseholdsContainer from '../containers/SearchedHouseholdsContainer.js'
+import SearchedItemsContainer from '../containers/SearchedItemsContainer'
 
 class Search extends Component {
 

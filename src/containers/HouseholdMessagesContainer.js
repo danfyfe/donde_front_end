@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Header, Card, Form, Message, Segment, Button } from 'semantic-ui-react'
-import HouseholdMessageCard from './HouseholdMessageCard.js'
 import { connect } from 'react-redux'
+
+import HouseholdMessageCard from '../components/HouseholdMessageCard.js'
 
 class HouseholdMessagesContainer extends Component {
 
@@ -91,7 +92,7 @@ class HouseholdMessagesContainer extends Component {
       })
     }).then(resp=>resp.json())
     .then(message=>{
-      
+
       this.props.addMessageToCurrentHousehold(message)
 
       this.setState({

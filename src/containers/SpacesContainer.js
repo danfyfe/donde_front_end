@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Message, Header, Segment } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-import SpaceCard from './SpaceCard.js'
-import Space from './Space.js'
+import SpaceCard from '../components/SpaceCard.js'
+import Space from '../components/Space.js'
 
 
 class SpacesConatiner extends Component {

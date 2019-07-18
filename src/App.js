@@ -15,10 +15,7 @@ import SpacePage from './pages/SpacePage.js'
 import ItemPage from './pages/ItemPage.js'
 import Search from './components/Search.js'
 
-// import Search from './components/Search.js'
-
 class App extends React.Component {
-  //  main dropdown menu functions
   handleLogOut = () => {
     localStorage.clear()
     this.props.history.push('/')
@@ -40,7 +37,7 @@ class App extends React.Component {
 
 
   render(){
-    // (console.log('APP PROPS state',this.props.state))
+
     return(
       <>
         <Menu style={{backgroundColor:"#3d8af7",borderRadius:"0px", marginBottom: "0px"}}>
@@ -94,5 +91,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(App);
-
-// <Dropdown trigger ={dropdownTrigger}options={dropdownOptions} pointing="top right" icon={null}/>

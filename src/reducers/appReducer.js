@@ -13,8 +13,6 @@ const defaultState = {
   itemDeleteConfirmationMessage: ""
 }
 
-
-
 function householdReducer (state = defaultState, action){
   switch (action.type) {
     case "SET_USER":
@@ -75,7 +73,7 @@ function householdReducer (state = defaultState, action){
       return {...state, currentSpace: {...state.currentSpace, containers:[...state.currentSpace.containers, action.container]}}
 
     case "UPDATE_CONTAINER":
-    
+
 
       return state
 

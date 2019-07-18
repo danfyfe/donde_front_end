@@ -1,9 +1,8 @@
 import React, { Component, } from 'react'
 import { Segment } from 'semantic-ui-react'
-// import HouseholdContainer from './HouseholdContainer.js'
-import HouseholdMessagesContainer from '../components/HouseholdMessagesContainer.js'
-// import SpaceContainer from './SpaceContainer.js'
 import { connect } from 'react-redux'
+
+import HouseholdMessagesContainer from '../containers/HouseholdMessagesContainer.js'
 
 class SpacePage extends Component {
 
@@ -24,13 +23,9 @@ class SpacePage extends Component {
     })
     .then(resp=>resp.json())
     .then(space=>{
-      // console.log("HOUSEHOLD",household)
-      // console.log("SPACE PAGE SPACE", space)
-      // this.props.setCurrentHousehold(household)
+
       this.props.setCurrentSpace(space)
-      // this.setState({
-      //   currentSpace: space
-      // })
+
     })
   )
   }

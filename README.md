@@ -1,75 +1,21 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h2>Welcome to Donde!</h2>
 
-## Available Scripts
+By: Dan Fyfe
 
-In the project directory, you can run:
+**Setup**
+- Complete the setup in the [Donde Back End directory](https://github.com/danfyfe/donde_back_end)
+- In your terminal, while inside the Donde Front End directory, run 'npm install', and 'npm start'
 
-### `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+**Basic Idea and Usage**
+- This app was made for household item management. If you live in household with other people who are always moving your things, this app will help you keep track of where everything is and notify you when your items have been moved, where they were moved to, and who moved them.
+- After signing up, the user is brought to the profile page which displays the user's households and all messages associated with those households. The user can create a household by clicking 'add household' and completing the form, or use the search icon at the top of the page to search for an already created household. If your housemates have created a household, they will need to give you the password before you can join it.
+- Once the user has created or joined a household, they can create a space(a closet, room, cabinet, etc), a container inside of that space(box, bag, etc) and an item inside of that container.
+- Once the household, spaces, containers, and items have been set, the user can navigate through the hierarchy to the item card, or use the same search bar mentioned above to search for the item they would like to move. The results of the item search will only display items that the user has access to through the households they belong to. Clicking on the item card will bring the user to the item's page.
+- From the item's page, the user can move the item by clicking the 'move item' button and filling in the appropriate information. Once the form is submitted, a message will automatically be posted to the Household's page and a text message sent to the item owner(s) phone numbers, if set up.
+- Note: For ease of demonstration, you can login with the username: 'John', and search for and join household: 'Apt'. All seeded passwords are a very secure '123' :)
 
 
-
-**Photo Credits**
+**Photo and Icon Credits**
 
 Thanks to all of these fine folks for the use of the icons and images in this project!
 
@@ -84,3 +30,5 @@ Thanks to all of these fine folks for the use of the icons and images in this pr
 
 
 <a href="https://www.freepik.com/free-photos-vectors/background">Background photo created by freepik - www.freepik.com</a>
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -2,7 +2,7 @@ import React, { Component, } from 'react'
 import { Segment, Card } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-import ItemCard from './ItemCard.js'
+import ItemCard from '../components/ItemCard.js'
 
 class SearchedItemsContainer extends Component {
 

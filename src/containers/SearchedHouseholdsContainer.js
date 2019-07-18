@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Segment, Card } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-import HouseholdCard from './HouseholdCard.js'
+import HouseholdCard from '../components/HouseholdCard.js'
 
 class SearchedHouseholdsContainer extends Component {
 

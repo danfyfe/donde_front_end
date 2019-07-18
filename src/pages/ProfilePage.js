@@ -2,14 +2,10 @@ import React, { Component } from 'react'
 import { Segment, Header, Menu, Grid, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-
-import HouseholdCardsContainer from '../components/HouseholdCardsContainer.js'
-import MessageContainer from '../components/MessageContainer.js'
+import HouseholdCardsContainer from '../containers/HouseholdCardsContainer.js'
+import MessageContainer from '../containers/MessageContainer.js'
 import Search from '../components/Search.js'
 import Loading from '../components/Loading.js'
-
-
-// import withAuth from '../hocs/withAuth'
 
 class ProfilePage extends Component {
   componentDidMount(){
@@ -19,7 +15,6 @@ class ProfilePage extends Component {
       headers: { Authorization:  localStorage.getItem("token") }
     }).then(resp=>resp.json())
     .then(user=>{
-      // console.log("USER", user)
       this.props.setUser(user.user)
       this.props.isDoneFetching()
     })
@@ -38,12 +33,10 @@ class ProfilePage extends Component {
   }
 
   render(){
-    // console.log("item delete message", this.props.state.itemDeleteConfirmationMessage)
 
     if (!localStorage.token || localStorage.token === "undefined") {
     this.props.history.push("/")
     }
-
 
     return(
       <>
@@ -77,7 +70,6 @@ class ProfilePage extends Component {
             </Grid.Column>
 
           </Grid>
-
 
         </> : <Loading/>
       }

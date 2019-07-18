@@ -1,8 +1,8 @@
 import React, { Component, } from 'react'
 import { Card, Header, Form, Message, Segment, Button, Dropdown } from 'semantic-ui-react'
-import MessageCard from './MessageCard.js'
-
 import { connect } from 'react-redux'
+
+import MessageCard from '../components/MessageCard.js'
 
 class MessageContainer extends Component {
 

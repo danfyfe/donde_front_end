@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Segment, Header, Form, Button, Dropdown, Message, Image } from 'semantic-ui-react'
-import SpacesContainer from './SpacesContainer.js'
 import { connect } from 'react-redux'
+
+import SpacesContainer from './SpacesContainer.js'
 
 class HouseholdContainer extends Component {
 

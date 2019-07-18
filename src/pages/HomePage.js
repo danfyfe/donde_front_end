@@ -22,8 +22,6 @@ class HomePage extends Component {
       body: JSON.stringify({user:this.state})
     }).then(resp=>resp.json())
     .then(data=>{
-      // console.log(data)
-
       if (data.message) {
         this.setState({
           statusMessage: data.message
@@ -33,12 +31,10 @@ class HomePage extends Component {
           statusMessage: null
         })
       }
-
       localStorage.setItem("token", data.jwt)
       if (localStorage.token !== "undefined") {
         this.props.history.push("/")
       }
-
     })
   }
 
@@ -47,7 +43,7 @@ class HomePage extends Component {
   }
 
 render(){
-  // console.log(this.state.statusMessage)
+
   return ( localStorage.token && localStorage.token !== "undefined" ? (
       <Redirect to={"/profile"} />
     ) : (
@@ -83,9 +79,7 @@ render(){
       </>
       )
     )
-}
-
-
+  }
 
 
 }

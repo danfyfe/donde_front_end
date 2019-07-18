@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 
 class ContainerCard extends Component {
 
-
   renderContainerItems = () => {
     if (this.props.container.items.length === 0) {
       return <Message warning>There are currently no items in this container! Click this card to view this container and add one!</Message>
@@ -12,7 +11,6 @@ class ContainerCard extends Component {
         return <span>{this.props.container.items.length} Items</span>
     }
   }
-
 
   render(){
 

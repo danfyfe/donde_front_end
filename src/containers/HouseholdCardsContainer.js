@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Card, Segment, Form, Message, Button, Header,Dropdown } from 'semantic-ui-react'
-import HouseholdCard from './HouseholdCard.js'
 import { connect } from 'react-redux'
+
+import HouseholdCard from '../components/HouseholdCard.js'
 
 class HouseholdCardsContainer extends Component {
   state = {

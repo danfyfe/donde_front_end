@@ -2,11 +2,9 @@ import React, { Component, } from 'react'
 import { Segment, Card, Menu, Header, Form, Button, Message } from 'semantic-ui-react'
 import {connect} from 'react-redux'
 
-
 import ItemCard from '../components/ItemCard.js'
 import Search from '../components/Search.js'
 import Loading from '../components/Loading.js'
-
 
 class ItemsPage extends Component {
   state = {
@@ -23,7 +21,6 @@ class ItemsPage extends Component {
       headers: { Authorization:  localStorage.getItem("token") }
     }).then(resp=>resp.json())
     .then(user=>{
-      // console.log("USER", user)
       this.props.setUser(user.user)
     }).then(
       fetch('http://localhost:3000/api/v1/items',{
@@ -31,7 +28,6 @@ class ItemsPage extends Component {
         headers: { Authorization:  localStorage.getItem("token") }
       }).then(resp=>resp.json())
       .then(items => {
-        // console.log("ITEMSSS",items)
         this.setState({
           items: items
         })
@@ -100,8 +96,7 @@ class ItemsPage extends Component {
   }
 
   render(){
-    // console.log("ITEMS PAGE",this.props)
-    // console.log('items page state', this.state)
+
     if (!localStorage.token || localStorage.token === "undefined") {
     this.props.history.push("/")
     }
@@ -109,9 +104,6 @@ class ItemsPage extends Component {
     return(
       <>
       {this.props.state.isDoneFetching ? null
-
-
-
         : <Loading/>
       }
       <Menu style={{marginTop: "0px"}}>
@@ -121,7 +113,6 @@ class ItemsPage extends Component {
         {this.props.state.searching ? <Search history={this.props.history}/> : null}
 
       <Segment style={{margin: "1% auto",width:"98%"}}>
-        {/*this.state.addingItem ? this.renderAddItemForm() : this.renderAddItemHeader()*/}
         <Card.Group itemsPerRow={8}>
           {this.renderItems()}
         </Card.Group>
