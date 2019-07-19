@@ -1,18 +1,22 @@
-import React, { Component } from 'react'
-import { Icon, Message, Segment } from 'semantic-ui-react'
+import React from 'react'
+import { Icon, Message, Segment, Grid } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 
 
-class Loading extends Component {
-  render(){
+function Loading() {
     return(
       <Segment style={{margin:"5% 42%"}}>
-        <Icon loading size="massive" name="question" style={{margin:"25% 20%"}}/>
-        <Message>Loading...</Message>
+        <Grid>
+          <Grid.Row>
+              <Icon loading size="massive" name="question" style={{margin:"25% 25%"}}/>
+          </Grid.Row>
+          <Grid.Row>
+              <Message style={{margin:'auto'}}>Loading...</Message>
+          </Grid.Row>
+        </Grid>
       </Segment>
     )
-  }
 }
 
 
