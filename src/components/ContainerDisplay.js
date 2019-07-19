@@ -248,7 +248,7 @@ class Container extends Component {
           <>
 
         <Grid>
-        <Grid.Column flaoted="left" width={4}>
+        <Grid.Column floated="left" width={8}>
           <Header floated="left" as="h2">{this.props.container.name}</Header>
           <Header color="grey" floated="left" as="h2">in {this.props.state.currentSpace.name} at {this.props.state.currentHousehold.name}</Header>
           </Grid.Column>

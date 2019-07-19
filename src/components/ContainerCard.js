@@ -45,11 +45,3 @@ const mapDispatchToProps = (dispatch) =>{
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(ContainerCard)
-
-// <List.Item >
-// <List.Content>{item.name}</List.Content>
-// </List.Item>
-//
-// <List>
-//   {this.renderContainerItems()}
-// </List>

@@ -208,7 +208,7 @@ class Space extends Component {
       <>
       <Grid>
 
-      <Grid.Column floated="left" width={4}>
+      <Grid.Column floated="left" width={6}>
       <Header floated="left" as="h2">{this.props.space.name}</Header>
       <Header color="grey" floated="left" as="h2">at {this.props.state.currentHousehold.name}</Header>
       </Grid.Column>

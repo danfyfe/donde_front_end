@@ -3,7 +3,7 @@ import { Message, Header, Segment } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import SpaceCard from '../components/SpaceCard.js'
-import Space from '../components/Space.js'
+import SpaceDisplay from '../components/SpaceDisplay.js'
 
 
 class SpacesConatiner extends Component {
@@ -20,7 +20,7 @@ class SpacesConatiner extends Component {
   }
 
   renderSpace = () => {
-    return <Space history={this.props.history} space={this.props.state.currentSpace}/>
+    return <SpaceDisplay history={this.props.history} space={this.props.state.currentSpace}/>
   }
 
   render(){
