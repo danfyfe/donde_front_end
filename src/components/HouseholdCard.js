@@ -1,25 +1,21 @@
-import React, { Component, } from 'react'
+import React from 'react'
 import { Card, Image } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-class HouseholdCard extends Component {
-
-  render(){
-
+function HouseholdCard(props) {
     return(
-      <Card color={this.props.household.color} link style={{width:"100%"}} onClick={()=>this.props.redirectToHousehold(this.props.household)}>
+      <Card color={props.household.color} link style={{width:"100%"}} onClick={()=>props.redirectToHousehold(props.household)}>
         <Card.Content>
-          <Image floated='right' size='mini' src={this.props.household.image}/>
-          <Card.Header>{this.props.household.name}</Card.Header>
+          <Image floated='right' size='mini' src={props.household.image}/>
+          <Card.Header>{props.household.name}</Card.Header>
         </Card.Content>
         {}
         <Card.Content extra>
-          <span style={{paddingRight:"5px"}}>{this.props.household.users.length} Users</span>
-          <span>{this.props.household.messages.length} Messages</span>
+          <span style={{paddingRight:"5px"}}>{props.household.users.length} Users</span>
+          <span>{props.household.messages.length} Messages</span>
         </Card.Content>
       </Card>
     )
-  }
 }
 
 const mapStateToProps = (state) => {
