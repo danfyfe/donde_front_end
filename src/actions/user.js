@@ -1,11 +1,8 @@
-export const /*FUNCTION*/ loginUser = (username, password) => {
-  return /*FUNCTION*/ (dispatch) => { //thunk
-    // console.log(process.env.REACT_APP_API_ENDPOINT)
+export const loginUser = (username, password) => {
+  return (dispatch) => { //thunk
+
     dispatch({ type: 'AUTHENTICATING_USER' })
-    // fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/login`)
-    // adapter.loginUser(username, password)
-    // http://localhost:3000
-    // TODO: send out env variables
+
     fetch(`http://localhost:3000/api/v1/login`, { //TODO: move this to an adapter
       method: 'POST',
       headers: {
@@ -27,10 +24,7 @@ export const /*FUNCTION*/ loginUser = (username, password) => {
           throw response
         }
       })
-      /* { user:
-        { username: 'chandler bing', bio: '', avatar: ''},
-        jwt: 'aaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbb.ccccccccccccccccccc'
-      } */
+
       .then(JSONResponse => {
         console.log('%c INSIDE YE OLDE .THEN', 'color: navy', JSONResponse)
         localStorage.setItem('token', JSONResponse.jwt)
@@ -38,15 +32,11 @@ export const /*FUNCTION*/ loginUser = (username, password) => {
         // dispatch(setCurrentUser(JSONResponse.user))
       })
       .catch(r => r.json().then(e => dispatch({ type: 'FAILED_LOGIN', payload: e.message })))
-      // .then((jsonResponse) => {
-      //   localStorage.setItem('jwt', jsonResponse.jwt)
-      //   dispatch(setCurrentUser(jsonResponse.user))
-      // })
+
   }
 }
 
 export const fetchCurrentUser = () => {
-  // takes the token in localStorage and finds out who it belongs to
   return (dispatch) => {
     dispatch(authenticatingUser()) //tells the app we are fetching
     fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/profile`, {

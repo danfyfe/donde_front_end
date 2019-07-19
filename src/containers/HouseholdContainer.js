@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Form, Button, Dropdown, Message, Image } from 'semantic-ui-react'
+import { Segment, Header, Form, Button, Dropdown, Message, Image, Grid } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import SpacesContainer from './SpacesContainer.js'
@@ -274,15 +274,24 @@ class HouseholdContainer extends Component {
           {this.props.state.currentSpace && this.props.state.currentSpace.hasOwnProperty('id') ? null :
           <>
 
-          <Header onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)} as="h1" floated="left">{this.props.state.currentHousehold.name}</Header><Image floated="left" src={this.props.state.currentHousehold.image} size="mini"/>
 
-          <Dropdown floated="right" pointing="top right" style={{margin:"0.75% 0 0 76% "}} text="Household">
-            <Dropdown.Menu>
-              <Dropdown.Item text="Add Space" onClick={this.setAddingSpace}/>
-              <Dropdown.Item text="Edit Household" onClick={this.setEditingHousehold}/>
-              <Dropdown.Item text="Leave Household" onClick={this.setLeavingHousehold}/>
-            </Dropdown.Menu>
-          </Dropdown>
+          <Grid>
+          <Grid.Column floated='left' width={4}>
+            <Header onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)} as="h1" floated="left">{this.props.state.currentHousehold.name}</Header><Image floated="left" src={this.props.state.currentHousehold.image} size="mini"/>
+          </Grid.Column>
+
+          <Grid.Column floated="right" width={2}>
+            <Dropdown floated="right" pointing="top right" style={{}} text="Household">
+              <Dropdown.Menu>
+                <Dropdown.Item text="Add Space" onClick={this.setAddingSpace}/>
+                <Dropdown.Item text="Edit Household" onClick={this.setEditingHousehold}/>
+                <Dropdown.Item text="Leave Household" onClick={this.setLeavingHousehold}/>
+              </Dropdown.Menu>
+            </Dropdown>
+            </Grid.Column>
+            </Grid>
+
+
 
             {this.state.editingHousehold ? this.renderEditHouseholdForm() : null}
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Form, Button, Message, Dropdown } from 'semantic-ui-react'
+import { Segment, Header, Form, Button, Message, Dropdown, Grid } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import ItemCard from './ItemCard.js'
@@ -246,9 +246,14 @@ class Container extends Component {
         {this.state.errorMessage !== "" ? this.renderErrorMessage() : null}
       <Segment clearing style={{minHeight:"500px"}}>
           <>
+
+        <Grid>
+        <Grid.Column flaoted="left" width={4}>
           <Header floated="left" as="h2">{this.props.container.name}</Header>
           <Header color="grey" floated="left" as="h2">in {this.props.state.currentSpace.name} at {this.props.state.currentHousehold.name}</Header>
+          </Grid.Column>
 
+          <Grid.Column floated="right" width={4}>
           <Dropdown floated="right" pointing="top right" style={{margin:"0% 0 0 54%"}} text="Container">
             <Dropdown.Menu>
               <Dropdown.Item text="Add Item" onClick={this.setAddingItem}/>
@@ -258,6 +263,8 @@ class Container extends Component {
 
             </Dropdown.Menu>
           </Dropdown>
+          </Grid.Column>
+          </Grid>
 
 
           {this.state.deletingContainer ? this.renderDeletingForm() : null}

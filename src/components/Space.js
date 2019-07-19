@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Form, Button, Message, Dropdown } from 'semantic-ui-react'
+import { Segment, Header, Form, Button, Message, Dropdown, Grid } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import ContainerCard from './ContainerCard.js'
@@ -206,9 +206,13 @@ class Space extends Component {
       {this.props.state.currentContainer && this.props.state.currentContainer.hasOwnProperty('id') ? this.renderContainer() :
 
       <>
+      <Grid>
+
+      <Grid.Column floated="left" width={4}>
       <Header floated="left" as="h2">{this.props.space.name}</Header>
       <Header color="grey" floated="left" as="h2">at {this.props.state.currentHousehold.name}</Header>
-
+      </Grid.Column>
+      <Grid.Column floated="right" width={4}>
       <Dropdown floated="right" pointing="top right" style={{margin:"0% 0 0 68% "}} text="Space">
         <Dropdown.Menu>
           <Dropdown.Item text="Add Container" onClick={this.setAddingContainer}/>
@@ -217,6 +221,9 @@ class Space extends Component {
           <Dropdown.Item text="Back To Household" onClick={() => this.props.setCurrentSpace({})}/>
         </Dropdown.Menu>
       </Dropdown>
+      </Grid.Column>
+
+      </Grid>
 
       {this.state.addingContainer ? this.renderAddContainerForm() :null}
       {this.state.editingSpace ? this.renderEditSpaceForm() : null}

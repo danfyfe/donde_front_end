@@ -4,7 +4,7 @@ By: Dan Fyfe
 
 **Setup**
 - Complete the setup in the [Donde Back End directory](https://github.com/danfyfe/donde_back_end)
-- In your terminal, while inside the Donde Front End directory, run 'npm install', and 'npm start'
+- In your terminal, while inside the Donde Front End directory, run 'npm install', ('npm i semantic-ui-react', if needed) and 'npm start'
 
 **Basic Idea and Usage**
 - This app was made for household item management. If you live in household with other people who are always moving your things, this app will help you keep track of where everything is and notify you when your items have been moved, where they were moved to, and who moved them.
