@@ -5,10 +5,18 @@ import { connect } from 'react-redux'
 function ContainerCard(props){
 
   const renderContainerItems = () => {
-    if (props.container.items.length === 0) {
-      return <Message warning>There are currently no items in this container! Click this card to view this container and add one!</Message>
-    } else {
+
+    if (props.container.items) {
+      if (props.container.items.length === 0) {
+        return <Message warning>There are currently no items in this container! Click this card to view this container and add one!</Message>
+      } else {
         return <span>{props.container.items.length} Items</span>
+      }
+    } else {
+      let containerItems = props.state.currentSpace.items.filter(item => {
+        return item.container.id === props.container.id
+      })
+      return <span>{containerItems.length} Items</span>
     }
   }
 

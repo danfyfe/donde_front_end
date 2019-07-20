@@ -19,11 +19,12 @@ class Space extends Component {
   }
 
   renderContainerCards = () => {
-    if (this.props.space.containers) {
-      if (this.props.space.containers.length === 0) {
+
+    if (this.props.state.currentSpace.containers) {
+      if (this.props.state.currentSpace.containers.length === 0) {
         return this.renderNoContainersMessage()
       } else {
-        return this.props.space.containers.map(container => {
+        return this.props.state.currentSpace.containers.map(container => {
           return <ContainerCard key={container.id} container={container}/>
         })
       }
@@ -155,9 +156,9 @@ class Space extends Component {
       })
     }).then(resp=>resp.json())
     .then(updatedSpace =>{
-      // console.log(updatedSpace)
-      this.props.setCurrentSpace(updatedSpace)
+      console.log('updated space', updatedSpace)
       this.props.updateSpace(updatedSpace)
+      this.props.setCurrentSpace(updatedSpace)
 
       this.setState({
         editingSpace: !this.state.editingSpace
@@ -183,11 +184,9 @@ class Space extends Component {
     .then(household =>{
       this.setState({
         deletingSpace: !this.state.deletingSpace,
-        // statusMessage: data.message
       })
       this.props.setCurrentHousehold(household)
       this.props.setCurrentSpace({})
-      // console.log(household)
 
 
     })
@@ -198,7 +197,7 @@ class Space extends Component {
   }
 
   render(){
-    // console.log(this.state)
+    
     return(
       <>
       <Segment>

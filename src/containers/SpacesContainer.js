@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Message, Header, Segment } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
@@ -6,39 +6,43 @@ import SpaceCard from '../components/SpaceCard.js'
 import SpaceDisplay from '../components/SpaceDisplay.js'
 
 
-class SpacesConatiner extends Component {
-  renderSpaceCards = () => {
-    if (this.props.state.currentHousehold.spaces) {
-      if (this.props.state.currentHousehold.spaces.length === 0) {
+function SpacesConatiner(props) {
+  const renderSpaceCards = () => {
+    if (props.state.currentHousehold.spaces) {
+      let spacesByDate = props.state.currentHousehold.spaces.sort((a, b) => {
+        return a.created_at.localeCompare(b.created_at)
+      })
+
+      if (props.state.currentHousehold.spaces.length === 0) {
         return <Message warning style={{margin:"4% 0 0 0", textAlign:"center"}}>There are currently no spaces in this household. A space is a location that you put your stuff, like a closet or storage area. Click Add Space to add one!</Message>
       } else {
-        return this.props.state.currentHousehold.spaces.map(space => {
-          return <SpaceCard key={space.id} redirectToSpace={this.redirectToSpace} space={space}/>
+        return spacesByDate.map(space => {
+          return <SpaceCard key={space.id} space={space}/>
         })
       }
     }
   }
 
-  renderSpace = () => {
-    return <SpaceDisplay history={this.props.history} space={this.props.state.currentSpace}/>
+  const renderSpace = () => {
+    return <SpaceDisplay history={props.history} space={props.state.currentSpace}/>
   }
 
-  render(){
+
 
     return(
       <>
-      {this.props.state.currentSpace && this.props.state.currentSpace.hasOwnProperty('id') ?  <> {this.renderSpace()} </>:
+      {props.state.currentSpace && props.state.currentSpace.hasOwnProperty('id') ?  <> {renderSpace()} </>:
         <>
           <Segment style={{margin:"2% auto", minHeight:"500px"}}>
             <Header>Spaces:</Header>
-            {this.renderSpaceCards()}
+            {renderSpaceCards()}
           </Segment>
         </>
       }
 
       </>
     )
-  }
+
 }
 
 

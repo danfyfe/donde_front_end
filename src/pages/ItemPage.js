@@ -457,7 +457,7 @@ class ItemPage extends Component {
 
     setStatusMessageToNothing = () => {
       if (this.state.statusMessage !== "") {
-        setTimeout(()=>{
+        this.messageTimer = setTimeout(()=>{
           this.setState({
             statusMessage: ""
           })
@@ -471,6 +471,10 @@ class ItemPage extends Component {
         this.props.setCurrentContainer({})
         this.props.history.push(`/households/${this.props.state.currentItem.household.id}`)
       }
+    }
+
+    componentWillUnmount(){
+      clearInterval(this.messageTimer)
     }
 
   render(){
