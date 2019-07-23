@@ -119,7 +119,7 @@ class MessageContainer extends Component {
 
     return(
       <>
-      <Segment clearing>
+      <Segment clearing style={{marginBottom:'20px'}}>
         <Header floated="left">Messages</Header>
         {this.state.addingNewMessage ? this.renderNewMessageForm():this.renderNewMessageHeader()}
       </Segment>

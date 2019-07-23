@@ -44,7 +44,7 @@ class ProfilePage extends Component {
 
       {this.props.state.isDoneFetching ?
         <>
-        
+
           <Menu style={{marginTop: "0px"}}>
             <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
           </Menu>
@@ -93,26 +93,3 @@ const mapDispatchToProps = (dispatch) =>{
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(ProfilePage)
-
-
-
-
-  // <Dropdown placeholder="Color" name="househholdColor" search selection options={householdColorOptions} onSelect={this.handleHouseholdInput}/>
-
-
-
-  // <>
-  //   <Menu style={{marginTop: "0px"}}>
-  //     <Header style={{padding:"10px"}}>Welcome User !</Header>
-  //   </Menu>
-  //
-  //   <Segment raised style={{width:"98%", margin:"10px auto"}}>
-  //     <HouseholdCardsContainer
-  //     user={this.state.userData.user} history={this.props.history} households={this.state.households}/>
-  //   </Segment>
-  //
-  //   <Segment raised style={{width:"98%", margin:"10px auto"}}>
-  //       <MessageContainer  user={this.state.userData.user}
-  //       history={this.props.history}/>
-  //   </Segment>
-  // </>
