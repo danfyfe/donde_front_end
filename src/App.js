@@ -22,10 +22,14 @@ class App extends React.Component {
   }
 
   sendToProfilePage = () => {
+    if (!localStorage.token || localStorage.token === "undefined") {
+    this.props.history.push("/")
+    } else {
     this.props.history.push('/profile')
     this.props.setCurrentSpace({})
     this.props.setCurrentContainer({})
     this.props.setSearchingToFalse()
+    }
   }
 
   sendToItemsPage = () => {
