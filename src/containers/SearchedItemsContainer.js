@@ -10,13 +10,13 @@ class SearchedItemsContainer extends Component {
     const userHouseholdItems = this.props.state.user.households.map(household => {
       return household.items
     }).flat()
-
+    console.log(userHouseholdItems)
     let filteredItems = userHouseholdItems.filter(item => {
       return (item.name.toLowerCase().includes(this.props.searchTerm.toLowerCase()) || item.description.toLowerCase().includes(this.props.searchTerm.toLowerCase()))
     })
 
-    if (filteredItems.length === userHouseholdItems.length) {
-    return null
+    if (filteredItems.length === 0) {
+      return null
     }else {
     return filteredItems.map(item => {
       return <ItemCard redirectToItemPage={this.redirectToItemPage} key={item.id} history={this.props.history} item={item}/>

@@ -109,7 +109,7 @@ class Space extends Component {
   }
 
   renderNoContainersMessage = () => {
-    return <Message warning style={{margin: "3% 0 0 0"}}>This space currently has no containers! Click Add Container to give it one!</Message>
+    return <Message warning style={{margin: "3% 0 0 0"}}>This space currently has no containers! Click Add Container in the dropdown to give it one!</Message>
   }
 
   renderEditSpaceForm = () => {
@@ -197,10 +197,10 @@ class Space extends Component {
   }
 
   render(){
-    
+
     return(
       <>
-      <Segment>
+      <Segment style={{minHeight:'500px'}}>
       {this.state.statusMessage !== "" ? this.renderStatusMessage(): null}
       {this.props.state.currentContainer && this.props.state.currentContainer.hasOwnProperty('id') ? this.renderContainer() :
 

@@ -14,7 +14,7 @@ function SpacesConatiner(props) {
       })
 
       if (props.state.currentHousehold.spaces.length === 0) {
-        return <Message warning style={{margin:"4% 0 0 0", textAlign:"center"}}>There are currently no spaces in this household. A space is a location that you put your stuff, like a closet or storage area. Click Add Space to add one!</Message>
+        return <Message warning style={{margin:"4% 0 0 0", textAlign:"center"}}>There are currently no spaces in this household. A space is a location that you put your stuff, like a closet or storage area. Click Add Space in the dropdown to add one!</Message>
       } else {
         return spacesByDate.map(space => {
           return <SpaceCard key={space.id} space={space}/>

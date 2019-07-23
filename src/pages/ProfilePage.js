@@ -63,7 +63,7 @@ class ProfilePage extends Component {
             </Grid.Column>
 
             <Grid.Column>
-              <Segment raised style={{width:"98%", margin:"10px", backgroundColor:"#f7f7f7"}}>
+              <Segment raised style={{width:"98%", margin:"10px", backgroundColor:"#f7f7f7", minHeight:'100px'}}>
                 <MessageContainer
                 history={this.props.history}/>
               </Segment>
