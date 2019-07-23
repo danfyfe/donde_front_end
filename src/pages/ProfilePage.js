@@ -44,7 +44,7 @@ class ProfilePage extends Component {
 
       {this.props.state.isDoneFetching ?
         <>
-
+        
           <Menu style={{marginTop: "0px"}}>
             <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
           </Menu>

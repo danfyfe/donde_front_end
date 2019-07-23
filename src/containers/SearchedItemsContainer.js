@@ -17,7 +17,7 @@ class SearchedItemsContainer extends Component {
 
     if (filteredItems.length === 0) {
       return null
-    }else {
+    } else {
     return filteredItems.map(item => {
       return <ItemCard redirectToItemPage={this.redirectToItemPage} key={item.id} history={this.props.history} item={item}/>
     })

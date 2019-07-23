@@ -7,7 +7,8 @@ class SignupPage extends Component {
 
   state = {
     username: "",
-    email: "",
+    email:"",
+    phone_number: "",
     password: "",
     passwordConfirm: ""
   }
@@ -43,7 +44,7 @@ class SignupPage extends Component {
       localStorage.token && localStorage.token !== "undefined" ?
           <Redirect to={"/profile"} /> :
       <>
-        <Segment style={{width:"75%", margin:"10% auto"}}>
+        <Segment clearing style={{width:"75%", margin:"10% auto"}}>
           <Message>
             <Message.Header>
               Sign Up!
@@ -53,6 +54,10 @@ class SignupPage extends Component {
             <Form.Field>
               <label>Username</label>
               <input onChange={this.handleChange} name = "username" placeholder = "Username"/>
+            </Form.Field>
+            <Form.Field>
+              <label>Phone</label>
+              <input onChange={this.handleChange}  name = "phone_number" placeholder = "Phone"/>
             </Form.Field>
             <Form.Field>
               <label>Email</label>
@@ -66,7 +71,7 @@ class SignupPage extends Component {
               <label>Confirm Password</label>
               <input onChange={this.handleChange}  name="passwordConfirm" type="password" placeholder = "Confirm Password"/>
             </Form.Field>
-            <Button onClick={this.handleSubmit} type='submit'>Submit</Button>
+            <Button floated='right' onClick={this.handleSubmit} type='submit' size='small'>Submit</Button>
           </Form>
         </Segment>
       </>
