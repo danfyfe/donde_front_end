@@ -228,7 +228,7 @@ class ItemPage extends Component {
   }
 
   moveItem = () => {
-    fetch(`https://df-donde.herokuapp.com/api/v1/items/${this.props.state.currentItem.id}`,{
+    fetch(`https://df-donde-api.herokuapp.com/api/v1/items/${this.props.state.currentItem.id}`,{
       method:"PATCH",
       headers:{
         'Content-Type':'application/json',
@@ -263,7 +263,7 @@ class ItemPage extends Component {
   }
 
   deleteItem = () => {
-    fetch(`https://df-donde.herokuapp.com/api/v1/items/${this.props.state.currentItem.id}`,{
+    fetch(`https://df-donde-api.herokuapp.com/api/v1/items/${this.props.state.currentItem.id}`,{
       method:"DELETE",
       headers:{
         'Content-Type':'application/json',
@@ -361,7 +361,7 @@ class ItemPage extends Component {
 
     addOwners = () => {
       this.props.isFetching()
-      fetch(`https://df-donde.herokuapp.com/api/v1/items/owners/${this.props.state.currentItem.id}`,{
+      fetch(`https://df-donde-api.herokuapp.com/api/v1/items/owners/${this.props.state.currentItem.id}`,{
         method:"PATCH",
         headers:{
           'Content-Type':'application/json',
@@ -395,7 +395,7 @@ class ItemPage extends Component {
 
     removeOwner = (userId) => {
       this.props.isFetching()
-      fetch(`https://df-donde.herokuapp.com/api/v1/items/owners/${this.props.state.currentItem.id}/${userId}`,{
+      fetch(`https://df-donde-api.herokuapp.com/api/v1/items/owners/${this.props.state.currentItem.id}/${userId}`,{
         method:"DELETE",
         headers:{
           'Content-Type':'application/json',
