@@ -400,7 +400,8 @@ class ItemPage extends Component {
         headers:{
           'Content-Type':'application/json',
           Accept: 'application/json',
-          Authorization:  localStorage.getItem("token")
+          Authorization:  localStorage.getItem("token"),
+          Allow: 'DELETE'
         },
         body:JSON.stringify({
           item:{
