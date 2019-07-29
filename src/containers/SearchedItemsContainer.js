@@ -10,7 +10,7 @@ class SearchedItemsContainer extends Component {
     const userHouseholdItems = this.props.state.user.households.map(household => {
       return household.items
     }).flat()
-    console.log(userHouseholdItems)
+    // console.log(userHouseholdItems)
     let filteredItems = userHouseholdItems.filter(item => {
       return (item.name.toLowerCase().includes(this.props.searchTerm.toLowerCase()) || item.description.toLowerCase().includes(this.props.searchTerm.toLowerCase()))
     })

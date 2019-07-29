@@ -33,7 +33,7 @@ class HouseholdPage extends Component {
       })
 
     }).then(
-    fetch(`http://localhost:3000/api/v1/households/${this.props.match.params.id}`,{
+    fetch(`https://df-donde-api.herokuapp.com/api/v1/households/${this.props.match.params.id}`,{
       method: "GET",
       headers: { Authorization:  localStorage.getItem("token") }
     })
@@ -98,7 +98,7 @@ class HouseholdPage extends Component {
   }
 
   joinHousehold = () => {
-    fetch(`http://localhost:3000/api/v1/households/${this.props.state.user.id}/${this.props.state.currentHousehold.id}`,{
+    fetch(`https://df-donde-api.herokuapp.com/api/v1/households/${this.props.state.user.id}/${this.props.state.currentHousehold.id}`,{
       method:"POST",
       headers:{
         'Content-Type':'application/json',
@@ -199,5 +199,3 @@ const mapDispatchToProps = (dispatch) =>{
 
 
 export default connect(mapStateToProps,mapDispatchToProps)(HouseholdPage)
-
-// household={this.props.state.currentHousehold}

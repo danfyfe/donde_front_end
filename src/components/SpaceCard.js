@@ -108,7 +108,7 @@ class SpaceCard extends Component {
   }
 
   editSpace = () => {
-    fetch(`http://localhost:3000/api/v1/spaces/${this.props.space.id}`,{
+    fetch(`https://df-donde-api.herokuapp.com/api/v1/spaces/${this.props.space.id}`,{
       method:"PATCH",
       headers:{
         'Content-Type':'application/json',

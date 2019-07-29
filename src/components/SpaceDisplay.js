@@ -141,7 +141,7 @@ class Space extends Component {
   }
 
   editSpace = () => {
-    fetch(`http://localhost:3000/api/v1/spaces/${this.props.state.currentSpace.id}`,{
+    fetch(`https://df-donde-api.herokuapp.com/api/v1/spaces/${this.props.state.currentSpace.id}`,{
       method:"PATCH",
       headers:{
         'Content-Type':'application/json',
@@ -167,7 +167,7 @@ class Space extends Component {
   }
 
   deleteSpace = () => {
-    fetch(`http://localhost:3000/api/v1/spaces/${this.props.state.currentSpace.id}`,{
+    fetch(`https://df-donde-api.herokuapp.com/api/v1/spaces/${this.props.state.currentSpace.id}`,{
       method:"DELETE",
       headers:{
         'Content-Type':'application/json',

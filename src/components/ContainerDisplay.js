@@ -173,7 +173,7 @@ class Container extends Component {
   }
 
   deleteContainer = () => {
-    fetch(`http://localhost:3000/api/v1/containers/${this.props.state.currentContainer.id}`,{
+    fetch(`https://df-donde-api.herokuapp.com/api/v1/containers/${this.props.state.currentContainer.id}`,{
       method:"DELETE",
       headers:{
         'Content-Type':'application/json',
@@ -203,7 +203,7 @@ class Container extends Component {
   }
 
   editContainer = () => {
-    fetch(`http://localhost:3000/api/v1/containers/${this.props.state.currentContainer.id}`,{
+    fetch(`https://df-donde-api.herokuapp.com/api/v1/containers/${this.props.state.currentContainer.id}`,{
       method:"PATCH",
       headers:{
         'Content-Type':'application/json',

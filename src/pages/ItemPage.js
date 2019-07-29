@@ -37,7 +37,7 @@ class ItemPage extends Component {
       this.props.setUser(user.user)
     })
     .then(
-      fetch(`http://localhost:3000/api/v1/items/${this.props.match.params.id}`,{
+      fetch(`https://df-donde-api.herokuapp.com/api/v1/items/${this.props.match.params.id}`,{
         method: "GET",
         headers: { Authorization:  localStorage.getItem("token") }
       })

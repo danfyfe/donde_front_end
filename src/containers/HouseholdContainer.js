@@ -41,7 +41,7 @@ class HouseholdContainer extends Component {
   }
 
   joinHousehold = () => {
-    fetch(`http://localhost:3000/api/v1/households/${this.props.state.user.id}/${this.props.state.currentHousehold.id}`,{
+    fetch(`https://df-donde-api.herokuapp.com/api/v1/households/${this.props.state.user.id}/${this.props.state.currentHousehold.id}`,{
       method:"POST",
       headers:{
         'Content-Type':'application/json',
@@ -158,7 +158,7 @@ class HouseholdContainer extends Component {
   }
 
   editHousehold = () => {
-    fetch(`http://localhost:3000/api/v1/households/${this.props.state.currentHousehold.id}`,{
+    fetch(`https://df-donde-api.herokuapp.com/api/v1/households/${this.props.state.currentHousehold.id}`,{
       method:"PATCH",
       headers: {
         'Content-Type': 'application/json',
@@ -242,7 +242,7 @@ class HouseholdContainer extends Component {
   }
 
   leaveHousehold = () => {
-    fetch(`http://localhost:3000/api/v1/households/${this.props.state.user.id}/${this.props.state.currentHousehold.id}`,{
+    fetch(`https://df-donde-api.herokuapp.com/api/v1/households/${this.props.state.user.id}/${this.props.state.currentHousehold.id}`,{
       method:"DELETE",
       headers:{
         'Content-Type':'application/json',
