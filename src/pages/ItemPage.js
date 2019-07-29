@@ -232,7 +232,8 @@ class ItemPage extends Component {
       method:"PATCH",
       headers:{
         'Content-Type':'application/json',
-        Accept: 'application/json'
+        Accept: 'application/json',
+        Authorization:  localStorage.getItem("token")
       },
       body:JSON.stringify({
         item:{
@@ -266,7 +267,8 @@ class ItemPage extends Component {
       method:"DELETE",
       headers:{
         'Content-Type':'application/json',
-        Accept: 'application/json'
+        Accept: 'application/json',
+        Authorization:  localStorage.getItem("token")
       },
       body:JSON.stringify({
         householdPassword: this.state.householdPassword,
@@ -363,7 +365,8 @@ class ItemPage extends Component {
         method:"PATCH",
         headers:{
           'Content-Type':'application/json',
-          Accept: 'application/json'
+          Accept: 'application/json',
+          Authorization:  localStorage.getItem("token")
         },
         body:JSON.stringify({
           item:{
@@ -396,7 +399,8 @@ class ItemPage extends Component {
         method:"DELETE",
         headers:{
           'Content-Type':'application/json',
-          Accept: 'application/json'
+          Accept: 'application/json',
+          Authorization:  localStorage.getItem("token")
         },
         body:JSON.stringify({
           item:{
