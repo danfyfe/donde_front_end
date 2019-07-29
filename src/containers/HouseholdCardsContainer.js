@@ -85,7 +85,7 @@ class HouseholdCardsContainer extends Component {
   }
 
   createHousehold = () => {
-    fetch('http://localhost:3000/api/v1/households',{
+    fetch('https://df-donde-api.herokuapp.com/api/v1/households',{
       method:"POST",
       headers:{
         'Content-Type':'application/json',

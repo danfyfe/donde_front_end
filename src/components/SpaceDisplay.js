@@ -56,7 +56,7 @@ class Space extends Component {
   }
 
   addContainer = () => {
-    fetch('http://localhost:3000/api/v1/containers',{
+    fetch('https://df-donde-api.herokuapp.com/api/v1/containers',{
       method:"POST",
       headers:{
         'Content-Type':'application/json',

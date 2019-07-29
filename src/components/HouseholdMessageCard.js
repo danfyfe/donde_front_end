@@ -32,7 +32,7 @@ class HouseholdMessageCard extends Component {
 
 
   addMessage = () => {
-    fetch('http://localhost:3000/api/v1/messages',{
+    fetch('https://df-donde-api.herokuapp.com/api/v1/messages',{
       method:"POST",
       headers:{
         'Content-Type':'application/json',

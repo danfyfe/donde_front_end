@@ -28,7 +28,7 @@ class ItemPage extends Component {
 
   componentDidMount(){
     this.props.isFetching()
-    fetch('http://localhost:3000/api/v1/profile',{
+    fetch('https://df-donde-api.herokuapp.com/api/v1/profile',{
       method:"POST",
       headers: { Authorization:  localStorage.getItem("token") }
     }).then(resp=>resp.json())
@@ -195,38 +195,9 @@ class ItemPage extends Component {
         })
       }
 
-
-      // below was giving user option to put things in different households
-
-      // const householdOptions = this.props.state.user.households.map(household => {
-      //   return {key:household.id, text:household.name, value:household.id}
-      // })
-
-
-
-      // const userSpaces = this.props.state.user.households.map(household => {
-      //   return household.spaces
-      // }).flat()
-      //
-      // const spaceOptions = userSpaces.map(space => {
-      //   return {key:space.id, text:space.name, value:space.id}
-      // })
-
-
-
-
-      // const userContainers = userSpaces.map(space => {
-      //   return space.containers
-      // }).flat()
-      //
-      // const containerOptions = userContainers.map(container => {
-      //
-      //   return {key: container.id, text: `${container.name}`, value: container.id}
-      // })
-
     return <Segment clearing raised>
       <Form>
-        <Form.Field>
+        {/*<Form.Field>
           <label>Name</label>
           <input onChange={this.handleItemNameInput} placeholder="Item name" value={this.state.itemName}/>
         </Form.Field>
@@ -234,7 +205,7 @@ class ItemPage extends Component {
         <Form.Field>
           <label>Description</label>
           <input onChange={this.handleItemDescriptionInput} placeholder="Item description" value={this.state.itemDescription}/>
-        </Form.Field>
+        </Form.Field>*/}
 
         <Form.Field>
           <label>Container</label>
@@ -249,14 +220,14 @@ class ItemPage extends Component {
 
 
         <Button onClick={this.setMoving} floated="right" size="mini">Cancel</Button>
-        <Button onClick={this.editItem} floated="right" size="mini">Submit</Button>
+        <Button onClick={this.moveItem} floated="right" size="mini">Submit</Button>
 
       </Form>
     </Segment>
     }
   }
 
-  editItem = () => {
+  moveItem = () => {
     fetch(`http://localhost:3000/api/v1/items/${this.props.state.currentItem.id}`,{
       method:"PATCH",
       headers:{

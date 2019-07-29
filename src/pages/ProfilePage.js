@@ -10,7 +10,7 @@ import Loading from '../components/Loading.js'
 class ProfilePage extends Component {
   componentDidMount(){
     this.props.isFetching()
-    fetch('http://localhost:3000/api/v1/profile',{
+    fetch('https://df-donde-api.herokuapp.com/api/v1/profile',{
       method:"POST",
       headers: { Authorization:  localStorage.getItem("token") }
     }).then(resp=>resp.json())
@@ -42,7 +42,7 @@ class ProfilePage extends Component {
       <>
       {this.setItemDeleteConfirmationMessageToNothing()}
 
-      {this.props.state.isDoneFetching ?
+      {this.props.state.isDoneFetching && this.props.state.user.username ? 
         <>
 
           <Menu style={{marginTop: "0px"}}>
