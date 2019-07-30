@@ -2,6 +2,14 @@ import React, { Component, Fragment } from 'react'
 import { Segment, Card, List, Message, Header, Button, Form } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
+
+let API_ENDPOINT
+if (process.env.NODE_ENV === 'production') {
+  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
+} else {
+  API_ENDPOINT = 'http://localhost:3000'
+}
+
 class SpaceCard extends Component {
 
   state = {
@@ -108,7 +116,7 @@ class SpaceCard extends Component {
   }
 
   editSpace = () => {
-    fetch(`https://df-donde-api.herokuapp.com/api/v1/spaces/${this.props.space.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/spaces/${this.props.space.id}`,{
       method:"PATCH",
       headers:{
         'Content-Type':'application/json',

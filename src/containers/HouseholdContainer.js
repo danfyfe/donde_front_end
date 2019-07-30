@@ -4,6 +4,14 @@ import { connect } from 'react-redux'
 
 import SpacesContainer from './SpacesContainer.js'
 
+
+let API_ENDPOINT
+if (process.env.NODE_ENV === 'production') {
+  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
+} else {
+  API_ENDPOINT = 'http://localhost:3000'
+}
+
 class HouseholdContainer extends Component {
 
   state = {
@@ -41,7 +49,7 @@ class HouseholdContainer extends Component {
   }
 
   joinHousehold = () => {
-    fetch(`https://df-donde-api.herokuapp.com/api/v1/households/${this.props.state.user.id}/${this.props.state.currentHousehold.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.state.user.id}/${this.props.state.currentHousehold.id}`,{
       method:"POST",
       headers:{
         'Content-Type':'application/json',
@@ -63,7 +71,7 @@ class HouseholdContainer extends Component {
   }
 
   addSpace = () => {
-    fetch('https://df-donde-api.herokuapp.com/api/v1/spaces',{
+    fetch(`${API_ENDPOINT}/api/v1/spaces`,{
       method:"POST",
       headers:{
         'Content-Type':'application/json',
@@ -158,7 +166,7 @@ class HouseholdContainer extends Component {
   }
 
   editHousehold = () => {
-    fetch(`https://df-donde-api.herokuapp.com/api/v1/households/${this.props.state.currentHousehold.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.state.currentHousehold.id}`,{
       method:"PATCH",
       headers: {
         'Content-Type': 'application/json',
@@ -242,7 +250,7 @@ class HouseholdContainer extends Component {
   }
 
   leaveHousehold = () => {
-    fetch(`https://df-donde-api.herokuapp.com/api/v1/households/${this.props.state.user.id}/${this.props.state.currentHousehold.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.state.user.id}/${this.props.state.currentHousehold.id}`,{
       method:"DELETE",
       headers:{
         'Content-Type':'application/json',

@@ -5,7 +5,12 @@ import { connect } from 'react-redux'
 import Search from '../components/Search.js'
 import Loading from '../components/Loading.js'
 
-
+let API_ENDPOINT
+if (process.env.NODE_ENV === 'production') {
+  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
+} else {
+  API_ENDPOINT = 'http://localhost:3000'
+}
 
 class ItemPage extends Component {
 
@@ -28,7 +33,7 @@ class ItemPage extends Component {
 
   componentDidMount(){
     this.props.isFetching()
-    fetch('https://df-donde-api.herokuapp.com/api/v1/profile',{
+    fetch(`${API_ENDPOINT}/api/v1/profile`,{
       method:"POST",
       headers: { Authorization:  localStorage.getItem("token") }
     }).then(resp=>resp.json())
@@ -37,7 +42,7 @@ class ItemPage extends Component {
       this.props.setUser(user.user)
     })
     .then(
-      fetch(`https://df-donde-api.herokuapp.com/api/v1/items/${this.props.match.params.id}`,{
+      fetch(`${API_ENDPOINT}/api/v1/items/${this.props.match.params.id}`,{
         method: "GET",
         headers: { Authorization:  localStorage.getItem("token") }
       })
@@ -228,7 +233,7 @@ class ItemPage extends Component {
   }
 
   moveItem = () => {
-    fetch(`https://df-donde-api.herokuapp.com/api/v1/items/${this.props.state.currentItem.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/items/${this.props.state.currentItem.id}`,{
       method:"PATCH",
       headers:{
         'Content-Type':'application/json',
@@ -263,7 +268,7 @@ class ItemPage extends Component {
   }
 
   deleteItem = () => {
-    fetch(`https://df-donde-api.herokuapp.com/api/v1/items/${this.props.state.currentItem.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/items/${this.props.state.currentItem.id}`,{
       method:"DELETE",
       headers:{
         'Content-Type':'application/json',
@@ -361,7 +366,7 @@ class ItemPage extends Component {
 
     addOwners = () => {
       this.props.isFetching()
-      fetch(`https://df-donde-api.herokuapp.com/api/v1/items/owners/${this.props.state.currentItem.id}`,{
+      fetch(`${API_ENDPOINT}/api/v1/items/owners/${this.props.state.currentItem.id}`,{
         method:"PATCH",
         headers:{
           'Content-Type':'application/json',
@@ -395,7 +400,7 @@ class ItemPage extends Component {
 
     removeOwner = (userId) => {
       this.props.isFetching()
-      fetch(`https://df-donde-api.herokuapp.com/api/v1/items/owners/${this.props.state.currentItem.id}/${userId}`,{
+      fetch(`${API_ENDPOINT}/api/v1/items/owners/${this.props.state.currentItem.id}/${userId}`,{
         method:"DELETE",
         headers:{
           'Content-Type':'application/json',

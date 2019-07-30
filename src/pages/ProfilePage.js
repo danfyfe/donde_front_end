@@ -7,10 +7,17 @@ import MessageContainer from '../containers/MessageContainer.js'
 import Search from '../components/Search.js'
 import Loading from '../components/Loading.js'
 
+let API_ENDPOINT
+if (process.env.NODE_ENV === 'production') {
+  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
+} else {
+  API_ENDPOINT = 'http://localhost:3000'
+}
+
 class ProfilePage extends Component {
   componentDidMount(){
     this.props.isFetching()
-    fetch('https://df-donde-api.herokuapp.com/api/v1/profile',{
+    fetch(`${API_ENDPOINT}/api/v1/profile`,{
       method:"POST",
       headers: { Authorization:  localStorage.getItem("token") }
     }).then(resp=>resp.json())
@@ -42,7 +49,7 @@ class ProfilePage extends Component {
       <>
       {this.setItemDeleteConfirmationMessageToNothing()}
 
-      {this.props.state.isDoneFetching && this.props.state.user.username ? 
+      {this.props.state.isDoneFetching && this.props.state.user.username ?
         <>
 
           <Menu style={{marginTop: "0px"}}>

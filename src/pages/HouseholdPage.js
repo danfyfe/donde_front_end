@@ -7,7 +7,12 @@ import HouseholdMessagesContainer from '../containers/HouseholdMessagesContainer
 import Search from '../components/Search.js'
 import Loading from '../components/Loading.js'
 
-
+let API_ENDPOINT
+if (process.env.NODE_ENV === 'production') {
+  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
+} else {
+  API_ENDPOINT = 'http://localhost:3000'
+}
 
 class HouseholdPage extends Component {
   state = {
@@ -20,7 +25,7 @@ class HouseholdPage extends Component {
   componentDidMount(){
     this.props.isFetching()
 
-    fetch('https://df-donde-api.herokuapp.com/api/v1/profile',{
+    fetch(`${API_ENDPOINT}/api/v1/profile`,{
       method:"POST",
       headers: { Authorization:  localStorage.getItem("token") }
     }).then(resp=>resp.json())
@@ -33,7 +38,7 @@ class HouseholdPage extends Component {
       })
 
     }).then(
-    fetch(`https://df-donde-api.herokuapp.com/api/v1/households/${this.props.match.params.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.match.params.id}`,{
       method: "GET",
       headers: { Authorization:  localStorage.getItem("token") }
     })
@@ -98,7 +103,7 @@ class HouseholdPage extends Component {
   }
 
   joinHousehold = () => {
-    fetch(`https://df-donde-api.herokuapp.com/api/v1/households/${this.props.state.user.id}/${this.props.state.currentHousehold.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.state.user.id}/${this.props.state.currentHousehold.id}`,{
       method:"POST",
       headers:{
         'Content-Type':'application/json',

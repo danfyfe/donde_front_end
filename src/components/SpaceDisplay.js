@@ -5,6 +5,13 @@ import { connect } from 'react-redux'
 import ContainerCard from './ContainerCard.js'
 import ContainerDisplay from './ContainerDisplay.js'
 
+let API_ENDPOINT
+if (process.env.NODE_ENV === 'production') {
+  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
+} else {
+  API_ENDPOINT = 'http://localhost:3000'
+}
+
 class Space extends Component {
 
   state = {
@@ -56,7 +63,7 @@ class Space extends Component {
   }
 
   addContainer = () => {
-    fetch('https://df-donde-api.herokuapp.com/api/v1/containers',{
+    fetch(`${API_ENDPOINT}/api/v1/containers`,{
       method:"POST",
       headers:{
         'Content-Type':'application/json',
@@ -141,7 +148,7 @@ class Space extends Component {
   }
 
   editSpace = () => {
-    fetch(`https://df-donde-api.herokuapp.com/api/v1/spaces/${this.props.state.currentSpace.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/spaces/${this.props.state.currentSpace.id}`,{
       method:"PATCH",
       headers:{
         'Content-Type':'application/json',
@@ -167,7 +174,7 @@ class Space extends Component {
   }
 
   deleteSpace = () => {
-    fetch(`https://df-donde-api.herokuapp.com/api/v1/spaces/${this.props.state.currentSpace.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/spaces/${this.props.state.currentSpace.id}`,{
       method:"DELETE",
       headers:{
         'Content-Type':'application/json',

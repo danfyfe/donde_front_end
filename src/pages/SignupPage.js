@@ -2,6 +2,12 @@ import React from 'react'
 import { Component, Redirect } from 'react'
 import { Segment, Form, Message, Button } from 'semantic-ui-react'
 
+let API_ENDPOINT
+if (process.env.NODE_ENV === 'production') {
+  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
+} else {
+  API_ENDPOINT = 'http://localhost:3000'
+}
 
 class SignupPage extends Component {
 
@@ -20,7 +26,7 @@ class SignupPage extends Component {
   }
 
   handleSubmit = () => {
-    fetch('https://df-donde-api.herokuapp.com/api/v1/users',{
+    fetch(`${API_ENDPOINT}/api/v1/users`,{
       method: "POST",
       headers: {
         "Content-Type": "application/json",

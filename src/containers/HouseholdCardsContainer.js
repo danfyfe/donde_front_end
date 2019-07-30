@@ -4,6 +4,13 @@ import { connect } from 'react-redux'
 
 import HouseholdCard from '../components/HouseholdCard.js'
 
+let API_ENDPOINT
+if (process.env.NODE_ENV === 'production') {
+  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
+} else {
+  API_ENDPOINT = 'http://localhost:3000'
+}
+
 class HouseholdCardsContainer extends Component {
   state = {
     addingHousehold: false,
@@ -85,7 +92,7 @@ class HouseholdCardsContainer extends Component {
   }
 
   createHousehold = () => {
-    fetch('https://df-donde-api.herokuapp.com/api/v1/households',{
+    fetch(`${API_ENDPOINT}/api/v1/households`,{
       method:"POST",
       headers:{
         'Content-Type':'application/json',

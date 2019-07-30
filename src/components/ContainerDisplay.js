@@ -4,6 +4,12 @@ import { connect } from 'react-redux'
 
 import ItemCard from './ItemCard.js'
 
+let API_ENDPOINT
+if (process.env.NODE_ENV === 'production') {
+  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
+} else {
+  API_ENDPOINT = 'http://localhost:3000'
+}
 
 class Container extends Component {
 
@@ -60,7 +66,7 @@ class Container extends Component {
 
 
   addItem = () => {
-    fetch('https://df-donde-api.herokuapp.com/api/v1/items',{
+    fetch(`${API_ENDPOINT}/api/v1/items`,{
       method:"POST",
       headers:{
         'Content-Type':'application/json',
@@ -173,7 +179,7 @@ class Container extends Component {
   }
 
   deleteContainer = () => {
-    fetch(`https://df-donde-api.herokuapp.com/api/v1/containers/${this.props.state.currentContainer.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/containers/${this.props.state.currentContainer.id}`,{
       method:"DELETE",
       headers:{
         'Content-Type':'application/json',
@@ -203,7 +209,7 @@ class Container extends Component {
   }
 
   editContainer = () => {
-    fetch(`https://df-donde-api.herokuapp.com/api/v1/containers/${this.props.state.currentContainer.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/containers/${this.props.state.currentContainer.id}`,{
       method:"PATCH",
       headers:{
         'Content-Type':'application/json',
