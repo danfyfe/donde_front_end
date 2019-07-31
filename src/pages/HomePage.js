@@ -2,6 +2,15 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 import { Button, Segment, Grid, Form, Divider, Message, Header } from 'semantic-ui-react'
 
+let API_ENDPOINT
+if (process.env.NODE_ENV === 'production') {
+  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
+} else {
+  API_ENDPOINT = 'http://localhost:3000'
+}
+
+
+
 class HomePage extends Component {
   state = {
     username:"",
@@ -16,7 +25,7 @@ class HomePage extends Component {
   }
 
   handleLogIn = () => {
-    fetch('http://localhost:3000/api/v1/login',{
+    fetch(`${API_ENDPOINT}/api/v1/login`,{
       method:"POST",
       headers: {"Content-Type": "application/json", Authorization:  localStorage.getItem("token")},
       body: JSON.stringify({user:this.state})
@@ -43,7 +52,6 @@ class HomePage extends Component {
   }
 
 render(){
-
   return ( localStorage.token && localStorage.token !== "undefined" ? (
       <Redirect to={"/profile"} />
     ) : (

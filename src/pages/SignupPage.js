@@ -2,6 +2,12 @@ import React from 'react'
 import { Component, Redirect } from 'react'
 import { Segment, Form, Message, Button } from 'semantic-ui-react'
 
+let API_ENDPOINT
+if (process.env.NODE_ENV === 'production') {
+  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
+} else {
+  API_ENDPOINT = 'http://localhost:3000'
+}
 
 class SignupPage extends Component {
 
@@ -20,7 +26,7 @@ class SignupPage extends Component {
   }
 
   handleSubmit = () => {
-    fetch('http://localhost:3000/api/v1/users',{
+    fetch(`${API_ENDPOINT}/api/v1/users`,{
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,14 +61,14 @@ class SignupPage extends Component {
               <label>Username</label>
               <input onChange={this.handleChange} name = "username" placeholder = "Username"/>
             </Form.Field>
-            <Form.Field>
+            {/*<Form.Field>
               <label>Phone</label>
               <input onChange={this.handleChange}  name = "phone_number" placeholder = "Phone"/>
             </Form.Field>
             <Form.Field>
               <label>Email</label>
               <input onChange={this.handleChange}  name = "email" placeholder = "Email"/>
-            </Form.Field>
+            </Form.Field>*/}
             <Form.Field>
               <label>Password</label>
               <input onChange={this.handleChange}  name="password" type="password" placeholder = "Password"/>

@@ -5,6 +5,14 @@ import { connect } from 'react-redux'
 import SearchedHouseholdsContainer from '../containers/SearchedHouseholdsContainer.js'
 import SearchedItemsContainer from '../containers/SearchedItemsContainer'
 
+
+let API_ENDPOINT
+if (process.env.NODE_ENV === 'production') {
+  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
+} else {
+  API_ENDPOINT = 'http://localhost:3000'
+}
+
 class Search extends Component {
 
   state = {
@@ -15,7 +23,7 @@ class Search extends Component {
   }
 
   componentDidMount(){
-    fetch('http://localhost:3000/api/v1/households',{
+    fetch(`${API_ENDPOINT}/api/v1/households`,{
       method:"GET",
       headers: { Authorization:  localStorage.getItem("token") }
     }).then(resp=>resp.json())
@@ -26,7 +34,7 @@ class Search extends Component {
       })
     })
     .then(
-      fetch('http://localhost:3000/api/v1/items',{
+      fetch(`${API_ENDPOINT}/api/v1/items`,{
         method:"GET",
         headers: { Authorization:  localStorage.getItem("token") }
       }).then(resp=>resp.json())

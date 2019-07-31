@@ -4,6 +4,14 @@ import { Button, Card, Icon, Image, Segment, Form, Message } from 'semantic-ui-r
 import { connect } from 'react-redux'
 import moment from 'moment'
 
+
+let API_ENDPOINT
+if (process.env.NODE_ENV === 'production') {
+  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
+} else {
+  API_ENDPOINT = 'http://localhost:3000'
+}
+
 class MessageCard extends Component {
   state = {
     addingMessage: false,
@@ -31,7 +39,7 @@ class MessageCard extends Component {
   }
 
   addMessage = () => {
-    fetch('http://localhost:3000/api/v1/messages',{
+    fetch(`${API_ENDPOINT}/api/v1/messages`,{
       method:"POST",
       headers:{
         'Content-Type':'application/json',
@@ -55,7 +63,7 @@ class MessageCard extends Component {
   }
 
   render(){
-    
+
     return(
       <Card color={this.props.message.household.color} style={{width: "100%"}}>
         <Card.Content>

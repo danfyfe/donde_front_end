@@ -5,7 +5,12 @@ import { connect } from 'react-redux'
 import Search from '../components/Search.js'
 import Loading from '../components/Loading.js'
 
-
+let API_ENDPOINT
+if (process.env.NODE_ENV === 'production') {
+  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
+} else {
+  API_ENDPOINT = 'http://localhost:3000'
+}
 
 class ItemPage extends Component {
 
@@ -28,7 +33,7 @@ class ItemPage extends Component {
 
   componentDidMount(){
     this.props.isFetching()
-    fetch('http://localhost:3000/api/v1/profile',{
+    fetch(`${API_ENDPOINT}/api/v1/profile`,{
       method:"POST",
       headers: { Authorization:  localStorage.getItem("token") }
     }).then(resp=>resp.json())
@@ -37,7 +42,7 @@ class ItemPage extends Component {
       this.props.setUser(user.user)
     })
     .then(
-      fetch(`http://localhost:3000/api/v1/items/${this.props.match.params.id}`,{
+      fetch(`${API_ENDPOINT}/api/v1/items/${this.props.match.params.id}`,{
         method: "GET",
         headers: { Authorization:  localStorage.getItem("token") }
       })
@@ -195,38 +200,9 @@ class ItemPage extends Component {
         })
       }
 
-
-      // below was giving user option to put things in different households
-
-      // const householdOptions = this.props.state.user.households.map(household => {
-      //   return {key:household.id, text:household.name, value:household.id}
-      // })
-
-
-
-      // const userSpaces = this.props.state.user.households.map(household => {
-      //   return household.spaces
-      // }).flat()
-      //
-      // const spaceOptions = userSpaces.map(space => {
-      //   return {key:space.id, text:space.name, value:space.id}
-      // })
-
-
-
-
-      // const userContainers = userSpaces.map(space => {
-      //   return space.containers
-      // }).flat()
-      //
-      // const containerOptions = userContainers.map(container => {
-      //
-      //   return {key: container.id, text: `${container.name}`, value: container.id}
-      // })
-
     return <Segment clearing raised>
       <Form>
-        <Form.Field>
+        {/*<Form.Field>
           <label>Name</label>
           <input onChange={this.handleItemNameInput} placeholder="Item name" value={this.state.itemName}/>
         </Form.Field>
@@ -234,7 +210,7 @@ class ItemPage extends Component {
         <Form.Field>
           <label>Description</label>
           <input onChange={this.handleItemDescriptionInput} placeholder="Item description" value={this.state.itemDescription}/>
-        </Form.Field>
+        </Form.Field>*/}
 
         <Form.Field>
           <label>Container</label>
@@ -249,19 +225,20 @@ class ItemPage extends Component {
 
 
         <Button onClick={this.setMoving} floated="right" size="mini">Cancel</Button>
-        <Button onClick={this.editItem} floated="right" size="mini">Submit</Button>
+        <Button onClick={this.moveItem} floated="right" size="mini">Submit</Button>
 
       </Form>
     </Segment>
     }
   }
 
-  editItem = () => {
-    fetch(`http://localhost:3000/api/v1/items/${this.props.state.currentItem.id}`,{
+  moveItem = () => {
+    fetch(`${API_ENDPOINT}/api/v1/items/${this.props.state.currentItem.id}`,{
       method:"PATCH",
       headers:{
         'Content-Type':'application/json',
-        Accept: 'application/json'
+        Accept: 'application/json',
+        Authorization:  localStorage.getItem("token")
       },
       body:JSON.stringify({
         item:{
@@ -291,11 +268,12 @@ class ItemPage extends Component {
   }
 
   deleteItem = () => {
-    fetch(`http://localhost:3000/api/v1/items/${this.props.state.currentItem.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/items/${this.props.state.currentItem.id}`,{
       method:"DELETE",
       headers:{
         'Content-Type':'application/json',
-        Accept: 'application/json'
+        Accept: 'application/json',
+        Authorization:  localStorage.getItem("token")
       },
       body:JSON.stringify({
         householdPassword: this.state.householdPassword,
@@ -388,11 +366,12 @@ class ItemPage extends Component {
 
     addOwners = () => {
       this.props.isFetching()
-      fetch(`http://localhost:3000/api/v1/items/owners/${this.props.state.currentItem}`,{
+      fetch(`${API_ENDPOINT}/api/v1/items/owners/${this.props.state.currentItem.id}`,{
         method:"PATCH",
         headers:{
           'Content-Type':'application/json',
-          Accept: 'application/json'
+          Accept: 'application/json',
+          Authorization:  localStorage.getItem("token")
         },
         body:JSON.stringify({
           item:{
@@ -421,11 +400,13 @@ class ItemPage extends Component {
 
     removeOwner = (userId) => {
       this.props.isFetching()
-      fetch(`http://localhost:3000/api/v1/items/owners/${this.props.state.currentItem.id}/${userId}`,{
+      fetch(`${API_ENDPOINT}/api/v1/items/owners/${this.props.state.currentItem.id}/${userId}`,{
         method:"DELETE",
         headers:{
           'Content-Type':'application/json',
-          Accept: 'application/json'
+          Accept: 'application/json',
+          Authorization:  localStorage.getItem("token"),
+          Allow: 'DELETE'
         },
         body:JSON.stringify({
           item:{
