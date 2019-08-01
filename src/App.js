@@ -44,8 +44,8 @@ class App extends React.Component {
 
     return(
       <>
+      {localStorage.token && localStorage.token !== "undefined" ?
         <Menu style={{backgroundColor:"#3d8af7",borderRadius:"0px", marginBottom: "0px"}}>
-
           <Menu.Item onClick={this.sendToProfilePage} header>
             Donde
           </Menu.Item>
@@ -61,7 +61,8 @@ class App extends React.Component {
             </Dropdown.Menu>
           </Dropdown>
           </Menu.Menu>
-        </Menu>
+        </Menu> : null
+      }
 
         <Modal>
           <Search />
