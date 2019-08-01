@@ -77,7 +77,8 @@ class SignupPage extends Component {
               <label>Confirm Password</label>
               <input onChange={this.handleChange}  name="passwordConfirm" type="password" placeholder = "Confirm Password"/>
             </Form.Field>
-            <Button floated='right' onClick={this.handleSubmit} type='submit' size='small'>Submit</Button>
+            <Button floated='right' onClick={()=>this.props.history.push('/')} type='cancel' size='mini'>Cancel</Button>
+            <Button floated='right' onClick={this.handleSubmit} type='submit' size='mini'>Submit</Button>
           </Form>
         </Segment>
       </>
