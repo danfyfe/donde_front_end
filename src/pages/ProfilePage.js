@@ -61,12 +61,12 @@ class ProfilePage extends Component {
           {this.props.state.searching ? <Search history={this.props.history}/> : null}
 
             <div className='profile-container'>
-              <Segment className='' style={{width:"100%", margin:"", backgroundColor:"#f7f7f7", border:'none', borderRadius:'none'}}>
+              <Segment raised className='' style={{width:"95%", margin:"2%", backgroundColor:"#f7f7f7", border:'none', borderRadius:'none'}}>
                 <HouseholdCardsContainer history={this.props.history}
                 />
               </Segment>
 
-              <Segment className='' style={{width:"100%", margin:"", backgroundColor:"#f7f7f7", border:'none', borderRadius:'none'}}>
+              <Segment raised className='' style={{width:"95%", margin:'2%', backgroundColor:"#f7f7f7", border:'none', borderRadius:'none'}}>
                 <MessageContainer
                 history={this.props.history}/>
               </Segment>
