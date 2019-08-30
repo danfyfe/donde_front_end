@@ -283,12 +283,9 @@ class HouseholdContainer extends Component {
           <>
 
 
-          <Grid>
-          <Grid.Column floated='left' width={4}>
-            <Header onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)} as="h1" floated="left">{this.props.state.currentHousehold.name}</Header><Image floated="left" src={this.props.state.currentHousehold.image} size="mini"/>
-          </Grid.Column>
 
-          <Grid.Column floated="right" width={2}>
+            <Header onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)} as="h1" floated="left">{this.props.state.currentHousehold.name}</Header><Image floated="left" src={this.props.state.currentHousehold.image} size="mini"/>
+
             <Dropdown floated="right" pointing="top right" style={{}} text="Household">
               <Dropdown.Menu>
                 <Dropdown.Item text="Add Space" onClick={this.setAddingSpace}/>
@@ -296,8 +293,6 @@ class HouseholdContainer extends Component {
                 <Dropdown.Item text="Leave Household" onClick={this.setLeavingHousehold}/>
               </Dropdown.Menu>
             </Dropdown>
-            </Grid.Column>
-            </Grid>
 
 
 

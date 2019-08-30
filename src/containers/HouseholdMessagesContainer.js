@@ -116,7 +116,7 @@ class HouseholdMessagesContainer extends Component {
     return(
       <>
       <Segment clearing>
-      <Header floated="left">Messages</Header>
+      <Header floated="left" style={{height:'1vh'}}>Messages</Header>
       {this.state.addingNewMessage ? this.renderNewMessageForm():this.renderNewMessageHeader()}
       </Segment>
         <Card.Group>
