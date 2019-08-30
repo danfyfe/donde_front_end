@@ -282,18 +282,20 @@ class HouseholdContainer extends Component {
           {this.props.state.currentSpace && this.props.state.currentSpace.hasOwnProperty('id') ? null :
           <>
 
-
-
-            <Header onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)} as="h1" floated="left">{this.props.state.currentHousehold.name}</Header><Image floated="left" src={this.props.state.currentHousehold.image} size="mini"/>
-
-            <Dropdown floated="right" pointing="top right" style={{}} text="Household">
-              <Dropdown.Menu>
-                <Dropdown.Item text="Add Space" onClick={this.setAddingSpace}/>
-                <Dropdown.Item text="Edit Household" onClick={this.setEditingHousehold}/>
-                <Dropdown.Item text="Leave Household" onClick={this.setLeavingHousehold}/>
-              </Dropdown.Menu>
-            </Dropdown>
-
+          <div className='d-flex justify-content-between'>
+            <div className='d-flex flex-row'>
+              <Header onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)} as="h1" floated="left">{this.props.state.currentHousehold.name}</Header><Image floated="left" src={this.props.state.currentHousehold.image} size="mini" style={{height:'5vh'}}/>
+            </div>
+            <div className='d-flex'>
+              <Dropdown floated="right" pointing="top right" style={{}} text="Household">
+                <Dropdown.Menu>
+                  <Dropdown.Item text="Add Space" onClick={this.setAddingSpace}/>
+                  <Dropdown.Item text="Edit Household" onClick={this.setEditingHousehold}/>
+                  <Dropdown.Item text="Leave Household" onClick={this.setLeavingHousehold}/>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          </div>
 
 
             {this.state.editingHousehold ? this.renderEditHouseholdForm() : null}
