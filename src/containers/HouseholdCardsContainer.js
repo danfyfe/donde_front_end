@@ -139,7 +139,7 @@ class HouseholdCardsContainer extends Component {
 
     return(
       <>
-      <div clearing className='d-flex justify-content-between full-width'>
+      <div className='d-flex justify-content-between full-width'>
 
         { this.state.addingHousehold ?
           this.renderHouseholdForm() : <><span className='font-weight-bold larger-text' style={{height:'1vh'}}>Households</span> {this.renderAddHouseholdHeader()}</>

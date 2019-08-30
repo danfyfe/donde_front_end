@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { Card, Header, Form, Message, Segment, Button, Dropdown } from 'semantic-ui-react'
+import { Card, Header, Form, Message, Segment, Button, Dropdown, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import MessageCard from '../components/MessageCard.js'
@@ -64,7 +64,7 @@ class MessageContainer extends Component {
       })
     }
 
-    return <Segment clearing raised>
+    return <Segment clearing raised style={{width:'100%'}}>
     <Message header="Add New Message!" size="mini"/>
       <Form>
         <Form.Field>
@@ -90,7 +90,7 @@ class MessageContainer extends Component {
       if (this.props.state.user.households.length === 0) {
         return <Message size="small" compact style={{margin: "2% auto 0 auto"}}>No messages are being displayed because you do not currently belong to any households. You can create a household by clicking 'Add Household', or use the Search Icon above to search for a household to join</Message>
       }else {
-        return <Button onClick={this.setAddingNewMessage} color="blue" size="mini" floated="right">Add Message</Button>
+        return <Icon onClick={this.setAddingNewMessage} name='plus'/>
       }
     }
   }
@@ -126,13 +126,14 @@ class MessageContainer extends Component {
 
     return(
       <>
-      <Segment clearing style={{marginBottom:'20px'}}>
-        <Header floated="left" style={{height:'1vh'}}>Messages</Header>
-        {this.state.addingNewMessage ? this.renderNewMessageForm():this.renderNewMessageHeader()}
-      </Segment>
-        <Card.Group>
-          {this.renderMessageCards()}
-        </Card.Group>
+      <div className='d-flex justify-content-between full-width'>
+
+        {this.state.addingNewMessage ? this.renderNewMessageForm():<><span className='font-weight-bold larger-text' style={{height:'1vh'}}>Messages</span>{this.renderNewMessageHeader()}</>
+      }
+      </div>
+      <div className='d-flex flex-column' style={{marginTop:'3vh'}}>
+        {this.renderMessageCards()}
+      </div>
       </>
     )
   }
