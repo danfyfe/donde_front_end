@@ -212,13 +212,13 @@ class Space extends Component {
       {this.props.state.currentContainer && this.props.state.currentContainer.hasOwnProperty('id') ? this.renderContainer() :
 
       <>
-      <div className='d-flex justify-content-bewtween'>
+      <div className='d-flex justify-content-between'>
         <div className='d-flex flex-row'>
           <span className='font-weight-bold text-nowrap'>{this.props.space.name}</span>
           <span className='text-muted text-nowrap' style={{paddingLeft:'5%'}}>at {this.props.state.currentHousehold.name}</span>
         </div>
         <div className='d-flex'>
-          <Dropdown floated="right" pointing="top right" style={{margin:"0% 0 0 68% "}} text="Space">
+          <Dropdown floated="right" pointing="top right" style={{}} text="Space">
             <Dropdown.Menu>
               <Dropdown.Item text="Add Container" onClick={this.setAddingContainer}/>
               <Dropdown.Item text="Edit Space" onClick={this.setEditingSpace}/>
