@@ -213,10 +213,12 @@ class Space extends Component {
 
       <>
       <div className='d-flex justify-content-between'>
-        <div className='d-flex flex-row'>
+
+        <div className='d-flex flex-column'>
           <span className='font-weight-bold text-nowrap'>{this.props.space.name}</span>
-          <span className='text-muted text-nowrap' style={{paddingLeft:'5%'}}>at {this.props.state.currentHousehold.name}</span>
+          <span className='text-muted text-nowrap small-font' style={{paddingLeft:'5%'}}>at {this.props.state.currentHousehold.name}</span>
         </div>
+
         <div className='d-flex'>
           <Dropdown floated="right" pointing="top right" style={{}} text="Space">
             <Dropdown.Menu>

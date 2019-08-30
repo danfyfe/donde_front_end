@@ -139,7 +139,7 @@ class SpaceCard extends Component {
   }
 
   deleteSpace = () => {
-    // didnt have time
+    // didnt have time -- todo
   }
 
   render(){

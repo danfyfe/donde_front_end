@@ -24,6 +24,18 @@ code {
   width: 50%;
 }
 
+.tiny-font {
+  font-size: 50%;
+}
+
+.small-font {
+  font-size: 75%;
+}
+
+.med-font {
+  font-size: 85%
+}
+
 .profile-container {
   display: flex;
   flex-direction: column;
