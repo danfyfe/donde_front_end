@@ -202,7 +202,6 @@ class HouseholdContainer extends Component {
     const householdImageOptions = householdImageDefinitions.map(imageObj => {
       return {key: imageObj.url, text: imageObj.name, value: imageObj.url, image:{ size: "mini", src: imageObj.url }}
     })
-
     return <Segment clearing raised>
     <Message header={"Edit" + this.props.state.currentHousehold.name} size="mini"/>
       <Form>
@@ -284,7 +283,7 @@ class HouseholdContainer extends Component {
 
           <div className='d-flex justify-content-between'>
             <div className='d-flex flex-row'>
-              <Header onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)} as="h1" floated="left">{this.props.state.currentHousehold.name}</Header><Image floated="left" src={this.props.state.currentHousehold.image} size="mini" style={{height:'5vh'}}/>
+              <span className='font-weight-bold huge-font' onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)}>{this.props.state.currentHousehold.name}</span><Image floated="left" src={this.props.state.currentHousehold.image} size="mini" style={{height:'auto', width:'40px', paddingLeft:'5%'}}/>
             </div>
             <div className='d-flex'>
               <Dropdown floated="right" pointing="top right" style={{}} text="Household">

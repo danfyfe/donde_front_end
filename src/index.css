@@ -36,6 +36,14 @@ code {
   font-size: 85%
 }
 
+.big-font {
+  font-size: 120%;
+}
+
+.huge-font {
+  font-size: 180%;
+}
+
 .profile-container {
   display: flex;
   flex-direction: column;
