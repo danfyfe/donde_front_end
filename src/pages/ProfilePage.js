@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Menu, Grid, Message } from 'semantic-ui-react'
+import { Segment, Header, Menu, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import HouseholdCardsContainer from '../containers/HouseholdCardsContainer.js'
@@ -60,23 +60,19 @@ class ProfilePage extends Component {
 
           {this.props.state.searching ? <Search history={this.props.history}/> : null}
 
-          <Grid columns={2}>
-
-            <Grid.Column>
+            <div className='profile-container'>
               <Segment raised style={{width:"98%", margin:"10px ", backgroundColor:"#f7f7f7"}}>
                 <HouseholdCardsContainer history={this.props.history}
                 />
               </Segment>
-            </Grid.Column>
 
-            <Grid.Column>
               <Segment raised style={{width:"98%", margin:"10px", backgroundColor:"#f7f7f7", minHeight:'100px'}}>
                 <MessageContainer
                 history={this.props.history}/>
               </Segment>
-            </Grid.Column>
 
-          </Grid>
+              </div>
+
 
         </> : <Loading/>
       }

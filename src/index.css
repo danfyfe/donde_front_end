@@ -11,3 +11,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.full-width {
+  width: 100%;
+}
+
+.most-width {
+  width:90%;
+}
+
+.half-width {
+  width: 50%;
+}
+
+.profile-container {
+
+}
+
+@media only screen and (min-width:600px) {
+  .profile-container {
+    display: flex;
+    flex-direction: row
+  }
+}
