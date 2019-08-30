@@ -31,29 +31,33 @@ class SpaceCard extends Component {
     })
   }
 
-  renderContainerDescriptions = () => {
-      return this.props.space.containers.map(container => {
-        return <Fragment key={container.id}>
-        <Card key={container.id} style={{width:"25%"}} onClick={() => this.props.setCurrentContainer(container)}>
-            <Card.Content header={container.name }/>
-            <Card.Content meta={container.description}/>
-            <Card.Content extra>
-              {container.items.length} Items
-            </Card.Content>
-        </Card>
-        </Fragment>
-      })
-  }
+  // renderContainerDescriptions = () => {
+  //     return this.props.space.containers.map(container => {
+  //       return <Fragment key={container.id}>
+  //       <Card key={container.id} style={{width:"25%"}} onClick={() => this.props.setCurrentContainer(container)}>
+  //           <Card.Content header={container.name }/>
+  //           <Card.Content meta={container.description}/>
+  //           <Card.Content extra>
+  //             {container.items.length} Items
+  //           </Card.Content>
+  //       </Card>
+  //       </Fragment>
+  //     })
+  // }
 
   renderContainerList = () => {
+
     let containerListItems = this.props.space.containers.map(container => {
       return <List.Item key={container.id}>
         {container.name}
       </List.Item>
     })
-    return <List>
+
+    return <div className='large-left-padding text-muted small-font'>
+    <List >
       {containerListItems}
     </List>
+    </div>
   }
 
   renderSpaceItems = () => {
@@ -67,7 +71,7 @@ class SpaceCard extends Component {
   }
 
   renderNoContainersMessage = () => {
-    return <Message warning>This space has no containers! Click this card to view this space and add one!</Message>
+    return <Message className='small-font'style={{margin:'0'}} warning>This space has no containers! Click this card to view this space and add one!</Message>
   }
 
   setCurrentSpaceAndContainerToNone = (space) => {
@@ -147,18 +151,18 @@ class SpaceCard extends Component {
     return(
 
 
-      <Card link style={{width:"100%"}} onClick={() => {this.setCurrentSpaceAndContainerToNone(this.props.space)}} >
-        <Card.Content header={this.props.space.name}  />
-
-        <Segment>
-        <Header as="h4">Containers:</Header>
+      <div className='df-card' onClick={() => {this.setCurrentSpaceAndContainerToNone(this.props.space)}} >
+        <span className='font-weight-bold' style={{margin:'2%'}}>{this.props.space.name}</span>
+        <hr style={{margin:'1vh auto'}} width={'85%'}/>
+        <div className='d-flex flex-column' style={{margin:'0 2% 2% 2%'}}>
+        <span className='font-weight-bold med-padding med-font'>Containers:</span>
           {
             this.props.space.containers.length === 0 ? this.renderNoContainersMessage() :
             this.renderContainerList()
           }
-        </Segment>
+        </div>
 
-      </Card>
+      </div>
 
     )
   }

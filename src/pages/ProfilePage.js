@@ -52,7 +52,7 @@ class ProfilePage extends Component {
       {this.props.state.isDoneFetching && this.props.state.user.username ?
         <>
 
-          <Menu style={{marginTop: "0px"}}>
+          <Menu style={{margin: "0px", borderRadius:'0'}}>
             <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
           </Menu>
 
@@ -61,12 +61,12 @@ class ProfilePage extends Component {
           {this.props.state.searching ? <Search history={this.props.history}/> : null}
 
             <div className='profile-container'>
-              <Segment raised style={{width:"98%", margin:"10px ", backgroundColor:"#f7f7f7"}}>
+              <Segment className='' style={{width:"100%", margin:"", backgroundColor:"#f7f7f7", border:'none', borderRadius:'none'}}>
                 <HouseholdCardsContainer history={this.props.history}
                 />
               </Segment>
 
-              <Segment raised style={{width:"98%", margin:"10px", backgroundColor:"#f7f7f7", minHeight:'100px'}}>
+              <Segment className='' style={{width:"100%", margin:"", backgroundColor:"#f7f7f7", border:'none', borderRadius:'none'}}>
                 <MessageContainer
                 history={this.props.history}/>
               </Segment>

@@ -36,6 +36,10 @@ code {
   font-size: 85%
 }
 
+.larger-font {
+  font-size: 110%;
+}
+
 .big-font {
   font-size: 120%;
 }
@@ -43,6 +47,24 @@ code {
 .huge-font {
   font-size: 180%;
 }
+
+.small-padding {
+  padding: 1%;
+}
+
+.med-padding {
+  padding: 2%;
+}
+
+.large-left-padding {
+  padding-left: 5%;
+  padding-bottom: 2%;
+}
+
+.large-padding {
+  padding: 5%;
+}
+
 
 .profile-container {
   display: flex;
@@ -52,8 +74,28 @@ code {
 @media only screen and (min-width:600px) {
   .profile-container {
     display: flex;
-    flex-direction: row
+    flex-direction: row;
+  }
+
+  .household-container {
+    display: flex;
+    flex-direction: row;
   }
 }
 
+.household-container {
+  display: flex;
+  flex-direction: column;
+}
 
+
+
+
+
+.df-card {
+  border: 1px #d3d3d3 solid;
+  border-radius: 5px;
+  width: 100%;
+  margin: 2% auto;
+  padding: 1%;
+}

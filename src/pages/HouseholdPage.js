@@ -165,10 +165,10 @@ class HouseholdPage extends Component {
           <Segment style={{margin:"auto", width:"100%", backgroundColor:"#f7f7f7", border:'none'}}>
 
           {this.isUsersHousehold() ?
-              <>
-              <HouseholdContainer history={this.props.history}/>
-              <HouseholdMessagesContainer />
-              </> :
+              <div className='household-container'>
+                <HouseholdContainer history={this.props.history}/>
+                <HouseholdMessagesContainer />
+              </div> :
 
               <Segment clearing>
                 <Header>{this.props.state.currentHousehold.name}</Header>

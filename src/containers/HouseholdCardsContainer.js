@@ -139,7 +139,7 @@ class HouseholdCardsContainer extends Component {
 
     return(
       <>
-      <Segment clearing >
+      <Segment clearing className='full-width'>
             <Header floated='left' style={{height:'1vh'}}>Households</Header>
             { this.state.addingHousehold ?
               this.renderHouseholdForm() : this.renderAddHouseholdHeader()

@@ -34,7 +34,7 @@ function SpacesConatiner(props) {
       {props.state.currentSpace && props.state.currentSpace.hasOwnProperty('id') ?  <> {renderSpace()} </>:
         <>
           <div style={{margin:"2% auto", minHeight:"500px"}}>
-            <span className='font-weight-bold big-font'>Spaces:</span>
+            <span className='font-weight-bold med-font text-muted'>Spaces:</span>
             {renderSpaceCards()}
           </div>
         </>
