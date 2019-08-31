@@ -57,19 +57,19 @@ render(){
     ) : (
       <div className='d-flex flex-column'>
 
-        <Segment raised style={{maxWidth:'75vw', height:"25vh", margin:"5vh auto", backgroundColor:"#3d8af7"}}>
+        <Segment raised style={{maxWidth:'75vw', margin:"5vh auto", backgroundColor:"#3d8af7"}}>
           <Segment raised className='d-flex flex-column'style={{ height:"100%", margin:"auto"}}>
 
-              <Header as="h1" className='m-auto text-center'>Welcome to Donde</Header>
+              <h3 className='m-auto text-center'>Welcome to Donde</h3>
 
-              <Header as="h4" className='m-auto'>Where everthing has its place</Header>
+              <span className='m-auto small-font text-center'>Where everthing has its place</span>
 
           </Segment>
         </Segment>
 
         {this.state.statusMessage ? this.renderErrorMessage():null}
 
-        <Segment placeholder raised className='most-width' style={{margin:'5vh auto'}}>
+        <Segment placeholder raised className='' style={{margin:'5vh auto'}}>
               <Form onSubmit={this.handleLogIn} style={{margin:'2vh auto'}}>
                 <Form.Input icon='user' iconPosition='left' label='Username' placeholder='Username'
                   name='username' onChange={this.handleChange} />
