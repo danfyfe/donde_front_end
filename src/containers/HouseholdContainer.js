@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Form, Button, Dropdown, Message, Image, Grid } from 'semantic-ui-react'
+import { Segment, Form, Button, Dropdown, Message, Image } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import SpacesContainer from './SpacesContainer.js'
@@ -276,7 +276,7 @@ class HouseholdContainer extends Component {
 
     return(
       <>
-        <Segment raised clearing >
+        <Segment raised clearing style={{margin:'1%'}}>
 
           {this.props.state.currentSpace && this.props.state.currentSpace.hasOwnProperty('id') ? null :
           <>

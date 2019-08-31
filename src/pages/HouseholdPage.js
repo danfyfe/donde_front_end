@@ -162,13 +162,13 @@ class HouseholdPage extends Component {
 
           {this.props.state.searching ? <Search history={this.props.history}/> : null}
 
-          <Segment style={{margin:"auto", width:"100%", backgroundColor:"#f7f7f7", border:'none'}}>
+          <Segment className='household-container' style={{margin:"auto", width:"100%", backgroundColor:"#f7f7f7", border:'none'}}>
 
           {this.isUsersHousehold() ?
-              <div className='household-container'>
+              <>
                 <HouseholdContainer history={this.props.history}/>
                 <HouseholdMessagesContainer />
-              </div> :
+              </> :
 
               <Segment clearing>
                 <Header>{this.props.state.currentHousehold.name}</Header>
