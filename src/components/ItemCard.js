@@ -19,7 +19,7 @@ class ItemCard extends Component {
     return(
       <>
 
-      <Card link style={{margin:"1% auto", height:"100%",width:"100%"}} onClick={()=>this.props.redirectToItemPage(this.props.item)}>
+      <Card link style={{margin:"5% auto", height:"100%",width:"100%"}} onClick={()=>this.props.redirectToItemPage(this.props.item)}>
         <Card.Content header={this.props.item.name}/>
 
 

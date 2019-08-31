@@ -74,15 +74,12 @@ class ItemPage extends Component {
         return <Message>This item currently has no owners! Click Add Owners to give it some!</Message>
       } else {
         return this.props.state.currentItem.users.map(user => {
-          return <Segment clearing key={user.id}>
-          <Grid>
-            <Grid.Column floated="left" >
-              <Header as="h3">{user.username}</Header>
-            </Grid.Column>
-            <Grid.Column>
+          return <Segment key={user.id}>
+            <div className='d-flex justify-content-between'>
+              <span className='font-weight-bold'>{user.username}</span>
+
               <Icon link color="red" floated='right' name='cancel' onClick={()=>this.removeOwner(user.id)}/>
-            </Grid.Column>
-          </Grid>
+            </div>
           </Segment>
         })
       }
@@ -473,8 +470,10 @@ class ItemPage extends Component {
       <Segment clearing raised style={{margin:"1% auto",width:"98%", minHeight:"500px", backgroundColor:"#f7f7f7"}}>
         {this.state.statusMessage !== "" ? this.renderStatusMessage() : null}
         <Segment clearing>
-          <Header floated="left" as="h1">{this.props.state.currentItem.name}</Header>
-          <Button floated="right" color="blue" size="mini" style={{margin:".5% 0 0 0"}} onClick={this.redirectToHousehold}>Return to Household</Button>
+        <div className='d-flex justify-content-between'>
+            <span className='font-weight-bold huge-font'>{this.props.state.currentItem.name}</span>
+            <Button floated="right" color="blue" size="mini" style={{}} onClick={this.redirectToHousehold}>Return to Household</Button>
+          </div>
         </Segment>
 
         <Segment.Group>
@@ -488,16 +487,21 @@ class ItemPage extends Component {
 
 
         <Segment clearing>
-          <Header floated="left">Owners</Header>
-          {this.state.addingOwners ? this.renderAddOwnersForm() : this.renderAddOwnersHeader() }
+          <div className='d-flex flex-column'>
+          <div className='d-flex justify-content-between'>
+            <span className='font-weight-bold big-font'>Owners</span>
+            {this.state.addingOwners ? this.renderAddOwnersForm() : this.renderAddOwnersHeader() }
+          </div>
           <Segment.Group style={{margin:"4% 0 0 0"}}>
             {this.renderOwners()}
           </Segment.Group>
+          </div>
         </Segment>
+        <div className='d-flex justify-content-around'>
         {this.state.deleting ? this.renderDeleteForm() : this.state.moving ? null :this.renderDeleteHeader()}
 
         {this.state.moving ? this.renderMovingForm() : this.state.deleting ? null :this.renderMovingHeader()}
-
+        </div>
       </Segment>
 
         </> : <Loading/>

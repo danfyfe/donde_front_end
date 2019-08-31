@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Segment, Form, Message, Button, Header,Dropdown } from 'semantic-ui-react'
+import { Card, Segment, Form, Message, Button, Header, Dropdown, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import HouseholdCard from '../components/HouseholdCard.js'
@@ -43,7 +43,7 @@ class HouseholdCardsContainer extends Component {
 
 
     return <>
-      <Segment clearing raised>
+      <Segment clearing raised style={{width:'100%'}}>
         <Message header="Add a Household!" size="mini"/>
         <Form>
           <Form.Field>
@@ -70,7 +70,7 @@ class HouseholdCardsContainer extends Component {
   }
 
   renderAddHouseholdHeader = () => {
-    return <Button onClick={this.setAddingHousehold} color="blue" floated="right" size="mini">Add Household</Button>
+    return <Icon onClick={this.setAddingHousehold} name='plus'/>
   }
 
   handleHouseholdInput = (e) => {
@@ -139,15 +139,16 @@ class HouseholdCardsContainer extends Component {
 
     return(
       <>
-      <Segment clearing>
-            <Header floated='left'>Households</Header>
-            { this.state.addingHousehold ?
-              this.renderHouseholdForm() : this.renderAddHouseholdHeader()
-            }
-      </Segment>
-          <Card.Group>
-            {this.renderHouseholdCards()}
-          </Card.Group>
+      <div className='d-flex justify-content-between full-width'>
+
+        { this.state.addingHousehold ?
+          this.renderHouseholdForm() : <><span className='font-weight-bold larger-text' style={{height:'1vh'}}>Households</span> {this.renderAddHouseholdHeader()}</>
+        }
+      </div>
+
+      <div className='d-flex flex-column' style={{marginTop:'3vh'}}>
+        {this.renderHouseholdCards()}
+      </div>
       </>
     )
   }

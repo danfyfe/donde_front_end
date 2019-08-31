@@ -207,29 +207,30 @@ class Space extends Component {
 
     return(
       <>
-      <Segment style={{minHeight:'500px'}}>
+      <div style={{minHeight:'500px'}}>
       {this.state.statusMessage !== "" ? this.renderStatusMessage(): null}
       {this.props.state.currentContainer && this.props.state.currentContainer.hasOwnProperty('id') ? this.renderContainer() :
 
       <>
-      <Grid>
+      <div className='d-flex justify-content-between'>
 
-      <Grid.Column floated="left" width={6}>
-      <Header floated="left" as="h2">{this.props.space.name}</Header>
-      <Header color="grey" floated="left" as="h2">at {this.props.state.currentHousehold.name}</Header>
-      </Grid.Column>
-      <Grid.Column floated="right" width={4}>
-      <Dropdown floated="right" pointing="top right" style={{margin:"0% 0 0 68% "}} text="Space">
-        <Dropdown.Menu>
-          <Dropdown.Item text="Add Container" onClick={this.setAddingContainer}/>
-          <Dropdown.Item text="Edit Space" onClick={this.setEditingSpace}/>
-          <Dropdown.Item text="Delete Space" onClick={this.setDeletingSpace}/>
-          <Dropdown.Item text="Back To Household" onClick={() => this.props.setCurrentSpace({})}/>
-        </Dropdown.Menu>
-      </Dropdown>
-      </Grid.Column>
+        <div className='d-flex flex-column'>
+          <span className='font-weight-bold text-nowrap'>{this.props.space.name}</span>
+          <span className='text-muted text-nowrap small-font' style={{paddingLeft:'5%'}}>at {this.props.state.currentHousehold.name}</span>
+        </div>
 
-      </Grid>
+        <div className='d-flex'>
+          <Dropdown floated="right" pointing="top right" style={{}} text="Space">
+            <Dropdown.Menu>
+              <Dropdown.Item text="Add Container" onClick={this.setAddingContainer}/>
+              <Dropdown.Item text="Edit Space" onClick={this.setEditingSpace}/>
+              <Dropdown.Item text="Delete Space" onClick={this.setDeletingSpace}/>
+              <Dropdown.Item text="Back To Household" onClick={() => this.props.setCurrentSpace({})}/>
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+      </div>
+
 
       {this.state.addingContainer ? this.renderAddContainerForm() :null}
       {this.state.editingSpace ? this.renderEditSpaceForm() : null}
@@ -240,7 +241,7 @@ class Space extends Component {
 
       }
 
-        </Segment>
+        </div>
 
       </>
     )

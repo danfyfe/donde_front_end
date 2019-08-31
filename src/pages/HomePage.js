@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
-import { Button, Segment, Grid, Form, Message, Header } from 'semantic-ui-react'
+import { Button, Segment, Form, Message, Header } from 'semantic-ui-react'
 
 let API_ENDPOINT
 if (process.env.NODE_ENV === 'production') {
@@ -55,44 +55,38 @@ render(){
   return ( localStorage.token && localStorage.token !== "undefined" ? (
       <Redirect to={"/profile"} />
     ) : (
-      <>
-      <Segment raised style={{maxWidth:'75vw', height:"200px", margin:"2% auto", backgroundColor:"#3d8af7"}}>
-        <Segment raised style={{ height:"100%", margin:"auto"}}>
-        <Grid>
-          <Grid.Row>
-            <Header as="h1" style={{margin:"3vh auto 0 auto", textAlign:"center"}}>Welcome to Donde</Header>
-          </Grid.Row>
-          <Grid.Row>
-            <Header as="h4" style={{margin:"auto", textAlign:"center", fontSize:'auto'}}>Where everthing has its place</Header>
-          </Grid.Row>
-        </Grid>
+      <div className='d-flex flex-column'>
+
+        <Segment raised style={{maxWidth:'75vw', height:"25vh", margin:"5vh auto", backgroundColor:"#3d8af7"}}>
+          <Segment raised className='d-flex flex-column'style={{ height:"100%", margin:"auto"}}>
+
+              <Header as="h1" className='m-auto text-center'>Welcome to Donde</Header>
+
+              <Header as="h4" className='m-auto'>Where everthing has its place</Header>
+
+          </Segment>
         </Segment>
-      </Segment>
 
         {this.state.statusMessage ? this.renderErrorMessage():null}
-        <Segment placeholder raised style={{margin: "5% auto", width:"50%", minWidth:'50vw'}}>
-          <Grid>
-            <Grid.Row>
-              <Form onSubmit={this.handleLogIn} style={{margin:'2vh auto', width:'75%'}}>
+
+        <Segment placeholder raised className='most-width' style={{margin:'5vh auto'}}>
+              <Form onSubmit={this.handleLogIn} style={{margin:'2vh auto'}}>
                 <Form.Input icon='user' iconPosition='left' label='Username' placeholder='Username'
                   name='username' onChange={this.handleChange} />
                 <Form.Input icon='lock' iconPosition='left' label='Password' placeholder="Password" type='password'
                   name='password' onChange={this.handleChange} />
                 <Button content='Login' primary size='small'/>
               </Form>
-            </Grid.Row>
+
             <hr style={{margin:'auto'}}width={'75%'}/>
-            <Grid.Row>
+
               <Header as='h4' textAlign='center' style={{margin:'1vh auto'}}>No account?</Header>
-            </Grid.Row>
-            <Grid.Row>
+
               <Button content='Sign up' icon='signup' size='small'
               onClick={() => this.props.history.push("/signup")} style={{marginBottom:'1vh'}}/>
-            </Grid.Row>
-          </Grid>
         </Segment>
 
-      </>
+      </div>
       )
     )
   }

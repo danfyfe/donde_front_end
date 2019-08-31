@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Header, Card, Form, Message, Segment, Button } from 'semantic-ui-react'
+import { Form, Message, Segment, Button, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import HouseholdMessageCard from '../components/HouseholdMessageCard.js'
@@ -62,7 +62,7 @@ class HouseholdMessagesContainer extends Component {
   }
 
   renderNewMessageForm = () => {
-    return <Segment clearing>
+    return <Segment clearing style={{width:'100%'}}>
     <Message header="Add a New Message!" size="mini"/>
       <Form>
         <Form.Field>
@@ -80,7 +80,7 @@ class HouseholdMessagesContainer extends Component {
   }
 
   renderNewMessageHeader = () => {
-    return <Button onClick={this.setAddingNewMessage} color="blue" size="mini" floated="right">Add Message</Button>
+    return <Icon onClick={this.setAddingNewMessage} name="plus"/>
   }
 
   addNewMessage = () => {
@@ -114,15 +114,25 @@ class HouseholdMessagesContainer extends Component {
   render(){
 
     return(
-      <>
-      <Segment clearing>
-      <Header floated="left">Messages</Header>
-      {this.state.addingNewMessage ? this.renderNewMessageForm():this.renderNewMessageHeader()}
-      </Segment>
-        <Card.Group>
+      <Segment style={{margin:'1%'}}>
+      <div className='d-flex flex-column'>
+
+        <div className='d-flex flex-column justify-content-between full-width'>
+          {this.state.addingNewMessage ? this.renderNewMessageForm():<>
+            <div className='d-flex justify-content-between'>
+              <span className='font-weight-bold larger-text' style={{height:'1vh'}}>Messages</span>
+              {this.renderNewMessageHeader()}
+            </div>
+            </>
+          }
+        </div>
+
+        <div className='d-flex flex-column' style={{marginTop:'3vh'}}>
           {this.renderMessageCards()}
-        </Card.Group>
-        </>
+        </div>
+
+      </div>
+        </Segment>
     )
   }
 }

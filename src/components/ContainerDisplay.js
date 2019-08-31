@@ -250,28 +250,27 @@ class Container extends Component {
     return(
       <>
         {this.state.errorMessage !== "" ? this.renderErrorMessage() : null}
-      <Segment clearing style={{minHeight:"500px"}}>
+      <div style={{minHeight:"500px"}}>
           <>
 
-        <Grid>
-        <Grid.Column floated="left" width={8}>
-          <Header floated="left" as="h2">{this.props.container.name}</Header>
-          <Header color="grey" floated="left" as="h2">in {this.props.state.currentSpace.name} at {this.props.state.currentHousehold.name}</Header>
-          </Grid.Column>
+          <div className='d-flex justify-content-between'>
 
-          <Grid.Column floated="right" width={4}>
-          <Dropdown floated="right" pointing="top right" style={{margin:"0% 0 0 54%"}} text="Container">
-            <Dropdown.Menu>
-              <Dropdown.Item text="Add Item" onClick={this.setAddingItem}/>
-              <Dropdown.Item text="Edit Container" onClick={this.setEditingContainer}/>
-              <Dropdown.Item text="Delete Container" onClick={this.setDeletingContainer}/>
-              <Dropdown.Item text="Back To Space" onClick={() => this.props.setCurrentContainer({})}/>
+            <div className='d-flex flex-column'>
+              <span className='font-weight-bold text-nowrap'>{this.props.container.name}</span>
+              <span className='text-muted text-nowrap small-font'style={{paddingLeft:'5%'}}>in {this.props.state.currentSpace.name} at {this.props.state.currentHousehold.name}</span>
+            </div>
 
-            </Dropdown.Menu>
-          </Dropdown>
-          </Grid.Column>
-          </Grid>
-
+            <div className='d-flex'>
+              <Dropdown floated="right" pointing="top right" style={{}} text="Container">
+                <Dropdown.Menu>
+                  <Dropdown.Item text="Add Item" onClick={this.setAddingItem}/>
+                  <Dropdown.Item text="Edit Container" onClick={this.setEditingContainer}/>
+                  <Dropdown.Item text="Delete Container" onClick={this.setDeletingContainer}/>
+                  <Dropdown.Item text="Back To Space" onClick={() => this.props.setCurrentContainer({})}/>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          </div>
 
           {this.state.deletingContainer ? this.renderDeletingForm() : null}
           {this.state.addingItem ? this.renderAddItemForm() : null}
@@ -280,7 +279,7 @@ class Container extends Component {
 
           </>
 
-      </Segment>
+      </div>
       </>
     )
   }

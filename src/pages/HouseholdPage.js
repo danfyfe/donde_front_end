@@ -154,7 +154,7 @@ class HouseholdPage extends Component {
         {this.props.state.isDoneFetching ?
           <>
 
-          <Menu style={{marginTop: "0px"}}>
+          <Menu style={{margin: "0px", borderRadius:'0'}}>
             <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
           </Menu>
 
@@ -162,12 +162,12 @@ class HouseholdPage extends Component {
 
           {this.props.state.searching ? <Search history={this.props.history}/> : null}
 
-          <Segment raised style={{margin:"10px auto",width:"98%", backgroundColor:"#f7f7f7"}}>
+          <Segment className='household-container' style={{margin:"auto", width:"100%", backgroundColor:"#f7f7f7", border:'none'}}>
 
           {this.isUsersHousehold() ?
               <>
-              <HouseholdContainer history={this.props.history}/>
-              <HouseholdMessagesContainer />
+                <HouseholdContainer history={this.props.history}/>
+                <HouseholdMessagesContainer />
               </> :
 
               <Segment clearing>

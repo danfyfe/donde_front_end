@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Form, Button, Dropdown, Message, Image, Grid } from 'semantic-ui-react'
+import { Segment, Form, Button, Dropdown, Message, Image } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import SpacesContainer from './SpacesContainer.js'
@@ -202,7 +202,6 @@ class HouseholdContainer extends Component {
     const householdImageOptions = householdImageDefinitions.map(imageObj => {
       return {key: imageObj.url, text: imageObj.name, value: imageObj.url, image:{ size: "mini", src: imageObj.url }}
     })
-
     return <Segment clearing raised>
     <Message header={"Edit" + this.props.state.currentHousehold.name} size="mini"/>
       <Form>
@@ -277,28 +276,25 @@ class HouseholdContainer extends Component {
 
     return(
       <>
-        <Segment raised clearing style={{minHeight:"500px"}}>
+        <Segment raised clearing style={{margin:'1%', minWidth:'50vw'}}>
 
           {this.props.state.currentSpace && this.props.state.currentSpace.hasOwnProperty('id') ? null :
           <>
 
-
-          <Grid>
-          <Grid.Column floated='left' width={4}>
-            <Header onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)} as="h1" floated="left">{this.props.state.currentHousehold.name}</Header><Image floated="left" src={this.props.state.currentHousehold.image} size="mini"/>
-          </Grid.Column>
-
-          <Grid.Column floated="right" width={2}>
-            <Dropdown floated="right" pointing="top right" style={{}} text="Household">
-              <Dropdown.Menu>
-                <Dropdown.Item text="Add Space" onClick={this.setAddingSpace}/>
-                <Dropdown.Item text="Edit Household" onClick={this.setEditingHousehold}/>
-                <Dropdown.Item text="Leave Household" onClick={this.setLeavingHousehold}/>
-              </Dropdown.Menu>
-            </Dropdown>
-            </Grid.Column>
-            </Grid>
-
+          <div className='d-flex justify-content-between'>
+            <div className='d-flex flex-row'>
+              <span className='font-weight-bold big-font' onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)}>{this.props.state.currentHousehold.name}</span><Image floated="left" src={this.props.state.currentHousehold.image} size="mini" style={{height:'auto', width:'40px', paddingLeft:'5%'}}/>
+            </div>
+            <div className='d-flex'>
+              <Dropdown floated="right" pointing="top right" style={{}} text="Household">
+                <Dropdown.Menu>
+                  <Dropdown.Item text="Add Space" onClick={this.setAddingSpace}/>
+                  <Dropdown.Item text="Edit Household" onClick={this.setEditingHousehold}/>
+                  <Dropdown.Item text="Leave Household" onClick={this.setLeavingHousehold}/>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          </div>
 
 
             {this.state.editingHousehold ? this.renderEditHouseholdForm() : null}

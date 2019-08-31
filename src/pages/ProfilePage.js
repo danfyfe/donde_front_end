@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Menu, Grid, Message } from 'semantic-ui-react'
+import { Segment, Header, Menu, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import HouseholdCardsContainer from '../containers/HouseholdCardsContainer.js'
@@ -52,7 +52,7 @@ class ProfilePage extends Component {
       {this.props.state.isDoneFetching && this.props.state.user.username ?
         <>
 
-          <Menu style={{marginTop: "0px"}}>
+          <Menu style={{margin: "0px", borderRadius:'0'}}>
             <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
           </Menu>
 
@@ -60,23 +60,19 @@ class ProfilePage extends Component {
 
           {this.props.state.searching ? <Search history={this.props.history}/> : null}
 
-          <Grid columns={2}>
-
-            <Grid.Column>
-              <Segment raised style={{width:"98%", margin:"10px ", backgroundColor:"#f7f7f7"}}>
+            <div className='profile-container'>
+              <Segment raised className='' style={{width:"95%", margin:"2%", backgroundColor:"#f7f7f7", border:'none', borderRadius:'none'}}>
                 <HouseholdCardsContainer history={this.props.history}
                 />
               </Segment>
-            </Grid.Column>
 
-            <Grid.Column>
-              <Segment raised style={{width:"98%", margin:"10px", backgroundColor:"#f7f7f7", minHeight:'100px'}}>
+              <Segment raised className='' style={{width:"95%", margin:'2%', backgroundColor:"#f7f7f7", border:'none', borderRadius:'none'}}>
                 <MessageContainer
                 history={this.props.history}/>
               </Segment>
-            </Grid.Column>
 
-          </Grid>
+              </div>
+
 
         </> : <Loading/>
       }

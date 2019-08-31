@@ -70,7 +70,7 @@ class HouseholdMessageCard extends Component {
         <Card.Content>
           <Card.Header>
             {this.props.message.title}
-            <Image floated="right"size="mini" src={this.props.message.household.image}/>
+            <Image floated="right"size="mini" style={{}} src={this.props.message.household.image}/>
           </Card.Header>
           <Card.Description style={{margin:"10px"}}>
             {this.props.message.content}

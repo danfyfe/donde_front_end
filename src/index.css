@@ -11,3 +11,93 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.full-width {
+  width: 100%;
+}
+
+.most-width {
+  width:90%;
+}
+
+.half-width {
+  width: 50%;
+}
+
+.tiny-font {
+  font-size: 50%;
+}
+
+.small-font {
+  font-size: 75%;
+}
+
+.med-font {
+  font-size: 85%
+}
+
+.larger-font {
+  font-size: 110%;
+}
+
+.big-font {
+  font-size: 120%;
+}
+
+.huge-font {
+  font-size: 180%;
+}
+
+.small-padding {
+  padding: 1%;
+}
+
+.med-padding {
+  padding: 2%;
+}
+
+.large-left-padding {
+  padding-left: 5%;
+  padding-bottom: 2%;
+}
+
+.large-padding {
+  padding: 5%;
+}
+
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (min-width:600px) {
+  .profile-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .household-container {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+  }
+}
+
+.household-container {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+
+
+.df-card {
+  border: 1px #d3d3d3 solid;
+  border-radius: 5px;
+  width: 100%;
+  margin: 2% auto;
+  padding: 1%;
+}
