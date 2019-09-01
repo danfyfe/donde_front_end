@@ -56,7 +56,7 @@ class App extends React.Component {
           <Dropdown pointing="top right" item text={null} icon="bars">
             <Dropdown.Menu>
               <Dropdown.Item onClick={this.sendToProfilePage}><Icon name="user circle"/>Profile</Dropdown.Item>
-              <Dropdown.Item onClick={this.sendToItemsPage}><Icon name="images"/>Items</Dropdown.Item>
+              {/*<Dropdown.Item onClick={this.sendToItemsPage}><Icon name="images"/>Items</Dropdown.Item>*/}
               <Dropdown.Item onClick={this.handleLogOut}><Icon name="log out"/>LogOut</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
