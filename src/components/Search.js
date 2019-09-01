@@ -59,14 +59,10 @@ class Search extends Component {
     })
   }
 
-  setFilterBy = e => {
-    console.log(e.target.value)
-  }
 
  handleChange = (e, { value }) => this.setState({ filterBy: value })
 
   render(){
-    console.log(this.state.filterBy)
     return(
 
         <Segment clearing raised style={{margin:"0 10px", backgroundColor:"#f7f7f7"}}>

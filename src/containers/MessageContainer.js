@@ -127,7 +127,7 @@ class MessageContainer extends Component {
     return(
       <>
       <div className='d-flex justify-content-between full-width'>
-
+      
         {this.state.addingNewMessage ? this.renderNewMessageForm():<><span className='font-weight-bold larger-text' style={{height:'1vh'}}>Messages</span>{this.renderNewMessageHeader()}</>
       }
       </div>

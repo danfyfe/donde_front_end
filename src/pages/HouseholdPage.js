@@ -170,7 +170,7 @@ class HouseholdPage extends Component {
                 <HouseholdMessagesContainer />
               </> :
 
-              <Segment clearing>
+              <Segment clearing className='full-width'>
                 <Header>{this.props.state.currentHousehold.name}</Header>
                 <Message warning><Header>You must join this household to view its details!</Header>
                 </Message>
