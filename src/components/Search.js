@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { Segment, Form, Button, Message, Grid } from 'semantic-ui-react'
+import { Segment, Form, Button, Message, Grid, Checkbox } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import SearchedHouseholdsContainer from '../containers/SearchedHouseholdsContainer.js'
@@ -19,7 +19,8 @@ class Search extends Component {
     households: [],
     items: [],
     searching: false,
-    searchTerm:''
+    searchTerm:'',
+    filterBy: 'none'
   }
 
   componentDidMount(){
@@ -58,8 +59,14 @@ class Search extends Component {
     })
   }
 
-  render(){
+  setFilterBy = e => {
+    console.log(e.target.value)
+  }
 
+ handleChange = (e, { value }) => this.setState({ filterBy: value })
+
+  render(){
+    console.log(this.state.filterBy)
     return(
 
         <Segment clearing raised style={{margin:"0 10px", backgroundColor:"#f7f7f7"}}>
@@ -67,30 +74,59 @@ class Search extends Component {
             <Message header="Search for a Household and/or Item!" size="mini"/>
             <Form floated="left">
               <Form.Field>
-              <label>Search</label>
-              <input onChange={this.setSearchTerm} name="searchTerm" placeholder="Start typing to search"/>
+                <label>Search</label>
+                <input onChange={this.setSearchTerm} name="searchTerm" placeholder="Start typing to search"/>
+              </Form.Field>
+
+              <Form.Field>
+              <div className='d-flex flex-column'>
+                <label className='font-weight-bold'>Filter By</label>
+                <div className='d-flex flex-row m-auto'>
+                <Form.Radio style={{margin:'0 1vw'}}
+                  label='None'
+                  value='none'
+                  checked={this.state.filterBy === 'none'}
+                  onChange={this.handleChange}
+                />
+                <Form.Radio style={{margin:'0 1vw'}}
+                  label='Households'
+                  value='households'
+                  checked={this.state.filterBy === 'households'}
+                  onChange={this.handleChange}
+                />
+                <Form.Radio style={{margin:'0 1vw'}}
+                  label='Items'
+                  value='items'
+                  checked={this.state.filterBy === 'items'}
+                  onChange={this.handleChange}
+                />
+                </div>
+                </div>
               </Form.Field>
               <Button onClick={this.props.setSearching}floated="right" style={{margin:"2% 0 0 0 0"}} size="mini">Cancel</Button>
             </Form>
           </Segment>
           {this.state.searchTerm === "" ?  null :
 
-        <Grid columns={2}>
+        <Grid columns={1}>
           <Grid.Column>
-
+          {this.state.filterBy === 'none' || this.state.filterBy ==='households' ?
             <>
-              <Message size="mini">Households</Message>
-              <SearchedHouseholdsContainer
-              history={this.props.history}
-              searchTerm={this.state.searchTerm} households={this.state.households}/>
-            </>
+            <Message size="mini">Households</Message>
+            <SearchedHouseholdsContainer
+            history={this.props.history}
+            searchTerm={this.state.searchTerm} households={this.state.households}/>
+            </> : null
+          }
           </Grid.Column>
           <Grid.Column>
+          {this.state.filterBy === 'none' || this.state.filterBy==='items' ?
             <>
-              <Message size="mini">Items</Message>
-              <SearchedItemsContainer history={this.props.history} searchTerm={this.state.searchTerm}
-              items={this.state.items}/>
-            </>
+            <Message size="mini">Items</Message>
+            <SearchedItemsContainer history={this.props.history} searchTerm={this.state.searchTerm}
+            items={this.state.items}/>
+            </> : null
+          }
             </Grid.Column>
 
         </Grid>
