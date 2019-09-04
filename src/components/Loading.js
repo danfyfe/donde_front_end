@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 
 function Loading() {
     return(
-      <Segment style={{width:'50%', margin:'10vh auto'}}>
+      <Segment style={{width:'200px', margin:'10vh auto'}}>
           <div className='d-flex flex-column'>
               <Icon loading size="massive" name="question" style={{margin:'auto'}}/>
 
