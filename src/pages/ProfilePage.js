@@ -49,7 +49,7 @@ class ProfilePage extends Component {
       <>
       {this.setItemDeleteConfirmationMessageToNothing()}
 
-      {this.props.state.isDoneFetching && this.props.state.user.username ?
+      {this.props.state.isDoneFetching && this.props.state.user.username.id ?
         <>
 
           <Menu style={{margin: "0px", borderRadius:'0'}}>

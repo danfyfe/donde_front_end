@@ -95,24 +95,3 @@ render(){
 }
 
 export default HomePage
-
-// <Segment placeholder raised style={{margin: "5% auto", width:"50%", minWidth:'75vw'}}>
-//   <Grid columns={2} relaxed='very' stackable>
-//     <Grid.Column>
-//       <Form onSubmit={this.handleLogIn}>
-//         <Form.Input icon='user' iconPosition='left' label='Username' placeholder='Username'
-//           name='username' onChange={this.handleChange} />
-//         <Form.Input icon='lock' iconPosition='left' label='Password' placeholder="Password" type='password'
-//           name='password' onChange={this.handleChange} />
-//         <Button content='Login' primary />
-//       </Form>
-//     </Grid.Column>
-//
-//     <Grid.Column verticalAlign='middle'>
-//       <Button content='Sign up' icon='signup' size='big'
-//         onClick={() => this.props.history.push("/signup")}/>
-//     </Grid.Column>
-//   </Grid>
-//
-//   <Divider vertical>Or</Divider>
-// </Segment>

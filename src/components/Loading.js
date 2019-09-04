@@ -1,20 +1,17 @@
 import React from 'react'
-import { Icon, Message, Segment, Grid } from 'semantic-ui-react'
+import { Icon, Message, Segment } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 
 
 function Loading() {
     return(
-      <Segment style={{margin:"5% 42%"}}>
-        <Grid>
-          <Grid.Row>
-              <Icon loading size="massive" name="question" style={{margin:"25% 25%"}}/>
-          </Grid.Row>
-          <Grid.Row>
-              <Message style={{margin:'auto'}}>Loading...</Message>
-          </Grid.Row>
-        </Grid>
+      <Segment style={{width:'50%', margin:'10vh auto'}}>
+          <div className='d-flex flex-column'>
+              <Icon loading size="massive" name="question" style={{margin:'auto'}}/>
+
+              <Message style={{margin:'5vh auto 0 auto'}}>Loading...</Message>
+          </div>
       </Segment>
     )
 }
