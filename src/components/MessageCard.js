@@ -69,18 +69,18 @@ class MessageCard extends Component {
         <Card.Content>
           <Card.Header>
             {this.props.message.title}
-            <Image floated="right"size="mini" src={this.props.message.household.image}/>
+            <Image floated="right"size="mini" style={{width:'20px', height:'20px'}}src={this.props.message.household.image}/>
           </Card.Header>
-          <Card.Description style={{margin:"10px"}}>
+          <Card.Description style={{margin:"10px", fontSize:'85%'}}>
             {this.props.message.content}
           </Card.Description>
           <Card.Meta>
           <Icon name="home"/>
-          <span style={{margin:'1% 0 0 0', paddingRight:'5px'}}>{this.props.message.household.name}</span>
+          <span style={{margin:'1% 0 0 0', paddingRight:'5px', fontSize:'75%'}}>{this.props.message.household.name}</span>
           <Icon name="user"/>
-          <span style={{paddingRight:'5px'}}>{this.props.message.user.username}</span>
+          <span style={{paddingRight:'5px', fontSize:'75%'}}>{this.props.message.user.username}</span>
           <Icon name="clock"/>
-          <span>{moment(this.props.message.created_at).format('MMMM Do YYYY, h:mm a')}</span>
+          <span style={{fontSize:'75%'}}>{moment(this.props.message.created_at).format('MMMM Do YYYY, h:mm a')}</span>
           {this.state.addingMessage ? null :<Button onClick={this.setAddingMessage}size="mini" floated="right"> Reply </Button>}
           </Card.Meta>
         </Card.Content>
