@@ -283,7 +283,7 @@ class HouseholdContainer extends Component {
 
           <div className='d-flex justify-content-between'>
             <div className='d-flex flex-row'>
-              <span className='font-weight-bold big-font' onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)}>{this.props.state.currentHousehold.name}</span><Image floated="left" src={this.props.state.currentHousehold.image} size="mini" style={{height:'auto', width:'40px', paddingLeft:'5%'}}/>
+              <span className='font-weight-bold big-font' onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)}>{this.props.state.currentHousehold.name}</span><Image floated="left" src={this.props.state.currentHousehold.image} size="mini" style={{height:'40px', width:'40px', paddingLeft:'5%'}}/>
             </div>
             <div className='d-flex'>
               <Dropdown floated="right" pointing="top right" style={{}} text="Household">
