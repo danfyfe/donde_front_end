@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Segment, Header, Menu, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import apiEndpoint from '../actions/ApiEndpoint.js'
+import { getUser } from '../actions/userActions.js'
 
 import HouseholdCardsContainer from '../containers/HouseholdCardsContainer.js'
 import MessageContainer from '../containers/MessageContainer.js'
@@ -11,25 +11,25 @@ import Loading from '../components/Loading.js'
 class ProfilePage extends Component {
 
   componentDidMount(){
-    // this.props.isFetching()
-    fetch(`${apiEndpoint}/profile`,{
-      method:"POST",
-      headers: {
-        Authorization: localStorage.getItem("token")
-      }
-    }).then(resp=>resp.json())
-    .then(user=>{
-      this.props.setUser(user.user)
-      this.props.isDoneFetching()
-    })
+    // fetch(`${apiEndpoint}/profile`,{
+    //   method:"POST",
+    //   headers: {
+    //     Authorization: localStorage.getItem("token")
+    //   }
+    // }).then(resp=>resp.json())
+    // .then(user=>{
+    //   this.props.setUser(user.user)
+    //   this.props.isDoneFetching()
+    // })
+    this.props.setUser()
   }
 
   renderDeleteConfirmationMessage = () => {
-    return <Message floated="center" style={{textAlign:"center", margin:"1% 5%"}} warning>{this.props.state.itemDeleteConfirmationMessage}</Message>
+    return <Message floated="center" style={{textAlign:"center", margin:"1% 5%"}} warning>{this.props.itemDeleteConfirmationMessage}</Message>
   }
 
   setItemDeleteConfirmationMessageToNothing = () => {
-    if (this.props.state.itemDeleteConfirmationMessage !== "") {
+    if (this.props.itemDeleteConfirmationMessage !== "") {
       setTimeout(()=>{
         this.props.itemDeleteConfirmationToNothing()
       },3000)
@@ -42,30 +42,33 @@ class ProfilePage extends Component {
     this.props.history.push("/")
     }
 
+    const { user, isDoneFetching, searching, history } = this.props
+
     return(
       <>
       {this.setItemDeleteConfirmationMessageToNothing()}
 
-      {this.props.state.isDoneFetching && this.props.state.user.username ?
+      {isDoneFetching && user.username ?
         <>
 
           <Menu style={{margin: "0px", borderRadius:'0'}}>
-            <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
+            <Header style={{padding:"10px"}}>Welcome, {user.username}!</Header>
           </Menu>
 
-          {this.props.state.itemDeleteConfirmationMessage !== "" ? this.renderDeleteConfirmationMessage() : null}
+          {/*itemDeleteConfirmationMessage !== "" ? this.renderDeleteConfirmationMessage() : null*/}
 
-          {this.props.state.searching ? <Search history={this.props.history}/> : null}
+          {searching ? <Search history={history}/> : null}
 
             <div className='profile-container'>
               <Segment raised className='' style={{width:"95%", margin:"2%", backgroundColor:"#f7f7f7", border:'none', borderRadius:'none'}}>
-                <HouseholdCardsContainer history={this.props.history}
+                <HouseholdCardsContainer
+                  history={history}
                 />
               </Segment>
 
               <Segment raised className='' style={{width:"95%", margin:'2%', backgroundColor:"#f7f7f7", border:'none', borderRadius:'none'}}>
                 <MessageContainer
-                history={this.props.history}/>
+                history={history}/>
               </Segment>
 
               </div>
@@ -78,16 +81,20 @@ class ProfilePage extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return { state }
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    itemDeleteConfirmationMessage: state.itemDeleteConfirmationMessage,
+    isDoneFetching: state.isDoneFetching,
+    searching: state.searching
+   }
 }
 
-const mapDispatchToProps = (dispatch) =>{
+const mapDispatchToProps = dispatch =>{
   return {
-    setUser: (user) => dispatch({type:"SET_USER", user}),
-    isFetching: () => dispatch({type:"IS_FETCHING"}),
+    setUser: () => dispatch(getUser()),
     isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"}),
-    setSearchingToFalse: () => dispatch({type:"SET_SEARCHING_TO_FALSE"}),
+    setSearching: () => dispatch({type:'SET_SEARCHING'}),
     itemDeleteConfirmationToNothing: () => dispatch({type:"ITEM_DELETE_CONFIRMATION_TO_NOTHING"})
   }
 }

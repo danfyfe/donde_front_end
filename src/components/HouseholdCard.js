@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 function HouseholdCard(props) {
     return(
-      <Card color={props.household.color} link style={{width:"100%"}} onClick={()=>props.redirectToHousehold(props.household)}>
+      <Card color={props.household.color} link style={{width:"100%"}} onClick={()=>props.redirectToHousehold(props.household.id)}>
         <Card.Content>
           <Image floated='right' size='mini' src={props.household.image}/>
           <Card.Header>{props.household.name}</Card.Header>

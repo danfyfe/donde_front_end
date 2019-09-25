@@ -3,7 +3,7 @@ import apiEndpoint from './ApiEndpoint.js';
 const axios = require('axios');
 
 export function getUser(){
-  return(dispatch) => {
+  return (dispatch) => {
     axios({
       method: 'POST',
       url: `${apiEndpoint}/profile`,
@@ -11,7 +11,7 @@ export function getUser(){
         Authorization: localStorage.getItem('token')
       }
     }).then( resp => {
-      return dispatch({ type:'SET_USER', payload: resp.data.user })
+      return dispatch({type: "SET_CURRENT_USER", payload: resp.data.user})
     });
   }
 };
