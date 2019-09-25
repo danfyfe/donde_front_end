@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react'
-import { Segment, Card, List, Message, Header, Button, Form } from 'semantic-ui-react'
+import React, { Component } from 'react'
+import { Segment, List, Message, Button, Form } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Form, Button, Message, Dropdown, Grid } from 'semantic-ui-react'
+import { Segment, Form, Button, Message, Dropdown } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import ContainerCard from './ContainerCard.js'

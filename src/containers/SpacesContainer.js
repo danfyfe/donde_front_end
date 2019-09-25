@@ -1,5 +1,5 @@
 import React from 'react'
-import { Message, Header, Segment } from 'semantic-ui-react'
+import { Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import SpaceCard from '../components/SpaceCard.js'

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Header, Form, Dropdown, Button, Message, Menu, Icon, Grid } from 'semantic-ui-react'
+import { Segment, Header, Form, Dropdown, Button, Message, Menu, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import Search from '../components/Search.js'
@@ -38,7 +38,6 @@ class ItemPage extends Component {
       headers: { Authorization:  localStorage.getItem("token") }
     }).then(resp=>resp.json())
     .then(user=>{
-      // console.log("USER", user)
       this.props.setUser(user.user)
     })
     .then(
@@ -197,7 +196,7 @@ class ItemPage extends Component {
         })
       }
 
-    return <Segment clearing raised>
+    return <Segment clearing raised className='full-width'>
       <Form>
         {/*<Form.Field>
           <label>Name</label>
@@ -311,7 +310,10 @@ class ItemPage extends Component {
     }
 
     renderAddOwnersHeader = () => {
-      return <Button floated="right" size="mini" onClick={this.setAddingOwners} color="blue">Add Owners</Button>
+      return <>
+      <span className='font-weight-bold big-font'>Owners</span>
+      <Button floated="right" size="mini" onClick={this.setAddingOwners} color="blue">Add Owners</Button>
+      </>
     }
 
     renderAddOwnersForm = () => {
@@ -334,7 +336,7 @@ class ItemPage extends Component {
       }
 
       if (currentItemHouseholdUsersOptions.hasOwnProperty(0)) {
-        return <Segment clearing raised>
+        return <Segment clearing raised className='full-width'>
           <Form>
             <Form.Field>
             <label>Owners to be added</label>
@@ -489,7 +491,6 @@ class ItemPage extends Component {
         <Segment clearing>
           <div className='d-flex flex-column'>
           <div className='d-flex justify-content-between'>
-            <span className='font-weight-bold big-font'>Owners</span>
             {this.state.addingOwners ? this.renderAddOwnersForm() : this.renderAddOwnersHeader() }
           </div>
           <Segment.Group style={{margin:"4% 0 0 0"}}>

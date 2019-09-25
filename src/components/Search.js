@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { Segment, Form, Button, Message, Grid, Checkbox } from 'semantic-ui-react'
+import { Segment, Form, Button, Message, Grid } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import SearchedHouseholdsContainer from '../containers/SearchedHouseholdsContainer.js'
