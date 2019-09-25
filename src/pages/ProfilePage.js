@@ -11,18 +11,9 @@ import Loading from '../components/Loading.js'
 class ProfilePage extends Component {
 
   componentDidMount(){
-    // fetch(`${apiEndpoint}/profile`,{
-    //   method:"POST",
-    //   headers: {
-    //     Authorization: localStorage.getItem("token")
-    //   }
-    // }).then(resp=>resp.json())
-    // .then(user=>{
-    //   this.props.setUser(user.user)
-    //   this.props.isDoneFetching()
-    // })
     this.props.setUser()
   }
+
 
   renderDeleteConfirmationMessage = () => {
     return <Message floated="center" style={{textAlign:"center", margin:"1% 5%"}} warning>{this.props.itemDeleteConfirmationMessage}</Message>
@@ -38,17 +29,19 @@ class ProfilePage extends Component {
 
   render(){
 
+    // console.log(this.props.user)
+
     if (!localStorage.token || localStorage.token === "undefined") {
     this.props.history.push("/")
     }
 
-    const { user, isDoneFetching, searching, history } = this.props
+    const { user, searching, history } = this.props
 
     return(
       <>
       {this.setItemDeleteConfirmationMessageToNothing()}
 
-      {isDoneFetching && user.username ?
+      {user.username ?
         <>
 
           <Menu style={{margin: "0px", borderRadius:'0'}}>

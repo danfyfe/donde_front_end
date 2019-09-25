@@ -3,7 +3,7 @@ import apiEndpoint from './ApiEndpoint.js';
 const axios = require('axios');
 
 export function getUser(){
-  return (dispatch) => {
+  return dispatch => {
     axios({
       method: 'POST',
       url: `${apiEndpoint}/profile`,

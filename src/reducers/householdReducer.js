@@ -1,10 +1,12 @@
-const defaultState = {}
+const defaultState = {
+
+}
 
 const householdReducer = ( state = defaultState, action) => {
   switch (action.type) {
     case 'SET_CURRENT_HOUSEHOLD':
+    console.log('inside hh reducer', action.payload)
       return {...action.payload}
-
     case "ADD_HOUSEHOLD":
       return {...action.payload}
 

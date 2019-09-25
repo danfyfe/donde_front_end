@@ -1,6 +1,8 @@
 import React, { Component, } from 'react'
 import { Segment, Menu, Header, Message, Button, Form } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import { getUser } from '../actions/userActions.js'
+import { getCurrentHousehold } from '../actions/householdActions.js'
 
 import HouseholdContainer from '../containers/HouseholdContainer.js'
 import HouseholdMessagesContainer from '../containers/HouseholdMessagesContainer.js'
@@ -15,55 +17,57 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 class HouseholdPage extends Component {
+
   state = {
-    user: {},
-    household: {},
     joingingHousehold: false,
     householdPassword: ""
   }
 
   componentDidMount(){
-    this.props.isFetching()
+    const { id } = this.props.match.params
 
-    fetch(`${API_ENDPOINT}/api/v1/profile`,{
-      method:"POST",
-      headers: { Authorization:  localStorage.getItem("token") }
-    }).then(resp=>resp.json())
-    .then(user=>{
-
-      this.props.setUser(user.user)
-
-      this.setState({
-        user: user.user
-      })
-
-    }).then(
-    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.match.params.id}`,{
-      method: "GET",
-      headers: { Authorization:  localStorage.getItem("token") }
-    })
-    .then(resp=>resp.json())
-    .then(household=>{
-      this.props.setCurrentHousehold(household)
-      this.setState({
-        household: household
-      })
-
-      if (this.props.state.currentHousehold && this.state.household && this.state.user) {
-        this.props.isDoneFetching()
-      }
-    })
-    )
+    this.props.setUser()
+    this.props.setCurrentHousehold(id)
+    // this.props.setCurrentHousehold(this.props.match.params.id)
+    // fetch(`${API_ENDPOINT}/api/v1/profile`,{
+    //   method:"POST",
+    //   headers: { Authorization:  localStorage.getItem("token") }
+    // }).then(resp=>resp.json())
+    // .then(user=>{
+    //
+    //   this.props.setUser(user.user)
+    //
+    //   this.setState({
+    //     user: user.user
+    //   })
+    //
+    // }).then(
+    // fetch(`${API_ENDPOINT}/api/v1/households/${this.props.match.params.id}`,{
+    //   method: "GET",
+    //   headers: { Authorization:  localStorage.getItem("token") }
+    // })
+    // .then(resp=>resp.json())
+    // .then(household=>{
+    //   this.props.setCurrentHousehold(household)
+    //   this.setState({
+    //     household: household
+    //   })
+    //
+    //   if (this.props.currentHousehold && this.state.household && this.state.user) {
+    //     this.props.isDoneFetching()
+    //   }
+    // })
+    // )
   }
 
 
   isUsersHousehold = () => {
     let isUserHousehold
-    if (this.props.state.user && this.props.state.currentHousehold) {
+    if (this.props.user && this.props.household) {
 
-      if (this.props.state.user.households) {
-        isUserHousehold = this.props.state.user.households.filter(household => {
-          return household.id === this.props.state.currentHousehold.id
+      if (this.props.user.households) {
+        isUserHousehold = this.props.user.households.filter(household => {
+          return household.id === this.props.household.id
         })
       }
     }
@@ -103,7 +107,7 @@ class HouseholdPage extends Component {
   }
 
   joinHousehold = () => {
-    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.state.user.id}/${this.props.state.currentHousehold.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.user.id}/${this.props.household.id}`,{
       method:"POST",
       headers:{
         'Content-Type':'application/json',
@@ -111,8 +115,8 @@ class HouseholdPage extends Component {
       },
       body:JSON.stringify({
         join:{
-          user_id: this.props.state.user.id,
-          household_id: this.props.state.currentHousehold.id,
+          user_id: this.props.user.id,
+          household_id: this.props.household.id,
           password: this.state.householdPassword
         }
       })
@@ -131,11 +135,11 @@ class HouseholdPage extends Component {
   }
 
   renderDeleteConfirmationMessage = () => {
-    return <Message floated="center" style={{textAlign:"center", margin:"1% 5%"}} warning>{this.props.state.itemDeleteConfirmationMessage}</Message>
+    return <Message floated="center" style={{textAlign:"center", margin:"1% 5%"}} warning>{this.props.itemDeleteConfirmationMessage}</Message>
   }
 
   setItemDeleteConfirmationMessageToNothing = () => {
-    if (this.props.state.itemDeleteConfirmationMessage !== "") {
+    if (this.props.itemDeleteConfirmationMessage !== "") {
       setTimeout(()=>{
         this.props.itemDeleteConfirmationToNothing()
       },3000)
@@ -143,24 +147,23 @@ class HouseholdPage extends Component {
   }
 
   render(){
-
+    // console.log(this.props.user)
     if (!localStorage.token || localStorage.token === "undefined") {
     this.props.history.push("/")
     }
-
     return(
       <>
       {this.setItemDeleteConfirmationMessageToNothing()}
-        {this.props.state.isDoneFetching ?
+        {this.props.user ?
           <>
 
           <Menu style={{margin: "0px", borderRadius:'0'}}>
-            <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
+            <Header style={{padding:"10px"}}>Welcome, {this.props.user.username}!</Header>
           </Menu>
 
-          {this.props.state.itemDeleteConfirmationMessage !== "" ? this.renderDeleteConfirmationMessage() : null}
+          {this.props.itemDeleteConfirmationMessage !== "" ? this.renderDeleteConfirmationMessage() : null}
 
-          {this.props.state.searching ? <Search history={this.props.history}/> : null}
+          {this.props.searching ? <Search history={this.props.history}/> : null}
 
           <Segment className='household-container' style={{margin:"auto", width:"100%", backgroundColor:"#f7f7f7", border:'none'}}>
 
@@ -171,7 +174,7 @@ class HouseholdPage extends Component {
               </> :
 
               <Segment clearing className='full-width'>
-                <Header>{this.props.state.currentHousehold.name}</Header>
+                <Header>{this.props.household.name}</Header>
                 <Message warning><Header>You must join this household to view its details!</Header>
                 </Message>
                   {this.state.joiningHousehold ? this.renderJoinHouseholdForm() : this.renderJoinHouseholdHeader()}
@@ -186,14 +189,21 @@ class HouseholdPage extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return { state }
+const mapStateToProps = state => {
+  // console.log('mapStateToProps state', state)
+  return {
+    user: state.user,
+    household: state.household,
+  }
 }
 
-const mapDispatchToProps = (dispatch) =>{
+const mapDispatchToProps = dispatch =>{
   return {
-    setUser: (user) => dispatch({type:"SET_USER", user}),
-    setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
+    setUser: () => dispatch(getUser()),
+    setCurrentHousehold: (householdId) => dispatch(getCurrentHousehold(householdId)),
+
+
+
     isFetching: () => dispatch({type:"IS_FETCHING"}),
     isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"}),
     isUsersHousehold: () => dispatch({type:"IS_USERS_HOUSEHOLD"}),

@@ -5,8 +5,9 @@ const defaultState = {
 const usersReducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'SET_CURRENT_USER':
-      
+    // console.log('inside usr reducer', action.payload)
       return {...action.payload}
+
     case 'AUTHENTICATING_USER':
 
       return {...state, authenticatingUser:true}

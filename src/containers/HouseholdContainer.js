@@ -49,7 +49,7 @@ class HouseholdContainer extends Component {
   }
 
   joinHousehold = () => {
-    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.state.user.id}/${this.props.state.currentHousehold.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.state.user.id}/${this.props.state.household.id}`,{
       method:"POST",
       headers:{
         'Content-Type':'application/json',
@@ -58,7 +58,7 @@ class HouseholdContainer extends Component {
       body:JSON.stringify({
         join:{
           user_id: this.props.state.user.id,
-          household_id: this.props.state.currentHousehold.id,
+          household_id: this.props.state.household.id,
           password: this.state.householdPassword
         }
       })
@@ -80,7 +80,7 @@ class HouseholdContainer extends Component {
       body:JSON.stringify({
         space:{
           name: this.state.newSpaceName,
-          household_id: this.props.state.currentHousehold.id
+          household_id: this.props.state.household.id
         }
       })
     }).then(resp=>resp.json())
@@ -100,7 +100,7 @@ class HouseholdContainer extends Component {
 
   renderAddSpaceForm = () => {
     return <Segment clearing raised style={{marginTop:"3%"}}>
-    <Message header={"Add a space to " + this.props.state.currentHousehold.name} size="mini"/>
+    <Message header={"Add a space to " + this.props.state.household.name} size="mini"/>
       <Form>
         <Form.Field>
           <label>Name</label>
@@ -166,7 +166,7 @@ class HouseholdContainer extends Component {
   }
 
   editHousehold = () => {
-    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.state.currentHousehold.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.state.household.id}`,{
       method:"PATCH",
       headers: {
         'Content-Type': 'application/json',
@@ -175,7 +175,7 @@ class HouseholdContainer extends Component {
       },
       body:JSON.stringify({
         household:{
-          id: this.props.state.currentHousehold.id,
+          id: this.props.state.household.id,
           name: this.state.newHouseholdName,
           color: this.state.newHouseholdColor,
           image: this.state.newHouseholdImage
@@ -203,7 +203,7 @@ class HouseholdContainer extends Component {
       return {key: imageObj.url, text: imageObj.name, value: imageObj.url, image:{ size: "mini", src: imageObj.url }}
     })
     return <Segment clearing raised>
-    <Message header={"Edit" + this.props.state.currentHousehold.name} size="mini"/>
+    <Message header={"Edit" + this.props.state.household.name} size="mini"/>
       <Form>
         <Form.Field>
         <label>Name</label>
@@ -249,7 +249,7 @@ class HouseholdContainer extends Component {
   }
 
   leaveHousehold = () => {
-    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.state.user.id}/${this.props.state.currentHousehold.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.state.user.id}/${this.props.state.household.id}`,{
       method:"DELETE",
       headers:{
         'Content-Type':'application/json',
@@ -258,7 +258,7 @@ class HouseholdContainer extends Component {
       body:JSON.stringify({
         leave:{
           user_id: this.props.state.user.id,
-          household_id: this.props.state.currentHousehold.id,
+          household_id: this.props.state.household.id,
           password: this.state.householdPassword
         }
       })
@@ -283,7 +283,7 @@ class HouseholdContainer extends Component {
 
           <div className='d-flex justify-content-between'>
             <div className='d-flex flex-row'>
-              <span className='font-weight-bold big-font' onClick={()=>this.props.setCurrentHousehold(this.props.state.currentHousehold)}>{this.props.state.currentHousehold.name}</span><Image floated="left" src={this.props.state.currentHousehold.image} size="mini" style={{height:'40px', width:'40px', paddingLeft:'5%'}}/>
+              <span className='font-weight-bold big-font' onClick={()=>this.props.setCurrentHousehold(this.props.state.household)}>{this.props.state.household.name}</span><Image floated="left" src={this.props.state.household.image} size="mini" style={{height:'40px', width:'40px', paddingLeft:'5%'}}/>
             </div>
             <div className='d-flex'>
               <Dropdown floated="right" pointing="top right" style={{}} text="Household">
