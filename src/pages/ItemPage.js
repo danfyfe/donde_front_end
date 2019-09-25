@@ -6,13 +6,6 @@ import apiEndpoint from '../actions/ApiEndpoint.js'
 import Search from '../components/Search.js'
 import Loading from '../components/Loading.js'
 
-// let API_ENDPOINT
-// if (process.env.NODE_ENV === 'production') {
-//   API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
-// } else {
-//   API_ENDPOINT = 'http://localhost:3000'
-// }
-
 class ItemPage extends Component {
 
   state = {
