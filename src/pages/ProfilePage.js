@@ -11,7 +11,7 @@ import Loading from '../components/Loading.js'
 class ProfilePage extends Component {
 
   componentDidMount(){
-    this.props.isFetching()
+    // this.props.isFetching()
     fetch(`${apiEndpoint}/profile`,{
       method:"POST",
       headers: {
