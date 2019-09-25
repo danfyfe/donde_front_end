@@ -3,14 +3,14 @@ const defaultState = {
   // households: {},
   // userHouseholdMessages: {},
   // currentHousehold: {},
-  currentSpace: {},
-  currentContainer: {},
-  currentItem: {},
+  // currentSpace: {},
+  // currentContainer: {},
+  // currentItem: {},
   searching: false,
-  isFetching: false,
-  isDoneFetching: false,
-  isUserHousehold: false,
-  itemDeleteConfirmationMessage: ""
+  // isFetching: false,
+  // isDoneFetching: false,
+  // isUserHousehold: false,
+  // itemDeleteConfirmationMessage: ""
 }
 
 function appReducer (state = defaultState, action){
@@ -23,8 +23,8 @@ function appReducer (state = defaultState, action){
     //
     //   return {...state, households: action.households}
 
-    case "ADD_HOUSEHOLD":
-      return {...state, user:{...state.user, households: [...state.user.households, action.household]}}
+    // case "ADD_HOUSEHOLD":
+    //   return {...state, user:{...state.user, households: [...state.user.households, action.household]}}
 
     case "ADD_MESSAGE":
 
@@ -88,7 +88,7 @@ function appReducer (state = defaultState, action){
       return {...state, currentContainer: action.container}
 
     case "SET_SEARCHING":
-      console.log('inside set searching')
+      // console.log('inside set searching')
       return {...state, searching: !state.searching}
 
     case "SET_SEARCHING_TO_FALSE":

@@ -29,7 +29,6 @@ class Search extends Component {
       headers: { Authorization:  localStorage.getItem("token") }
     }).then(resp=>resp.json())
     .then(households=>{
-
       this.setState({
         households: households
       })
@@ -40,7 +39,6 @@ class Search extends Component {
         headers: { Authorization:  localStorage.getItem("token") }
       }).then(resp=>resp.json())
       .then(items=>{
-
         this.setState({
           items: items
         })
@@ -106,7 +104,7 @@ class Search extends Component {
 
         <Grid columns={1}>
           <Grid.Column>
-          {this.state.filterBy === 'none' || this.state.filterBy ==='households' ?
+          {this.state.filterBy === 'none' || this.state.filterBy === 'households' ?
             <>
             <Message size="mini">Households</Message>
             <SearchedHouseholdsContainer

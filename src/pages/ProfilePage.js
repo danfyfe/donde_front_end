@@ -34,7 +34,7 @@ class ProfilePage extends Component {
     }
 
     const { user, searching, history } = this.props
-    console.log(this.props)
+
     return(
       <>
       {this.setItemDeleteConfirmationMessageToNothing()}

@@ -10,9 +10,32 @@ export function getCurrentHousehold(householdId){
       headers: { Authorization:  localStorage.getItem("token") }
     })
     .then( resp =>{
-      // console.log('inside get current hh', resp)
         return dispatch({type:'SET_CURRENT_HOUSEHOLD', payload: resp.data})
+    })
+  }
+}
 
+export function createHousehold( householdName, householdPass, householdColor, householdImage, userId ){
+  return dispatch => {
+    axios({
+      method:"POST",
+      url: `${apiEndpoint}/households`,
+      headers:{
+        'Content-Type':'application/json',
+        Accept: 'application/json'
+      },
+      data: {
+        household:{
+          name: householdName,
+          password: householdPass,
+          color: householdColor,
+          image: householdImage
+        },
+        user_id: userId
+      }
+    })
+    .then( resp => {
+      return dispatch({type:"ADD_HOUSEHOLD", payload: resp.data})
     })
   }
 }

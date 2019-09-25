@@ -1,39 +1,40 @@
 import React, { useState } from 'react'
 import { Segment, Form, Message, Button, Dropdown } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
-import apiEndpoint from '../../../actions/ApiEndpoint.js'
+// import apiEndpoint from '../../../actions/ApiEndpoint.js'
+import { createHousehold } from '../../../actions/householdActions.js'
 
 const AddHouseholdForm = props => {
-
   const [ householdName, setHouseholdName ] = useState('')
   const [ householdPass, setHouseholdPass ] = useState('')
   const [ householdColor, setHouseholdColor ] = useState('')
   const [ householdImage, setHouseholdImage ] = useState('')
 
-  const { setAddingHousehold, userId, addHousehold } = props
+  const { setAddingHousehold, userId, addHousehold, addNewHousehold, newHousehold } = props
 
-  const createHousehold = () => {
-    fetch(`${apiEndpoint}/households`,{
-      method:"POST",
-      headers:{
-        'Content-Type':'application/json',
-        Accept: 'application/json'
-      },
-      body:JSON.stringify({
-        household:{
-          name: householdName,
-          password: householdPass,
-          color: householdColor,
-          image: householdImage
-        },
-        user_id: userId
-      })
-    }).then(resp=>resp.json())
-    .then(household=>{
-      addHousehold(household)
-      setAddingHousehold(false)
-    })
-  }
+  // const createHousehold = ( householdName, householdPass, householdColor, householdImage, userId ) => {
+  //   fetch(`${apiEndpoint}/households`,{
+  //     method:"POST",
+  //     headers:{
+  //       'Content-Type':'application/json',
+  //       Accept: 'application/json'
+  //     },
+  //     body:JSON.stringify({
+  //       household:{
+  //         name: householdName,
+  //         password: householdPass,
+  //         color: householdColor,
+  //         image: householdImage
+  //       },
+  //       user_id: userId
+  //     })
+  //   }).then(resp=>resp.json())
+  //   .then(household=>{
+  //     addHousehold(household)
+  //     setAddingHousehold(false)
+  //   })
+  // }
 
   const householdColorDefinitions = ['red','orange','yellow','olive','green','teal','blue','violet','purple','pink','brown','grey']
 
@@ -69,11 +70,27 @@ const AddHouseholdForm = props => {
             <Dropdown name="householdImage" onChange={(e, data) => setHouseholdImage(data.value)} pointing="top left" placeholder="Select Image" fluid selection options={householdImageOptions}/>
           </Form.Field>
           <Button size="mini" floated="right" onClick={() => setAddingHousehold(false)}>Cancel</Button>
-          <Button size="mini" floated="right" onClick={createHousehold}>Submit</Button>
+          <Button size="mini" floated="right" onClick={() => {
+            addHousehold(householdName, householdPass, householdColor, householdImage, userId)
+            setAddingHousehold(false)
+          }
+          }>Submit</Button>
         </Form>
       </Segment>
     </>
   )
 }
 
-export default AddHouseholdForm
+const mapStateToProps = state => {
+  return {
+    newHousehold: state.household
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addHousehold: (householdName, householdPass, householdColor, householdImage, userId) => dispatch(createHousehold(householdName, householdPass, householdColor, householdImage, userId))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddHouseholdForm)

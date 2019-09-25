@@ -161,6 +161,7 @@ const mapStateToProps = state => {
   return {
     user: state.user,
     household: state.household,
+    searching: state.app.searching
   }
 }
 
