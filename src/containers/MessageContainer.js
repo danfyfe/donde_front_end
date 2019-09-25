@@ -1,16 +1,9 @@
 import React, { Component, } from 'react'
-import { Form, Message, Segment, Button, Dropdown, Icon } from 'semantic-ui-react'
+import { Message, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import MessageCard from '../components/MessageCard.js'
 import AddMessageForm from '../components/forms/messages/AddMessageForm.js'
-
-let API_ENDPOINT
-if (process.env.NODE_ENV === 'production') {
-  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
-} else {
-  API_ENDPOINT = 'http://localhost:3000'
-}
 
 class MessageContainer extends Component {
 
@@ -30,6 +23,7 @@ class MessageContainer extends Component {
       if (this.props.state.user.households.length === 0) {
           return <Message size="small" compact style={{margin: "2% auto 0 auto"}}>No messages are being displayed because you do not currently belong to any households. You can create a household by clicking 'Add Household', or use the Search Icon above to search for a household to join</Message>
       } else {
+
         let householdMessages = []
 
         this.props.state.user.households.forEach(household => {
@@ -37,12 +31,15 @@ class MessageContainer extends Component {
         })
 
         householdMessages.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1).reverse()
-
-        return householdMessages.map(message => {
-          return <MessageCard key={message.id} message={message}/>
-        })
+        if (householdMessages.length === 0) {
+          return <Message size="small" compact style={{margin: "2% auto 0 auto"}}>There are currently no messages! Click the 'plus' icon above to add one!</Message>
+        } else {
+          return householdMessages.map(message => {
+            return <MessageCard key={message.id} message={message}/>
+          })
         }
       }
+    }
   }
 
   renderNewMessageHeader = () => {

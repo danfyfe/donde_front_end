@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Message, Segment, Button, Dropdown, Icon } from 'semantic-ui-react'
+import { Form, Message, Segment, Button, Dropdown } from 'semantic-ui-react'
 
 import apiEndpoint from '../../../actions/ApiEndpoint.js'
 
