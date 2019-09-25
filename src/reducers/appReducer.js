@@ -16,9 +16,11 @@ const defaultState = {
 function householdReducer (state = defaultState, action){
   switch (action.type) {
     case "SET_USER":
+
       return {...state, user: action.user}
 
     case "SET_HOUSEHOLDS":
+    
       return {...state, households: action.households}
 
     case "ADD_HOUSEHOLD":
