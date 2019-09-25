@@ -7,13 +7,16 @@ import SpaceDisplay from '../components/SpaceDisplay.js'
 
 
 function SpacesConatiner(props) {
+
+  const { household, space } = props
+
   const renderSpaceCards = () => {
-    if (props.state.currentHousehold.spaces) {
-      let spacesByDate = props.state.currentHousehold.spaces.sort((a, b) => {
+    if (household.spaces) {
+      let spacesByDate = household.spaces.sort((a, b) => {
         return a.created_at.localeCompare(b.created_at)
       })
 
-      if (props.state.currentHousehold.spaces.length === 0) {
+      if (household.spaces.length === 0) {
         return <Message warning style={{margin:"4% 0 0 0", textAlign:"center"}}>There are currently no spaces in this household. A space is a location that you put your stuff, like a closet or storage area. Click Add Space in the dropdown to add one!</Message>
       } else {
         return spacesByDate.map(space => {
@@ -24,14 +27,12 @@ function SpacesConatiner(props) {
   }
 
   const renderSpace = () => {
-    return <SpaceDisplay history={props.history} space={props.state.currentSpace}/>
+    return <SpaceDisplay history={props.history} space={space}/>
   }
-
-
 
     return(
       <>
-      {props.state.currentSpace && props.state.currentSpace.hasOwnProperty('id') ?  <> {renderSpace()} </>:
+      {space && space.hasOwnProperty('id') ?  <> {renderSpace()} </>:
         <>
           <div style={{margin:"2% auto"}}>
             <span className='font-weight-bold med-font text-muted'>Spaces:</span>
@@ -39,7 +40,6 @@ function SpacesConatiner(props) {
           </div>
         </>
       }
-
       </>
     )
 
@@ -47,7 +47,10 @@ function SpacesConatiner(props) {
 
 
 const mapStateToProps = (state) => {
-  return { state }
+  return {
+    household: state.household,
+    space: state.space
+   }
 }
 
 const mapDispatchToProps = (dispatch) =>{

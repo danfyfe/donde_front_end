@@ -147,7 +147,7 @@ class HouseholdPage extends Component {
   }
 
   render(){
-    // console.log(this.props.user)
+    console.log(this.props.household)
     if (!localStorage.token || localStorage.token === "undefined") {
     this.props.history.push("/")
     }

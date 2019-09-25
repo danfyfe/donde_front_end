@@ -300,7 +300,7 @@ class HouseholdContainer extends Component {
             {this.state.editingHousehold ? this.renderEditHouseholdForm() : null}
 
             {this.state.addingSpace ? this.renderAddSpaceForm() : null}
-
+            
             {this.state.leavingHousehold ? this.renderLeavingHouseholdForm() : null}
           </>
         }
