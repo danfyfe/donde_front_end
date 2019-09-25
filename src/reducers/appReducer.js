@@ -1,8 +1,8 @@
 const defaultState = {
-  user: {},
-  households: {},
-  userHouseholdMessages: {},
-  currentHousehold: {},
+  // user: {},
+  // households: {},
+  // userHouseholdMessages: {},
+  // currentHousehold: {},
   currentSpace: {},
   currentContainer: {},
   currentItem: {},
@@ -13,15 +13,15 @@ const defaultState = {
   itemDeleteConfirmationMessage: ""
 }
 
-function householdReducer (state = defaultState, action){
+function appReducer (state = defaultState, action){
   switch (action.type) {
-    case "SET_USER":
-    
-      return {...state, user: action.user}
-
-    case "SET_HOUSEHOLDS":
-
-      return {...state, households: action.households}
+    // case "SET_USER":
+    //
+    //   return {...state, user: action.user}
+    //
+    // case "SET_HOUSEHOLDS":
+    //
+    //   return {...state, households: action.households}
 
     case "ADD_HOUSEHOLD":
       return {...state, user:{...state.user, households: [...state.user.households, action.household]}}
@@ -88,7 +88,7 @@ function householdReducer (state = defaultState, action){
       return {...state, currentContainer: action.container}
 
     case "SET_SEARCHING":
-
+      console.log('inside set searching')
       return {...state, searching: !state.searching}
 
     case "SET_SEARCHING_TO_FALSE":
@@ -125,4 +125,4 @@ function householdReducer (state = defaultState, action){
 
 }
 
-export default householdReducer
+export default appReducer

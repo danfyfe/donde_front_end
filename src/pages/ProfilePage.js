@@ -29,14 +29,12 @@ class ProfilePage extends Component {
 
   render(){
 
-    // console.log(this.props.user)
-
     if (!localStorage.token || localStorage.token === "undefined") {
     this.props.history.push("/")
     }
 
     const { user, searching, history } = this.props
-
+    console.log(this.props)
     return(
       <>
       {this.setItemDeleteConfirmationMessageToNothing()}
@@ -78,15 +76,13 @@ const mapStateToProps = state => {
   return {
     user: state.user,
     itemDeleteConfirmationMessage: state.itemDeleteConfirmationMessage,
-    isDoneFetching: state.isDoneFetching,
-    searching: state.searching
+    searching: state.app.searching,
    }
 }
 
 const mapDispatchToProps = dispatch =>{
   return {
     setUser: () => dispatch(getUser()),
-    isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"}),
     setSearching: () => dispatch({type:'SET_SEARCHING'}),
     itemDeleteConfirmationToNothing: () => dispatch({type:"ITEM_DELETE_CONFIRMATION_TO_NOTHING"})
   }

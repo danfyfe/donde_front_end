@@ -25,39 +25,8 @@ class HouseholdPage extends Component {
 
   componentDidMount(){
     const { id } = this.props.match.params
-
     this.props.setUser()
     this.props.setCurrentHousehold(id)
-    // this.props.setCurrentHousehold(this.props.match.params.id)
-    // fetch(`${API_ENDPOINT}/api/v1/profile`,{
-    //   method:"POST",
-    //   headers: { Authorization:  localStorage.getItem("token") }
-    // }).then(resp=>resp.json())
-    // .then(user=>{
-    //
-    //   this.props.setUser(user.user)
-    //
-    //   this.setState({
-    //     user: user.user
-    //   })
-    //
-    // }).then(
-    // fetch(`${API_ENDPOINT}/api/v1/households/${this.props.match.params.id}`,{
-    //   method: "GET",
-    //   headers: { Authorization:  localStorage.getItem("token") }
-    // })
-    // .then(resp=>resp.json())
-    // .then(household=>{
-    //   this.props.setCurrentHousehold(household)
-    //   this.setState({
-    //     household: household
-    //   })
-    //
-    //   if (this.props.currentHousehold && this.state.household && this.state.user) {
-    //     this.props.isDoneFetching()
-    //   }
-    // })
-    // )
   }
 
 
@@ -147,7 +116,6 @@ class HouseholdPage extends Component {
   }
 
   render(){
-    console.log(this.props.household)
     if (!localStorage.token || localStorage.token === "undefined") {
     this.props.history.push("/")
     }
@@ -161,7 +129,7 @@ class HouseholdPage extends Component {
             <Header style={{padding:"10px"}}>Welcome, {this.props.user.username}!</Header>
           </Menu>
 
-          {this.props.itemDeleteConfirmationMessage !== "" ? this.renderDeleteConfirmationMessage() : null}
+          {/*this.props.itemDeleteConfirmationMessage !== "" ? this.renderDeleteConfirmationMessage() : null*/}
 
           {this.props.searching ? <Search history={this.props.history}/> : null}
 
@@ -172,7 +140,6 @@ class HouseholdPage extends Component {
                 <HouseholdContainer history={this.props.history}/>
                 <HouseholdMessagesContainer />
               </> :
-
               <Segment clearing className='full-width'>
                 <Header>{this.props.household.name}</Header>
                 <Message warning><Header>You must join this household to view its details!</Header>
