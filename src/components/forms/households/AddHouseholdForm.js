@@ -47,7 +47,6 @@ const AddHouseholdForm = props => {
     return {key: imageObj.url, text: imageObj.name, value: imageObj.url, image:{ size: "mini", src: imageObj.url }}
   })
 
-  console.log(householdImage,householdColor)
   return(
     <>
       <Segment clearing raised style={{width:'100%'}}>

@@ -1,16 +1,9 @@
 import React, { Component } from 'react'
-import { Segment, Form, Message, Button, Dropdown, Icon } from 'semantic-ui-react'
+import { Message, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import HouseholdCard from '../components/HouseholdCard.js'
 import AddHouseholdForm from '../components/forms/households/AddHouseholdForm.js'
-
-// let API_ENDPOINT
-// if (process.env.NODE_ENV === 'production') {
-//   API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
-// } else {
-//   API_ENDPOINT = 'http://localhost:3000'
-// }
 
 class HouseholdCardsContainer extends Component {
   state = {
@@ -22,7 +15,7 @@ class HouseholdCardsContainer extends Component {
       addingHousehold: !this.state.addingHousehold
     })
   }
-  
+
   renderAddHouseholdHeader = () => {
     return <>
     <span className='font-weight-bold larger-text' style={{height:'1vh'}}>Households</span>
@@ -46,7 +39,7 @@ class HouseholdCardsContainer extends Component {
   redirectToHousehold = (household) => {
     this.props.history.push(`/households/${household.id}`)
   }
-
+  
   render(){
 
     return(

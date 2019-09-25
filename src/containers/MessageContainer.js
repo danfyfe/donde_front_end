@@ -41,18 +41,23 @@ class MessageContainer extends Component {
   renderMessageCards = () => {
     if (this.props.state.isDoneFetching && this.props.state.user.households) {
 
-      let householdMessages = []
+      if (this.props.state.user.households.length === 0) {
+          return <Message size="small" compact style={{margin: "2% auto 0 auto"}}>No messages are being displayed because you do not currently belong to any households. You can create a household by clicking 'Add Household', or use the Search Icon above to search for a household to join</Message>
+      } else {
+        let householdMessages = []
 
-      this.props.state.user.households.forEach(household => {
-        return householdMessages = [...householdMessages, household.messages].flat()
-      })
+        this.props.state.user.households.forEach(household => {
+          return householdMessages = [...householdMessages, household.messages].flat()
+        })
 
-      householdMessages.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1).reverse()
+        householdMessages.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1).reverse()
 
         return householdMessages.map(message => {
           return <MessageCard key={message.id} message={message}/>
         })
+        }
       }
+
   }
 
   renderNewMessageForm = () => {
@@ -87,11 +92,9 @@ class MessageContainer extends Component {
 
   renderNewMessageHeader = () => {
     if (this.props.state.user.households) {
-      if (this.props.state.user.households.length === 0) {
-        return <Message size="small" compact style={{margin: "2% auto 0 auto"}}>No messages are being displayed because you do not currently belong to any households. You can create a household by clicking 'Add Household', or use the Search Icon above to search for a household to join</Message>
-      }else {
+
         return <Icon onClick={this.setAddingNewMessage} name='plus'/>
-      }
+      
     }
   }
 
@@ -127,7 +130,7 @@ class MessageContainer extends Component {
     return(
       <>
       <div className='d-flex justify-content-between full-width'>
-      
+
         {this.state.addingNewMessage ? this.renderNewMessageForm():<><span className='font-weight-bold larger-text' style={{height:'1vh'}}>Messages</span>{this.renderNewMessageHeader()}</>
       }
       </div>
