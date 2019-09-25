@@ -18,32 +18,29 @@ class MessageContainer extends Component {
   }
 
   renderMessageCards = () => {
-    if (this.props.state.isDoneFetching && this.props.state.user.households) {
+    if (this.props.user.households.length === 0) {
+        return <Message size="small" compact style={{margin: "2% auto 0 auto"}}>No messages are being displayed because you do not currently belong to any households. You can create a household by clicking 'Add Household', or use the Search Icon above to search for a household to join</Message>
+    } else {
 
-      if (this.props.state.user.households.length === 0) {
-          return <Message size="small" compact style={{margin: "2% auto 0 auto"}}>No messages are being displayed because you do not currently belong to any households. You can create a household by clicking 'Add Household', or use the Search Icon above to search for a household to join</Message>
+      let householdMessages = []
+
+      this.props.user.households.forEach(household => {
+        return householdMessages = [...householdMessages, household.messages].flat()
+      })
+
+      householdMessages.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1).reverse()
+      if (householdMessages.length === 0) {
+        return <Message size="small" compact style={{margin: "2% auto 0 auto"}}>There are currently no messages! Click the 'plus' icon above to add one!</Message>
       } else {
-
-        let householdMessages = []
-
-        this.props.state.user.households.forEach(household => {
-          return householdMessages = [...householdMessages, household.messages].flat()
+        return householdMessages.map(message => {
+          return <MessageCard key={message.id} message={message}/>
         })
-
-        householdMessages.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1).reverse()
-        if (householdMessages.length === 0) {
-          return <Message size="small" compact style={{margin: "2% auto 0 auto"}}>There are currently no messages! Click the 'plus' icon above to add one!</Message>
-        } else {
-          return householdMessages.map(message => {
-            return <MessageCard key={message.id} message={message}/>
-          })
-        }
       }
     }
   }
 
   renderNewMessageHeader = () => {
-    if (this.props.state.user.households) {
+    if (this.props.user.households) {
         return <>
         <span className='font-weight-bold larger-text' style={{height:'1vh'}}>Messages</span>
         <Icon onClick={this.setAddingNewMessage} name='plus'/> </>
@@ -56,10 +53,11 @@ class MessageContainer extends Component {
       <>
       <div className='d-flex justify-content-between full-width'>
         {this.state.addingNewMessage ?
-          <AddMessageForm households={this.props.state.user.households}
+          <AddMessageForm households={this.props.user.households}
           setAddingNewMessage={this.setAddingNewMessage}
-          userId={this.props.state.user.id}
-          addMessage={this.props.addMessage}/>:
+          userId={this.props.user.id}
+          addMessage={this.props.addMessage}/>
+          :
         <>{this.renderNewMessageHeader()}</>
       }
       </div>
@@ -72,16 +70,15 @@ class MessageContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { state }
+  return {
+    user: state.user
+  }
 }
 
 
 const mapDispatchToProps = (dispatch) => {
     return {
       setUser: (user) => dispatch({type:"SET_USER", user}),
-      setHouseholds: (households) => dispatch({type:"SET_HOUSEHOLDS", households}),
-      addHousehold: (household) => dispatch({type:"ADD_HOUSEHOLD", household}),
-      setUserHouseholdMessages: (userHouseholdMessages) => dispatch({type:"SET_USERHOUSEHOLDMESSAGES", userHouseholdMessages}),
       addMessage: (message) => dispatch({type:"ADD_MESSAGE", message})
     }
 }
