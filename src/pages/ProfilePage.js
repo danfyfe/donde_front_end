@@ -1,25 +1,22 @@
 import React, { Component } from 'react'
 import { Segment, Header, Menu, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import apiEndpoint from '../actions/ApiEndpoint.js'
 
 import HouseholdCardsContainer from '../containers/HouseholdCardsContainer.js'
 import MessageContainer from '../containers/MessageContainer.js'
 import Search from '../components/Search.js'
 import Loading from '../components/Loading.js'
 
-let API_ENDPOINT
-if (process.env.NODE_ENV === 'production') {
-  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
-} else {
-  API_ENDPOINT = 'http://localhost:3000'
-}
-
 class ProfilePage extends Component {
+
   componentDidMount(){
     this.props.isFetching()
-    fetch(`${API_ENDPOINT}/api/v1/profile`,{
+    fetch(`${apiEndpoint}/profile`,{
       method:"POST",
-      headers: { Authorization:  localStorage.getItem("token") }
+      headers: {
+        Authorization: localStorage.getItem("token")
+      }
     }).then(resp=>resp.json())
     .then(user=>{
       this.props.setUser(user.user)

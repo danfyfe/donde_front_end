@@ -1,16 +1,10 @@
 import React, { Component } from 'react'
-import { Segment, Header, Form, Dropdown, Button, Message, Menu, Icon, Grid } from 'semantic-ui-react'
+import { Segment, Header, Form, Dropdown, Button, Message, Menu, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import apiEndpoint from '../actions/ApiEndpoint.js'
 
 import Search from '../components/Search.js'
 import Loading from '../components/Loading.js'
-
-let API_ENDPOINT
-if (process.env.NODE_ENV === 'production') {
-  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
-} else {
-  API_ENDPOINT = 'http://localhost:3000'
-}
 
 class ItemPage extends Component {
 
@@ -33,16 +27,15 @@ class ItemPage extends Component {
 
   componentDidMount(){
     this.props.isFetching()
-    fetch(`${API_ENDPOINT}/api/v1/profile`,{
+    fetch(`${apiEndpoint}/profile`,{
       method:"POST",
       headers: { Authorization:  localStorage.getItem("token") }
     }).then(resp=>resp.json())
     .then(user=>{
-      // console.log("USER", user)
       this.props.setUser(user.user)
     })
     .then(
-      fetch(`${API_ENDPOINT}/api/v1/items/${this.props.match.params.id}`,{
+      fetch(`${apiEndpoint}/items/${this.props.match.params.id}`,{
         method: "GET",
         headers: { Authorization:  localStorage.getItem("token") }
       })
@@ -197,17 +190,8 @@ class ItemPage extends Component {
         })
       }
 
-    return <Segment clearing raised>
+    return <Segment clearing raised className='full-width'>
       <Form>
-        {/*<Form.Field>
-          <label>Name</label>
-          <input onChange={this.handleItemNameInput} placeholder="Item name" value={this.state.itemName}/>
-        </Form.Field>
-
-        <Form.Field>
-          <label>Description</label>
-          <input onChange={this.handleItemDescriptionInput} placeholder="Item description" value={this.state.itemDescription}/>
-        </Form.Field>*/}
 
         <Form.Field>
           <label>Container</label>
@@ -230,7 +214,7 @@ class ItemPage extends Component {
   }
 
   moveItem = () => {
-    fetch(`${API_ENDPOINT}/api/v1/items/${this.props.state.currentItem.id}`,{
+    fetch(`${apiEndpoint}/items/${this.props.state.currentItem.id}`,{
       method:"PATCH",
       headers:{
         'Content-Type':'application/json',
@@ -250,7 +234,6 @@ class ItemPage extends Component {
       })
     }).then(resp=>resp.json())
     .then(updatedItem => {
-      // console.log("updated item",updatedItem)
       this.props.setCurrentItem(updatedItem)
 
       this.setState({
@@ -265,7 +248,7 @@ class ItemPage extends Component {
   }
 
   deleteItem = () => {
-    fetch(`${API_ENDPOINT}/api/v1/items/${this.props.state.currentItem.id}`,{
+    fetch(`${apiEndpoint}/items/${this.props.state.currentItem.id}`,{
       method:"DELETE",
       headers:{
         'Content-Type':'application/json',
@@ -311,7 +294,10 @@ class ItemPage extends Component {
     }
 
     renderAddOwnersHeader = () => {
-      return <Button floated="right" size="mini" onClick={this.setAddingOwners} color="blue">Add Owners</Button>
+      return <>
+      <span className='font-weight-bold big-font'>Owners</span>
+      <Button floated="right" size="mini" onClick={this.setAddingOwners} color="blue">Add Owners</Button>
+      </>
     }
 
     renderAddOwnersForm = () => {
@@ -334,7 +320,7 @@ class ItemPage extends Component {
       }
 
       if (currentItemHouseholdUsersOptions.hasOwnProperty(0)) {
-        return <Segment clearing raised>
+        return <Segment clearing raised className='full-width'>
           <Form>
             <Form.Field>
             <label>Owners to be added</label>
@@ -363,7 +349,7 @@ class ItemPage extends Component {
 
     addOwners = () => {
       this.props.isFetching()
-      fetch(`${API_ENDPOINT}/api/v1/items/owners/${this.props.state.currentItem.id}`,{
+      fetch(`${apiEndpoint}/items/owners/${this.props.state.currentItem.id}`,{
         method:"PATCH",
         headers:{
           'Content-Type':'application/json',
@@ -397,7 +383,7 @@ class ItemPage extends Component {
 
     removeOwner = (userId) => {
       this.props.isFetching()
-      fetch(`${API_ENDPOINT}/api/v1/items/owners/${this.props.state.currentItem.id}/${userId}`,{
+      fetch(`${apiEndpoint}/items/owners/${this.props.state.currentItem.id}/${userId}`,{
         method:"DELETE",
         headers:{
           'Content-Type':'application/json',
@@ -413,7 +399,6 @@ class ItemPage extends Component {
         })
       }).then(resp=>resp.json())
       .then(item =>{
-        // console.log(item)
 
         this.props.setCurrentItem(item)
 
@@ -489,7 +474,6 @@ class ItemPage extends Component {
         <Segment clearing>
           <div className='d-flex flex-column'>
           <div className='d-flex justify-content-between'>
-            <span className='font-weight-bold big-font'>Owners</span>
             {this.state.addingOwners ? this.renderAddOwnersForm() : this.renderAddOwnersHeader() }
           </div>
           <Segment.Group style={{margin:"4% 0 0 0"}}>

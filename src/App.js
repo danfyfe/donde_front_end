@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Dropdown, Icon, Modal } from 'semantic-ui-react'
+import { Menu, Dropdown, Icon } from 'semantic-ui-react'
 import { Switch, Route } from 'react-router-dom'
 
 import { connect } from 'react-redux'
@@ -13,7 +13,7 @@ import ItemsPage from './pages/ItemsPage.js'
 import HouseholdPage from './pages/HouseholdPage.js'
 import SpacePage from './pages/SpacePage.js'
 import ItemPage from './pages/ItemPage.js'
-import Search from './components/Search.js'
+// import Search from './components/Search.js'
 
 class App extends React.Component {
   handleLogOut = () => {
@@ -63,11 +63,6 @@ class App extends React.Component {
           </Menu.Menu>
         </Menu> : null
       }
-
-        <Modal>
-          <Search />
-        </Modal>
-
         <Switch>
           <Route exact path="/" render={({ history }) => <HomePage history={history} /> } />
           <Route path="/profile" render={({history}) => <ProfilePage history={history} />} />
