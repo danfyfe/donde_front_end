@@ -112,7 +112,7 @@ class Space extends Component {
   }
 
   renderContainer = () => {
-    return <ContainerDisplay history={this.props.history} container={this.props.state.currentContainer}/>
+    return <ContainerDisplay history={this.props.history} container={this.props.container}/>
   }
 
   renderNoContainersMessage = () => {
@@ -194,8 +194,6 @@ class Space extends Component {
       })
       this.props.setCurrentHousehold(household)
       this.props.setCurrentSpace({})
-
-
     })
   }
 
@@ -206,7 +204,7 @@ class Space extends Component {
   render(){
 
     const { space, container, household } = this.props
-
+    console.log('space display',container)
     return(
       <>
       <div style={{minHeight:'500px'}}>

@@ -94,14 +94,14 @@ class Container extends Component {
 
     let currentHosueholdUsersOptions = {}
 
-    if (this.props.state.currentHousehold.users) {
-      currentHosueholdUsersOptions = this.props.state.currentHousehold.users.map(user => {
+    if (this.props.household.users) {
+      currentHosueholdUsersOptions = this.props.household.users.map(user => {
         return {key:user.id,text:user.username,value:user.id}
       })
     }
 
     return <Segment clearing raised style={{marginTop:"2%"}}>
-    <Message header={"Add an Item to " + this.props.state.currentContainer.name} size="mini"/>
+    <Message header={"Add an Item to " + this.props.container.name} size="mini"/>
       <Form>
         <Form.Field>
           <label>Name</label>
@@ -151,11 +151,11 @@ class Container extends Component {
   // }
   renderEditContainerForm = () => {
     return <Segment clearing>
-    <Message header={"Edit " + this.props.state.currentContainer.name} size="mini"/>
+    <Message header={"Edit " + this.props.container.name} size="mini"/>
     <Form>
       <Form.Field>
         <label>New Name</label>
-        <input onChange={this.handleInput} name="newContainerName" placeholder={this.props.state.currentContainer.name}/>
+        <input onChange={this.handleInput} name="newContainerName" placeholder={this.props.container.name}/>
       </Form.Field>
       <Button onClick={this.setEditingContainer} floated="right" size="mini">Cancel</Button>
       <Button onClick={this.editContainer} floated="right" size="mini">Submit</Button>
@@ -179,7 +179,7 @@ class Container extends Component {
   }
 
   deleteContainer = () => {
-    fetch(`${API_ENDPOINT}/api/v1/containers/${this.props.state.currentContainer.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/containers/${this.props.container.id}`,{
       method:"DELETE",
       headers:{
         'Content-Type':'application/json',
@@ -187,8 +187,8 @@ class Container extends Component {
       },
       body:JSON.stringify({
         container:{
-          container_id:this.props.state.currentContainer.id,
-          household_id: this.props.state.currentHousehold.id,
+          container_id:this.props.container.id,
+          household_id: this.props.household.id,
           password: this.state.householdPassword
         }
       })
@@ -209,7 +209,7 @@ class Container extends Component {
   }
 
   editContainer = () => {
-    fetch(`${API_ENDPOINT}/api/v1/containers/${this.props.state.currentContainer.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/containers/${this.props.container.id}`,{
       method:"PATCH",
       headers:{
         'Content-Type':'application/json',
@@ -218,8 +218,8 @@ class Container extends Component {
       body:JSON.stringify({
         container:{
           name: this.state.newContainerName,
-          container_id:this.props.state.currentContainer.id,
-          household_id: this.props.state.currentHousehold.id,
+          container_id:this.props.container.id,
+          household_id: this.props.household.id,
           password: this.state.householdPassword
         }
       })
@@ -257,7 +257,7 @@ class Container extends Component {
 
             <div className='d-flex flex-column'>
               <span className='font-weight-bold text-nowrap'>{this.props.container.name}</span>
-              <span className='text-muted text-nowrap small-font'style={{paddingLeft:'5%'}}>in {this.props.state.currentSpace.name} at {this.props.state.currentHousehold.name}</span>
+              <span className='text-muted text-nowrap small-font'style={{paddingLeft:'5%'}}>in {this.props.space.name} at {this.props.household.name}</span>
             </div>
 
             <div className='d-flex'>
@@ -289,7 +289,11 @@ class Container extends Component {
 
 
 const mapStateToProps = (state) => {
-  return { state }
+  return {
+    conatiner: state.container,
+    space: state.space,
+    household: state.household
+   }
 }
 
 const mapDispatchToProps = (dispatch) =>{

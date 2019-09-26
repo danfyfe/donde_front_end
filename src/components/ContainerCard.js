@@ -4,51 +4,57 @@ import { connect } from 'react-redux'
 
 function ContainerCard(props){
 
-  const renderContainerItems = () => {
+  const { container } = props
 
-    if (props.container.items) {
-      if (props.container.items.length === 0) {
-        return <Message warning>There are currently no items in this container! Click this card to view this container and add one!</Message>
-      } else {
-        return <span>{props.container.items.length} Items</span>
-      }
-    } else {
-      let containerItems = props.state.currentSpace.items.filter(item => {
-        return item.container.id === props.container.id
-      })
-      return <span>{containerItems.length} Items</span>
-    }
-  }
+  // const renderContainerItems = () => {
+  //   if (container.items) {
+  //     if (container.items.length === 0) {
+  //       return <Message warning>There are currently no items in this container! Click this card to view this container and add one!</Message>
+  //     } else {
+  //       return <span>{container.items.length} Items</span>
+  //     }
+  //   } else {
+  //     let containerItems = props.state.currentSpace.items.filter(item => {
+  //       return item.container.id === props.container.id
+  //     })
+  //     return <span>{containerItems.length} Items</span>
+  //   }
+  // }
 
 
     return(
-
-      <Card link style={{width:"100%"}} onClick={() => props.setCurrentContainer(props.container)}>
-        <Card.Content>
-          <Card.Header>{props.container.name}</Card.Header>
-          <Card.Meta>{props.container.description}</Card.Meta>
-        </Card.Content>
-
-        <Segment style={{margin:"5px"}}>
-        {renderContainerItems()}
-        </Segment>
-
-
-      </Card>
+      <div className='df-card' onClick={() => props.setCurrentContainer(container)}>
+        <span className='font-weight-bold small-padding'>{container.name}</span>
+      </div>
     )
 
 }
 
 const mapStateToProps = (state) => {
-  return { state }
+  return {
+    state
+  }
 }
 
 const mapDispatchToProps = (dispatch) =>{
   return {
-    setCurrentContainer: (container) => {
+    setCurrentContainer: container => {
       dispatch({type:"SET_CURRENT_CONTAINER", container})
     }
   }
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(ContainerCard)
+
+//
+// <Card link style={{width:"100%"}} onClick={() => props.setCurrentContainer(container)}>
+//   <Card.Content>
+//     <Card.Header>{container.name}</Card.Header>
+//     <Card.Meta>{container.description}</Card.Meta>
+//   </Card.Content>
+//
+//   <Segment style={{margin:"5px"}}>
+//     {renderContainerItems()}
+//   </Segment>
+//
+// </Card>
