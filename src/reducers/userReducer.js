@@ -12,8 +12,19 @@ const usersReducer = (state = defaultState, action) => {
       return {...state, households: [action.payload, ...state.households]}
 
     case 'JOIN_HOUSEHOLD':
-      // console.log(action.payload)
+
       return {...state, households: [action.payload, ...state.households]}
+
+    case 'LEAVE_HOUSEHOLD':
+
+      let leftHousehold = action.payload
+
+      let newHouseholds = state.households.filter( household => {
+        return household.id !== leftHousehold.id
+      })
+
+      
+      return {...state, households: [...newHouseholds]}
 
     // case 'AUTHENTICATING_USER':
     //

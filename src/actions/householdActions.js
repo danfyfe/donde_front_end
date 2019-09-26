@@ -88,3 +88,26 @@ export function joinHousehold(userId, householdId, householdPass){
     })
   }
 }
+
+export function leaveHousehold(userId, householdId, householdPass){
+  return dispatch => {
+    axios({
+      method:"DELETE",
+      url: `${apiEndpoint}/households/${userId}/${householdId}`,
+      headers:{
+        'Content-Type':'application/json',
+        Accept: 'application/json'
+      },
+      data: {
+        leave: {
+          user_id: userId,
+          household_id: householdId,
+          password: householdPass
+        }
+      }
+    })
+    .then( resp =>{
+      return dispatch({type:'LEAVE_HOUSEHOLD', payload: resp.data})
+    })
+  }
+}

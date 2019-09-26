@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import SpacesContainer from './SpacesContainer.js'
 import EditHouseholdForm from '../components/forms/households/EditHouseholdForm.js'
+import JoinOrLeaveHouseholdForm from '../components/forms/households/JoinOrLeaveHouseholdForm.js'
 
 
 let API_ENDPOINT
@@ -18,7 +19,7 @@ class HouseholdContainer extends Component {
   state = {
     addingSpace: false,
     newSpaceName:"",
-    joiningHousehold: false,
+    // joiningHousehold: false,
     leavingHousehold: false,
     householdPassword: "",
 
@@ -34,11 +35,11 @@ class HouseholdContainer extends Component {
     })
   }
 
-  setJoiningHousehold = () => {
-    this.setState({
-      joiningHousehold: !this.state.joiningHousehold
-    })
-  }
+  // setJoiningHousehold = () => {
+  //   this.setState({
+  //     joiningHousehold: !this.state.joiningHousehold
+  //   })
+  // }
 
   handleInput = (e) => {
       this.setState({
@@ -46,27 +47,27 @@ class HouseholdContainer extends Component {
       })
   }
 
-  joinHousehold = () => {
-    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.user.id}/${this.props.household.id}`,{
-      method:"POST",
-      headers:{
-        'Content-Type':'application/json',
-        Accept: 'application/json'
-      },
-      body:JSON.stringify({
-        join:{
-          user_id: this.props.user.id,
-          household_id: this.props.household.id,
-          password: this.state.householdPassword
-        }
-      })
-    }).then(resp=>resp.json())
-    .then(household=>{
-      this.setState({
-        joiningHousehold: !this.state.joiningHousehold
-      })
-    })
-  }
+  // joinHousehold = () => {
+  //   fetch(`${API_ENDPOINT}/api/v1/households/${this.props.user.id}/${this.props.household.id}`,{
+  //     method:"POST",
+  //     headers:{
+  //       'Content-Type':'application/json',
+  //       Accept: 'application/json'
+  //     },
+  //     body:JSON.stringify({
+  //       join:{
+  //         user_id: this.props.user.id,
+  //         household_id: this.props.household.id,
+  //         password: this.state.householdPassword
+  //       }
+  //     })
+  //   }).then(resp=>resp.json())
+  //   .then(household=>{
+  //     this.setState({
+  //       joiningHousehold: !this.state.joiningHousehold
+  //     })
+  //   })
+  // }
 
   addSpace = () => {
     fetch(`${API_ENDPOINT}/api/v1/spaces`,{
@@ -112,23 +113,23 @@ class HouseholdContainer extends Component {
     </Segment>
   }
 
-  renderJoinHouseholdForm = () => {
-    return <Segment clearing raised>
-      <Form>
-        <Form.Field>
-          <title>Password</title>
-          <input type="password" name="householdPassword" onChange={this.handleInput} placeholder="Please enter Household Password"/>
-        </Form.Field>
-        <Button floated="right" size="mini"
-        onClick={this.setJoiningHousehold}>Cancel</Button>
-        <Button floated="right" size="mini" onClick={this.joinHousehold}>Submit</Button>
-      </Form>
-    </Segment>
-  }
+  // renderJoinHouseholdForm = () => {
+  //   return <Segment clearing raised>
+  //     <Form>
+  //       <Form.Field>
+  //         <title>Password</title>
+  //         <input type="password" name="householdPassword" onChange={this.handleInput} placeholder="Please enter Household Password"/>
+  //       </Form.Field>
+  //       <Button floated="right" size="mini"
+  //       onClick={this.setJoiningHousehold}>Cancel</Button>
+  //       <Button floated="right" size="mini" onClick={this.joinHousehold}>Submit</Button>
+  //     </Form>
+  //   </Segment>
+  // }
 
-  renderJoinHouseholdHeader = () => {
-    return <Button onClick={this.setJoiningHousehold} color="blue" floated="right" size="mini">Join Household</Button>
-  }
+  // renderJoinHouseholdHeader = () => {
+  //   return <Button onClick={this.setJoiningHousehold} color="blue" floated="right" size="mini">Join Household</Button>
+  // }
 
   // edit household
 
@@ -270,7 +271,7 @@ class HouseholdContainer extends Component {
   }
 
   render(){
-
+    // console.log(this.props.household.id)
     return(
       <>
         <Segment raised clearing style={{margin:'1%', minWidth:'50vw'}}>
@@ -300,7 +301,9 @@ class HouseholdContainer extends Component {
 
             {this.state.addingSpace ? this.renderAddSpaceForm() : null}
 
-            {this.state.leavingHousehold ? this.renderLeavingHouseholdForm() : null}
+            {this.state.leavingHousehold ? <JoinOrLeaveHouseholdForm type={"leave"}
+            householdId={this.props.household.id} userId={this.props.user.id}
+            setLeavingHousehold={this.setLeavingHousehold} />: null}
           </>
         }
 

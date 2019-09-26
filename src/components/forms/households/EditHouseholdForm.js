@@ -23,6 +23,7 @@ const EditHouseholdForm = props => {
   const householdImageOptions = householdImageDefinitions.map(imageObj => {
     return {key: imageObj.url, text: imageObj.name, value: imageObj.url, image:{ size: "mini", src: imageObj.url }}
   })
+  
   return(
     <Segment clearing raised>
       <Message header={"Edit " + household.name} size="mini"/>
