@@ -6,7 +6,7 @@ import { addSpace } from '../../../actions/spaceActions.js'
 
 const AddSpaceForm = props => {
 
-  const { householdId, householdName, setAddingSpace } = props
+  const { householdId, householdName, setAddingSpace, addSpace } = props
 
   const [ spaceName, setSpaceName ] = useState('')
 
@@ -22,7 +22,8 @@ const AddSpaceForm = props => {
          onClick={() => setAddingSpace(false)}>Cancel</Button>
         <Button floated="right" size="mini"
         onClick={ () => {
-          props.addSpace(householdId, spaceName)
+          addSpace(householdId, spaceName)
+          setAddingSpace(false)
         }}>Submit</Button>
       </Form>
     </Segment>

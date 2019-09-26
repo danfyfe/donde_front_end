@@ -12,8 +12,9 @@ const householdReducer = ( state = defaultState, action) => {
       return {...action.payload}
 
     case 'ADD_SPACE':
-
-      return {...state, spaces: [ action.payload, ...action.space ] }
+      // let newSpaces = [...state.spaces ]
+      // newSpaces.unshift(action.payload)
+      return {...state, spaces: [ action.payload, ...state.spaces ] }
     default:
     return state
   }

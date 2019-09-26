@@ -27,11 +27,11 @@ class Space extends Component {
 
   renderContainerCards = () => {
 
-    if (this.props.state.currentSpace.containers) {
-      if (this.props.state.currentSpace.containers.length === 0) {
+    if (this.props.space.containers) {
+      if (this.props.space.containers.length === 0) {
         return this.renderNoContainersMessage()
       } else {
-        return this.props.state.currentSpace.containers.map(container => {
+        return this.props.space.containers.map(container => {
           return <ContainerCard key={container.id} container={container}/>
         })
       }
@@ -205,18 +205,20 @@ class Space extends Component {
 
   render(){
 
+    const { space, container, household } = this.props
+
     return(
       <>
       <div style={{minHeight:'500px'}}>
       {this.state.statusMessage !== "" ? this.renderStatusMessage(): null}
-      {this.props.state.currentContainer && this.props.state.currentContainer.hasOwnProperty('id') ? this.renderContainer() :
+
+      {container && container.hasOwnProperty('id') ? this.renderContainer() :
 
       <>
       <div className='d-flex justify-content-between'>
-
         <div className='d-flex flex-column'>
-          <span className='font-weight-bold text-nowrap'>{this.props.space.name}</span>
-          <span className='text-muted text-nowrap small-font' style={{paddingLeft:'5%'}}>at {this.props.state.currentHousehold.name}</span>
+          <span className='font-weight-bold text-nowrap'>{space.name}</span>
+          <span className='text-muted text-nowrap small-font' style={{paddingLeft:'5%'}}>at {household.name}</span>
         </div>
 
         <div className='d-flex'>
@@ -249,7 +251,11 @@ class Space extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { state }
+  return {
+    household: state.household,
+    space: state.space,
+    container: state.container
+   }
 }
 
 const mapDispatchToProps = (dispatch) =>{

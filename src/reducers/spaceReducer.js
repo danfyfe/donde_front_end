@@ -5,10 +5,10 @@ const defaultState = {
 const spaceReducer = ( state = defaultState, action) => {
   switch (action.type) {
     case 'SET_CURRENT_SPACE':
-
-      return {...action.payload}
-
     
+      return {...action.space}
+
+
     default:
     return state
   }
