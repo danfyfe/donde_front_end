@@ -3,6 +3,7 @@ import { Segment, Form, Button, Dropdown, Message, Image } from 'semantic-ui-rea
 import { connect } from 'react-redux'
 
 import SpacesContainer from './SpacesContainer.js'
+import EditHouseholdForm from '../components/forms/households/EditHouseholdForm.js'
 
 
 let API_ENDPOINT
@@ -22,12 +23,9 @@ class HouseholdContainer extends Component {
     householdPassword: "",
 
     editingHousehold: false,
-    newHouseholdName: "",
-    newHouseholdColor:"",
-    newHouseholdImage:"",
 
-    currentSpace: {},
-    currentContainer: {}
+    // currentSpace: {},
+    // currentContainer: {}
   }
 
   setAddingSpace = () => {
@@ -49,7 +47,7 @@ class HouseholdContainer extends Component {
   }
 
   joinHousehold = () => {
-    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.state.user.id}/${this.props.state.household.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.user.id}/${this.props.household.id}`,{
       method:"POST",
       headers:{
         'Content-Type':'application/json',
@@ -57,8 +55,8 @@ class HouseholdContainer extends Component {
       },
       body:JSON.stringify({
         join:{
-          user_id: this.props.state.user.id,
-          household_id: this.props.state.household.id,
+          user_id: this.props.user.id,
+          household_id: this.props.household.id,
           password: this.state.householdPassword
         }
       })
@@ -80,7 +78,7 @@ class HouseholdContainer extends Component {
       body:JSON.stringify({
         space:{
           name: this.state.newSpaceName,
-          household_id: this.props.state.household.id
+          household_id: this.props.household.id
         }
       })
     }).then(resp=>resp.json())
@@ -92,15 +90,15 @@ class HouseholdContainer extends Component {
     })
   }
 
-  renderAddSpaceHeader = () => {
-    if (!this.state.editingHousehold) {
-      return <Button onClick={this.setAddingSpace} color="blue" floated="right" size="mini">Add Space</Button>
-    }
-  }
+  // renderAddSpaceHeader = () => {
+  //   if (!this.state.editingHousehold) {
+  //     return <Button onClick={this.setAddingSpace} color="blue" floated="right" size="mini">Add Space</Button>
+  //   }
+  // }
 
   renderAddSpaceForm = () => {
     return <Segment clearing raised style={{marginTop:"3%"}}>
-    <Message header={"Add a space to " + this.props.state.household.name} size="mini"/>
+    <Message header={"Add a space to " + this.props.household.name} size="mini"/>
       <Form>
         <Form.Field>
           <label>Name</label>
@@ -140,89 +138,88 @@ class HouseholdContainer extends Component {
     })
   }
 
-  renderEditHouseholdHeaeder = () => {
-    if (!this.state.addingSpace) {
-      return <Button onClick={this.setEditingHousehold} floated="right"color="blue" size="mini">Edit Household</Button>
-    }
-  }
+  // renderEditHouseholdHeaeder = () => {
+  //   if (!this.state.addingSpace) {
+  //     return <Button onClick={this.setEditingHousehold} floated="right"color="blue" size="mini">Edit Household</Button>
+  //   }
+  // }
 
-  handleEditHouseholdColorInput = (e, data) => {
+  // handleEditHouseholdColorInput = (e, data) => {
+  //   this.setState({
+  //     newHouseholdColor: data.value
+  //   })
+  // }
+  //
+  // handleEditHouseholdImageInput = (e, data) => {
+  //   this.setState({
+  //     newHouseholdImage: data.value
+  //   })
+  // }
+  //
+  // handleEditHouseholdNameInput = (e) => {
+  //   this.setState({
+  //     newHouseholdName: e.target.value
+  //   })
+  // }
 
-    this.setState({
-      newHouseholdColor: data.value
-    })
-  }
+  // editHousehold = () => {
+  //   fetch(`${API_ENDPOINT}/api/v1/households/${this.props.state.household.id}`,{
+  //     method:"PATCH",
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Accept: 'application/json',
+  //       Authorization:  localStorage.getItem("token")
+  //     },
+  //     body:JSON.stringify({
+  //       household:{
+  //         id: this.props.state.household.id,
+  //         name: this.state.newHouseholdName,
+  //         color: this.state.newHouseholdColor,
+  //         image: this.state.newHouseholdImage
+  //       }
+  //     })
+  //   }).then(resp=>resp.json())
+  //   .then(household=>{
+  //     this.props.setCurrentHousehold(household)
+  //     this.setState({
+  //       editingHousehold: !this.state.editingHousehold
+  //     })
+  //   })
+  // }
 
-  handleEditHouseholdImageInput = (e, data) => {
-    this.setState({
-      newHouseholdImage: data.value
-    })
-  }
-
-  handleEditHouseholdNameInput = (e) => {
-    this.setState({
-      newHouseholdName: e.target.value
-    })
-  }
-
-  editHousehold = () => {
-    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.state.household.id}`,{
-      method:"PATCH",
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization:  localStorage.getItem("token")
-      },
-      body:JSON.stringify({
-        household:{
-          id: this.props.state.household.id,
-          name: this.state.newHouseholdName,
-          color: this.state.newHouseholdColor,
-          image: this.state.newHouseholdImage
-        }
-      })
-    }).then(resp=>resp.json())
-    .then(household=>{
-      this.props.setCurrentHousehold(household)
-      this.setState({
-        editingHousehold: !this.state.editingHousehold
-      })
-    })
-  }
-
-  renderEditHouseholdForm = () => {
-    const householdColorDefinitions = ['red','orange','yellow','olive','green','teal','blue','violet','purple','pink','brown','grey']
-
-    const householdImageDefinitions = [{url:"https://i.imgur.com/GMOhUbb.png", name:"House 1"}, {url:"https://i.imgur.com/JSJ5Dk7.png", name: "House 2"}, {url:"https://i.imgur.com/rY6q2iR.png", name:"House 3"}, {url:"https://i.imgur.com/nKUQcrC.png", name:"House 4"}, {url:"https://i.imgur.com/0n5AzLS.png", name:"House 5"}, {url:"https://i.imgur.com/0dtFzLj.png",name:"House 6"}, {url:"https://i.imgur.com/CPYkV9E.png", name:"House 7"}]
-
-    const householdColorOptions = householdColorDefinitions.map(color=>{
-      return {key:color,text:color,value:color}
-    })
-
-    const householdImageOptions = householdImageDefinitions.map(imageObj => {
-      return {key: imageObj.url, text: imageObj.name, value: imageObj.url, image:{ size: "mini", src: imageObj.url }}
-    })
-    return <Segment clearing raised>
-    <Message header={"Edit" + this.props.state.household.name} size="mini"/>
-      <Form>
-        <Form.Field>
-        <label>Name</label>
-        <input onChange={this.handleEditHouseholdNameInput} placeholder="New Household Name"
-        />
-        </Form.Field>
-        <Form.Field>
-        <label>Color</label>
-          <Dropdown name="householdColor" onChange={this.handleEditHouseholdColorInput} pointing="top left" placeholder="Select Color" fluid selection options={householdColorOptions}/>
-        </Form.Field>
-        <Form.Field>
-        <label>Image</label>
-          <Dropdown name="householdImage" onChange={this.handleEditHouseholdImageInput} pointing="top left" placeholder="Select Image" fluid selection options={householdImageOptions}/>
-        </Form.Field>
-        <Button floated="right" size="mini" onClick={this.setEditingHousehold}>Cancel</Button>
-        <Button onClick={this.editHousehold} floated="right" size="mini">Submit</Button>
-      </Form>
-    </Segment>
-  }
+  // renderEditHouseholdForm = () => {
+  //   const householdColorDefinitions = ['red','orange','yellow','olive','green','teal','blue','violet','purple','pink','brown','grey']
+  //
+  //   const householdImageDefinitions = [{url:"https://i.imgur.com/GMOhUbb.png", name:"House 1"}, {url:"https://i.imgur.com/JSJ5Dk7.png", name: "House 2"}, {url:"https://i.imgur.com/rY6q2iR.png", name:"House 3"}, {url:"https://i.imgur.com/nKUQcrC.png", name:"House 4"}, {url:"https://i.imgur.com/0n5AzLS.png", name:"House 5"}, {url:"https://i.imgur.com/0dtFzLj.png",name:"House 6"}, {url:"https://i.imgur.com/CPYkV9E.png", name:"House 7"}]
+  //
+  //   const householdColorOptions = householdColorDefinitions.map(color=>{
+  //     return {key:color,text:color,value:color}
+  //   })
+  //
+  //   const householdImageOptions = householdImageDefinitions.map(imageObj => {
+  //     return {key: imageObj.url, text: imageObj.name, value: imageObj.url, image:{ size: "mini", src: imageObj.url }}
+  //   })
+  //   return <Segment clearing raised>
+  //   <Message header={"Edit" + this.props.state.household.name} size="mini"/>
+  //     <Form>
+  //       <Form.Field>
+  //       <label>Name</label>
+  //       <input onChange={this.handleEditHouseholdNameInput} placeholder="New Household Name"
+  //       />
+  //       </Form.Field>
+  //       <Form.Field>
+  //       <label>Color</label>
+  //         <Dropdown name="householdColor" onChange={this.handleEditHouseholdColorInput} pointing="top left" placeholder="Select Color" fluid selection options={householdColorOptions}/>
+  //       </Form.Field>
+  //       <Form.Field>
+  //       <label>Image</label>
+  //         <Dropdown name="householdImage" onChange={this.handleEditHouseholdImageInput} pointing="top left" placeholder="Select Image" fluid selection options={householdImageOptions}/>
+  //       </Form.Field>
+  //       <Button floated="right" size="mini" onClick={this.setEditingHousehold}>Cancel</Button>
+  //       <Button onClick={this.editHousehold} floated="right" size="mini">Submit</Button>
+  //     </Form>
+  //   </Segment>
+  // }
 
   setLeavingHousehold = () => {
     this.setState({
@@ -230,9 +227,9 @@ class HouseholdContainer extends Component {
     })
   }
 
-  renderLeavingHouseholdHeader = () => {
-    return <Button color="red" size="mini" style={{marginTop: "0.5%"}} onClick={this.setLeavingHousehold}>Leave Household</Button>
-  }
+  // renderLeavingHouseholdHeader = () => {
+  //   return <Button color="red" size="mini" style={{marginTop: "0.5%"}} onClick={this.setLeavingHousehold}>Leave Household</Button>
+  // }
 
   renderLeavingHouseholdForm = () => {
     return <Segment clearing raised>
@@ -249,7 +246,7 @@ class HouseholdContainer extends Component {
   }
 
   leaveHousehold = () => {
-    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.state.user.id}/${this.props.state.household.id}`,{
+    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.user.id}/${this.props.household.id}`,{
       method:"DELETE",
       headers:{
         'Content-Type':'application/json',
@@ -257,8 +254,8 @@ class HouseholdContainer extends Component {
       },
       body:JSON.stringify({
         leave:{
-          user_id: this.props.state.user.id,
-          household_id: this.props.state.household.id,
+          user_id: this.props.user.id,
+          household_id: this.props.household.id,
           password: this.state.householdPassword
         }
       })
@@ -278,12 +275,12 @@ class HouseholdContainer extends Component {
       <>
         <Segment raised clearing style={{margin:'1%', minWidth:'50vw'}}>
 
-          {this.props.state.currentSpace && this.props.state.currentSpace.hasOwnProperty('id') ? null :
+          {this.props.space && this.props.space.hasOwnProperty('id') ? null :
           <>
 
           <div className='d-flex justify-content-between'>
             <div className='d-flex flex-row'>
-              <span className='font-weight-bold big-font' onClick={()=>this.props.setCurrentHousehold(this.props.state.household)}>{this.props.state.household.name}</span><Image floated="left" src={this.props.state.household.image} size="mini" style={{height:'40px', width:'40px', paddingLeft:'5%'}}/>
+              <span className='font-weight-bold big-font' onClick={()=>this.props.setCurrentHousehold(this.props.household)}>{this.props.household.name}</span><Image floated="left" src={this.props.household.image} size="mini" style={{height:'40px', width:'40px', paddingLeft:'5%'}}/>
             </div>
             <div className='d-flex'>
               <Dropdown floated="right" pointing="top right" style={{}} text="Household">
@@ -296,11 +293,13 @@ class HouseholdContainer extends Component {
             </div>
           </div>
 
-
-            {this.state.editingHousehold ? this.renderEditHouseholdForm() : null}
+            {this.state.editingHousehold ? <EditHouseholdForm
+              setEditingHousehold={this.setEditingHousehold}
+              household={this.props.household}
+              /> : null}
 
             {this.state.addingSpace ? this.renderAddSpaceForm() : null}
-            
+
             {this.state.leavingHousehold ? this.renderLeavingHouseholdForm() : null}
           </>
         }
@@ -314,7 +313,12 @@ class HouseholdContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { state }
+  return {
+    user: state.user,
+    household: state.household,
+    space: state.space,
+    container: state.container
+   }
 }
 
 const mapDispatchToProps = (dispatch) =>{

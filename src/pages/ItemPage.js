@@ -34,26 +34,10 @@ class ItemPage extends Component {
 
     this.props.setItem(id);
 
-      // fetch(`${apiEndpoint}/items/${this.props.match.params.id}`,{
-      //   method: "GET",
-      //   headers: { Authorization:  localStorage.getItem("token") }
-      // })
-      // .then(resp=>resp.json())
-      // .then(item=>{
-      //   this.setState({
-      //     itemName: item.name,
-      //     itemDescription: item.description,
-      //     itemContainer_id: item.container.id,
-      //     itemSpace_id: item.space.id,
-      //     itemHousehold_id: item.household.id,
-      //     itemContainerName: item.container.name,
-      //     itemSpaceName: item.space.name
-      //   })
-      // })
 
   }
 
-
+  
   renderOwners = () => {
     if (this.props.item.users) {
       if (this.props.item.users.length === 0) {

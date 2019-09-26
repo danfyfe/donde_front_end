@@ -8,6 +8,10 @@ const householdReducer = ( state = defaultState, action) => {
 
       return {...action.payload}
 
+    case 'EDIT_HOUSEHOLD':
+
+      return {...action.payload}
+      
     default:
     return state
   }

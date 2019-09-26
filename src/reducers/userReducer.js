@@ -9,22 +9,22 @@ const usersReducer = (state = defaultState, action) => {
 
     case 'ADD_HOUSEHOLD':
 
-      return {...state, households: [...state.households, action.payload]}
+      return {...state, households: [action.payload, ...state.households]}
 
-    case 'AUTHENTICATING_USER':
-
-      return {...state, authenticatingUser:true}
-    case 'AUTHENTICATED_USER':
-
-    return {...state, authenticatingUser:false}
-
-    case 'FAILED_LOGIN':
-      return {
-        ...state,
-        failedLogin:true,
-        error: action.payload,
-        authenticatingUser: false
-      }
+    // case 'AUTHENTICATING_USER':
+    //
+    //   return {...state, authenticatingUser:true}
+    // case 'AUTHENTICATED_USER':
+    //
+    // return {...state, authenticatingUser:false}
+    //
+    // case 'FAILED_LOGIN':
+    //   return {
+    //     ...state,
+    //     failedLogin:true,
+    //     error: action.payload,
+    //     authenticatingUser: false
+    //   }
       default:
       return state
   }

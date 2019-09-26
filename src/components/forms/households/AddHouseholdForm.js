@@ -11,30 +11,8 @@ const AddHouseholdForm = props => {
   const [ householdColor, setHouseholdColor ] = useState('')
   const [ householdImage, setHouseholdImage ] = useState('')
 
-  const { setAddingHousehold, userId, addHousehold, addNewHousehold, newHousehold } = props
+  const { setAddingHousehold, userId, addHousehold } = props
 
-  // const createHousehold = ( householdName, householdPass, householdColor, householdImage, userId ) => {
-  //   fetch(`${apiEndpoint}/households`,{
-  //     method:"POST",
-  //     headers:{
-  //       'Content-Type':'application/json',
-  //       Accept: 'application/json'
-  //     },
-  //     body:JSON.stringify({
-  //       household:{
-  //         name: householdName,
-  //         password: householdPass,
-  //         color: householdColor,
-  //         image: householdImage
-  //       },
-  //       user_id: userId
-  //     })
-  //   }).then(resp=>resp.json())
-  //   .then(household=>{
-  //     addHousehold(household)
-  //     setAddingHousehold(false)
-  //   })
-  // }
 
   const householdColorDefinitions = ['red','orange','yellow','olive','green','teal','blue','violet','purple','pink','brown','grey']
 

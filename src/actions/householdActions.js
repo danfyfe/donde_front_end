@@ -39,3 +39,29 @@ export function createHousehold( householdName, householdPass, householdColor, h
     })
   }
 }
+
+export function editHousehold( householdId, householdName, householdColor, householdImage){
+  return dispatch => {
+    axios({
+      method:"PATCH",
+      url: `${apiEndpoint}/households/${householdId}`,
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization:  localStorage.getItem("token")
+      },
+      data: {
+        household:{
+          id: householdId,
+          name: householdName,
+          color: householdColor,
+          image: householdImage
+        }
+      }
+    })
+    .then( resp =>{
+      // console.log('edit household func',resp.data)
+      return dispatch({type:"EDIT_HOUSEHOLD", payload: resp.data})
+    })
+  }
+}
