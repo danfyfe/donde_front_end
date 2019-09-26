@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Segment, Header, Form, Dropdown, Button, Message, Menu, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import apiEndpoint from '../actions/ApiEndpoint.js'
+import { getUser } from '../actions/userActions.js'
+import { getItem } from '../actions/itemActions.js'
 
 import Search from '../components/Search.js'
 import Loading from '../components/Loading.js'
@@ -26,47 +28,38 @@ class ItemPage extends Component {
   }
 
   componentDidMount(){
-    this.props.isFetching()
-    fetch(`${apiEndpoint}/profile`,{
-      method:"POST",
-      headers: { Authorization:  localStorage.getItem("token") }
-    }).then(resp=>resp.json())
-    .then(user=>{
-      this.props.setUser(user.user)
-    })
-    .then(
-      fetch(`${apiEndpoint}/items/${this.props.match.params.id}`,{
-        method: "GET",
-        headers: { Authorization:  localStorage.getItem("token") }
-      })
-      .then(resp=>resp.json())
-      .then(item=>{
-        // console.log(item)
-        this.setState({
-          itemName: item.name,
-          itemDescription: item.description,
-          itemContainer_id: item.container.id,
-          itemSpace_id: item.space.id,
-          itemHousehold_id: item.household.id,
-          itemContainerName: item.container.name,
-          itemSpaceName: item.space.name
-        })
+    const { id } = this.props.match.params
 
-        this.props.setCurrentItem(item)
-        if (this.props.state.currentItem) {
-          this.props.isDoneFetching()
-        }
-      })
-    )
+    this.props.setUser();
+
+    this.props.setItem(id);
+
+      // fetch(`${apiEndpoint}/items/${this.props.match.params.id}`,{
+      //   method: "GET",
+      //   headers: { Authorization:  localStorage.getItem("token") }
+      // })
+      // .then(resp=>resp.json())
+      // .then(item=>{
+      //   this.setState({
+      //     itemName: item.name,
+      //     itemDescription: item.description,
+      //     itemContainer_id: item.container.id,
+      //     itemSpace_id: item.space.id,
+      //     itemHousehold_id: item.household.id,
+      //     itemContainerName: item.container.name,
+      //     itemSpaceName: item.space.name
+      //   })
+      // })
+
   }
 
 
   renderOwners = () => {
-    if (this.props.state.currentItem.users) {
-      if (this.props.state.currentItem.users.length === 0) {
+    if (this.props.item.users) {
+      if (this.props.item.users.length === 0) {
         return <Message>This item currently has no owners! Click Add Owners to give it some!</Message>
       } else {
-        return this.props.state.currentItem.users.map(user => {
+        return this.props.item.users.map(user => {
           return <Segment key={user.id}>
             <div className='d-flex justify-content-between'>
               <span className='font-weight-bold'>{user.username}</span>
@@ -80,17 +73,17 @@ class ItemPage extends Component {
   }
 
   renderDescription = () => {
-    if (this.props.state.currentItem) {
-      return <Header>{this.props.state.currentItem.description}</Header>
+    if (this.props.item) {
+      return <Header>{this.props.item.description}</Header>
     }
   }
 
   renderLocationDetails = () => {
-    if (this.props.state.currentItem.household && this.props.state.currentItem.container && this.props.state.currentItem.space) {
+    if (this.props.item.household && this.props.item.container && this.props.item.space) {
       return <>
-      <Header as="h4" floated="left" color="grey">in {this.props.state.currentItem.container.name}</Header>
-      <Header as="h4" floated="left" color="grey">in {this.props.state.currentItem.space.name}</Header>
-      <Header as="h4" floated="left" color="grey">at {this.props.state.currentItem.household.name}</Header>
+      <Header as="h4" floated="left" color="grey">in {this.props.item.container.name}</Header>
+      <Header as="h4" floated="left" color="grey">in {this.props.item.space.name}</Header>
+      <Header as="h4" floated="left" color="grey">at {this.props.item.household.name}</Header>
       </>
     }
   }
@@ -170,10 +163,10 @@ class ItemPage extends Component {
   }
 
   renderMovingForm = () => {
-    if (this.props.state.user.households && this.props.state.currentItem) {
+    if (this.props.user.households && this.props.item) {
 
-      const itemHousehold = this.props.state.user.households.filter(household => {
-        return household.id === this.props.state.currentItem.household.id
+      const itemHousehold = this.props.user.households.filter(household => {
+        return household.id === this.props.item.household.id
       })[0]
 
 
@@ -214,7 +207,7 @@ class ItemPage extends Component {
   }
 
   moveItem = () => {
-    fetch(`${apiEndpoint}/items/${this.props.state.currentItem.id}`,{
+    fetch(`${apiEndpoint}/items/${this.props.item.id}`,{
       method:"PATCH",
       headers:{
         'Content-Type':'application/json',
@@ -226,11 +219,11 @@ class ItemPage extends Component {
           household_id: this.state.itemHousehold_id,
           space_id: this.state.itemSpace_id,
           container_id: this.state.itemContainer_id,
-          id: this.props.state.currentItem.id,
+          id: this.props.item.id,
           name: this.state.itemName,
           description: this.state.itemDescription
         },
-        user_id: this.props.state.user.id
+        user_id: this.props.user.id
       })
     }).then(resp=>resp.json())
     .then(updatedItem => {
@@ -248,7 +241,7 @@ class ItemPage extends Component {
   }
 
   deleteItem = () => {
-    fetch(`${apiEndpoint}/items/${this.props.state.currentItem.id}`,{
+    fetch(`${apiEndpoint}/items/${this.props.item.id}`,{
       method:"DELETE",
       headers:{
         'Content-Type':'application/json',
@@ -257,7 +250,7 @@ class ItemPage extends Component {
       },
       body:JSON.stringify({
         householdPassword: this.state.householdPassword,
-        userId: this.props.state.user.id
+        userId: this.props.user.id
       })
     }).then(resp=>resp.json())
     .then(data => {
@@ -304,9 +297,9 @@ class ItemPage extends Component {
 
       let currentItemHousehold = {}
 
-      if (this.props.state.user.households && this.props.state.currentItem.household) {
-        currentItemHousehold = this.props.state.user.households.filter(household => {
-          return household.id === this.props.state.currentItem.household.id
+      if (this.props.user.households && this.props.item.household) {
+        currentItemHousehold = this.props.user.households.filter(household => {
+          return household.id === this.props.item.household.id
         })[0]
 
       }
@@ -349,7 +342,7 @@ class ItemPage extends Component {
 
     addOwners = () => {
       this.props.isFetching()
-      fetch(`${apiEndpoint}/items/owners/${this.props.state.currentItem.id}`,{
+      fetch(`${apiEndpoint}/items/owners/${this.props.item.id}`,{
         method:"PATCH",
         headers:{
           'Content-Type':'application/json',
@@ -358,7 +351,7 @@ class ItemPage extends Component {
         },
         body:JSON.stringify({
           item:{
-            id: this.props.state.currentItem.id
+            id: this.props.item.id
           },
           users_ids: this.state.addingOwnersIds
         })
@@ -371,7 +364,7 @@ class ItemPage extends Component {
           addingOwners: !this.state.addingOwners
         })
 
-        if (this.props.state.currentItem) {
+        if (this.props.item) {
           this.setState({
             statusMessage: "Owners succesfully added!"
           })
@@ -383,7 +376,7 @@ class ItemPage extends Component {
 
     removeOwner = (userId) => {
       this.props.isFetching()
-      fetch(`${apiEndpoint}/items/owners/${this.props.state.currentItem.id}/${userId}`,{
+      fetch(`${apiEndpoint}/items/owners/${this.props.item.id}/${userId}`,{
         method:"DELETE",
         headers:{
           'Content-Type':'application/json',
@@ -393,7 +386,7 @@ class ItemPage extends Component {
         },
         body:JSON.stringify({
           item:{
-            id: this.props.state.currentItem.id
+            id: this.props.item.id
           },
           user_id: userId
         })
@@ -402,7 +395,7 @@ class ItemPage extends Component {
 
         this.props.setCurrentItem(item)
 
-        if (this.props.state.currentItem) {
+        if (this.props.item) {
           this.setState({
             statusMessage: "Owners succesfully removed!"
           })
@@ -429,10 +422,10 @@ class ItemPage extends Component {
     }
 
     redirectToHousehold = () => {
-      if (this.props.state.currentItem) {
+      if (this.props.item) {
         this.props.setCurrentSpace({})
         this.props.setCurrentContainer({})
-        this.props.history.push(`/households/${this.props.state.currentItem.household.id}`)
+        this.props.history.push(`/households/${this.props.item.household.id}`)
       }
     }
 
@@ -442,21 +435,23 @@ class ItemPage extends Component {
 
   render(){
 
+    const { user, searching, item } = this.props
+
     return(
       <>
       {this.setStatusMessageToNothing()}
-      {this.props.state.isDoneFetching ?
-        <>{this.props.state.searching ? <Search history={this.props.history}/> : null}
+      {true ?
+        <>{searching ? <Search history={this.props.history}/> : null}
 
       <Menu style={{marginTop: "0px"}}>
-        <Header style={{padding:"10px"}}>Welcome,  {this.props.state.user.username}!</Header>
+        <Header style={{padding:"10px"}}>Welcome,  {user.username}!</Header>
       </Menu>
 
       <Segment clearing raised style={{margin:"1% auto",width:"98%", minHeight:"500px", backgroundColor:"#f7f7f7"}}>
         {this.state.statusMessage !== "" ? this.renderStatusMessage() : null}
         <Segment clearing>
         <div className='d-flex justify-content-between'>
-            <span className='font-weight-bold huge-font'>{this.props.state.currentItem.name}</span>
+            <span className='font-weight-bold huge-font'>{this.props.item.name}</span>
             <Button floated="right" color="blue" size="mini" style={{}} onClick={this.redirectToHousehold}>Return to Household</Button>
           </div>
         </Segment>
@@ -496,24 +491,28 @@ class ItemPage extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return { state }
+const mapStateToProps = state => {
+  return {
+    item: state.item,
+    user: state.user,
+    searching: state.app.searching
+   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return {
-      setUser: (user) => dispatch({type:"SET_USER", user}),
-      setHouseholds: (households) => dispatch({type:"SET_HOUSEHOLDS", households}),
-      addHousehold: (household) => dispatch({type:"ADD_HOUSEHOLD", household}),
-      setUserHouseholdMessages: (allMessages) => dispatch({type:"SET_USERHOUSEHOLDMESSAGES", allMessages}),
-      addMessage: (message) => dispatch({type:"ADD_MESSAGE", message}),
-      setCurrentItem: (item) => dispatch({type:"SET_CURRENT_ITEM", item}),
-      isFetching: () => dispatch({type:"IS_FETCHING"}),
-      isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"}),
-      setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE"}),
-      setCurrentContainer: (container) => dispatch({type:"SET_CURRENT_CONTAINER", container}),
-      setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
-      itemDeleteConfirmation: () => dispatch({type:"ITEM_DELETE_CONFIRMATION"})
+      setUser: () => dispatch(getUser()),
+      setItem: (itemId) => dispatch(getItem(itemId)),
+      // setHouseholds: (households) => dispatch({type:"SET_HOUSEHOLDS", households}),
+      // addHousehold: (household) => dispatch({type:"ADD_HOUSEHOLD", household}),
+      // setUserHouseholdMessages: (allMessages) => dispatch({type:"SET_USERHOUSEHOLDMESSAGES", allMessages}),
+      // addMessage: (message) => dispatch({type:"ADD_MESSAGE", message}),
+      // isFetching: () => dispatch({type:"IS_FETCHING"}),
+      // isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"}),
+      // setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE", space}),
+      // setCurrentContainer: (container) => dispatch({type:"SET_CURRENT_CONTAINER", container}),
+      // setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
+      // itemDeleteConfirmation: () => dispatch({type:"ITEM_DELETE_CONFIRMATION"})
     }
 }
 
