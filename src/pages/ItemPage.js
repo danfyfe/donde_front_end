@@ -37,7 +37,7 @@ class ItemPage extends Component {
 
   }
 
-  
+
   renderOwners = () => {
     if (this.props.item.users) {
       if (this.props.item.users.length === 0) {
@@ -419,7 +419,7 @@ class ItemPage extends Component {
 
   render(){
 
-    const { user, searching, item } = this.props
+    const { user, searching } = this.props
 
     return(
       <>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Segment, Card, Message } from 'semantic-ui-react'
+// import {  Card, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 function ContainerCard(props){

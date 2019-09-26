@@ -1,16 +1,7 @@
-import React, { Component } from 'react'
-import { Segment, List, Message, Button, Form } from 'semantic-ui-react'
+import React from 'react'
+// import { Message} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-// import { setSpace } from '../actions/setSpace.js'
-
-
-let API_ENDPOINT
-if (process.env.NODE_ENV === 'production') {
-  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
-} else {
-  API_ENDPOINT = 'http://localhost:3000'
-}
 
 const SpaceCard = props => {
 
@@ -39,15 +30,15 @@ const SpaceCard = props => {
   //   })
   // }
 
-  const renderNoContainersMessage = () => {
-    return <Message className='small-font'style={{margin:'0'}} warning>This space has no containers! Click this card to view this space and add one!</Message>
-  }
+  // const renderNoContainersMessage = () => {
+  //   return <Message className='small-font'style={{margin:'0'}} warning>This space has no containers! Click this card to view this space and add one!</Message>
+  // }
 
   const setCurrentSpaceAndContainerToNone = (space) => {
     props.setCurrentSpace(space)
     props.setCurrentContainer({})
   }
-  
+
   return(
     <div className='df-card' onClick={() => {setCurrentSpaceAndContainerToNone(props.space)}} >
       <span className='font-weight-bold small-padding'>{props.space.name}</span>
@@ -69,7 +60,7 @@ const SpaceCard = props => {
 const mapStateToProps = (state) => {
   return {
     state
-   }
+  }
 }
 
 const mapDispatchToProps = (dispatch) =>{

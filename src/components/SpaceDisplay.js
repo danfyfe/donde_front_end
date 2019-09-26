@@ -163,7 +163,7 @@ class Space extends Component {
       })
     }).then(resp=>resp.json())
     .then(updatedSpace =>{
-      console.log('updated space', updatedSpace)
+      // console.log('updated space', updatedSpace)
       this.props.updateSpace(updatedSpace)
       this.props.setCurrentSpace(updatedSpace)
 
@@ -204,7 +204,7 @@ class Space extends Component {
   render(){
 
     const { space, container, household } = this.props
-    console.log('space display',container)
+    // console.log('space display',container)
     return(
       <>
       <div style={{minHeight:'500px'}}>
