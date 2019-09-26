@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import SpacesContainer from './SpacesContainer.js'
 import EditHouseholdForm from '../components/forms/households/EditHouseholdForm.js'
 import JoinOrLeaveHouseholdForm from '../components/forms/households/JoinOrLeaveHouseholdForm.js'
+import AddSpaceForm from '../components/forms/spaces/AddSpaceForm.js'
 
 
 let API_ENDPOINT
@@ -232,46 +233,45 @@ class HouseholdContainer extends Component {
   //   return <Button color="red" size="mini" style={{marginTop: "0.5%"}} onClick={this.setLeavingHousehold}>Leave Household</Button>
   // }
 
-  renderLeavingHouseholdForm = () => {
-    return <Segment clearing raised>
-      <Form>
-        <Form.Field>
-          <title>Password</title>
-          <input type="password" name="householdPassword" onChange={this.handleInput} placeholder="Please enter Household Password"/>
-        </Form.Field>
-        <Button floated="right" size="mini"
-        onClick={this.setLeavingHousehold}>Cancel</Button>
-        <Button floated="right" size="mini" onClick={this.leaveHousehold} color="red">Leave Household</Button>
-      </Form>
-    </Segment>
-  }
-
-  leaveHousehold = () => {
-    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.user.id}/${this.props.household.id}`,{
-      method:"DELETE",
-      headers:{
-        'Content-Type':'application/json',
-        Accept: 'application/json'
-      },
-      body:JSON.stringify({
-        leave:{
-          user_id: this.props.user.id,
-          household_id: this.props.household.id,
-          password: this.state.householdPassword
-        }
-      })
-    }).then(resp=>resp.json())
-    .then(household=>{
-      this.setState({
-        leavingHousehold: !this.state.leavingHousehold
-      })
-      this.props.history.push('/')
-    })
-
-  }
+  // renderLeavingHouseholdForm = () => {
+  //   return <Segment clearing raised>
+  //     <Form>
+  //       <Form.Field>
+  //         <title>Password</title>
+  //         <input type="password" name="householdPassword" onChange={this.handleInput} placeholder="Please enter Household Password"/>
+  //       </Form.Field>
+  //       <Button floated="right" size="mini"
+  //       onClick={this.setLeavingHousehold}>Cancel</Button>
+  //       <Button floated="right" size="mini" onClick={this.leaveHousehold} color="red">Leave Household</Button>
+  //     </Form>
+  //   </Segment>
+  // }
+  //
+  // leaveHousehold = () => {
+  //   fetch(`${API_ENDPOINT}/api/v1/households/${this.props.user.id}/${this.props.household.id}`,{
+  //     method:"DELETE",
+  //     headers:{
+  //       'Content-Type':'application/json',
+  //       Accept: 'application/json'
+  //     },
+  //     body:JSON.stringify({
+  //       leave:{
+  //         user_id: this.props.user.id,
+  //         household_id: this.props.household.id,
+  //         password: this.state.householdPassword
+  //       }
+  //     })
+  //   }).then(resp=>resp.json())
+  //   .then(household=>{
+  //     this.setState({
+  //       leavingHousehold: !this.state.leavingHousehold
+  //     })
+  //     this.props.history.push('/')
+  //   })
+  //
+  // }
 
   render(){
-    // console.log(this.props.household.id)
     return(
       <>
         <Segment raised clearing style={{margin:'1%', minWidth:'50vw'}}>
@@ -299,11 +299,16 @@ class HouseholdContainer extends Component {
               household={this.props.household}
               /> : null}
 
-            {this.state.addingSpace ? this.renderAddSpaceForm() : null}
+            {this.state.addingSpace ? <AddSpaceForm
+              householdId={this.props.household.id}
+              setAddingSpace={this.setAddingSpace}
+              />: null}
 
-            {this.state.leavingHousehold ? <JoinOrLeaveHouseholdForm type={"leave"}
-            householdId={this.props.household.id} userId={this.props.user.id}
-            setLeavingHousehold={this.setLeavingHousehold} />: null}
+            {this.state.leavingHousehold ? <JoinOrLeaveHouseholdForm
+              type={"leave"}
+              householdId={this.props.household.id}
+              householdName={this.props.household.name}
+              setLeavingHousehold={this.setLeavingHousehold} />: null}
           </>
         }
 

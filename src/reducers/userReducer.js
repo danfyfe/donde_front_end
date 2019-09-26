@@ -4,7 +4,7 @@ const defaultState = {
 const usersReducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'SET_CURRENT_USER':
-      // console.log('inside usr reducer', action.payload)
+    
       return {...action.payload}
 
     case 'ADD_HOUSEHOLD':
@@ -23,7 +23,7 @@ const usersReducer = (state = defaultState, action) => {
         return household.id !== leftHousehold.id
       })
 
-      
+
       return {...state, households: [...newHouseholds]}
 
     // case 'AUTHENTICATING_USER':

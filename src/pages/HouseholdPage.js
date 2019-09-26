@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { Segment, Menu, Header, Message, Button, Form } from 'semantic-ui-react'
+import { Segment, Menu, Header, Message, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { getUser } from '../actions/userActions.js'
 import { getCurrentHousehold } from '../actions/householdActions.js'
@@ -10,18 +10,10 @@ import Search from '../components/Search.js'
 import Loading from '../components/Loading.js'
 import JoinOrLeaveHouseholdForm from '../components/forms/households/JoinOrLeaveHouseholdForm.js'
 
-let API_ENDPOINT
-if (process.env.NODE_ENV === 'production') {
-  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
-} else {
-  API_ENDPOINT = 'http://localhost:3000'
-}
-
 class HouseholdPage extends Component {
 
   state = {
-    joingingHousehold: false,
-    householdPassword: ""
+    joingingHousehold: false
   }
 
   componentDidMount(){
@@ -29,7 +21,6 @@ class HouseholdPage extends Component {
     this.props.setUser()
     this.props.setCurrentHousehold(id)
   }
-
 
   isUsersHousehold = () => {
     let isUserHousehold
@@ -61,60 +52,6 @@ class HouseholdPage extends Component {
   renderJoinHouseholdHeader = () => {
     return <Button onClick={this.setJoiningHousehold} color="blue" floated="right" size="mini">Join Household</Button>
   }
-
-  // renderJoinHouseholdForm = () => {
-  //   return <>
-  //     <Form>
-  //       <Form.Field>
-  //         <label>Password</label>
-  //         <input type="password" name="householdPassword" onChange={this.handleInput} placeholder="Please enter Household Password"/>
-  //       </Form.Field>
-  //       <Button floated="right" size="mini"
-  //       onClick={this.setJoiningHousehold}>Cancel</Button>
-  //       <Button floated="right" size="mini" onClick={this.joinHousehold}>Submit</Button>
-  //     </Form>
-  //     </>
-  // }
-
-  // joinHousehold = () => {
-  //   fetch(`${API_ENDPOINT}/api/v1/households/${this.props.user.id}/${this.props.household.id}`,{
-  //     method:"POST",
-  //     headers:{
-  //       'Content-Type':'application/json',
-  //       Accept: 'application/json'
-  //     },
-  //     body:JSON.stringify({
-  //       join:{
-  //         user_id: this.props.user.id,
-  //         household_id: this.props.household.id,
-  //         password: this.state.householdPassword
-  //       }
-  //     })
-  //   }).then(resp=>resp.json())
-  //   .then(household=>{
-  //     this.props.addHouseholdToCurrentUser(household)
-  //
-  //     this.setState({
-  //       joiningHousehold: !this.state.joiningHousehold,
-  //       household: household
-  //     })
-  //
-  //     this.props.history.push(`/households/${household.id}`)
-  //
-  //   })
-  // }
-
-  // renderDeleteConfirmationMessage = () => {
-  //   return <Message floated="center" style={{textAlign:"center", margin:"1% 5%"}} warning>{this.props.itemDeleteConfirmationMessage}</Message>
-  // }
-  //
-  // setItemDeleteConfirmationMessageToNothing = () => {
-  //   if (this.props.itemDeleteConfirmationMessage !== "") {
-  //     setTimeout(()=>{
-  //       this.props.itemDeleteConfirmationToNothing()
-  //     },3000)
-  //   }
-  // }
 
   render(){
     if (!localStorage.token || localStorage.token === "undefined") {
@@ -173,11 +110,11 @@ const mapDispatchToProps = dispatch =>{
 
 
 
-    isFetching: () => dispatch({type:"IS_FETCHING"}),
-    isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"}),
-    isUsersHousehold: () => dispatch({type:"IS_USERS_HOUSEHOLD"}),
-    addHouseholdToCurrentUser: (household) => dispatch({type:"ADD_HOUSEHOLD_TO_CURRENT_USER", household}),
-    itemDeleteConfirmationToNothing: () => dispatch({type:"ITEM_DELETE_CONFIRMATION_TO_NOTHING"})
+    // isFetching: () => dispatch({type:"IS_FETCHING"}),
+    // isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"}),
+    // isUsersHousehold: () => dispatch({type:"IS_USERS_HOUSEHOLD"}),
+    // addHouseholdToCurrentUser: (household) => dispatch({type:"ADD_HOUSEHOLD_TO_CURRENT_USER", household}),
+    // itemDeleteConfirmationToNothing: () => dispatch({type:"ITEM_DELETE_CONFIRMATION_TO_NOTHING"})
   }
 }
 

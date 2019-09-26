@@ -1,5 +1,4 @@
 const defaultState = {
-
 }
 
 const householdReducer = ( state = defaultState, action) => {
@@ -12,7 +11,9 @@ const householdReducer = ( state = defaultState, action) => {
 
       return {...action.payload}
 
-    
+    case 'ADD_SPACE':
+
+      return {...state, spaces: [ action.payload, ...action.space ] }
     default:
     return state
   }

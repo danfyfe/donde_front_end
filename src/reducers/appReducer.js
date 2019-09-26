@@ -51,9 +51,9 @@ function appReducer (state = defaultState, action){
 
       return {...state, user: {...state.user, households:[...state.user.households, action.household]}}
 
-    case "ADD_SPACE":
-
-      return {...state, currentHousehold:{...state.currentHousehold, spaces:[...state.currentHousehold.spaces,action.space]}}
+    // case "ADD_SPACE":
+    //
+    //   return {...state, currentHousehold:{...state.currentHousehold, spaces:[...state.currentHousehold.spaces,action.space]}}
 
     case "UPDATE_SPACE":
         let spaceToBeUpdated = state.currentHousehold.spaces.find(space => {
