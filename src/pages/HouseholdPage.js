@@ -8,6 +8,7 @@ import HouseholdContainer from '../containers/HouseholdContainer.js'
 import HouseholdMessagesContainer from '../containers/HouseholdMessagesContainer.js'
 import Search from '../components/Search.js'
 import Loading from '../components/Loading.js'
+import JoinOrLeaveHouseholdForm from '../components/forms/households/JoinOrLeaveHouseholdForm.js'
 
 let API_ENDPOINT
 if (process.env.NODE_ENV === 'production') {
@@ -61,59 +62,59 @@ class HouseholdPage extends Component {
     return <Button onClick={this.setJoiningHousehold} color="blue" floated="right" size="mini">Join Household</Button>
   }
 
-  renderJoinHouseholdForm = () => {
-    return <>
-      <Form>
-        <Form.Field>
-          <label>Password</label>
-          <input type="password" name="householdPassword" onChange={this.handleInput} placeholder="Please enter Household Password"/>
-        </Form.Field>
-        <Button floated="right" size="mini"
-        onClick={this.setJoiningHousehold}>Cancel</Button>
-        <Button floated="right" size="mini" onClick={this.joinHousehold}>Submit</Button>
-      </Form>
-      </>
-  }
+  // renderJoinHouseholdForm = () => {
+  //   return <>
+  //     <Form>
+  //       <Form.Field>
+  //         <label>Password</label>
+  //         <input type="password" name="householdPassword" onChange={this.handleInput} placeholder="Please enter Household Password"/>
+  //       </Form.Field>
+  //       <Button floated="right" size="mini"
+  //       onClick={this.setJoiningHousehold}>Cancel</Button>
+  //       <Button floated="right" size="mini" onClick={this.joinHousehold}>Submit</Button>
+  //     </Form>
+  //     </>
+  // }
 
-  joinHousehold = () => {
-    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.user.id}/${this.props.household.id}`,{
-      method:"POST",
-      headers:{
-        'Content-Type':'application/json',
-        Accept: 'application/json'
-      },
-      body:JSON.stringify({
-        join:{
-          user_id: this.props.user.id,
-          household_id: this.props.household.id,
-          password: this.state.householdPassword
-        }
-      })
-    }).then(resp=>resp.json())
-    .then(household=>{
-      this.props.addHouseholdToCurrentUser(household)
+  // joinHousehold = () => {
+  //   fetch(`${API_ENDPOINT}/api/v1/households/${this.props.user.id}/${this.props.household.id}`,{
+  //     method:"POST",
+  //     headers:{
+  //       'Content-Type':'application/json',
+  //       Accept: 'application/json'
+  //     },
+  //     body:JSON.stringify({
+  //       join:{
+  //         user_id: this.props.user.id,
+  //         household_id: this.props.household.id,
+  //         password: this.state.householdPassword
+  //       }
+  //     })
+  //   }).then(resp=>resp.json())
+  //   .then(household=>{
+  //     this.props.addHouseholdToCurrentUser(household)
+  //
+  //     this.setState({
+  //       joiningHousehold: !this.state.joiningHousehold,
+  //       household: household
+  //     })
+  //
+  //     this.props.history.push(`/households/${household.id}`)
+  //
+  //   })
+  // }
 
-      this.setState({
-        joiningHousehold: !this.state.joiningHousehold,
-        household: household
-      })
-
-      this.props.history.push(`/households/${household.id}`)
-
-    })
-  }
-
-  renderDeleteConfirmationMessage = () => {
-    return <Message floated="center" style={{textAlign:"center", margin:"1% 5%"}} warning>{this.props.itemDeleteConfirmationMessage}</Message>
-  }
-
-  setItemDeleteConfirmationMessageToNothing = () => {
-    if (this.props.itemDeleteConfirmationMessage !== "") {
-      setTimeout(()=>{
-        this.props.itemDeleteConfirmationToNothing()
-      },3000)
-    }
-  }
+  // renderDeleteConfirmationMessage = () => {
+  //   return <Message floated="center" style={{textAlign:"center", margin:"1% 5%"}} warning>{this.props.itemDeleteConfirmationMessage}</Message>
+  // }
+  //
+  // setItemDeleteConfirmationMessageToNothing = () => {
+  //   if (this.props.itemDeleteConfirmationMessage !== "") {
+  //     setTimeout(()=>{
+  //       this.props.itemDeleteConfirmationToNothing()
+  //     },3000)
+  //   }
+  // }
 
   render(){
     if (!localStorage.token || localStorage.token === "undefined") {
@@ -121,7 +122,7 @@ class HouseholdPage extends Component {
     }
     return(
       <>
-      {this.setItemDeleteConfirmationMessageToNothing()}
+      {/*this.setItemDeleteConfirmationMessageToNothing()*/}
         {this.props.user ?
           <>
 
@@ -144,7 +145,8 @@ class HouseholdPage extends Component {
                 <Header>{this.props.household.name}</Header>
                 <Message warning><Header>You must join this household to view its details!</Header>
                 </Message>
-                  {this.state.joiningHousehold ? this.renderJoinHouseholdForm() : this.renderJoinHouseholdHeader()}
+                  {this.state.joiningHousehold ? <JoinOrLeaveHouseholdForm type={'join'} householdId={this.props.household.id} userId={this.props.user.id}
+                  setJoiningHousehold={this.setJoiningHousehold}/> : this.renderJoinHouseholdHeader()}
               </Segment>
             }
           </Segment>
@@ -157,7 +159,6 @@ class HouseholdPage extends Component {
 }
 
 const mapStateToProps = state => {
-  // console.log('mapStateToProps state', state)
   return {
     user: state.user,
     household: state.household,

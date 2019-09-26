@@ -11,6 +11,10 @@ const usersReducer = (state = defaultState, action) => {
 
       return {...state, households: [action.payload, ...state.households]}
 
+    case 'JOIN_HOUSEHOLD':
+      // console.log(action.payload)
+      return {...state, households: [action.payload, ...state.households]}
+
     // case 'AUTHENTICATING_USER':
     //
     //   return {...state, authenticatingUser:true}

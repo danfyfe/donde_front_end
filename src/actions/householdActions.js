@@ -65,3 +65,26 @@ export function editHousehold( householdId, householdName, householdColor, house
     })
   }
 }
+
+export function joinHousehold(userId, householdId, householdPass){
+  return dispatch => {
+    axios({
+      method:"POST",
+      url: `${apiEndpoint}/households/${userId}/${householdId}`,
+      headers:{
+        'Content-Type':'application/json',
+        Accept: 'application/json'
+      },
+      data: {
+        join:{
+          user_id: userId,
+          household_id: householdId,
+          password: householdPass
+        }
+      }
+    })
+    .then( resp =>{
+      return dispatch({type:'JOIN_HOUSEHOLD', payload: resp.data})
+    })
+  }
+}
