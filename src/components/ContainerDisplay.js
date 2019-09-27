@@ -250,7 +250,7 @@ class Container extends Component {
     return(
       <>
         {this.state.errorMessage !== "" ? this.renderErrorMessage() : null}
-      <div style={{minHeight:"500px"}}>
+      <div style={{minHeight:"200px"}}>
           <>
 
           <div className='d-flex justify-content-between'>

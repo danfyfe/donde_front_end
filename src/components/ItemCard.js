@@ -19,16 +19,18 @@ class ItemCard extends Component {
     return(
       <>
 
-      <Card link style={{margin:"5% auto", height:"100%",width:"100%"}} onClick={()=>this.props.redirectToItemPage(this.props.item)}>
-        <Card.Content header={this.props.item.name}/>
-
-
-        <Card.Content meta={this.props.item.space.name + " :: " + this.props.item.container.name}/>
+      <div className='df-card'style={{margin:"5% auto", height:"100%",width:"100%"}} onClick={()=>this.props.redirectToItemPage(this.props.item)}>
+        {/*<Card.Content header={this.props.item.name}/>*/}
+        <div className='font-weight-bold small-padding text-center m-auto'>{this.props.item.name}</div>
+        {/*<hr width={"75%"}/>*/}
+        <div className='text-muted med-padding text-center small-font'>{this.props.item.description}
+        </div>
+      {/*  <Card.Content meta={this.props.item.space.name + " :: " + this.props.item.container.name}/>}
         <Card.Content description={this.props.item.description}/>
-        <Card.Content extra>
+        {/*<Card.Content extra>
           Owners: {this.renderOwners()}
-        </Card.Content>
-      </Card>
+        </Card.Content>*/}
+      </div>
       </>
     )
   }

@@ -210,7 +210,7 @@ class Space extends Component {
 
     return(
       <>
-      <div style={{minHeight:'500px'}}>
+      <div style={{minHeight:'200px'}}>
       {this.state.statusMessage !== "" ? this.renderStatusMessage(): null}
 
       {container && container.hasOwnProperty('id') ? this.renderContainer() :
