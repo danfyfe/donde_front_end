@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { Segment, Form, Button, Message, Dropdown } from 'semantic-ui-react'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import ContainerCard from './ContainerCard.js'
 import ContainerDisplay from './ContainerDisplay.js'
 
 import EditSpaceForm from './forms/spaces/EditSpaceForm.js'
+import DeleteSpaceForm from './forms/spaces/DeleteSpaceForm.js'
 
 let API_ENDPOINT
 if (process.env.NODE_ENV === 'production') {
@@ -121,92 +123,91 @@ class Space extends Component {
     return <Message warning style={{margin: "3% 0 0 0"}}>This space currently has no containers! Click Add Container in the dropdown to give it one!</Message>
   }
 
-  renderEditSpaceForm = () => {
-    return <Segment clearing>
-    <Message header={"Edit " + this.props.state.currentSpace.name} size="mini"/>
-    <Form>
-      <Form.Field>
-        <label>New Name</label>
-        <input onChange={this.handleInput} name="newSpaceName" placeholder={this.props.state.currentSpace.name}/>
-      </Form.Field>
-      <Button onClick={this.setEditingSpace} floated="right" size="mini">Cancel</Button>
-      <Button onClick={this.editSpace} floated="right" size="mini">Submit</Button>
-    </Form>
-    </Segment>
-  }
+  // renderEditSpaceForm = () => {
+  //   return <Segment clearing>
+  //   <Message header={"Edit " + this.props.state.currentSpace.name} size="mini"/>
+  //   <Form>
+  //     <Form.Field>
+  //       <label>New Name</label>
+  //       <input onChange={this.handleInput} name="newSpaceName" placeholder={this.props.state.currentSpace.name}/>
+  //     </Form.Field>
+  //     <Button onClick={this.setEditingSpace} floated="right" size="mini">Cancel</Button>
+  //     <Button onClick={this.editSpace} floated="right" size="mini">Submit</Button>
+  //   </Form>
+  //   </Segment>
+  // }
 
-  renderDeleteSpaceForm = () => {
-    return <Segment clearing>
-    <Message header={"Delete " + this.props.state.currentSpace.name} size="mini"/>
-    <Form>
-      <Form.Field>
-        <label>Household Password</label>
-        <input onChange={this.handleInput} name="householdPassword" type="password" placeholder="Household Password"/>
-      </Form.Field>
-      <Button onClick={this.setDeletingSpace} floated="right" size="mini">Cancel</Button>
-      <Button onClick={this.deleteSpace} floated="right" size="mini" color="red">Delete Space</Button>
-    </Form>
-    </Segment>
-  }
+  // renderDeleteSpaceForm = () => {
+  //   return <Segment clearing>
+  //   <Message header={"Delete " + this.props.state.currentSpace.name} size="mini"/>
+  //   <Form>
+  //     <Form.Field>
+  //       <label>Household Password</label>
+  //       <input onChange={this.handleInput} name="householdPassword" type="password" placeholder="Household Password"/>
+  //     </Form.Field>
+  //     <Button onClick={this.setDeletingSpace} floated="right" size="mini">Cancel</Button>
+  //     <Button onClick={this.deleteSpace} floated="right" size="mini" color="red">Delete Space</Button>
+  //   </Form>
+  //   </Segment>
+  // }
 
-  editSpace = () => {
-    fetch(`${API_ENDPOINT}/api/v1/spaces/${this.props.state.currentSpace.id}`,{
-      method:"PATCH",
-      headers:{
-        'Content-Type':'application/json',
-        Accept: 'application/json'
-      },
-      body:JSON.stringify({
-        space:{
-          id: this.props.state.currentSpace.id,
-          name: this.state.newSpaceName,
-          household_id: this.props.state.currentHousehold.id
-        }
-      })
-    }).then(resp=>resp.json())
-    .then(updatedSpace =>{
-      // console.log('updated space', updatedSpace)
-      this.props.updateSpace(updatedSpace)
-      this.props.setCurrentSpace(updatedSpace)
+  // editSpace = () => {
+  //   fetch(`${API_ENDPOINT}/api/v1/spaces/${this.props.state.currentSpace.id}`,{
+  //     method:"PATCH",
+  //     headers:{
+  //       'Content-Type':'application/json',
+  //       Accept: 'application/json'
+  //     },
+  //     body:JSON.stringify({
+  //       space:{
+  //         id: this.props.state.currentSpace.id,
+  //         name: this.state.newSpaceName,
+  //         household_id: this.props.state.currentHousehold.id
+  //       }
+  //     })
+  //   }).then(resp=>resp.json())
+  //   .then(updatedSpace =>{
+  //     // console.log('updated space', updatedSpace)
+  //     this.props.updateSpace(updatedSpace)
+  //     this.props.setCurrentSpace(updatedSpace)
+  //
+  //     this.setState({
+  //       editingSpace: !this.state.editingSpace
+  //     })
+  //   })
+  // }
 
-      this.setState({
-        editingSpace: !this.state.editingSpace
-      })
-    })
-  }
-
-  deleteSpace = () => {
-    fetch(`${API_ENDPOINT}/api/v1/spaces/${this.props.state.currentSpace.id}`,{
-      method:"DELETE",
-      headers:{
-        'Content-Type':'application/json',
-        Accept: 'application/json'
-      },
-      body:JSON.stringify({
-        space:{
-          id: this.props.state.currentSpace.id,
-        },
-        household_id: this.props.state.currentHousehold.id,
-        household_password: this.state.householdPassword
-      })
-    }).then(resp=>resp.json())
-    .then(household =>{
-      this.setState({
-        deletingSpace: !this.state.deletingSpace,
-      })
-      this.props.setCurrentHousehold(household)
-      this.props.setCurrentSpace({})
-    })
-  }
+  // deleteSpace = () => {
+  //   fetch(`${API_ENDPOINT}/api/v1/spaces/${this.props.state.currentSpace.id}`,{
+  //     method:"DELETE",
+  //     headers:{
+  //       'Content-Type':'application/json',
+  //       Accept: 'application/json'
+  //     },
+  //     body:JSON.stringify({
+  //       space:{
+  //         id: this.props.state.currentSpace.id,
+  //       },
+  //       household_id: this.props.state.currentHousehold.id,
+  //       household_password: this.state.householdPassword
+  //     })
+  //   }).then(resp=>resp.json())
+  //   .then(household =>{
+  //     this.setState({
+  //       deletingSpace: !this.state.deletingSpace,
+  //     })
+  //     this.props.setCurrentHousehold(household)
+  //     this.props.setCurrentSpace({})
+  //   })
+  // }
 
   renderStatusMessage = () => {
     return <Message warning>{this.state.statusMessage}</Message>
   }
 
   render(){
-
     const { space, container, household } = this.props
-    // console.log('space display',container)
+
     return(
       <>
       <div style={{minHeight:'500px'}}>
@@ -237,7 +238,9 @@ class Space extends Component {
       {this.state.addingContainer ? this.renderAddContainerForm() :null}
       {this.state.editingSpace ? <EditSpaceForm
         setEditingSpace={this.setEditingSpace}/> : null}
-      {this.state.deletingSpace ? this.renderDeleteSpaceForm() : null}
+
+      {this.state.deletingSpace ? <DeleteSpaceForm setDeletingSpace={this.setDeletingSpace} /> : null}
+
       {this.renderContainers()}
 
       </>
@@ -261,14 +264,14 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) =>{
   return {
-    setUser: (user) => dispatch({type:"SET_USER", user}),
-    setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
-    addSpace: (space) => dispatch({type:"ADD_SPACE", space}),
+    // setUser: (user) => dispatch({type:"SET_USER", user}),
+    // setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
+    // addSpace: (space) => dispatch({type:"ADD_SPACE", space}),
     setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE", space}),
     addContainer: (container) => dispatch({type:"ADD_CONTAINER", container}),
-    updateSpace: (space) => dispatch({type:"UPDATE_SPACE", space})
+    // updateSpace: (space) => dispatch({type:"UPDATE_SPACE", space})
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Space)
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Space))
 

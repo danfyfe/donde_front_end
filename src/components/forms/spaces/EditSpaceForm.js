@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { Segment, Form, Button, Message, Dropdown } from 'semantic-ui-react'
+import { Segment, Form, Button, Message } from 'semantic-ui-react'
 
 import { connect } from 'react-redux'
 

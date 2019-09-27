@@ -47,3 +47,26 @@ export function editSpace(spaceId, householdId, spaceName){
     })
   }
 }
+
+export function deleteSpace(spaceId, householdId, householdPass){
+  return dispatch => {
+    axios({
+      method:"DELETE",
+      url: `${apiEndpoint}/spaces/${spaceId}`,
+      headers:{
+        'Content-Type':'application/json',
+        Accept: 'application/json'
+      },
+      data:{
+        space:{
+          id: spaceId
+        },
+        household_id: householdId,
+        household_password: householdPass
+      }
+    })
+    .then( resp =>{
+      return dispatch({type:'SET_CURRENT_HOUSEHOLD', payload: resp.data})
+    })
+  }
+}
