@@ -23,3 +23,27 @@ export function addSpace(householdId, spaceName){
     })
   }
 }
+
+export function editSpace(spaceId, householdId, spaceName){
+  return dispatch => {
+    axios({
+      method:"PATCH",
+      url:`${apiEndpoint}/spaces/${spaceId}`,
+      headers:{
+        'Content-Type':'application/json',
+        Accept: 'application/json'
+      },
+      data:{
+        space:{
+          id: spaceId,
+          name: spaceName,
+          household_id: householdId
+        }
+      }
+    })
+    .then( resp =>{
+
+      return dispatch({type:'EDIT_SPACE', payload: resp.data})
+    })
+  }
+}

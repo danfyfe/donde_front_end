@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 import ContainerCard from './ContainerCard.js'
 import ContainerDisplay from './ContainerDisplay.js'
 
+import EditSpaceForm from './forms/spaces/EditSpaceForm.js'
+
 let API_ENDPOINT
 if (process.env.NODE_ENV === 'production') {
   API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
@@ -233,7 +235,8 @@ class Space extends Component {
 
 
       {this.state.addingContainer ? this.renderAddContainerForm() :null}
-      {this.state.editingSpace ? this.renderEditSpaceForm() : null}
+      {this.state.editingSpace ? <EditSpaceForm
+        setEditingSpace={this.setEditingSpace}/> : null}
       {this.state.deletingSpace ? this.renderDeleteSpaceForm() : null}
       {this.renderContainers()}
 
