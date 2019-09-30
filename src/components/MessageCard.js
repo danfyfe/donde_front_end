@@ -81,11 +81,11 @@ class MessageCard extends Component {
           <span style={{paddingRight:'5px', fontSize:'75%'}}>{this.props.message.user.username}</span>
           <Icon name="clock"/>
           <span style={{fontSize:'75%'}}>{moment(this.props.message.created_at).format('MMMM Do YYYY, h:mm a')}</span>
-          {this.state.addingMessage ? null :<Button onClick={this.setAddingMessage}size="mini" floated="right"> Reply </Button>}
+          {/*this.state.addingMessage ? null :<Button onClick={this.setAddingMessage}size="mini" floated="right"> Reply </Button>*/}
           </Card.Meta>
         </Card.Content>
 
-        {this.state.addingMessage ?
+        {/*this.state.addingMessage ?
         <Segment>
           <Message header="Relpy to Message!"/>
           <Form>
@@ -105,7 +105,7 @@ class MessageCard extends Component {
             <Button size='mini'floated="right"
             onClick={this.addMessage}>Submit</Button>
           </Form>
-        </Segment>:null}
+        </Segment>:null*/}
       </Card>
     )
   }

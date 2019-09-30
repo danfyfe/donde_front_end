@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Segment, Card, Form, Icon, Image, Message, Button } from 'semantic-ui-react'
 
 import { connect } from 'react-redux'
+
 import moment from 'moment'
 
 let API_ENDPOINT
@@ -60,7 +61,6 @@ class HouseholdMessageCard extends Component {
         addingMessage: !this.state.addingMessage
       })
     })
-
   }
 
   render(){
@@ -82,7 +82,7 @@ class HouseholdMessageCard extends Component {
           <span style={{fontSize:'75%'}}>{this.props.message.user.username}</span>
           <Icon name="clock"/>
           <span style={{fontSize:'75%'}}>{moment(this.props.message.created_at).format('MMMM Do YYYY, h:mm a')}</span>
-          {this.state.addingMessage ? null :<Button onClick={this.setAddingMessage}size="mini" floated="right"> Reply </Button>}
+          {/*this.state.addingMessage ? null :<Button onClick={this.setAddingMessage}size="mini" floated="right"> Reply </Button>*/}
           </Card.Meta>
         </Card.Content>
 
