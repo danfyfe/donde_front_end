@@ -11,6 +11,11 @@ const spaceReducer = ( state = defaultState, action) => {
     case 'EDIT_SPACE':
 
       return {...action.payload}
+
+    case 'ADD_CONTAINER':
+
+      return {...state, containers:[...state.containers, action.payload]}
+      
     default:
     return state
   }

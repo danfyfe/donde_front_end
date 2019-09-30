@@ -5,11 +5,14 @@ import { connect } from 'react-redux'
 
 import { getCurrentHousehold } from '../actions/householdActions.js'
 
+import { addContainer } from '../actions/containerActions.js'
+
 import ContainerCard from './ContainerCard.js'
 import ContainerDisplay from './ContainerDisplay.js'
 
 import EditSpaceForm from './forms/spaces/EditSpaceForm.js'
 import DeleteSpaceForm from './forms/spaces/DeleteSpaceForm.js'
+import AddContainerForm from './forms/containers/AddContainerForm.js'
 
 let API_ENDPOINT
 if (process.env.NODE_ENV === 'production') {
@@ -68,48 +71,48 @@ class Space extends Component {
     })
   }
 
-  addContainer = () => {
-    fetch(`${API_ENDPOINT}/api/v1/containers`,{
-      method:"POST",
-      headers:{
-        'Content-Type':'application/json',
-        Accept: 'application/json'
-      },
-      body:JSON.stringify({
-        container:{
-          name: this.state.newContainerName,
-          description: this.state.newContainerDescription,
-          space_id: this.props.state.currentSpace.id
-        }
-      })
-    }).then(resp=>resp.json())
-    .then(container =>{
+  // addContainer = () => {
+  //   fetch(`${API_ENDPOINT}/api/v1/containers`,{
+  //     method:"POST",
+  //     headers:{
+  //       'Content-Type':'application/json',
+  //       Accept: 'application/json'
+  //     },
+  //     body:JSON.stringify({
+  //       container:{
+  //         name: this.state.newContainerName,
+  //         description: this.state.newContainerDescription,
+  //         space_id: this.props.state.currentSpace.id
+  //       }
+  //     })
+  //   }).then(resp=>resp.json())
+  //   .then(container =>{
+  //
+  //     this.props.addContainer(container)
+  //
+  //     this.setState({
+  //       addingContainer: !this.state.addingContainer
+  //     })
+  //   })
+  // }
 
-      this.props.addContainer(container)
-
-      this.setState({
-        addingContainer: !this.state.addingContainer
-      })
-    })
-  }
-
-  renderAddContainerForm = () => {
-    return <Segment clearing raised style={{marginTop:"2%"}}>
-      <Message header={"Add a Container to " + this.props.state.currentSpace.name} size="mini"/>
-      <Form>
-        <Form.Field>
-          <label>Name</label>
-          <input onChange={this.handleInput} name="newContainerName" placeholder="Container Name"/>
-        </Form.Field>
-        <Form.Field>
-          <label>Description</label>
-          <input onChange={this.handleInput} name="newContainerDescription" placeholder="Continer Description"/>
-        </Form.Field>
-        <Button onClick={this.setAddingContainer} floated="right" size="mini">Cancel</Button>
-        <Button onClick={this.addContainer} floated="right" size="mini">Submit</Button>
-      </Form>
-    </Segment>
-  }
+  // renderAddContainerForm = () => {
+  //   return <Segment clearing raised style={{marginTop:"2%"}}>
+  //     <Message header={"Add a Container to " + this.props.state.currentSpace.name} size="mini"/>
+  //     <Form>
+  //       <Form.Field>
+  //         <label>Name</label>
+  //         <input onChange={this.handleInput} name="newContainerName" placeholder="Container Name"/>
+  //       </Form.Field>
+  //       <Form.Field>
+  //         <label>Description</label>
+  //         <input onChange={this.handleInput} name="newContainerDescription" placeholder="Continer Description"/>
+  //       </Form.Field>
+  //       <Button onClick={this.setAddingContainer} floated="right" size="mini">Cancel</Button>
+  //       <Button onClick={this.addContainer} floated="right" size="mini">Submit</Button>
+  //     </Form>
+  //   </Segment>
+  // }
 
   renderContainers = () => {
     return <>
@@ -242,7 +245,8 @@ class Space extends Component {
       </div>
 
 
-      {this.state.addingContainer ? this.renderAddContainerForm() :null}
+      {this.state.addingContainer ? <AddContainerForm
+        setAddingContainer={this.setAddingContainer}/> :null}
       {this.state.editingSpace ? <EditSpaceForm
         setEditingSpace={this.setEditingSpace}/> : null}
 
@@ -276,7 +280,7 @@ const mapDispatchToProps = (dispatch) =>{
     // addSpace: (space) => dispatch({type:"ADD_SPACE", space}),
     setCurrentHousehold: (householdId) => dispatch(getCurrentHousehold(householdId)),
     setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE", space}),
-    addContainer: (container) => dispatch({type:"ADD_CONTAINER", container}),
+    addContainer: ( containerName, containerDescription, spaceId) => dispatch(addContainer( containerName, containerDescription, spaceId)),
     // updateSpace: (space) => dispatch({type:"UPDATE_SPACE", space})
   }
 }

@@ -6,7 +6,7 @@ const containerReducer = ( state = defaultState, action) => {
     case 'SET_CURRENT_CONTAINER':
 
       return {...action.container}
-
+      
     default:
     return state
   }
