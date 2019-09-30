@@ -21,14 +21,11 @@ export function addMessage(messageTitle, messageContent, householdId, userId, ty
       }
     })
     .then( resp =>{
-      console.log('message action',resp.data)
       if (type === 'user') {
         return dispatch({type:'ADD_USER_MESSAGE', payload: resp.data})
       } else if (type === 'household') {
-
+        return dispatch({type:'ADD_HOUSEHOLD_MESSAGE', payload: resp.data})
       }
-
-
     })
   }
 }

@@ -15,6 +15,10 @@ const householdReducer = ( state = defaultState, action) => {
       // let newSpaces = [...state.spaces ]
       // newSpaces.unshift(action.payload)
       return {...state, spaces: [ action.payload, ...state.spaces ] }
+
+    case 'ADD_HOUSEHOLD_MESSAGE':
+
+    return {...state, messages: [action.payload, ...state.messages]}
     default:
     return state
   }
