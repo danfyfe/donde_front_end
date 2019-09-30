@@ -279,9 +279,7 @@ const mapDispatchToProps = (dispatch) =>{
     // setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
     // addSpace: (space) => dispatch({type:"ADD_SPACE", space}),
     setCurrentHousehold: (householdId) => dispatch(getCurrentHousehold(householdId)),
-    setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE", space}),
-    addContainer: ( containerName, containerDescription, spaceId) => dispatch(addContainer( containerName, containerDescription, spaceId)),
-    // updateSpace: (space) => dispatch({type:"UPDATE_SPACE", space})
+    setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE", space})
   }
 }
 

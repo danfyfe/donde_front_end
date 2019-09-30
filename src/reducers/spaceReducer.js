@@ -15,7 +15,11 @@ const spaceReducer = ( state = defaultState, action) => {
     case 'ADD_CONTAINER':
 
       return {...state, containers:[...state.containers, action.payload]}
-      
+
+    case 'DELETE_CONTAINER':
+    
+      return {...action.payload}
+
     default:
     return state
   }

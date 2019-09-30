@@ -3,6 +3,8 @@ import { Segment, Form, Button, Message, Dropdown } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import ItemCard from './ItemCard.js'
+import EditContainerForm from './forms/containers/EditContainerForm.js'
+import DeleteContainerForm from './forms/containers/DeleteContainerForm.js'
 
 let API_ENDPOINT
 if (process.env.NODE_ENV === 'production') {
@@ -164,88 +166,88 @@ class Container extends Component {
   }
 
 
-  renderDeletingForm = () => {
-    return <Segment clearing raised>
-      <Form>
-        <Form.Field>
-          <title>Password</title>
-          <input type="password" name="householdPassword" onChange={this.handleInput} placeholder="Please enter Household Password"/>
-        </Form.Field>
-        <Button floated="right" size="mini"
-        onClick={this.setDeletingContainer}>Cancel</Button>
-        <Button floated="right" size="mini" onClick={this.deleteContainer} color="red">Delete Container</Button>
-      </Form>
-    </Segment>
-  }
+  // renderDeletingForm = () => {
+  //   return <Segment clearing raised>
+  //     <Form>
+  //       <Form.Field>
+  //         <title>Password</title>
+  //         <input type="password" name="householdPassword" onChange={this.handleInput} placeholder="Please enter Household Password"/>
+  //       </Form.Field>
+  //       <Button floated="right" size="mini"
+  //       onClick={this.setDeletingContainer}>Cancel</Button>
+  //       <Button floated="right" size="mini" onClick={this.deleteContainer} color="red">Delete Container</Button>
+  //     </Form>
+  //   </Segment>
+  // }
 
-  deleteContainer = () => {
-    fetch(`${API_ENDPOINT}/api/v1/containers/${this.props.container.id}`,{
-      method:"DELETE",
-      headers:{
-        'Content-Type':'application/json',
-        Accept: 'application/json'
-      },
-      body:JSON.stringify({
-        container:{
-          container_id:this.props.container.id,
-          household_id: this.props.household.id,
-          password: this.state.householdPassword
-        }
-      })
-    }).then(resp=>resp.json())
-    .then(data=>{
-      // console.log(data)
-      if (data.hasOwnProperty("id")) {
-        this.props.setCurrentSpace(data)
-      } else {
-        this.setState({
-          errorMessage: data.message
-        })
-      }
-      this.setState({
-        deletingHousehold: !this.state.deletingHousehold
-      })
-    })
-  }
+  // deleteContainer = () => {
+  //   fetch(`${API_ENDPOINT}/api/v1/containers/${this.props.container.id}`,{
+  //     method:"DELETE",
+  //     headers:{
+  //       'Content-Type':'application/json',
+  //       Accept: 'application/json'
+  //     },
+  //     body:JSON.stringify({
+  //       container:{
+  //         container_id:this.props.container.id,
+  //         household_id: this.props.household.id,
+  //         password: this.state.householdPassword
+  //       }
+  //     })
+  //   }).then(resp=>resp.json())
+  //   .then(data=>{
+  //     // console.log(data)
+  //     if (data.hasOwnProperty("id")) {
+  //       this.props.setCurrentSpace(data)
+  //     } else {
+  //       this.setState({
+  //         errorMessage: data.message
+  //       })
+  //     }
+  //     this.setState({
+  //       deletingHousehold: !this.state.deletingHousehold
+  //     })
+  //   })
+  // }
 
-  editContainer = () => {
-    fetch(`${API_ENDPOINT}/api/v1/containers/${this.props.container.id}`,{
-      method:"PATCH",
-      headers:{
-        'Content-Type':'application/json',
-        Accept: 'application/json'
-      },
-      body:JSON.stringify({
-        container:{
-          name: this.state.newContainerName,
-          container_id:this.props.container.id,
-          household_id: this.props.household.id,
-          password: this.state.householdPassword
-        }
-      })
-    }).then(resp=>resp.json())
-    .then(data=>{
-      // console.log(data)
-      if (data.hasOwnProperty("id")) {
-        this.props.setCurrentSpace(data)
-      } else {
-        this.setState({
-          errorMessage: data.message
-        })
-      }
-      this.setState({
-        deletingHousehold: !this.state.deletingHousehold
-      })
-    })
-
-
-  }
+  // editContainer = () => {
+  //   fetch(`${API_ENDPOINT}/api/v1/containers/${this.props.container.id}`,{
+  //     method:"PATCH",
+  //     headers:{
+  //       'Content-Type':'application/json',
+  //       Accept: 'application/json'
+  //     },
+  //     body:JSON.stringify({
+  //       container:{
+  //         name: this.state.newContainerName,
+  //         container_id:this.props.container.id,
+  //         household_id: this.props.household.id,
+  //         password: this.state.householdPassword
+  //       }
+  //     })
+  //   }).then(resp=>resp.json())
+  //   .then(data=>{
+  //     // console.log(data)
+  //     if (data.hasOwnProperty("id")) {
+  //       this.props.setCurrentSpace(data)
+  //     } else {
+  //       this.setState({
+  //         errorMessage: data.message
+  //       })
+  //     }
+  //     this.setState({
+  //       deletingHousehold: !this.state.deletingHousehold
+  //     })
+  //   })
+  // }
 
   renderErrorMessage = () => {
     return <Message warning>{this.state.errorMessage}</Message>
   }
 
   render(){
+
+    const { editingContainer, addingItem, deletingContainer} = this.state
 
     return(
       <>
@@ -272,9 +274,9 @@ class Container extends Component {
             </div>
           </div>
 
-          {this.state.deletingContainer ? this.renderDeletingForm() : null}
-          {this.state.addingItem ? this.renderAddItemForm() : null}
-
+          { deletingContainer ? <DeleteContainerForm setDeletingContainer={this.setDeletingContainer}/> : null}
+          { addingItem ? this.renderAddItemForm() : null}
+          { editingContainer ? <EditContainerForm setEditingContainer={this.setEditingContainer}/> : null }
           {this.renderItemCards()}
 
           </>

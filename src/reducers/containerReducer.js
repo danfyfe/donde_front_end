@@ -6,7 +6,12 @@ const containerReducer = ( state = defaultState, action) => {
     case 'SET_CURRENT_CONTAINER':
 
       return {...action.container}
-      
+
+    case 'EDIT_CONTAINER':
+
+      return {...action.payload}
+
+    
     default:
     return state
   }
