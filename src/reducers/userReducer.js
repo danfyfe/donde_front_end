@@ -4,7 +4,7 @@ const defaultState = {
 const usersReducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'SET_CURRENT_USER':
-    
+
       return {...action.payload}
 
     case 'ADD_HOUSEHOLD':
@@ -25,6 +25,20 @@ const usersReducer = (state = defaultState, action) => {
 
 
       return {...state, households: [...newHouseholds]}
+
+      case 'ADD_USER_MESSAGE':
+
+      let household = state.households.find(household => {
+        return household.id === action.payload.household.id
+      })
+
+      let updatedHousehold = {...household, messages: [action.payload, ...household.messages]}
+
+      let index = state.households.indexOf(household)
+
+      state.households.splice( index, 1, updatedHousehold)
+
+      return { ...state }
 
     // case 'AUTHENTICATING_USER':
     //

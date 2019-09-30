@@ -56,7 +56,8 @@ class MessageContainer extends Component {
           <AddMessageForm households={this.props.user.households}
           setAddingNewMessage={this.setAddingNewMessage}
           userId={this.props.user.id}
-          addMessage={this.props.addMessage}/>
+          addMessage={this.props.addMessage}
+          type={'user'}/>
           :
         <>{this.renderNewMessageHeader()}</>
       }
@@ -78,8 +79,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-      setUser: (user) => dispatch({type:"SET_USER", user}),
-      addMessage: (message) => dispatch({type:"ADD_MESSAGE", message})
+
     }
 }
 
