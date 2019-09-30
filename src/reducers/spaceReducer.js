@@ -1,6 +1,4 @@
-const defaultState = {
-
-}
+const defaultState = {}
 
 const spaceReducer = ( state = defaultState, action) => {
   switch (action.type) {
@@ -17,7 +15,7 @@ const spaceReducer = ( state = defaultState, action) => {
       return {...state, containers:[...state.containers, action.payload]}
 
     case 'DELETE_CONTAINER':
-    
+
       return {...action.payload}
 
     default:

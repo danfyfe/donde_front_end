@@ -16,3 +16,27 @@ export function getItem(itemId) {
   }
 };
 
+export function addItem( itemName, itemDescription, containerId, itemOwners ){
+  return dispatch => {
+    axios({
+      method:"POST",
+      url: `${apiEndpoint}/items`,
+      headers:{
+        'Content-Type':'application/json',
+        Accept: 'application/json'
+      },
+      data: {
+        item:{
+          name: itemName,
+          description: itemDescription,
+          container_id: containerId
+        },
+        users_ids: itemOwners
+      }
+    })
+    .then( resp =>{
+      return dispatch({type:'ADD_ITEM', payload: resp.data})
+    })
+  }
+};
+

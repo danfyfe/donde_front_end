@@ -65,13 +65,10 @@ export function deleteContainer(containerId, householdId, householdPass){
       }
     })
     .then( resp =>{
-
-      console.log(resp.data)
-
       if (resp.data.hasOwnProperty("id")) {
         return dispatch({type:'DELETE_CONTAINER', payload: resp.data})
       } else {
-        
+        // need to setup error message reducer
       }
       // this.setState({
       //   deletingHousehold: !this.state.deletingHousehold

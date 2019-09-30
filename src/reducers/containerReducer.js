@@ -11,7 +11,9 @@ const containerReducer = ( state = defaultState, action) => {
 
       return {...action.payload}
 
+    case 'ADD_ITEM':
     
+      return {...state, items: [...state.items, action.payload]}
     default:
     return state
   }
