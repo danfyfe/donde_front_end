@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+.grey-background {
+  background-color: #f7f7f7;
+}
+
 .full-width {
   width: 100%;
 }
@@ -65,6 +69,13 @@ code {
   padding: 5%;
 }
 
+.m-v1 {
+  margin: 1vh 2%;
+}
+
+.border-r {
+  border-radius: 5px;
+}
 
 .profile-container {
   display: flex;

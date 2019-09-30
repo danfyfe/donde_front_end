@@ -3,6 +3,8 @@ import { Segment, Form, Button, Message, Dropdown } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+import { getCurrentHousehold } from '../actions/householdActions.js'
+
 import ContainerCard from './ContainerCard.js'
 import ContainerDisplay from './ContainerDisplay.js'
 
@@ -228,7 +230,12 @@ class Space extends Component {
               <Dropdown.Item text="Add Container" onClick={this.setAddingContainer}/>
               <Dropdown.Item text="Edit Space" onClick={this.setEditingSpace}/>
               <Dropdown.Item text="Delete Space" onClick={this.setDeletingSpace}/>
-              <Dropdown.Item text="Back To Household" onClick={() => this.props.setCurrentSpace({})}/>
+              <Dropdown.Item text="Back To Household" onClick={() => {
+              this.props.setCurrentSpace({})
+              this.props.setCurrentHousehold(household.id)
+              }
+            }/>
+
             </Dropdown.Menu>
           </Dropdown>
         </div>
@@ -267,6 +274,7 @@ const mapDispatchToProps = (dispatch) =>{
     // setUser: (user) => dispatch({type:"SET_USER", user}),
     // setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
     // addSpace: (space) => dispatch({type:"ADD_SPACE", space}),
+    setCurrentHousehold: (householdId) => dispatch(getCurrentHousehold(householdId)),
     setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE", space}),
     addContainer: (container) => dispatch({type:"ADD_CONTAINER", container}),
     // updateSpace: (space) => dispatch({type:"UPDATE_SPACE", space})
