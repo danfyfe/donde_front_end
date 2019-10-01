@@ -14,6 +14,14 @@ const itemReducer = ( state = defaultState, action) => {
 
     return {...action.payload}
 
+    case 'ADD_OWNERS':
+
+    return {...action.payload}
+
+    case 'REMOVE_OWNERS':
+
+    return {...action.payload}
+
     default:
     return state
   }

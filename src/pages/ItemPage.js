@@ -10,6 +10,7 @@ import Loading from '../components/Loading.js'
 import ItemLocationDetails from '../containers/ItemLocationDetails.js'
 import ItemDescription from '../containers/ItemDescription'
 import EditItemForm from '../components/forms/items/EditItemForm.js'
+import AddOwnersForm from '../components/forms/items/AddOwnersForm.js'
 
 class ItemPage extends Component {
 
@@ -283,117 +284,117 @@ class ItemPage extends Component {
       </>
     }
 
-    renderAddOwnersForm = () => {
+    // renderAddOwnersForm = () => {
+    //
+    //   let currentItemHousehold = {}
+    //
+    //   if (this.props.user.households && this.props.item.household) {
+    //     currentItemHousehold = this.props.user.households.filter(household => {
+    //       return household.id === this.props.item.household.id
+    //     })[0]
+    //
+    //   }
+    //
+    //   let currentItemHouseholdUsersOptions = {}
+    //
+    //   if (currentItemHousehold.users) {
+    //      currentItemHouseholdUsersOptions = currentItemHousehold.users.map(user => {
+    //       return {key:user.id,text:user.username,value:user.id}
+    //     })
+    //   }
+    //
+    //   if (currentItemHouseholdUsersOptions.hasOwnProperty(0)) {
+    //     return <Segment clearing raised className='full-width'>
+    //       <Form>
+    //         <Form.Field>
+    //         <label>Owners to be added</label>
+    //           <Dropdown
+    //           onChange = {this.handleOwnersInput}
+    //           placeholder='Household Users'
+    //           fluid
+    //           multiple
+    //           search
+    //           selection
+    //           options={currentItemHouseholdUsersOptions}
+    //           />
+    //         </Form.Field>
+    //         <Button onClick={this.setAddingOwners} floated="right" size="mini">Cancel</Button>
+    //         <Button onClick={this.addOwners} floated="right" size="mini">Submit</Button>
+    //       </Form>
+    //     </Segment>
+    //   }
+    // }
 
-      let currentItemHousehold = {}
+    // handleOwnersInput = (e,data) => {
+    //   this.setState({
+    //     addingOwnersIds: data.value
+    //   })
+    // }
+    //
+    // addOwners = () => {
+    //   this.props.isFetching()
+    //   fetch(`${apiEndpoint}/items/owners/${this.props.item.id}`,{
+    //     method:"PATCH",
+    //     headers:{
+    //       'Content-Type':'application/json',
+    //       Accept: 'application/json',
+    //       Authorization:  localStorage.getItem("token")
+    //     },
+    //     body:JSON.stringify({
+    //       item:{
+    //         id: this.props.item.id
+    //       },
+    //       users_ids: this.state.addingOwnersIds
+    //     })
+    //   }).then(resp=>resp.json())
+    //   .then(item =>{
+    //
+    //     this.props.setCurrentItem(item)
+    //
+    //     this.setState({
+    //       addingOwners: !this.state.addingOwners
+    //     })
+    //
+    //     if (this.props.item) {
+    //       this.setState({
+    //         statusMessage: "Owners succesfully added!"
+    //       })
+    //       this.props.isDoneFetching()
+    //     }
+    //
+    //   })
+    // }
 
-      if (this.props.user.households && this.props.item.household) {
-        currentItemHousehold = this.props.user.households.filter(household => {
-          return household.id === this.props.item.household.id
-        })[0]
-
-      }
-
-      let currentItemHouseholdUsersOptions = {}
-
-      if (currentItemHousehold.users) {
-         currentItemHouseholdUsersOptions = currentItemHousehold.users.map(user => {
-          return {key:user.id,text:user.username,value:user.id}
-        })
-      }
-
-      if (currentItemHouseholdUsersOptions.hasOwnProperty(0)) {
-        return <Segment clearing raised className='full-width'>
-          <Form>
-            <Form.Field>
-            <label>Owners to be added</label>
-              <Dropdown
-              onChange = {this.handleOwnersInput}
-              placeholder='Household Users'
-              fluid
-              multiple
-              search
-              selection
-              options={currentItemHouseholdUsersOptions}
-              />
-            </Form.Field>
-            <Button onClick={this.setAddingOwners} floated="right" size="mini">Cancel</Button>
-            <Button onClick={this.addOwners} floated="right" size="mini">Submit</Button>
-          </Form>
-        </Segment>
-      }
-    }
-
-    handleOwnersInput = (e,data) => {
-      this.setState({
-        addingOwnersIds: data.value
-      })
-    }
-
-    addOwners = () => {
-      this.props.isFetching()
-      fetch(`${apiEndpoint}/items/owners/${this.props.item.id}`,{
-        method:"PATCH",
-        headers:{
-          'Content-Type':'application/json',
-          Accept: 'application/json',
-          Authorization:  localStorage.getItem("token")
-        },
-        body:JSON.stringify({
-          item:{
-            id: this.props.item.id
-          },
-          users_ids: this.state.addingOwnersIds
-        })
-      }).then(resp=>resp.json())
-      .then(item =>{
-
-        this.props.setCurrentItem(item)
-
-        this.setState({
-          addingOwners: !this.state.addingOwners
-        })
-
-        if (this.props.item) {
-          this.setState({
-            statusMessage: "Owners succesfully added!"
-          })
-          this.props.isDoneFetching()
-        }
-
-      })
-    }
-
-    removeOwner = (userId) => {
-      this.props.isFetching()
-      fetch(`${apiEndpoint}/items/owners/${this.props.item.id}/${userId}`,{
-        method:"DELETE",
-        headers:{
-          'Content-Type':'application/json',
-          Accept: 'application/json',
-          Authorization:  localStorage.getItem("token"),
-          Allow: 'DELETE'
-        },
-        body:JSON.stringify({
-          item:{
-            id: this.props.item.id
-          },
-          user_id: userId
-        })
-      }).then(resp=>resp.json())
-      .then(item =>{
-
-        this.props.setCurrentItem(item)
-
-        if (this.props.item) {
-          this.setState({
-            statusMessage: "Owners succesfully removed!"
-          })
-          this.props.isDoneFetching()
-        }
-
-      })
-    }
+    // removeOwner = (userId) => {
+    //   this.props.isFetching()
+    //   fetch(`${apiEndpoint}/items/owners/${this.props.item.id}/${userId}`,{
+    //     method:"DELETE",
+    //     headers:{
+    //       'Content-Type':'application/json',
+    //       Accept: 'application/json',
+    //       Authorization:  localStorage.getItem("token"),
+    //       Allow: 'DELETE'
+    //     },
+    //     body:JSON.stringify({
+    //       item:{
+    //         id: this.props.item.id
+    //       },
+    //       user_id: userId
+    //     })
+    //   }).then(resp=>resp.json())
+    //   .then(item =>{
+    //
+    //     this.props.setCurrentItem(item)
+    //
+    //     if (this.props.item) {
+    //       this.setState({
+    //         statusMessage: "Owners succesfully removed!"
+    //       })
+    //       this.props.isDoneFetching()
+    //     }
+    //
+    //   })
+    // }
 
     renderStatusMessage = () => {
       if (this.state.statusMessage !== "") {
@@ -437,7 +438,7 @@ class ItemPage extends Component {
         <Header style={{padding:"10px"}}>Welcome,  {user.username}!</Header>
       </Menu>
 
-      <Segment clearing raised style={{width:"98%", margin:'auto', minHeight:"500px", backgroundColor:"#f7f7f7"}}>
+      <Segment clearing raised style={{width:"300px", height:'150px', margin:'auto', minHeight:"500px", backgroundColor:"#f7f7f7"}}>
         {this.state.statusMessage !== "" ? this.renderStatusMessage() : null}
 
         <div className='d-flex justify-content-between'>
@@ -445,16 +446,18 @@ class ItemPage extends Component {
           <span className='my-auto ml-auto link' onClick={this.setEditing}>Edit</span>
         </div>
 
-        { this.state.editing ? <EditItemForm setEditing={this.setEditing} item={item}/> : null }
         <div className='d-flex flex-column'>
           <ItemLocationDetails
             item={item} />
           <ItemDescription itemDescription={item.description} />
         </div>
+
+        { this.state.editing ? <EditItemForm setEditing={this.setEditing} item={item}/> : null }
+
         <Segment clearing>
           <div className='d-flex flex-column'>
           <div className='d-flex justify-content-between'>
-            {this.state.addingOwners ? this.renderAddOwnersForm() : this.renderAddOwnersHeader() }
+            {this.state.addingOwners ? <AddOwnersForm setAddingOwners={this.setAddingOwners} /> : this.renderAddOwnersHeader() }
           </div>
           <Segment.Group style={{margin:"4% 0 0 0"}}>
             {this.renderOwners()}

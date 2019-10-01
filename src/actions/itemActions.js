@@ -64,5 +64,25 @@ export function editItem( itemId, itemName, itemDescription, containerId ){
   }
 }
 
+export function addOwners(itemId, owners){
+  return dispatch => {
+    axios({
+      method:"PATCH",
+      url: `${apiEndpoint}/items/owners/${itemId}`,
+      headers: {
+        'Content-Type':'application/json',
+        Accept: 'application/json',
+        Authorization:  localStorage.getItem("token")
+      },
+      data: {
+        users_ids: owners
+      }
+    })
+    .then( resp =>{
+      return dispatch({type:'ADD_OWNERS', payload: resp.data})
+    })
+  }
+}
+
 
 
