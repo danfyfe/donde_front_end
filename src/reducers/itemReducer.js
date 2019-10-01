@@ -10,6 +10,9 @@ const itemReducer = ( state = defaultState, action) => {
 
       return {...action.payload}
 
+    case 'EDIT_ITEM':
+
+    return {...action.payload}
 
     default:
     return state

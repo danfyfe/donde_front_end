@@ -12,6 +12,11 @@ code {
     monospace;
 }
 
+.link {
+    text-decoration: underline;
+    color: #5c80d6;
+}
+
 .grey-background {
   background-color: #f7f7f7;
 }

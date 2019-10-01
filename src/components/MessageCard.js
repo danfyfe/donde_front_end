@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { Button, Card, Icon, Image, Segment, Form, Message } from 'semantic-ui-react'
+import { Card, Icon, Image } from 'semantic-ui-react'
 
 import { connect } from 'react-redux'
 import moment from 'moment'

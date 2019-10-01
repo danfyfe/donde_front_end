@@ -7,6 +7,9 @@ import { getItem } from '../actions/itemActions.js'
 
 import Search from '../components/Search.js'
 import Loading from '../components/Loading.js'
+import ItemLocationDetails from '../containers/ItemLocationDetails.js'
+import ItemDescription from '../containers/ItemDescription'
+import EditItemForm from '../components/forms/items/EditItemForm.js'
 
 class ItemPage extends Component {
 
@@ -62,15 +65,15 @@ class ItemPage extends Component {
     }
   }
 
-  renderLocationDetails = () => {
-    if (this.props.item.household && this.props.item.container && this.props.item.space) {
-      return <>
-      <Header as="h4" floated="left" color="grey">in {this.props.item.container.name}</Header>
-      <Header as="h4" floated="left" color="grey">in {this.props.item.space.name}</Header>
-      <Header as="h4" floated="left" color="grey">at {this.props.item.household.name}</Header>
-      </>
-    }
-  }
+  // renderLocationDetails = () => {
+  //   if (this.props.item.household && this.props.item.container && this.props.item.space) {
+  //     return <>
+  //     <Header as="h4" floated="left" color="grey">in {this.props.item.container.name}</Header>
+  //     <Header as="h4" floated="left" color="grey">in {this.props.item.space.name}</Header>
+  //     <Header as="h4" floated="left" color="grey">at {this.props.item.household.name}</Header>
+  //     </>
+  //   }
+  // }
 
   handleInput = (e) => {
     this.setState({
@@ -105,6 +108,12 @@ class ItemPage extends Component {
   handleContainerInput = (e,data) => {
     this.setState({
       itemContainer_id: data.value
+    })
+  }
+
+  setEditing = () => {
+    this.setState({
+      editing: !this.state.editing
     })
   }
 
@@ -257,11 +266,8 @@ class ItemPage extends Component {
           this.props.history.push('/')
         }
       }
-
-
     })
   }
-
 
   // add owners
     setAddingOwners = () => {
@@ -419,37 +425,32 @@ class ItemPage extends Component {
 
   render(){
 
-    const { user, searching } = this.props
+    const { user, searching, item } = this.props
 
     return(
       <>
-      {this.setStatusMessageToNothing()}
-      {true ?
+      {/*this.setStatusMessageToNothing()*/}
+      {item.hasOwnProperty('id') ?
         <>{searching ? <Search history={this.props.history}/> : null}
 
       <Menu style={{marginTop: "0px"}}>
         <Header style={{padding:"10px"}}>Welcome,  {user.username}!</Header>
       </Menu>
 
-      <Segment clearing raised style={{margin:"1% auto",width:"98%", minHeight:"500px", backgroundColor:"#f7f7f7"}}>
+      <Segment clearing raised style={{width:"98%", margin:'auto', minHeight:"500px", backgroundColor:"#f7f7f7"}}>
         {this.state.statusMessage !== "" ? this.renderStatusMessage() : null}
-        <Segment clearing>
+
         <div className='d-flex justify-content-between'>
-            <span className='font-weight-bold huge-font'>{this.props.item.name}</span>
-            <Button floated="right" color="blue" size="mini" style={{}} onClick={this.redirectToHousehold}>Return to Household</Button>
-          </div>
-        </Segment>
+          <span className='font-weight-bold huge-font'>{item.name}</span>
+          <span className='my-auto ml-auto link' onClick={this.setEditing}>Edit</span>
+        </div>
 
-        <Segment.Group>
-          <Segment clearing>
-            {this.renderLocationDetails()}
-          </Segment>
-          <Segment >
-            {this.renderDescription()}
-          </Segment>
-        </Segment.Group>
-
-
+        { this.state.editing ? <EditItemForm setEditing={this.setEditing} item={item}/> : null }
+        <div className='d-flex flex-column'>
+          <ItemLocationDetails
+            item={item} />
+          <ItemDescription itemDescription={item.description} />
+        </div>
         <Segment clearing>
           <div className='d-flex flex-column'>
           <div className='d-flex justify-content-between'>
@@ -487,17 +488,9 @@ const mapDispatchToProps = dispatch => {
     return {
       setUser: () => dispatch(getUser()),
       setItem: (itemId) => dispatch(getItem(itemId)),
-      // setHouseholds: (households) => dispatch({type:"SET_HOUSEHOLDS", households}),
-      // addHousehold: (household) => dispatch({type:"ADD_HOUSEHOLD", household}),
-      // setUserHouseholdMessages: (allMessages) => dispatch({type:"SET_USERHOUSEHOLDMESSAGES", allMessages}),
-      // addMessage: (message) => dispatch({type:"ADD_MESSAGE", message}),
-      // isFetching: () => dispatch({type:"IS_FETCHING"}),
-      // isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"}),
-      // setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE", space}),
-      // setCurrentContainer: (container) => dispatch({type:"SET_CURRENT_CONTAINER", container}),
-      // setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
-      // itemDeleteConfirmation: () => dispatch({type:"ITEM_DELETE_CONFIRMATION"})
     }
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(ItemPage)
+
+// <Button floated="right" color="blue" size="mini" style={{}} onClick={this.redirectToHousehold}>Return to Household</Button>

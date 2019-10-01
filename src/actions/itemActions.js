@@ -40,5 +40,29 @@ export function addItem( itemName, itemDescription, containerId, itemOwners ){
   }
 };
 
+export function editItem( itemId, itemName, itemDescription, containerId ){
+
+  return dispatch => {
+    axios({
+      method:"PATCH",
+      url: `${apiEndpoint}/items/edit/${itemId}`,
+      headers:{
+        'Content-Type':'application/json',
+        Accept: 'application/json'
+      },
+      data: {
+        item:{
+          name: itemName,
+          description: itemDescription,
+          container_id: containerId
+        }
+      }
+    })
+    .then( resp =>{
+      return dispatch({type:'EDIT_ITEM', payload: resp.data})
+    })
+  }
+}
+
 
 
