@@ -84,5 +84,73 @@ export function addOwners(itemId, owners){
   }
 }
 
+export function removeOwner(itemId, userId){
+  axios({
+    method:"DELETE",
+    url: `${apiEndpoint}/items/owners/${itemId}/${userId}`,
+    headers:{
+      'Content-Type':'application/json',
+      Accept: 'application/json',
+      Authorization:  localStorage.getItem("token"),
+      Allow: 'DELETE'
+    },
+    data: {
+      item:{
+        id: itemId
+      },
+      user_id: userId
+    }
+  }).then( resp =>{
+    
+
+  })
+}
+
+
+export function deleteItem(itemId){
+  axios({
+    method:"DELETE",
+    url: `${apiEndpoint}/items/${this.props.item.id}`,
+    headers: {
+      'Content-Type':'application/json',
+      Accept: 'application/json',
+      Authorization:  localStorage.getItem("token")
+    },
+    data: {
+      householdPassword: this.state.householdPassword,
+      userId: this.props.user.id
+    }
+  }).then( resp => {
+
+
+  })
+}
+
+export function moveItem(itemId){
+  axios({
+    method:"PATCH",
+    url: `${apiEndpoint}/items/${this.props.item.id}`,
+    headers:{
+      'Content-Type':'application/json',
+      Accept: 'application/json',
+      Authorization:  localStorage.getItem("token")
+    },
+    data: {
+      item:{
+        household_id: this.state.itemHousehold_id,
+        space_id: this.state.itemSpace_id,
+        container_id: this.state.itemContainer_id,
+        id: this.props.item.id,
+        name: this.state.itemName,
+        description: this.state.itemDescription
+      },
+      user_id: this.props.user.id
+    }
+  })
+  .then( resp  => {
+
+  })
+}
+
 
 

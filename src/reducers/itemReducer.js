@@ -22,6 +22,7 @@ const itemReducer = ( state = defaultState, action) => {
 
     return {...action.payload}
 
+
     default:
     return state
   }

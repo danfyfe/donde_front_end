@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { editItem } from '../../../actions/itemActions.js'
 import { Segment, Form, Button, Dropdown } from 'semantic-ui-react'
 import { addOwners } from '../../../actions/itemActions.js'
 

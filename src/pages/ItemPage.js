@@ -3,7 +3,7 @@ import { Segment, Header, Form, Dropdown, Button, Message, Menu, Icon } from 'se
 import { connect } from 'react-redux'
 import apiEndpoint from '../actions/ApiEndpoint.js'
 import { getUser } from '../actions/userActions.js'
-import { getItem } from '../actions/itemActions.js'
+import { getItem, removeOwner } from '../actions/itemActions.js'
 
 import Search from '../components/Search.js'
 import Loading from '../components/Loading.js'
@@ -38,7 +38,6 @@ class ItemPage extends Component {
 
     this.props.setItem(id);
 
-
   }
 
 
@@ -52,7 +51,7 @@ class ItemPage extends Component {
             <div className='d-flex justify-content-between'>
               <span className='font-weight-bold'>{user.username}</span>
 
-              <Icon link color="red" floated='right' name='cancel' onClick={()=>this.removeOwner(user.id)}/>
+              <Icon link color="red" floated='right' name='cancel' onClick={()=> removeOwner(user.id)}/>
             </div>
           </Segment>
         })
@@ -60,11 +59,11 @@ class ItemPage extends Component {
     }
   }
 
-  renderDescription = () => {
-    if (this.props.item) {
-      return <Header>{this.props.item.description}</Header>
-    }
-  }
+  // renderDescription = () => {
+  //   if (this.props.item) {
+  //     return <Header>{this.props.item.description}</Header>
+  //   }
+  // }
 
   // renderLocationDetails = () => {
   //   if (this.props.item.household && this.props.item.container && this.props.item.space) {
@@ -175,7 +174,7 @@ class ItemPage extends Component {
         containerOptions = itemHousehold.containers.map(container => {
           return {key: container.id, text: container.name, value: container.id}
         })
-      }
+  }
 
     return <Segment clearing raised className='full-width'>
       <Form>
@@ -189,8 +188,6 @@ class ItemPage extends Component {
           <label>Space</label>
           <Dropdown name="space_id" onChange={this.handleSpaceInput} pointing="top left" placeholder={this.state.itemSpaceName} fluid selection options={spaceOptions}/>
         </Form.Field>
-
-
 
         <Button onClick={this.setMoving} floated="right" size="mini">Cancel</Button>
         <Button onClick={this.moveItem} floated="right" size="mini">Submit</Button>
