@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { Segment, Header, Form, Dropdown, Button, Message, Menu } from 'semantic-ui-react'
+import { Segment, Form, Dropdown, Button } from 'semantic-ui-react'
 
 
 import { moveItem } from '../../../actions/itemActions.js'

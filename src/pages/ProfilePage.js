@@ -51,18 +51,23 @@ class ProfilePage extends Component {
           {searching ? <Search history={history}/> : null}
 
             <div className='profile-container'>
-              <Segment raised className='' style={{width:"95%", margin:"2%", backgroundColor:"#f7f7f7", border:'none', borderRadius:'none'}}>
-                <HouseholdCardsContainer
-                  history={history}
-                />
-              </Segment>
 
-              <Segment raised className='' style={{width:"95%", margin:'2%', backgroundColor:"#f7f7f7", border:'none', borderRadius:'none'}}>
-                <MessageContainer
-                history={history}/>
-              </Segment>
-
+              <div className='big-container'>
+                <Segment raised className='' style={{width:"95%", margin:"2%", backgroundColor:"#f7f7f7", border:'none', borderRadius:'none'}}>
+                  <HouseholdCardsContainer
+                    history={history}
+                  />
+                </Segment>
               </div>
+
+              <div className='big-container'>
+                <Segment raised className='' style={{width:"95%", margin:'2%', backgroundColor:"#f7f7f7", border:'none', borderRadius:'none'}}>
+                  <MessageContainer
+                  history={history}/>
+                </Segment>
+              </div>
+
+            </div>
 
 
         </> : <Loading/>

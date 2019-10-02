@@ -91,11 +91,16 @@ code {
   flex-direction: column;
 }
 
+
 @media only screen and (min-width:600px) {
   .profile-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+  }
+
+  .big-container {
+    width: 45%;
   }
 
   .household-container {

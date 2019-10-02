@@ -75,8 +75,12 @@ class HouseholdPage extends Component {
 
           {this.isUsersHousehold() ?
               <>
-                <HouseholdContainer history={this.props.history}/>
-                <HouseholdMessagesContainer />
+                <div className='big-container'>
+                  <HouseholdContainer history={this.props.history}/>
+                </div>
+                <div className='big-container'>
+                  <HouseholdMessagesContainer />
+                </div>
               </> :
               <Segment clearing className='full-width'>
                 <Header>{this.props.household.name}</Header>
