@@ -4,12 +4,11 @@ import { connect } from 'react-redux'
 
 function HouseholdCard(props) {
     return(
-      <Card color={props.household.color} link style={{width:"100%"}} onClick={()=>props.redirectToHousehold(props.household)}>
+      <Card color={props.household.color} link style={{width:"100%"}} onClick={()=>props.redirectToHousehold(props.household.id)}>
         <Card.Content>
-          <Image floated='right' size='mini' src={props.household.image}/>
+          <Image floated='right' size='mini' style={{height:'30px', width: '30px'}} src={props.household.image}/>
           <Card.Header>{props.household.name}</Card.Header>
         </Card.Content>
-        {}
         <Card.Content extra>
           <span style={{paddingRight:"5px"}}>{props.household.users.length} Users</span>
           <span>{props.household.messages.length} Messages</span>

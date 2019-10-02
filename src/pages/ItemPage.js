@@ -1,98 +1,46 @@
 import React, { Component } from 'react'
-import { Segment, Header, Form, Dropdown, Button, Message, Menu, Icon } from 'semantic-ui-react'
+import { Segment, Header, Form, Dropdown, Button, Message, Menu } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import apiEndpoint from '../actions/ApiEndpoint.js'
+import { getUser } from '../actions/userActions.js'
+import { getItem } from '../actions/itemActions.js'
 
 import Search from '../components/Search.js'
 import Loading from '../components/Loading.js'
+import ItemLocationDetails from '../containers/ItemLocationDetails.js'
+import ItemDescription from '../containers/ItemDescription'
+import ItemOwnersContainer from '../containers/ItemOwnersContainer'
+import EditItemForm from '../components/forms/items/EditItemForm.js'
+import AddOwnersForm from '../components/forms/items/AddOwnersForm.js'
+import DeleteItemForm from '../components/forms/items/DeleteItemForm.js'
+import MoveItemForm from '../components/forms/items/MoveItemForm.js'
+
 
 class ItemPage extends Component {
 
   state = {
     editing: false,
     moving: false,
-    itemName: "",
-    itemDescription: "",
-    itemHousehold_id: "",
-    itemSpace_id: "",
-    itemContainer_id: "",
-    itemContainerName:"",
-    itemSpaceName:"",
+    // itemName: "",
+    // itemDescription: "",
+    // itemHousehold_id: "",
+    // itemSpace_id: "",
+    // itemContainer_id: "",
+    // itemContainerName:"",
+    // itemSpaceName:"",
     addingOwners: false,
-    addOwnersIds: [],
     deleting: false,
     statusMessage: "",
     error: false
   }
 
   componentDidMount(){
-    this.props.isFetching()
-    fetch(`${apiEndpoint}/profile`,{
-      method:"POST",
-      headers: { Authorization:  localStorage.getItem("token") }
-    }).then(resp=>resp.json())
-    .then(user=>{
-      this.props.setUser(user.user)
-    })
-    .then(
-      fetch(`${apiEndpoint}/items/${this.props.match.params.id}`,{
-        method: "GET",
-        headers: { Authorization:  localStorage.getItem("token") }
-      })
-      .then(resp=>resp.json())
-      .then(item=>{
-        // console.log(item)
-        this.setState({
-          itemName: item.name,
-          itemDescription: item.description,
-          itemContainer_id: item.container.id,
-          itemSpace_id: item.space.id,
-          itemHousehold_id: item.household.id,
-          itemContainerName: item.container.name,
-          itemSpaceName: item.space.name
-        })
+    const { id } = this.props.match.params
 
-        this.props.setCurrentItem(item)
-        if (this.props.state.currentItem) {
-          this.props.isDoneFetching()
-        }
-      })
-    )
-  }
+    this.props.setUser();
 
+    this.props.setItem(id);
 
-  renderOwners = () => {
-    if (this.props.state.currentItem.users) {
-      if (this.props.state.currentItem.users.length === 0) {
-        return <Message>This item currently has no owners! Click Add Owners to give it some!</Message>
-      } else {
-        return this.props.state.currentItem.users.map(user => {
-          return <Segment key={user.id}>
-            <div className='d-flex justify-content-between'>
-              <span className='font-weight-bold'>{user.username}</span>
-
-              <Icon link color="red" floated='right' name='cancel' onClick={()=>this.removeOwner(user.id)}/>
-            </div>
-          </Segment>
-        })
-      }
-    }
-  }
-
-  renderDescription = () => {
-    if (this.props.state.currentItem) {
-      return <Header>{this.props.state.currentItem.description}</Header>
-    }
-  }
-
-  renderLocationDetails = () => {
-    if (this.props.state.currentItem.household && this.props.state.currentItem.container && this.props.state.currentItem.space) {
-      return <>
-      <Header as="h4" floated="left" color="grey">in {this.props.state.currentItem.container.name}</Header>
-      <Header as="h4" floated="left" color="grey">in {this.props.state.currentItem.space.name}</Header>
-      <Header as="h4" floated="left" color="grey">at {this.props.state.currentItem.household.name}</Header>
-      </>
-    }
   }
 
   handleInput = (e) => {
@@ -131,6 +79,12 @@ class ItemPage extends Component {
     })
   }
 
+  setEditing = () => {
+    this.setState({
+      editing: !this.state.editing
+    })
+  }
+
   setMoving = () => {
     this.setState({
       moving: !this.state.moving
@@ -144,147 +98,142 @@ class ItemPage extends Component {
     })
   }
 
-  renderMovingHeader = () => {
+  renderMovingButton = () => {
     return <>
     <Button floated="right" size="mini" onClick={this.setMoving} color="blue" style={{margin:"7% .05% 0 0"}}>Move Item</Button>
     </>
   }
 
-  renderDeleteHeader = () => {
+  renderDeleteButton = () => {
     return <>
       <Button floated="right" size="mini" onClick={this.setDeleting} color="red" style={{margin:"7% 0 0 0"}}>Delete Item</Button>
     </>
   }
 
-  renderDeleteForm = () => {
-    return <Segment clearing>
-      <Form>
-        <Form.Field>
-          <label>Please enter household password to delete item</label>
-          <input onChange={this.handleInput} name="householdPassword" type="password" placeholder="Household password"/>
-        </Form.Field>
-        <Button floated="right" size="mini" onClick={this.setDeleting}>Cancel</Button>
-        <Button floated="right" size="mini" color="red" onClick={this.deleteItem}>Delete Item</Button>
-      </Form>
-    </Segment>
-  }
+  // renderDeleteForm = () => {
+  //   return <Segment clearing>
+  //     <Form>
+  //       <Form.Field>
+  //         <label>Please enter household password to delete item</label>
+  //         <input onChange={this.handleInput} name="householdPassword" type="password" placeholder="Household password"/>
+  //       </Form.Field>
+  //       <Button floated="right" size="mini" onClick={this.setDeleting}>Cancel</Button>
+  //       <Button floated="right" size="mini" color="red" onClick={this.deleteItem}>Delete Item</Button>
+  //     </Form>
+  //   </Segment>
+  // }
 
-  renderMovingForm = () => {
-    if (this.props.state.user.households && this.props.state.currentItem) {
+  // renderMovingForm = () => {
+  //   if (this.props.user.households && this.props.item) {
+  //
+  //     const itemHousehold = this.props.user.households.filter(household => {
+  //       return household.id === this.props.item.household.id
+  //     })[0]
+  //
+  //
+  //     let spaceOptions = []
+  //     let containerOptions = []
+  //
+  //     if (itemHousehold.spaces && itemHousehold.containers) {
+  //       spaceOptions = itemHousehold.spaces.map(space => {
+  //         return {key:space.id, text:space.name, value: space.id}
+  //       })
+  //
+  //       containerOptions = itemHousehold.containers.map(container => {
+  //         return {key: container.id, text: container.name, value: container.id}
+  //       })
+  // }
+  //
+  //   return <Segment clearing raised className='full-width'>
+  //     <Form>
+  //
+  //       <Form.Field>
+  //         <label>Container</label>
+  //         <Dropdown name="container_id" onChange={this.handleContainerInput} pointing="top left" placeholder={this.state.itemContainerName} fluid selection options={containerOptions}/>
+  //       </Form.Field>
+  //
+  //       <Form.Field>
+  //         <label>Space</label>
+  //         <Dropdown name="space_id" onChange={this.handleSpaceInput} pointing="top left" placeholder={this.state.itemSpaceName} fluid selection options={spaceOptions}/>
+  //       </Form.Field>
+  //
+  //       <Button onClick={this.setMoving} floated="right" size="mini">Cancel</Button>
+  //       <Button onClick={this.moveItem} floated="right" size="mini">Submit</Button>
+  //
+  //     </Form>
+  //   </Segment>
+  //   }
+  // }
 
-      const itemHousehold = this.props.state.user.households.filter(household => {
-        return household.id === this.props.state.currentItem.household.id
-      })[0]
-
-
-      let spaceOptions = []
-      let containerOptions = []
-
-      if (itemHousehold.spaces && itemHousehold.containers) {
-        spaceOptions = itemHousehold.spaces.map(space => {
-          return {key:space.id, text:space.name, value: space.id}
-        })
-
-        containerOptions = itemHousehold.containers.map(container => {
-          return {key: container.id, text: container.name, value: container.id}
-        })
-      }
-
-    return <Segment clearing raised className='full-width'>
-      <Form>
-
-        <Form.Field>
-          <label>Container</label>
-          <Dropdown name="container_id" onChange={this.handleContainerInput} pointing="top left" placeholder={this.state.itemContainerName} fluid selection options={containerOptions}/>
-        </Form.Field>
-
-        <Form.Field>
-          <label>Space</label>
-          <Dropdown name="space_id" onChange={this.handleSpaceInput} pointing="top left" placeholder={this.state.itemSpaceName} fluid selection options={spaceOptions}/>
-        </Form.Field>
-
-
-
-        <Button onClick={this.setMoving} floated="right" size="mini">Cancel</Button>
-        <Button onClick={this.moveItem} floated="right" size="mini">Submit</Button>
-
-      </Form>
-    </Segment>
-    }
-  }
-
-  moveItem = () => {
-    fetch(`${apiEndpoint}/items/${this.props.state.currentItem.id}`,{
-      method:"PATCH",
-      headers:{
-        'Content-Type':'application/json',
-        Accept: 'application/json',
-        Authorization:  localStorage.getItem("token")
-      },
-      body:JSON.stringify({
-        item:{
-          household_id: this.state.itemHousehold_id,
-          space_id: this.state.itemSpace_id,
-          container_id: this.state.itemContainer_id,
-          id: this.props.state.currentItem.id,
-          name: this.state.itemName,
-          description: this.state.itemDescription
-        },
-        user_id: this.props.state.user.id
-      })
-    }).then(resp=>resp.json())
-    .then(updatedItem => {
-      this.props.setCurrentItem(updatedItem)
-
-      this.setState({
-        moving: !this.state.moving,
-        statusMessage: "Item successfully moved! A message was sent to your household on your behalf."
-      })
-    })
-  }
+  // moveItem = () => {
+  //   fetch(`${apiEndpoint}/items/${this.props.item.id}`,{
+  //     method:"PATCH",
+  //     headers:{
+  //       'Content-Type':'application/json',
+  //       Accept: 'application/json',
+  //       Authorization:  localStorage.getItem("token")
+  //     },
+  //     body:JSON.stringify({
+  //       item:{
+  //         household_id: this.state.itemHousehold_id,
+  //         space_id: this.state.itemSpace_id,
+  //         container_id: this.state.itemContainer_id,
+  //         id: this.props.item.id,
+  //         name: this.state.itemName,
+  //         description: this.state.itemDescription
+  //       },
+  //       user_id: this.props.user.id
+  //     })
+  //   }).then(resp=>resp.json())
+  //   .then(updatedItem => {
+  //     this.props.setCurrentItem(updatedItem)
+  //
+  //     this.setState({
+  //       moving: !this.state.moving,
+  //       statusMessage: "Item successfully moved! A message was sent to your household on your behalf."
+  //     })
+  //   })
+  // }
 
   renderErrorMessage = () => {
     return <Message key={1} error header={this.state.statusMessage}/>
   }
 
-  deleteItem = () => {
-    fetch(`${apiEndpoint}/items/${this.props.state.currentItem.id}`,{
-      method:"DELETE",
-      headers:{
-        'Content-Type':'application/json',
-        Accept: 'application/json',
-        Authorization:  localStorage.getItem("token")
-      },
-      body:JSON.stringify({
-        householdPassword: this.state.householdPassword,
-        userId: this.props.state.user.id
-      })
-    }).then(resp=>resp.json())
-    .then(data => {
-
-      this.setState({
-        statusMessage: data.message,
-        deleting: !this.state.deleting
-      })
-
-
-      if (!data.error) {
-        if (this.props.state.currentHousehold.hasOwnProperty('id')) {
-          this.props.itemDeleteConfirmation()
-          this.props.setCurrentContainer({})
-          this.props.setCurrentSpace({})
-          this.props.setCurrentHousehold(this.props.state.currentHousehold)
-          this.props.history.push(`/households/${this.props.state.currentHousehold.id}`)
-        } else {
-          this.props.itemDeleteConfirmation()
-          this.props.history.push('/')
-        }
-      }
-
-
-    })
-  }
-
+  // deleteItem = () => {
+  //   fetch(`${apiEndpoint}/items/${this.props.item.id}`,{
+  //     method:"DELETE",
+  //     headers:{
+  //       'Content-Type':'application/json',
+  //       Accept: 'application/json',
+  //       Authorization:  localStorage.getItem("token")
+  //     },
+  //     body:JSON.stringify({
+  //       householdPassword: this.state.householdPassword,
+  //       userId: this.props.user.id
+  //     })
+  //   }).then(resp=>resp.json())
+  //   .then(data => {
+  //
+  //     this.setState({
+  //       statusMessage: data.message,
+  //       deleting: !this.state.deleting
+  //     })
+  //
+  //
+  //     if (!data.error) {
+  //       if (this.props.state.currentHousehold.hasOwnProperty('id')) {
+  //         this.props.itemDeleteConfirmation()
+  //         this.props.setCurrentContainer({})
+  //         this.props.setCurrentSpace({})
+  //         this.props.setCurrentHousehold(this.props.state.currentHousehold)
+  //         this.props.history.push(`/households/${this.props.state.currentHousehold.id}`)
+  //       } else {
+  //         this.props.itemDeleteConfirmation()
+  //         this.props.history.push('/')
+  //       }
+  //     }
+  //   })
+  // }
 
   // add owners
     setAddingOwners = () => {
@@ -293,123 +242,11 @@ class ItemPage extends Component {
       })
     }
 
-    renderAddOwnersHeader = () => {
+    renderAddOwnersButton = () => {
       return <>
       <span className='font-weight-bold big-font'>Owners</span>
       <Button floated="right" size="mini" onClick={this.setAddingOwners} color="blue">Add Owners</Button>
       </>
-    }
-
-    renderAddOwnersForm = () => {
-
-      let currentItemHousehold = {}
-
-      if (this.props.state.user.households && this.props.state.currentItem.household) {
-        currentItemHousehold = this.props.state.user.households.filter(household => {
-          return household.id === this.props.state.currentItem.household.id
-        })[0]
-
-      }
-
-      let currentItemHouseholdUsersOptions = {}
-
-      if (currentItemHousehold.users) {
-         currentItemHouseholdUsersOptions = currentItemHousehold.users.map(user => {
-          return {key:user.id,text:user.username,value:user.id}
-        })
-      }
-
-      if (currentItemHouseholdUsersOptions.hasOwnProperty(0)) {
-        return <Segment clearing raised className='full-width'>
-          <Form>
-            <Form.Field>
-            <label>Owners to be added</label>
-              <Dropdown
-              onChange = {this.handleOwnersInput}
-              placeholder='Household Users'
-              fluid
-              multiple
-              search
-              selection
-              options={currentItemHouseholdUsersOptions}
-              />
-            </Form.Field>
-            <Button onClick={this.setAddingOwners} floated="right" size="mini">Cancel</Button>
-            <Button onClick={this.addOwners} floated="right" size="mini">Submit</Button>
-          </Form>
-        </Segment>
-      }
-    }
-
-    handleOwnersInput = (e,data) => {
-      this.setState({
-        addingOwnersIds: data.value
-      })
-    }
-
-    addOwners = () => {
-      this.props.isFetching()
-      fetch(`${apiEndpoint}/items/owners/${this.props.state.currentItem.id}`,{
-        method:"PATCH",
-        headers:{
-          'Content-Type':'application/json',
-          Accept: 'application/json',
-          Authorization:  localStorage.getItem("token")
-        },
-        body:JSON.stringify({
-          item:{
-            id: this.props.state.currentItem.id
-          },
-          users_ids: this.state.addingOwnersIds
-        })
-      }).then(resp=>resp.json())
-      .then(item =>{
-
-        this.props.setCurrentItem(item)
-
-        this.setState({
-          addingOwners: !this.state.addingOwners
-        })
-
-        if (this.props.state.currentItem) {
-          this.setState({
-            statusMessage: "Owners succesfully added!"
-          })
-          this.props.isDoneFetching()
-        }
-
-      })
-    }
-
-    removeOwner = (userId) => {
-      this.props.isFetching()
-      fetch(`${apiEndpoint}/items/owners/${this.props.state.currentItem.id}/${userId}`,{
-        method:"DELETE",
-        headers:{
-          'Content-Type':'application/json',
-          Accept: 'application/json',
-          Authorization:  localStorage.getItem("token"),
-          Allow: 'DELETE'
-        },
-        body:JSON.stringify({
-          item:{
-            id: this.props.state.currentItem.id
-          },
-          user_id: userId
-        })
-      }).then(resp=>resp.json())
-      .then(item =>{
-
-        this.props.setCurrentItem(item)
-
-        if (this.props.state.currentItem) {
-          this.setState({
-            statusMessage: "Owners succesfully removed!"
-          })
-          this.props.isDoneFetching()
-        }
-
-      })
     }
 
     renderStatusMessage = () => {
@@ -429,11 +266,16 @@ class ItemPage extends Component {
     }
 
     redirectToHousehold = () => {
-      if (this.props.state.currentItem) {
+      if (this.props.item) {
         this.props.setCurrentSpace({})
         this.props.setCurrentContainer({})
-        this.props.history.push(`/households/${this.props.state.currentItem.household.id}`)
+        this.props.history.push(`/households/${this.props.item.household.id}`)
       }
+    }
+
+    renderBackToHousehold = () => {
+      return <Button className='' size='mini'
+      onClick={this.redirectToHousehold}>Back to Household</Button>
     }
 
     componentWillUnmount(){
@@ -442,49 +284,51 @@ class ItemPage extends Component {
 
   render(){
 
+    const { user, searching, item } = this.props
+
     return(
       <>
-      {this.setStatusMessageToNothing()}
-      {this.props.state.isDoneFetching ?
-        <>{this.props.state.searching ? <Search history={this.props.history}/> : null}
+      {/*this.setStatusMessageToNothing()*/}
+      {item.hasOwnProperty('id') ?
+        <>{searching ? <Search history={this.props.history}/> : null}
 
       <Menu style={{marginTop: "0px"}}>
-        <Header style={{padding:"10px"}}>Welcome,  {this.props.state.user.username}!</Header>
+        <Header style={{padding:"10px"}}>Welcome,  {user.username}!</Header>
       </Menu>
 
-      <Segment clearing raised style={{margin:"1% auto",width:"98%", minHeight:"500px", backgroundColor:"#f7f7f7"}}>
+      <Segment clearing raised style={{width:"300px", height:'150px', margin:'auto', minHeight:"500px", backgroundColor:"#f7f7f7"}}>
         {this.state.statusMessage !== "" ? this.renderStatusMessage() : null}
-        <Segment clearing>
+
         <div className='d-flex justify-content-between'>
-            <span className='font-weight-bold huge-font'>{this.props.state.currentItem.name}</span>
-            <Button floated="right" color="blue" size="mini" style={{}} onClick={this.redirectToHousehold}>Return to Household</Button>
-          </div>
-        </Segment>
+          <span className='font-weight-bold huge-font'>{item.name}</span>
+          <span className='my-auto ml-auto link' onClick={this.setEditing}>Edit</span>
+        </div>
 
-        <Segment.Group>
-          <Segment clearing>
-            {this.renderLocationDetails()}
-          </Segment>
-          <Segment >
-            {this.renderDescription()}
-          </Segment>
-        </Segment.Group>
+        <div className='d-flex flex-column'>
+          <ItemLocationDetails
+            item={item} />
+          <ItemDescription itemDescription={item.description} />
+        </div>
 
+        { this.state.editing ? <EditItemForm setEditing={this.setEditing} item={item}/> : null }
+
+        <div className='d-flex justify-content-around'>
+          {this.state.deleting ? <DeleteItemForm setDeleting={this.setDeleting}/> : this.state.moving ? null :this.renderDeleteButton()}
+          {this.state.moving ? <MoveItemForm setMoving={this.setMoving}/> : this.state.deleting ? null :this.renderMovingButton()}
+        </div>
 
         <Segment clearing>
           <div className='d-flex flex-column'>
           <div className='d-flex justify-content-between'>
-            {this.state.addingOwners ? this.renderAddOwnersForm() : this.renderAddOwnersHeader() }
+            {this.state.addingOwners ? <AddOwnersForm setAddingOwners={this.setAddingOwners} /> : this.renderAddOwnersButton() }
           </div>
           <Segment.Group style={{margin:"4% 0 0 0"}}>
-            {this.renderOwners()}
+            <ItemOwnersContainer />
           </Segment.Group>
           </div>
         </Segment>
-        <div className='d-flex justify-content-around'>
-        {this.state.deleting ? this.renderDeleteForm() : this.state.moving ? null :this.renderDeleteHeader()}
-
-        {this.state.moving ? this.renderMovingForm() : this.state.deleting ? null :this.renderMovingHeader()}
+        <div className='d-flex justify-content-center med-padding'>
+        {this.renderBackToHousehold()}
         </div>
       </Segment>
 
@@ -496,25 +340,25 @@ class ItemPage extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return { state }
+const mapStateToProps = state => {
+  return {
+    item: state.item,
+    user: state.user,
+    searching: state.app.searching
+   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return {
-      setUser: (user) => dispatch({type:"SET_USER", user}),
-      setHouseholds: (households) => dispatch({type:"SET_HOUSEHOLDS", households}),
-      addHousehold: (household) => dispatch({type:"ADD_HOUSEHOLD", household}),
-      setUserHouseholdMessages: (allMessages) => dispatch({type:"SET_USERHOUSEHOLDMESSAGES", allMessages}),
-      addMessage: (message) => dispatch({type:"ADD_MESSAGE", message}),
-      setCurrentItem: (item) => dispatch({type:"SET_CURRENT_ITEM", item}),
-      isFetching: () => dispatch({type:"IS_FETCHING"}),
-      isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"}),
+      setUser: () => dispatch(getUser()),
+      setItem: (itemId) => dispatch(getItem(itemId)),
       setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE"}),
-      setCurrentContainer: (container) => dispatch({type:"SET_CURRENT_CONTAINER", container}),
-      setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
-      itemDeleteConfirmation: () => dispatch({type:"ITEM_DELETE_CONFIRMATION"})
+      setCurrentContainer: container => {
+        dispatch({type:"SET_CURRENT_CONTAINER", container})
+      }
     }
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(ItemPage)
+
+// <Button floated="right" color="blue" size="mini" style={{}} onClick={this.redirectToHousehold}>Return to Household</Button>

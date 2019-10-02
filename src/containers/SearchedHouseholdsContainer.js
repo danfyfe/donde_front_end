@@ -6,13 +6,12 @@ import HouseholdCard from '../components/HouseholdCard.js'
 
 class SearchedHouseholdsContainer extends Component {
 
-  redirectToHousehold = (household) => {
-
+  redirectToHousehold = (householdId) => {
     this.props.setSearchingToFalse()
 
-    this.props.history.push(`/households/${household.id}`)
+    this.props.history.push(`/households/${householdId}`)
 
-    this.props.setCurrentHousehold(household)
+    this.props.setCurrentHousehold(householdId)
 
   }
 

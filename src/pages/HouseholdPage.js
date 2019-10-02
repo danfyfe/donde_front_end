@@ -1,69 +1,34 @@
 import React, { Component, } from 'react'
-import { Segment, Menu, Header, Message, Button, Form } from 'semantic-ui-react'
+import { Segment, Menu, Header, Message, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import { getUser } from '../actions/userActions.js'
+import { getCurrentHousehold } from '../actions/householdActions.js'
 
 import HouseholdContainer from '../containers/HouseholdContainer.js'
 import HouseholdMessagesContainer from '../containers/HouseholdMessagesContainer.js'
 import Search from '../components/Search.js'
 import Loading from '../components/Loading.js'
-
-let API_ENDPOINT
-if (process.env.NODE_ENV === 'production') {
-  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
-} else {
-  API_ENDPOINT = 'http://localhost:3000'
-}
+import JoinOrLeaveHouseholdForm from '../components/forms/households/JoinOrLeaveHouseholdForm.js'
 
 class HouseholdPage extends Component {
+
   state = {
-    user: {},
-    household: {},
-    joingingHousehold: false,
-    householdPassword: ""
+    joingingHousehold: false
   }
 
   componentDidMount(){
-    this.props.isFetching()
-
-    fetch(`${API_ENDPOINT}/api/v1/profile`,{
-      method:"POST",
-      headers: { Authorization:  localStorage.getItem("token") }
-    }).then(resp=>resp.json())
-    .then(user=>{
-
-      this.props.setUser(user.user)
-
-      this.setState({
-        user: user.user
-      })
-
-    }).then(
-    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.match.params.id}`,{
-      method: "GET",
-      headers: { Authorization:  localStorage.getItem("token") }
-    })
-    .then(resp=>resp.json())
-    .then(household=>{
-      this.props.setCurrentHousehold(household)
-      this.setState({
-        household: household
-      })
-
-      if (this.props.state.currentHousehold && this.state.household && this.state.user) {
-        this.props.isDoneFetching()
-      }
-    })
-    )
+    const { id } = this.props.match.params
+    this.props.setUser()
+    this.props.setCurrentHousehold(id)
   }
-
 
   isUsersHousehold = () => {
     let isUserHousehold
-    if (this.props.state.user && this.props.state.currentHousehold) {
+    if (this.props.user && this.props.household) {
 
-      if (this.props.state.user.households) {
-        isUserHousehold = this.props.state.user.households.filter(household => {
-          return household.id === this.props.state.currentHousehold.id
+      if (this.props.user.households) {
+        isUserHousehold = this.props.user.households.filter(household => {
+          return household.id === this.props.household.id
         })
       }
     }
@@ -88,79 +53,23 @@ class HouseholdPage extends Component {
     return <Button onClick={this.setJoiningHousehold} color="blue" floated="right" size="mini">Join Household</Button>
   }
 
-  renderJoinHouseholdForm = () => {
-    return <>
-      <Form>
-        <Form.Field>
-          <label>Password</label>
-          <input type="password" name="householdPassword" onChange={this.handleInput} placeholder="Please enter Household Password"/>
-        </Form.Field>
-        <Button floated="right" size="mini"
-        onClick={this.setJoiningHousehold}>Cancel</Button>
-        <Button floated="right" size="mini" onClick={this.joinHousehold}>Submit</Button>
-      </Form>
-      </>
-  }
-
-  joinHousehold = () => {
-    fetch(`${API_ENDPOINT}/api/v1/households/${this.props.state.user.id}/${this.props.state.currentHousehold.id}`,{
-      method:"POST",
-      headers:{
-        'Content-Type':'application/json',
-        Accept: 'application/json'
-      },
-      body:JSON.stringify({
-        join:{
-          user_id: this.props.state.user.id,
-          household_id: this.props.state.currentHousehold.id,
-          password: this.state.householdPassword
-        }
-      })
-    }).then(resp=>resp.json())
-    .then(household=>{
-      this.props.addHouseholdToCurrentUser(household)
-
-      this.setState({
-        joiningHousehold: !this.state.joiningHousehold,
-        household: household
-      })
-
-      this.props.history.push(`/households/${household.id}`)
-
-    })
-  }
-
-  renderDeleteConfirmationMessage = () => {
-    return <Message floated="center" style={{textAlign:"center", margin:"1% 5%"}} warning>{this.props.state.itemDeleteConfirmationMessage}</Message>
-  }
-
-  setItemDeleteConfirmationMessageToNothing = () => {
-    if (this.props.state.itemDeleteConfirmationMessage !== "") {
-      setTimeout(()=>{
-        this.props.itemDeleteConfirmationToNothing()
-      },3000)
-    }
-  }
-
   render(){
-
     if (!localStorage.token || localStorage.token === "undefined") {
     this.props.history.push("/")
     }
-
     return(
       <>
-      {this.setItemDeleteConfirmationMessageToNothing()}
-        {this.props.state.isDoneFetching ?
+      {/*this.setItemDeleteConfirmationMessageToNothing()*/}
+        {this.props.user ?
           <>
 
           <Menu style={{margin: "0px", borderRadius:'0'}}>
-            <Header style={{padding:"10px"}}>Welcome, {this.props.state.user.username}!</Header>
+            <Header style={{padding:"10px"}}>Welcome, {this.props.user.username}!</Header>
           </Menu>
 
-          {this.props.state.itemDeleteConfirmationMessage !== "" ? this.renderDeleteConfirmationMessage() : null}
+          {/*this.props.itemDeleteConfirmationMessage !== "" ? this.renderDeleteConfirmationMessage() : null*/}
 
-          {this.props.state.searching ? <Search history={this.props.history}/> : null}
+          {this.props.searching ? <Search history={this.props.history}/> : null}
 
           <Segment className='household-container' style={{margin:"auto", width:"100%", backgroundColor:"#f7f7f7", border:'none'}}>
 
@@ -169,12 +78,12 @@ class HouseholdPage extends Component {
                 <HouseholdContainer history={this.props.history}/>
                 <HouseholdMessagesContainer />
               </> :
-
               <Segment clearing className='full-width'>
-                <Header>{this.props.state.currentHousehold.name}</Header>
+                <Header>{this.props.household.name}</Header>
                 <Message warning><Header>You must join this household to view its details!</Header>
                 </Message>
-                  {this.state.joiningHousehold ? this.renderJoinHouseholdForm() : this.renderJoinHouseholdHeader()}
+                  {this.state.joiningHousehold ? <JoinOrLeaveHouseholdForm type={'join'} householdId={this.props.household.id} userId={this.props.user.id}
+                  setJoiningHousehold={this.setJoiningHousehold}/> : this.renderJoinHouseholdHeader()}
               </Segment>
             }
           </Segment>
@@ -186,19 +95,26 @@ class HouseholdPage extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return { state }
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    household: state.household,
+    searching: state.app.searching
+  }
 }
 
-const mapDispatchToProps = (dispatch) =>{
+const mapDispatchToProps = dispatch =>{
   return {
-    setUser: (user) => dispatch({type:"SET_USER", user}),
-    setCurrentHousehold: (household) => dispatch({type:"SET_CURRENT_HOUSEHOLD", household}),
-    isFetching: () => dispatch({type:"IS_FETCHING"}),
-    isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"}),
-    isUsersHousehold: () => dispatch({type:"IS_USERS_HOUSEHOLD"}),
-    addHouseholdToCurrentUser: (household) => dispatch({type:"ADD_HOUSEHOLD_TO_CURRENT_USER", household}),
-    itemDeleteConfirmationToNothing: () => dispatch({type:"ITEM_DELETE_CONFIRMATION_TO_NOTHING"})
+    setUser: () => dispatch(getUser()),
+    setCurrentHousehold: (householdId) => dispatch(getCurrentHousehold(householdId)),
+
+
+
+    // isFetching: () => dispatch({type:"IS_FETCHING"}),
+    // isDoneFetching: () => dispatch({type:"IS_DONE_FETCHING"}),
+    // isUsersHousehold: () => dispatch({type:"IS_USERS_HOUSEHOLD"}),
+    // addHouseholdToCurrentUser: (household) => dispatch({type:"ADD_HOUSEHOLD_TO_CURRENT_USER", household}),
+    // itemDeleteConfirmationToNothing: () => dispatch({type:"ITEM_DELETE_CONFIRMATION_TO_NOTHING"})
   }
 }
 
