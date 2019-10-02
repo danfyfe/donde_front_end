@@ -7,7 +7,7 @@ import { getUser } from '../../../actions/userActions.js'
 
 const AddMessageForm = props => {
 
-  const { households, setAddingNewMessage, addMessage, household, user, type, setUser } = props
+  const { households, setAddingNewMessage, addMessage, household, user, type } = props
 
   const [ messageTitle, setMessageTitle ] = useState('')
   const [ messageContent, setMessageContent ] = useState('')

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Form, Button, Message, Dropdown } from 'semantic-ui-react'
+import { Message, Dropdown } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import ItemCard from './ItemCard.js'
@@ -7,12 +7,12 @@ import EditContainerForm from './forms/containers/EditContainerForm.js'
 import DeleteContainerForm from './forms/containers/DeleteContainerForm.js'
 import AddItemForm from './forms/items/AddItemForm.js'
 
-let API_ENDPOINT
-if (process.env.NODE_ENV === 'production') {
-  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
-} else {
-  API_ENDPOINT = 'http://localhost:3000'
-}
+// let API_ENDPOINT
+// if (process.env.NODE_ENV === 'production') {
+//   API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
+// } else {
+//   API_ENDPOINT = 'http://localhost:3000'
+// }
 
 class Container extends Component {
 

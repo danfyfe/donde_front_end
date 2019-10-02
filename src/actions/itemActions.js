@@ -102,29 +102,30 @@ export function removeOwner(itemId, userId){
         user_id: userId
       }
     }).then( resp =>{
-      return dispatch({type:'REMOVE_OWNER', payload: resp.data})  
+      return dispatch({type:'REMOVE_OWNER', payload: resp.data})
     })
   }
 }
 
 
-export function deleteItem(itemId){
-  axios({
-    method:"DELETE",
-    url: `${apiEndpoint}/items/${this.props.item.id}`,
-    headers: {
-      'Content-Type':'application/json',
-      Accept: 'application/json',
-      Authorization:  localStorage.getItem("token")
-    },
-    data: {
-      householdPassword: this.state.householdPassword,
-      userId: this.props.user.id
-    }
-  }).then( resp => {
-
-
-  })
+export function deleteItem(itemId, householdPass, userId){
+  return dispatch => {
+    axios({
+      method:"DELETE",
+      url: `${apiEndpoint}/items/${itemId}`,
+      headers: {
+        'Content-Type':'application/json',
+        Accept: 'application/json',
+        Authorization:  localStorage.getItem("token")
+      },
+      data: {
+        householdPassword: householdPass,
+        userId: userId
+      }
+    }).then( resp => {
+      return dispatch({type:'DELETE_ITEM', payload: resp.payload})
+    })
+  }
 }
 
 export function moveItem(itemId){
