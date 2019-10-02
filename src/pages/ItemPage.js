@@ -3,14 +3,16 @@ import { Segment, Header, Form, Dropdown, Button, Message, Menu, Icon } from 'se
 import { connect } from 'react-redux'
 import apiEndpoint from '../actions/ApiEndpoint.js'
 import { getUser } from '../actions/userActions.js'
-import { getItem, removeOwner } from '../actions/itemActions.js'
+import { getItem } from '../actions/itemActions.js'
 
 import Search from '../components/Search.js'
 import Loading from '../components/Loading.js'
 import ItemLocationDetails from '../containers/ItemLocationDetails.js'
 import ItemDescription from '../containers/ItemDescription'
+import ItemOwnersContainer from '../containers/ItemOwnersContainer'
 import EditItemForm from '../components/forms/items/EditItemForm.js'
 import AddOwnersForm from '../components/forms/items/AddOwnersForm.js'
+
 
 class ItemPage extends Component {
 
@@ -41,23 +43,25 @@ class ItemPage extends Component {
   }
 
 
-  renderOwners = () => {
-    if (this.props.item.users) {
-      if (this.props.item.users.length === 0) {
-        return <Message>This item currently has no owners! Click Add Owners to give it some!</Message>
-      } else {
-        return this.props.item.users.map(user => {
-          return <Segment key={user.id}>
-            <div className='d-flex justify-content-between'>
-              <span className='font-weight-bold'>{user.username}</span>
+  // renderOwners = () => {
+  //   // if (this.props.item.users) {
+  //     if (this.props.item.users.length === 0) {
+  //       return <Message>This item currently has no owners! Click Add Owners to give it some!</Message>
+  //     } else {
+  //       return this.props.item.users.map(user => {
+  //         return <Segment key={user.id}>
+  //           <div className='d-flex justify-content-between'>
+  //             <span className='font-weight-bold'>{user.username}</span>
+  //
+  //             <Icon link color="red" floated='right' name='cancel' onClick={()=> removeOwner(this.props.item.id, user.id)}/>
+  //           </div>
+  //         </Segment>
+  //       })
+  //     }
+  //   // }
+  // }
 
-              <Icon link color="red" floated='right' name='cancel' onClick={()=> removeOwner(user.id)}/>
-            </div>
-          </Segment>
-        })
-      }
-    }
-  }
+  
 
   // renderDescription = () => {
   //   if (this.props.item) {
@@ -130,13 +134,13 @@ class ItemPage extends Component {
     })
   }
 
-  renderMovingHeader = () => {
+  renderMovingButton = () => {
     return <>
     <Button floated="right" size="mini" onClick={this.setMoving} color="blue" style={{margin:"7% .05% 0 0"}}>Move Item</Button>
     </>
   }
 
-  renderDeleteHeader = () => {
+  renderDeleteButton = () => {
     return <>
       <Button floated="right" size="mini" onClick={this.setDeleting} color="red" style={{margin:"7% 0 0 0"}}>Delete Item</Button>
     </>
@@ -456,23 +460,23 @@ class ItemPage extends Component {
 
         { this.state.editing ? <EditItemForm setEditing={this.setEditing} item={item}/> : null }
 
+        <div className='d-flex justify-content-around'>
+          {this.state.deleting ? this.renderDeleteForm() : this.state.moving ? null :this.renderDeleteButton()}
+          {this.state.moving ? this.renderMovingForm() : this.state.deleting ? null :this.renderMovingButton()}
+        </div>
+
         <Segment clearing>
           <div className='d-flex flex-column'>
           <div className='d-flex justify-content-between'>
             {this.state.addingOwners ? <AddOwnersForm setAddingOwners={this.setAddingOwners} /> : this.renderAddOwnersHeader() }
           </div>
           <Segment.Group style={{margin:"4% 0 0 0"}}>
-            {this.renderOwners()}
+            <ItemOwnersContainer />
           </Segment.Group>
           </div>
         </Segment>
-        <div className='d-flex justify-content-around'>
-        {this.state.deleting ? this.renderDeleteForm() : this.state.moving ? null :this.renderDeleteHeader()}
-
-        {this.state.moving ? this.renderMovingForm() : this.state.deleting ? null :this.renderMovingHeader()}
-        </div>
         <div className='d-flex justify-content-center med-padding'>
-          {this.renderBackToHousehold()}
+        {this.renderBackToHousehold()}
         </div>
       </Segment>
 

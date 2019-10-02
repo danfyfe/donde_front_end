@@ -18,10 +18,9 @@ const itemReducer = ( state = defaultState, action) => {
 
     return {...action.payload}
 
-    case 'REMOVE_OWNERS':
+    case 'REMOVE_OWNER':
 
     return {...action.payload}
-
 
     default:
     return state

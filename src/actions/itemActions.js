@@ -85,25 +85,26 @@ export function addOwners(itemId, owners){
 }
 
 export function removeOwner(itemId, userId){
-  axios({
-    method:"DELETE",
-    url: `${apiEndpoint}/items/owners/${itemId}/${userId}`,
-    headers:{
-      'Content-Type':'application/json',
-      Accept: 'application/json',
-      Authorization:  localStorage.getItem("token"),
-      Allow: 'DELETE'
-    },
-    data: {
-      item:{
-        id: itemId
+  return dispatch => {
+    axios({
+      method:"DELETE",
+      url: `${apiEndpoint}/items/owners/${itemId}/${userId}`,
+      headers:{
+        'Content-Type':'application/json',
+        Accept: 'application/json',
+        Authorization:  localStorage.getItem("token"),
+        Allow: 'DELETE'
       },
-      user_id: userId
-    }
-  }).then( resp =>{
-    
-
-  })
+      data: {
+        item:{
+          id: itemId
+        },
+        user_id: userId
+      }
+    }).then( resp =>{
+      return dispatch({type:'REMOVE_OWNER', payload: resp.data})  
+    })
+  }
 }
 
 
