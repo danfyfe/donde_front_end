@@ -257,8 +257,8 @@ class Container extends Component {
           <div className='d-flex justify-content-between'>
 
             <div className='d-flex flex-column'>
-              <span className='font-weight-bold text-nowrap'>{this.props.container.name}</span>
-              <span className='text-muted text-nowrap small-font'style={{paddingLeft:'5%'}}>in {this.props.space.name} at {this.props.household.name}</span>
+              <span className='font-weight-bold'>{this.props.container.name}</span>
+              <span className='text-muted small-font'style={{paddingLeft:'5%'}}>in {this.props.space.name} at {this.props.household.name}</span>
             </div>
 
             <div className='d-flex'>

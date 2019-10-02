@@ -223,7 +223,7 @@ class Space extends Component {
       <>
       <div className='d-flex justify-content-between'>
         <div className='d-flex flex-column'>
-          <span className='font-weight-bold text-nowrap'>{space.name}</span>
+          <span className='font-weight-bold'>{space.name}</span>
           <span className='text-muted text-nowrap small-font' style={{paddingLeft:'5%'}}>at {household.name}</span>
         </div>
 
