@@ -128,30 +128,32 @@ export function deleteItem(itemId, householdPass, userId){
   }
 }
 
-export function moveItem(itemId){
-  axios({
-    method:"PATCH",
-    url: `${apiEndpoint}/items/${this.props.item.id}`,
-    headers:{
-      'Content-Type':'application/json',
-      Accept: 'application/json',
-      Authorization:  localStorage.getItem("token")
-    },
-    data: {
-      item:{
-        household_id: this.state.itemHousehold_id,
-        space_id: this.state.itemSpace_id,
-        container_id: this.state.itemContainer_id,
-        id: this.props.item.id,
-        name: this.state.itemName,
-        description: this.state.itemDescription
+export function moveItem( householdId, spaceId, containerId, itemId, itemName, itemDescription, userId){
+  return dispatch => {
+    axios({
+      method:"PATCH",
+      url: `${apiEndpoint}/items/${itemId}`,
+      headers:{
+        'Content-Type':'application/json',
+        Accept: 'application/json',
+        Authorization:  localStorage.getItem("token")
       },
-      user_id: this.props.user.id
-    }
-  })
-  .then( resp  => {
-
-  })
+      data: {
+        item:{
+          household_id: householdId,
+          space_id: spaceId,
+          container_id: containerId,
+          id: itemId,
+          name: itemName,
+          description: itemDescription
+        },
+        user_id: userId
+      }
+    })
+    .then( resp  => {
+      return dispatch({type:'MOVE_ITEM', payload: resp.data})
+    })
+  }
 }
 
 

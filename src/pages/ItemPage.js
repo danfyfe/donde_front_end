@@ -13,6 +13,7 @@ import ItemOwnersContainer from '../containers/ItemOwnersContainer'
 import EditItemForm from '../components/forms/items/EditItemForm.js'
 import AddOwnersForm from '../components/forms/items/AddOwnersForm.js'
 import DeleteItemForm from '../components/forms/items/DeleteItemForm.js'
+import MoveItemForm from '../components/forms/items/MoveItemForm.js'
 
 
 class ItemPage extends Component {
@@ -20,15 +21,14 @@ class ItemPage extends Component {
   state = {
     editing: false,
     moving: false,
-    itemName: "",
-    itemDescription: "",
-    itemHousehold_id: "",
-    itemSpace_id: "",
-    itemContainer_id: "",
-    itemContainerName:"",
-    itemSpaceName:"",
+    // itemName: "",
+    // itemDescription: "",
+    // itemHousehold_id: "",
+    // itemSpace_id: "",
+    // itemContainer_id: "",
+    // itemContainerName:"",
+    // itemSpaceName:"",
     addingOwners: false,
-    addOwnersIds: [],
     deleting: false,
     statusMessage: "",
     error: false
@@ -123,77 +123,77 @@ class ItemPage extends Component {
   //   </Segment>
   // }
 
-  renderMovingForm = () => {
-    if (this.props.user.households && this.props.item) {
+  // renderMovingForm = () => {
+  //   if (this.props.user.households && this.props.item) {
+  //
+  //     const itemHousehold = this.props.user.households.filter(household => {
+  //       return household.id === this.props.item.household.id
+  //     })[0]
+  //
+  //
+  //     let spaceOptions = []
+  //     let containerOptions = []
+  //
+  //     if (itemHousehold.spaces && itemHousehold.containers) {
+  //       spaceOptions = itemHousehold.spaces.map(space => {
+  //         return {key:space.id, text:space.name, value: space.id}
+  //       })
+  //
+  //       containerOptions = itemHousehold.containers.map(container => {
+  //         return {key: container.id, text: container.name, value: container.id}
+  //       })
+  // }
+  //
+  //   return <Segment clearing raised className='full-width'>
+  //     <Form>
+  //
+  //       <Form.Field>
+  //         <label>Container</label>
+  //         <Dropdown name="container_id" onChange={this.handleContainerInput} pointing="top left" placeholder={this.state.itemContainerName} fluid selection options={containerOptions}/>
+  //       </Form.Field>
+  //
+  //       <Form.Field>
+  //         <label>Space</label>
+  //         <Dropdown name="space_id" onChange={this.handleSpaceInput} pointing="top left" placeholder={this.state.itemSpaceName} fluid selection options={spaceOptions}/>
+  //       </Form.Field>
+  //
+  //       <Button onClick={this.setMoving} floated="right" size="mini">Cancel</Button>
+  //       <Button onClick={this.moveItem} floated="right" size="mini">Submit</Button>
+  //
+  //     </Form>
+  //   </Segment>
+  //   }
+  // }
 
-      const itemHousehold = this.props.user.households.filter(household => {
-        return household.id === this.props.item.household.id
-      })[0]
-
-
-      let spaceOptions = []
-      let containerOptions = []
-
-      if (itemHousehold.spaces && itemHousehold.containers) {
-        spaceOptions = itemHousehold.spaces.map(space => {
-          return {key:space.id, text:space.name, value: space.id}
-        })
-
-        containerOptions = itemHousehold.containers.map(container => {
-          return {key: container.id, text: container.name, value: container.id}
-        })
-  }
-
-    return <Segment clearing raised className='full-width'>
-      <Form>
-
-        <Form.Field>
-          <label>Container</label>
-          <Dropdown name="container_id" onChange={this.handleContainerInput} pointing="top left" placeholder={this.state.itemContainerName} fluid selection options={containerOptions}/>
-        </Form.Field>
-
-        <Form.Field>
-          <label>Space</label>
-          <Dropdown name="space_id" onChange={this.handleSpaceInput} pointing="top left" placeholder={this.state.itemSpaceName} fluid selection options={spaceOptions}/>
-        </Form.Field>
-
-        <Button onClick={this.setMoving} floated="right" size="mini">Cancel</Button>
-        <Button onClick={this.moveItem} floated="right" size="mini">Submit</Button>
-
-      </Form>
-    </Segment>
-    }
-  }
-
-  moveItem = () => {
-    fetch(`${apiEndpoint}/items/${this.props.item.id}`,{
-      method:"PATCH",
-      headers:{
-        'Content-Type':'application/json',
-        Accept: 'application/json',
-        Authorization:  localStorage.getItem("token")
-      },
-      body:JSON.stringify({
-        item:{
-          household_id: this.state.itemHousehold_id,
-          space_id: this.state.itemSpace_id,
-          container_id: this.state.itemContainer_id,
-          id: this.props.item.id,
-          name: this.state.itemName,
-          description: this.state.itemDescription
-        },
-        user_id: this.props.user.id
-      })
-    }).then(resp=>resp.json())
-    .then(updatedItem => {
-      this.props.setCurrentItem(updatedItem)
-
-      this.setState({
-        moving: !this.state.moving,
-        statusMessage: "Item successfully moved! A message was sent to your household on your behalf."
-      })
-    })
-  }
+  // moveItem = () => {
+  //   fetch(`${apiEndpoint}/items/${this.props.item.id}`,{
+  //     method:"PATCH",
+  //     headers:{
+  //       'Content-Type':'application/json',
+  //       Accept: 'application/json',
+  //       Authorization:  localStorage.getItem("token")
+  //     },
+  //     body:JSON.stringify({
+  //       item:{
+  //         household_id: this.state.itemHousehold_id,
+  //         space_id: this.state.itemSpace_id,
+  //         container_id: this.state.itemContainer_id,
+  //         id: this.props.item.id,
+  //         name: this.state.itemName,
+  //         description: this.state.itemDescription
+  //       },
+  //       user_id: this.props.user.id
+  //     })
+  //   }).then(resp=>resp.json())
+  //   .then(updatedItem => {
+  //     this.props.setCurrentItem(updatedItem)
+  //
+  //     this.setState({
+  //       moving: !this.state.moving,
+  //       statusMessage: "Item successfully moved! A message was sent to your household on your behalf."
+  //     })
+  //   })
+  // }
 
   renderErrorMessage = () => {
     return <Message key={1} error header={this.state.statusMessage}/>
@@ -314,7 +314,7 @@ class ItemPage extends Component {
 
         <div className='d-flex justify-content-around'>
           {this.state.deleting ? <DeleteItemForm setDeleting={this.setDeleting}/> : this.state.moving ? null :this.renderDeleteButton()}
-          {this.state.moving ? this.renderMovingForm() : this.state.deleting ? null :this.renderMovingButton()}
+          {this.state.moving ? <MoveItemForm setMoving={this.setMoving}/> : this.state.deleting ? null :this.renderMovingButton()}
         </div>
 
         <Segment clearing>

@@ -20,6 +20,10 @@ const itemReducer = ( state = defaultState, action) => {
 
     return {...action.payload}
 
+    case 'MOVE_ITEM':
+
+    return {...action.payload}
+
     default:
     return state
   }
