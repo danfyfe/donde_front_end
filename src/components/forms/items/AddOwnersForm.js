@@ -7,17 +7,27 @@ const AddOwnersForm = props => {
 
   const { user, item, setAddingOwners, addOwners } = props
   const [ owners, setOwners ] = useState()
-
   let currentItemHousehold = {}
 
+  // going through user's households to have access to the household's users
   currentItemHousehold = user.households.filter(household => {
       return household.id === item.household.id
     })[0]
 
+  const itemUsersIds = item.users.map( user => {
+    return user.id
+  })
+
+  //  filter out users that are already owners of item
+  const householdUsersNotAlreadyOwners =  currentItemHousehold.users.filter( user => {
+    return !itemUsersIds.includes(user.id)
+  })
+
+  // create the options objects for the form
   let currentItemHouseholdUsersOptions = {}
 
-   currentItemHouseholdUsersOptions = currentItemHousehold.users.map(user => {
-    return { key:user.id, text:user.username, value:user.id}
+   currentItemHouseholdUsersOptions = householdUsersNotAlreadyOwners.map(user => {
+    return { key:user.id, text:user.username, value:user.id }
   })
 
   return(

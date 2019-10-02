@@ -6,7 +6,7 @@ import { deleteContainer } from '../../../actions/containerActions.js'
 
 const DeleteContainerForm = props => {
 
-  const { container, space, household, setDeletingContainer, deleteContainer, setCurrentContainer, setCurrentSpace } = props
+  const { container, household, setDeletingContainer, deleteContainer, setCurrentContainer } = props
 
   const [ householdPass, setHouseholdPass ] = useState('')
 

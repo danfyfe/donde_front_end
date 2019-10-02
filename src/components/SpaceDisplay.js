@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { Segment, Form, Button, Message, Dropdown } from 'semantic-ui-react'
+import { Message, Dropdown } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { getCurrentHousehold } from '../actions/householdActions.js'
 
-import { addContainer } from '../actions/containerActions.js'
+// import { addContainer } from '../actions/containerActions.js'
 
 import ContainerCard from './ContainerCard.js'
 import ContainerDisplay from './ContainerDisplay.js'
@@ -14,12 +14,12 @@ import EditSpaceForm from './forms/spaces/EditSpaceForm.js'
 import DeleteSpaceForm from './forms/spaces/DeleteSpaceForm.js'
 import AddContainerForm from './forms/containers/AddContainerForm.js'
 
-let API_ENDPOINT
-if (process.env.NODE_ENV === 'production') {
-  API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
-} else {
-  API_ENDPOINT = 'http://localhost:3000'
-}
+// let API_ENDPOINT
+// if (process.env.NODE_ENV === 'production') {
+//   API_ENDPOINT = 'https://df-donde-api.herokuapp.com'
+// } else {
+//   API_ENDPOINT = 'http://localhost:3000'
+// }
 
 class Space extends Component {
 
