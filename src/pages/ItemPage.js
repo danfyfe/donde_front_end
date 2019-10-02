@@ -417,6 +417,11 @@ class ItemPage extends Component {
       }
     }
 
+    renderBackToHousehold = () => {
+      return <Button className='' size='mini'
+      onClick={this.redirectToHousehold}>Back to Household</Button>
+    }
+
     componentWillUnmount(){
       clearInterval(this.messageTimer)
     }
@@ -466,6 +471,9 @@ class ItemPage extends Component {
 
         {this.state.moving ? this.renderMovingForm() : this.state.deleting ? null :this.renderMovingHeader()}
         </div>
+        <div className='d-flex justify-content-center med-padding'>
+          {this.renderBackToHousehold()}
+        </div>
       </Segment>
 
         </> : <Loading/>
@@ -488,6 +496,10 @@ const mapDispatchToProps = dispatch => {
     return {
       setUser: () => dispatch(getUser()),
       setItem: (itemId) => dispatch(getItem(itemId)),
+      setCurrentSpace: (space) => dispatch({type:"SET_CURRENT_SPACE"}),
+      setCurrentContainer: container => {
+        dispatch({type:"SET_CURRENT_CONTAINER", container})
+      }
     }
 }
 
